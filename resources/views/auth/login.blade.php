@@ -31,7 +31,13 @@
                     <div class="form-content">
 
                         <h1 class="">Login</h1>
-                        <p class="general-message-container">Silahkan <i>login</i> untuk mengakses sistem</p>
+                        <p class="general-message-container">
+                            @if (session('status'))
+                                <span class="text-success">{{ session('status') }}</span>
+                            @else
+                                Silahkan <i>login</i> untuk mengakses sistem
+                            @endif
+                        </p>
 
                         <form class="text-left" action="#" id="login-form" method="POST">
                             <div class="form">
@@ -52,7 +58,7 @@
                                 <div id="password-field" class="field-wrapper input mb-2">
                                     <div class="d-flex justify-content-between">
                                         <label for="password">PASSWORD</label>
-                                        <a href="#" class="forgot-pass-link">Lupa
+                                        <a href="{{ route('password.forgot') }}" class="forgot-pass-link">Lupa
                                             Password?</a>
                                     </div>
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
@@ -116,8 +122,8 @@
     <script src="{{ asset('assets/themes/cork/js/libs/jquery-3.1.1.min.js') }}"></script>
     <script src="{{ asset('assets/plugins/bootstrap/js/popper.min.js') }}"></script>
     <script src="{{ asset('assets/plugins/bootstrap/js/bootstrap.min.js') }}"></script>
-
     <!-- END GLOBAL MANDATORY SCRIPTS -->
+
     <script>
         var togglePassword = document.getElementById("toggle-password");
         var formContent = document.getElementsByClassName('form-content')[0];
@@ -209,7 +215,7 @@
                             messageContainer.innerHTML = '<i class="fa fa-spin fa-spinner"></i> Mengalihkan...';
                         }, 3500);
                         setTimeout(function () {
-                            window.location = '{{ route('admin.index') }}';
+                            window.location = '{{ route('index') }}';
                         }, 6000);
                     }
                 })
