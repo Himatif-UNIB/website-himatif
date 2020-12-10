@@ -76,6 +76,40 @@
     <script src="{{ asset('assets/themes/cork/js/loader.js') }}"></script>
     <!-- END GLOBAL MANDATORY SCRIPTS -->
 
+    <script>
+        let logoutButton =  document.querySelector('.logout-btn');
+        logoutButton.addEventListener('click', function (e) {
+            e.preventDefault();
+
+            logoutButton.querySelector('span')
+                .innerHTML = 'Log Out...';
+            fetch('{{ route('auth.logout') }}', {
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
+                method: 'POST'
+            })
+            .then(res => res.json())
+            .then(res => {
+                if (res.success) {
+                    logoutButton.querySelector('span')
+                        .innerHTML = 'Berhasil!';
+
+                    localStorage.removeItem('passportAccessToken');
+                    localStorage.removeItem('passportAccessTokenType');
+                    localStorage.removeItem('passportAccessTokenExpireAt');
+
+                    setTimeout(function () {
+                        window.location = '{{ route('login') }}';
+                    }, 2000);
+                }
+            })
+            .catch(errors => {
+                console.log(errors);
+            });
+        });
+    </script>
+
     <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
     @stack('custom_js')
     <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
