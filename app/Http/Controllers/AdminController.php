@@ -13,6 +13,7 @@ class AdminController extends Controller
      * 
      * @since   1.0.0
      * @author  mulyosyahidin95
+     * 
      * @return  View\Factory@admin.index
      */
     public function index()

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
@@ -36,4 +37,11 @@ Route::group(['prefix' => 'auth', 'as' => 'password.', 'middleware' => 'guest'],
     Route::post('/forgot-password', [ForgotPasswordController::class, 'verifyEmail'])->name('email');
     Route::get('/reset-password/{token}', [ForgotPasswordController::class, 'resetPassword'])->name('reset');
     Route::post('/reset-password', [ForgotPasswordController::class, ])->name('update');
+});
+
+Route::group(['as' => 'admin.', 'middleware' => ['auth'], 'prefix' => 'admin'], function () {
+    Route::group(['as' => 'settings.', 'prefix' => 'settings'], function () {
+        Route::get('/', [SettingController::class, 'general'])->name('general');
+        Route::put('/update', [SettingController::class, 'update'])->name('update');
+    });
 });

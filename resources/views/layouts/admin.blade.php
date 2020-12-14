@@ -9,7 +9,11 @@
 
     <title>@yield('title')</title>
 
-    <link rel="icon" type="image/x-icon" href="{{ asset('assets/images/icons/favicon.ico') }}"/>
+    @if (getSiteLogo() == NULL)
+        <link rel="icon" type="image/x-icon" href="{{ asset('assets/images/icons/favicon.ico') }}"/>
+    @else
+        <link rel="icon" href="{{ getSiteLogo() }}"/>
+    @endif
     <link href="{{ asset('assets/themes/cork/css/loader.css') }}" rel="stylesheet" type="text/css" />
 
     <!-- BEGIN GLOBAL MANDATORY STYLES -->
