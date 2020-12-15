@@ -269,6 +269,42 @@ if (!function_exists('getProfilePicture')) {
             return auth()->user()->media[0]->getFullUrl();
         }
 
-        return asset('assets/themes/stisla/img/avatar/avatar-1.png');
+        return asset('assets/images/avatar-1.png');
+    }
+}
+
+if (!function_exists('printUserName'))
+{
+    /**
+     * Membuat nama panggilan
+     * 
+     * Membuat nama panggilan berdasarkan nama lengkap.
+     * Nama depan akan dijadikan sebagai nama panggilan.
+     * 
+     * @param mixed $name Nama lengkap
+     * 
+     * @since   1.0.0
+     * @author  mulyosyahidin95
+     * 
+     * @return Nama panggilan
+     */
+    function printUserName($name) {
+        $nama = trim($name);
+        $names = explode(' ', $name);
+        if (count($names) == 1)
+            return $nama;
+    
+        $firstName = $names[0];
+    
+        $backName = '';
+        for ($i = 1; $i < count($names); $i++) {
+            $backName .= $names[$i] .' ';
+        }
+        $backName = rtrim($backName);
+        $backName = createAcronym($backName);
+    
+        $name = $firstName .' '. $backName;
+    
+        return $name;
     }
 }

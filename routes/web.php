@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -39,9 +40,14 @@ Route::group(['prefix' => 'auth', 'as' => 'password.', 'middleware' => 'guest'],
     Route::post('/reset-password', [ForgotPasswordController::class, ])->name('update');
 });
 
-Route::group(['as' => 'admin.', 'middleware' => ['auth'], 'prefix' => 'admin'], function () {
-    Route::group(['as' => 'settings.', 'prefix' => 'settings'], function () {
-        Route::get('/', [SettingController::class, 'general'])->name('general');
-        Route::put('/update', [SettingController::class, 'update'])->name('update');
+Route::group(['middleware' => ['auth']], function () {
+    Route::group(['as' => 'admin.', 'prefix' => 'admin'], function () {
+        Route::group(['as' => 'settings.', 'prefix' => 'settings'], function () {
+            Route::get('/', [SettingController::class, 'general'])->name('general');
+            Route::put('/update', [SettingController::class, 'update'])->name('update');
+        });
     });
+    Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
+    Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::put('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
 });
