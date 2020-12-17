@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
+use App\Http\Controllers\DivisionController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -50,4 +51,6 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
     Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::put('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
+
+    Route::get('/divisions', [DivisionController::class, 'index'])->name('divisions');
 });

@@ -81,6 +81,8 @@
     <!-- END GLOBAL MANDATORY SCRIPTS -->
 
     <script>
+        const passportAccessToken = localStorage.getItem('passportAccessToken');
+
         let logoutButton =  document.querySelector('.logout-btn');
         logoutButton.addEventListener('click', function (e) {
             e.preventDefault();
