@@ -16,7 +16,7 @@ class PositionController extends Controller
      */
     public function index()
     {
-        return ['data' => Position::with('parent')->get()];
+        return ['data' => Position::with('division')->get()];
     }
 
     /**
@@ -29,7 +29,8 @@ class PositionController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name' => ['required'],
-            'parent_id' => ['nullable', 'numeric']
+            'division_id' => ['nullable', 'numeric'],
+            'order_level' => ['required', 'numeric']
         ]);
 
         if ($validator->fails()) {
@@ -42,7 +43,8 @@ class PositionController extends Controller
 
         $position = new Position;
         $position->name = $request->name;
-        $position->parent_id = ($request->parent_id == 0) ? NULL : $request->parent_id;
+        $position->division_id = ($request->division_id == 0) ? NULL : $request->division_id;
+        $position->order_level = $request->order_level;
         $position->save();
 
         return response()
@@ -74,7 +76,8 @@ class PositionController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name' => ['required'],
-            'parent_id' => ['nullable', 'numeric']
+            'division_id' => ['nullable', 'numeric'],
+            'order_level' => ['required', 'numeric']
         ]);
 
         if ($validator->fails()) {
@@ -86,7 +89,8 @@ class PositionController extends Controller
         }
 
         $position->name = $request->name;
-        $position->parent_id = ($request->parent_id == 0) ? NULL : $request->parent_id;
+        $position->division_id = ($request->division_id == 0) ? NULL : $request->division_id;
+        $position->order_level = $request->order_level;
         $position->save();
 
         return response()
@@ -104,15 +108,12 @@ class PositionController extends Controller
      */
     public function destroy(Position $position)
     {
-        $message = ($position->parent_id == NULL) ? 'Berhasil menghapus data jabatan. Jabatan ini merupakan jabatan induk, semua child dari jabatan ini juga dihapus.' :
-            'Berhasil menghapus data jabatan';
-
         $position->delete();
 
         return response()
             ->json([
                 'success' => true,
-                'message' => $message
+                'message' => 'Berhasil menghapus data jabatan'
             ]);
     }
 
@@ -129,7 +130,7 @@ class PositionController extends Controller
      */
     public function parents()
     {
-        $parents = Position::where('parent_id', NULL)->get();
+        $parents = Position::where('division_id', NULL)->get();
 
         return ['data' => $parents];
     }

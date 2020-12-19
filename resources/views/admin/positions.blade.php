@@ -34,7 +34,8 @@
                                 <tr>
                                     <th>#</th>
                                     <th>Jabatan</th>
-                                    <th>Induk</th>
+                                    <th>Divisi</th>
+                                    <th>Order Level</th>
                                     <th></th>
                                 </tr>
                             </thead>
@@ -73,11 +74,17 @@
 
                             <div class="invalid-feedback position-name-feedback"></div>
                         </div>
-                        <div class="form-group" id="position-parent-field">
-                            <label for="position-parent">Induk:</label>
-                            <select name="parent_id" id="position-parent" class="form-control">
+                        <div class="form-group" id="position-division-field">
+                            <label for="position-division">Divisi:</label>
+                            <select name="division_id" id="position-division" class="form-control">
                                 <option value="0">Tidak ada</option>
                             </select>
+                        </div>
+                        <div class="form-group" id="position-order-level-field">
+                            <label for="position-order-level">Urutan:</label>
+                            <input type="number" class="form-control" id="position-order-level" name="order-level-name" required>
+                        
+                            <div class="invalid-feedback order-level-name-feedback"></div>
                         </div>
                     </div>
                     <div class="modal-footer md-button">
@@ -114,11 +121,17 @@
 
                             <div class="invalid-feedback position-name-feedback"></div>
                         </div>
-                        <div class="form-group" id="edit-position-parent-field">
-                            <label for="edit-position-parent">Induk:</label>
-                            <select name="parent_id" id="edit-position-parent" class="form-control">
+                        <div class="form-group" id="edit-position-division-field">
+                            <label for="edit-position-division">Divisi:</label>
+                            <select name="division_id" id="edit-position-division" class="form-control">
                                 <option value="0">Tidak ada</option>
                             </select>
+                        </div>
+                        <div class="form-group" id="edit-position-order-level-field">
+                            <label for="edit-position-order-level">Urutan:</label>
+                            <input type="number" class="form-control" id="edit-position-order-level" name="order-level-name" required>
+                        
+                            <div class="invalid-feedback edit-order-level-name-feedback"></div>
                         </div>
                     </div>
                     <div class="modal-footer md-button">
@@ -152,7 +165,7 @@
                         Semua anggota dengan jabatan ini akan ditandai "NULL"
                     </div>
 
-                    <div class="is-parent-alert"></div>
+                    <div class="is-division-alert"></div>
                 </div>
                 <div class="modal-footer md-button">
                     <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12"></i> Batal</button>
@@ -166,13 +179,13 @@
 @push('custom_js')
     <script src="{{ asset('assets/plugins/table/datatable/datatables.js') }}"></script>
     <script>
-        function loadPositionParents(loadTo, defaultSelected = null) {
+        function loadDivisions(loadTo, defaultSelected = null) {
             const defaultOption = document.createElement('option');
             defaultOption.setAttribute('value', 0);
-            defaultOption.classList.add('parent-0');
+            defaultOption.classList.add('division-0');
             defaultOption.innerHTML = 'Tidak ada';
 
-            fetch('{{ route('api.positions.parents') }}', {
+            fetch('{{ route('api.divisions.index') }}', {
                 method: 'GET',
                 headers: {
                     'Authorization': `Bearer ${passportAccessToken}`
@@ -180,24 +193,24 @@
             })
                 .then(res => res.json())
                 .then(res => {
-                    const parents = res.data;
-                    if (parents.length > 0) {
+                    const divisions = res.data;
+                    if (divisions.length > 0) {
                         while (loadTo.firstChild) {
                             loadTo.removeChild(loadTo.firstChild);
                         }
 
                         loadTo.appendChild(defaultOption);
 
-                        parents.forEach((parent) => {
-                            let parentOption = document.createElement('option');
-                            parentOption.setAttribute('value', parent.id);
-                            if (defaultSelected != null && defaultSelected == parent.id) {
-                                parentOption.setAttribute('selected', 'selected');
+                        divisions.forEach((division) => {
+                            let divisionOption = document.createElement('option');
+                            divisionOption.setAttribute('value', division.id);
+                            if (defaultSelected != null && defaultSelected == division.id) {
+                                divisionOption.setAttribute('selected', 'selected');
                             }
-                            parentOption.classList.add(`parent-${parent.id}`);
-                            parentOption.innerHTML = parent.name;
+                            divisionOption.classList.add(`division-${division.id}`);
+                            divisionOption.innerHTML = division.name;
 
-                            loadTo.appendChild(parentOption);
+                            loadTo.appendChild(divisionOption);
                         });
                     }
                 })
@@ -214,7 +227,8 @@
                 }
             },
             dom: '<"row"<"col-md-12"<"row"<"col-md-6"B><"col-md-6"f> > ><"col-md-12"rt> <"col-md-12"<"row"<"col-md-5"i><"col-md-7"p>>> >',
-            columns: [{
+            columns: [
+                {
                     "data": "id"
                 },
                 {
@@ -222,9 +236,12 @@
                 },
                 {
                     "data": function(data, row, type) {
-                        return (data.parent == null) ? '<span class="badge badge-info">Tidak ada</span>' :
-                            `<span class="badge badge-success">${data.parent.name}</span>`;
+                        return (data.division == null) ? '<span class="badge badge-info">Tidak ada</span>' :
+                            `<span class="badge badge-success">${data.division.name}</span>`;
                     }
+                },
+                {
+                    "data": "order_level"
                 },
                 {
                     data: function(data, row, type) {
@@ -248,7 +265,7 @@
                 "sLengthMenu": "Results :  _MENU_",
             },
             "order": [
-                [1, "asc"]
+                [3, "asc"]
             ],
             "stripeClasses": [],
             "lengthMenu": [10, 20, 25, 100],
@@ -256,19 +273,22 @@
         });
 
         $('#add-modal').on('show.bs.modal', function () {
-            loadPositionParents(document.querySelector('#position-parent'));
+            loadDivisions(document.querySelector('#position-division'));
         });
 
         const addPositionModal = document.querySelector('#add-modal');
         const addPositionForm = addPositionModal.querySelector('form');
         const addPositionBtn = addPositionForm.querySelector('.add-position-btn');
         const addPositionNameField = addPositionForm.querySelector('#position-name-field');
-        addPositionParentField = addPositionForm.querySelector('#position-parent-field');
+        const addPositionDivisionField = addPositionForm.querySelector('#position-division-field');
+        const addPositionOrderLevelField = addPositionForm.querySelector('#position-order-level-field');
 
         const addPositionNameInput = addPositionNameField.querySelector('#position-name');
         const addPositionNameFeedback = addPositionNameField.querySelector('.invalid-feedback');
-        const addPositionParentInput = addPositionParentField.querySelector('#position-parent');
-        const addPositionParentFeedback = addPositionParentField.querySelector('.invalid-feedback');
+        const addPositionDivisionInput = addPositionDivisionField.querySelector('#position-division');
+        const addPositionDivisionFeedback = addPositionDivisionField.querySelector('.invalid-feedback');
+        const addPositionOrderLevelInput = addPositionOrderLevelField.querySelector('#position-order-level');
+        const addPositionOrderLevelFeedback = addPositionOrderLevelField.querySelector('.invalid-feedback');
 
         const addMessageContainer = addPositionForm.querySelector('.message-container');
 
@@ -285,7 +305,7 @@
             e.preventDefault();
 
             addPositionBtn.innerHTML = '<i class="fa fa-spin fa-spinner"></i> Menambah...';
-            if (addPositionNameInput != '' && addPositionParentInput != '') {
+            if (addPositionNameInput != '' && addPositionDivisionInput != '') {
                 addPositionBtn.setAttribute('disabled', 'disabled');
 
                 fetch('{{ route('api.positions.store') }}', {
@@ -296,7 +316,8 @@
                     },
                     body: JSON.stringify({
                         name: addPositionNameInput.value,
-                        parent_id: addPositionParentInput.value
+                        division_id: addPositionDivisionInput.value,
+                        order_level: addPositionOrderLevelInput.value
                     })
                 })
                     .then(res => res.json())
@@ -312,15 +333,19 @@
                                     addPositionNameInput.classList.add('is-invalid');
                                     addPositionNameFeedback.innerHTML = validation.name[0]
                                 }
-                                if (validation.parent) {
-                                    addPositionParentInput.classList.add('is-invalid');
-                                    addPositionParentFeedback.innerHTML = validation.parent[0]
+                                if (validation.division) {
+                                    addPositionDivisionInput.classList.add('is-invalid');
+                                    addPositionDivisionFeedback.innerHTML = validation.division[0]
+                                }
+                                if (validation.order_level) {
+                                    addPositionOrderLevelInput.classList.add('is-invalid');
+                                    addPositionOrderLevelFeedback.innerHTML = validation.order_level[0]
                                 }
                             }
                         } else if (res.success) {
                             addPositionBtn.innerHTML = '<i class="fa fa-check"></i> Berhasil!';
                             positionTable.ajax.reload();
-                            loadPositionParents(document.querySelector('#position-parent'));
+                            loadDivisions(document.querySelector('#position-division'));
 
                             if (!addMessageContainer.classList.contains('alert')) {
                                 addMessageContainer.classList.add('alert');
@@ -333,9 +358,13 @@
                                 addPositionNameInput.classList.remove('is-invalid');
                                 addPositionNameFeedback.innerHTML = '';
                             }
-                            if (addPositionParentInput.classList.contains('is-invalid')) {
-                                addPositionParentInput.classList.remove('is-invalid');
-                                addPositionParentFeedback.innerHTML = '';
+                            if (addPositionDivisionInput.classList.contains('is-invalid')) {
+                                addPositionDivisionInput.classList.remove('is-invalid');
+                                addPositionDivisionFeedback.innerHTML = '';
+                            }
+                            if (addPositionOrderLevelInput.classList.contains('is-invalid')) {
+                                addPositionOrderLevelInput.classList.remove('is-invalid');
+                                addPositionOrderLevelFeedback.innerHTML = '';
                             }
 
                             addMessageContainer.classList.add('alert-success');
@@ -433,12 +462,15 @@
         const editPositionForm = editPositionModal.querySelector('form');
         const editPositionBtn = editPositionForm.querySelector('.save-position-btn');
         const editPositionNameField = editPositionForm.querySelector('#edit-position-name-field');
-        const editPositionParentField = editPositionForm.querySelector('#edit-position-parent-field');
+        const editPositionDivisionField = editPositionForm.querySelector('#edit-position-division-field');
+        const editPositionOrderLevelField = editPositionForm.querySelector('#edit-position-order-level-field');
 
         const editPositionNameInput = editPositionNameField.querySelector('#edit-position-name');
         const editPositionNameFeedback = editPositionNameField.querySelector('.invalid-feedback');
-        const editPositionParentInput = editPositionParentField.querySelector('#edit-position-parent');
-        const editPositionParentFeedback = editPositionParentField.querySelector('.invalid-feedback');
+        const editPositionDivisionInput = editPositionDivisionField.querySelector('#edit-position-division');
+        const editPositionDivisionFeedback = editPositionDivisionField.querySelector('.invalid-feedback');
+        const editPositionOrderLevelInput = editPositionOrderLevelField.querySelector('#edit-position-order-level');
+        const editPositionOrderLevelFeedback = editPositionOrderLevelField.querySelector('.invalid-feedback');
 
         const editMessageContainer = editPositionForm.querySelector('.message-container');
         let edit_id = 0;
@@ -457,7 +489,9 @@
                 .then(res => res.json())
                 .then(res => {
                     editPositionNameInput.value = res.name;
-                    loadPositionParents(document.querySelector('#edit-position-parent'), res.parent_id);
+                    editPositionOrderLevelInput.value = res.order_level;
+
+                    loadDivisions(document.querySelector('#edit-position-division'), res.division_id);
                     
                     $('#edit-modal').modal('show');
                 })
@@ -480,7 +514,8 @@
                     },
                     body: JSON.stringify({
                         name: editPositionNameInput.value,
-                        parent_id: editPositionParentInput.value
+                        division_id: editPositionDivisionInput.value,
+                        order_level: editPositionOrderLevelInput.value
                     })
                 })
                 .then(res => res.json())
@@ -496,10 +531,15 @@
                                 editPositionNameInput.classList.add('is-invalid');
                                 editPositionNameFeedback.innerHTML = validation.name[0]
                             }
-                            if (validation.active) {
-                                editPositionParentInput.classList.add('is-invalid');
-                                editPositionParentFeedback.innerHTML = validation.active[0]
+                            if (validation.division) {
+                                editPositionDivisionInput.classList.add('is-invalid');
+                                editPositionDivisionFeedback.innerHTML = validation.name[0]
                             }
+                            if (validation.order_level) {
+                                editPositionOrderLevelInput.classList.add('is-invalid');
+                                editPositionOrderLevelFeedback.innerHTML = validation.name[0]
+                            }
+                            
                         }
                     } else if (res.success) {
                         editPositionBtn.innerHTML = '<i class="fa fa-check"></i> Berhasil!';
@@ -516,9 +556,13 @@
                             editPositionNameInput.classList.remove('is-invalid');
                             editPositionNameFeedback.innerHTML = '';
                         }
-                        if (editPositionParentInput.classList.contains('is-invalid')) {
-                            editPositionParentInput.classList.remove('is-invalid');
-                            editPositionParentFeedback.innerHTML = '';
+                        if (editPositionDivisionInput.classList.contains('is-invalid')) {
+                            editPositionDivisionInput.classList.remove('is-invalid');
+                            editPositionDivisionFeedback.innerHTML = '';
+                        }
+                        if (editPositionOrderLevelInput.classList.contains('is-invalid')) {
+                            editPositionOrderLevelInput.classList.remove('is-invalid');
+                            editPositionOrderLevelFeedback.innerHTML = '';
                         }
 
                         editMessageContainer.classList.add('alert-success');
