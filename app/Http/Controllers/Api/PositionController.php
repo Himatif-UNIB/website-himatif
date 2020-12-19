@@ -3,11 +3,11 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\Period;
+use App\Models\Position;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-class PeriodController extends Controller
+class PositionController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,7 +16,7 @@ class PeriodController extends Controller
      */
     public function index()
     {
-        return ['data' => Period::all()];
+        return ['data' => Position::with('parent')->get()];
     }
 
     /**
@@ -28,8 +28,8 @@ class PeriodController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'name' => ['required', 'unique:periods,name'],
-            'is_active' => ['nullable', 'boolean']
+            'name' => ['required'],
+            'parent_id' => ['nullable', 'numeric']
         ]);
 
         if ($validator->fails()) {
@@ -40,44 +40,41 @@ class PeriodController extends Controller
                 ], 422);
         }
 
-        $period = new Period;
-        $period->name = $request->name;
-        if ($request->is_active == 1) {
-            $period->is_active = true;
-            Period::where('is_active', true)->update(['is_active' => false]);
-        }
-        $period->save();
+        $position = new Position;
+        $position->name = $request->name;
+        $position->parent_id = ($request->parent_id == 0) ? NULL : $request->parent_id;
+        $position->save();
 
         return response()
             ->json([
                 'success' => true,
-                'message' => 'Berhasil menambah data periode'
+                'message' => 'Berhasil menambah data jabatan'
             ]);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Period  $period
+     * @param  \App\Models\Position  $position
      * @return \Illuminate\Http\Response
      */
-    public function show(Period $period)
+    public function show(Position $position)
     {
-        return $period;
+        return $position;
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Period  $period
+     * @param  \App\Models\Position  $position
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Period $period)
+    public function update(Request $request, Position $position)
     {
         $validator = Validator::make($request->all(), [
             'name' => ['required'],
-            'is_active' => ['nullable', 'boolean']
+            'parent_id' => ['nullable', 'numeric']
         ]);
 
         if ($validator->fails()) {
@@ -88,42 +85,52 @@ class PeriodController extends Controller
                 ], 422);
         }
 
-        $period->name = $request->name;
-        if ($request->is_active == 1) {
-            $period->is_active = true;
-            Period::where('id', '!=', $period->id)->update(['is_active' => false]);
-        }
-        $period->save();
+        $position->name = $request->name;
+        $position->parent_id = ($request->parent_id == 0) ? NULL : $request->parent_id;
+        $position->save();
 
         return response()
             ->json([
                 'success' => true,
-                'message' => 'Berhasil memperbarui data periode'
+                'message' => 'Berhasil memperbarui data jabatan'
             ]);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Period  $period
+     * @param  \App\Models\Position  $position
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Period $period)
+    public function destroy(Position $position)
     {
-        if ($period->is_active == 1) {
-            return response()
-                ->json([
-                    'error' => true,
-                    'message' => 'Tidak bisa menghapus periode yang ditandai aktif'
-                ]);
-        }
+        $message = ($position->parent_id == NULL) ? 'Berhasil menghapus data jabatan. Jabatan ini merupakan jabatan induk, semua child dari jabatan ini juga dihapus.' :
+            'Berhasil menghapus data jabatan';
 
-        $period->delete();
+        $position->delete();
 
         return response()
             ->json([
                 'success' => true,
-                'message' => 'Berhasil menghapus data periode'
+                'message' => $message
             ]);
+    }
+
+    /**
+     * Menampilkan jabatan parent
+     * 
+     * Menampilkan semua jabatan yang merupakan
+     * jabatan parent
+     * 
+     * @since   1.0.0
+     * @author  mulyosyahidin95
+     * 
+     * @return  Array   Data jabatan parent
+     */
+    public function parents()
+    {
+        $parents = Position::where('parent_id', NULL)->get();
+
+        return ['data' => $parents];
     }
 }

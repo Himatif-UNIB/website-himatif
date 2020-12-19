@@ -7,6 +7,7 @@ use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\DivisionController;
 use App\Http\Controllers\ForceController;
 use App\Http\Controllers\PeriodController;
+use App\Http\Controllers\PositionController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -57,4 +58,5 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/divisions', [DivisionController::class, 'index'])->name('divisions');
     Route::get('/periods', [PeriodController::class, 'index'])->name('periods');
     Route::get('/forces', [ForceController::class, 'index'])->name('forces');
+    Route::get('/positions', [PositionController::class, 'index'])->name('positions');
 });
