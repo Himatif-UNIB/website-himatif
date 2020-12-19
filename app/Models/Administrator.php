@@ -65,4 +65,20 @@ class Administrator extends Model
     {
         return $this->hasOne('App\Models\Period', 'id', 'period_id');
     }
+
+    /**
+     * Mengembalikan relasi
+     * 
+     * Mengembalikan relasi satu ke banyak dari model
+     * App\Models\Member
+     * 
+     * @since   1.0.0
+     * @author  mulyosyahidin95
+     * 
+     * @return  Invers relasi
+     */
+    public function memberAdministrator()
+    {
+        return $this->belongsTo(Member::class);
+    }
 }

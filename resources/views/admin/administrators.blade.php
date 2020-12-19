@@ -195,8 +195,8 @@
                 {"data": "position.name"},
                 {
                     data: function (data, row, type) {
-                        return (data.division == null) ? '<span class="badge badge-info">Tidak ada divisi</span>' :
-                            `<span class="badge badge-success">${data.division.name}</span>`;
+                        return (data.position.division == null) ? '<span class="badge badge-info">Tidak ada divisi</span>' :
+                            `<span class="badge badge-success">${data.position.division.name}</span>`;
                     }
                 },
                 {"data": "period.name"},

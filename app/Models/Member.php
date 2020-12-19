@@ -42,4 +42,22 @@ class Member extends Model
     {
         return $this->belongsTo('App\Models\Administrator');
     }
+
+    /**
+     * Relasi one to many
+     * 
+     * Membuat relasi one to many ke model
+     * App\Models\Administrator
+     * 
+     * Mengambil semua data kepengurusan dari anggota
+     * 
+     * @since   1.0.0
+     * @author  mulyosyahidin95
+     * 
+     * @return  Definisi relasi one to many
+     */
+    public function administrators()
+    {
+        return $this->hasMany(Administrator::class);
+    }
 }

@@ -27,6 +27,19 @@ class Position extends Model
         return $this->belongsTo('App\Models\Administrator');
     }
 
+    /**
+     * Relasi one to one
+     * 
+     * Membuat relasi one to one ke model
+     * App\Models\Division
+     * 
+     * Setiap jabatan dapat menjadi bagian dari suatu divisi, atau tidak.
+     * 
+     * @since   1.0.0
+     * @author  mulyosyahidin95
+     * 
+     * @return  Definisi relasi
+     */
     public function division()
     {
         return $this->hasOne('App\Models\Division', 'id', 'division_id');

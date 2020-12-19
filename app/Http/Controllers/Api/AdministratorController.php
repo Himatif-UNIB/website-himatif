@@ -16,7 +16,7 @@ class AdministratorController extends Controller
      */
     public function index()
     {
-        return ['data' => Administrator::with(['member', 'position', 'period'])->get()];
+        return ['data' => Administrator::with(['member', 'position', 'period', 'position.division'])->get()];
     }
 
     /**

@@ -303,7 +303,9 @@
                 {"data": "id"},
                 {"data": "npm"},
                 {
-                    "data": "name"
+                    data: function (data, row, type) {
+                        return `<a href="{{ route('members.show', false) }}/${data.id}" target="_blank">${data.name}</a>`;
+                    }
                 },
                 {
                     "data": function (data, type, row) {

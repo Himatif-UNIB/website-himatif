@@ -63,6 +63,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/positions', [PositionController::class, 'index'])->name('positions');
 
     Route::get('/members', [MemberController::class, 'index'])->name('members');
+    Route::get('/members/{member}', [MemberController::class, 'show'])->name('members.show');
     Route::get('/members/export', [MemberController::class, 'export'])->name('members.export');
 
     Route::get('/administrators', [AdministratorController::class, 'index'])->name('administrators');
