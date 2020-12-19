@@ -4,6 +4,15 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
+/**
+ * Tabel `members`
+ * 
+ * Tabel `members` merupakan tabel yang menyimpan
+ * data anggota HIMATIF, baik yang pengurus maupun bukan.
+ * 
+ * @since   1.0.0
+ * @author  mulyosyahidin95
+ */
 class CreateMembersTable extends Migration
 {
     /**

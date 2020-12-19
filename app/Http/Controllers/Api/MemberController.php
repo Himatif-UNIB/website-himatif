@@ -120,6 +120,17 @@ class MemberController extends Controller
             ]);
     }
 
+    /**
+     * Impor data anggota
+     * 
+     * Mengimpor data anggota dari file Excel.
+     * Template file: /public/assets/uploads/*.xlsx
+     * 
+     * @since   1.0.0
+     * @author  mulyosyahidin95
+     * 
+     * @return  Hasil import
+     */
     public function import(Request $request)
     {
         $validator = Validator::make($request->all(), [
