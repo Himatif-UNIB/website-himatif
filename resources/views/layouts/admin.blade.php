@@ -114,6 +114,10 @@
                 console.log(errors);
             });
         });
+
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        });
     </script>
 
     <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->

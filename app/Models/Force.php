@@ -10,4 +10,9 @@ class Force extends Model
     use HasFactory;
 
     public $timestamps = FALSE;
+
+    public function memberForce()
+    {
+        return $this->belongsTo('App\Models\Member');
+    }
 }

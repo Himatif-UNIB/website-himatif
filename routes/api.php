@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\DivisionController;
 use App\Http\Controllers\Api\ForceController;
+use App\Http\Controllers\Api\MemberController;
 use App\Http\Controllers\Api\PeriodController;
 use App\Http\Controllers\Api\PositionController;
 use Illuminate\Http\Request;
@@ -25,4 +26,7 @@ Route::group(['middleware' => ['auth:api'], 'as' => 'api.'], function () {
 
     Route::get('positions/parents', [PositionController::class, 'parents'])->name('positions.parents');
     Route::apiResource('positions', PositionController::class);
+
+    Route::post('/members/import', [MemberController::class, 'import'])->name('members.import');
+    Route::apiResource('/members', MemberController::class);
 });
