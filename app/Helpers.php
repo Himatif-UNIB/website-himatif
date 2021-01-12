@@ -308,3 +308,54 @@ if (!function_exists('printUserName'))
         return $name;
     }
 }
+
+if (!function_exists('__displayAria')) {
+    /**
+     * Menentukan display aria
+     * 
+     * Membuat desisi display aria
+     * pada navigasi yang aktif
+     * di sidebar.
+     * 
+     * @param string $controller
+     * @param string $action
+     * @param string $param
+     * 
+     * @since   1.0.0
+     * @author  mulyosyahidin95
+     * 
+     * @return String   html class .active
+     */
+    function __displayAria($controller = '', $action = '', $param = '')
+    {
+        $phpSelf = $_SERVER['PHP_SELF'];
+
+        if ($controller === '' && $action === '') {
+            return 'true';
+        } else if ($param !== '') {
+            if (isController($controller) && isAction($action)) {
+                if (strpos($phpSelf, $param) !== FALSE) {
+                    return true;
+                }
+            }
+        } else if (is_array($controller) && count($controller)) {
+            foreach ($controller as $c) {
+                if (isController($c)) {
+                    return 'true';
+                    break;
+                }
+            }
+        } else if (is_array($action) && count($action) > 0) {
+            foreach ($action as $method) {
+                if (isController($controller) && isAction($method)) {
+                    return 'true';
+                    break;
+                }
+            }
+        } else if (isController($controller) && isAction($action)) {
+            return 'true';
+        }
+
+        return 'false';
+    }
+}

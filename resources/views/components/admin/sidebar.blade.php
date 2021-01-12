@@ -4,8 +4,8 @@
         <div class="profile-info">
             <figure class="user-cover-image"></figure>
             <div class="user-info">
-                <img src="{{ asset('assets/themes/cork/img/90x90.jpg') }}" alt="avatar">
-                <h6 class="">Susan Phillips</h6>
+                <img src="{{ asset('assets/themes/cork/img/90x90.jpg') }}"" alt="avatar">
+                <h6 class="">{{ auth()->user()->name }}</h6>
                 <p class="">Web Developer</p>
             </div>
         </div>
@@ -98,11 +98,32 @@
             </li>
 
             <li class="menu menu-heading">
+                <div class="heading"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-minus"><line x1="5" y1="12" x2="19" y2="12"></line></svg><span>MANAJEMEN FORMULIR</span></div>
+            </li>
+
+            <li class="menu {{ __active('FormController', ['index', 'edit', 'answer', 'show']) }}">
+                <a href="{{ route('forms.index') }}" aria-expanded="{{ __displayAria('FormController', ['index', 'edit', 'answer', 'show']) }}" class="dropdown-toggle">
+                    <div class="">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-mail"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                        <span>Kelola Formulir</span>
+                    </div>
+                </a>
+            </li>
+            <li class="menu {{ __active('FormController', 'create') }}">
+                <a href="{{ route('forms.create') }}" aria-expanded="{{ __displayAria('FormController', 'create') }}" class="dropdown-toggle">
+                    <div class="">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus-square"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>
+                        <span>Buat Formulir</span>
+                    </div>
+                </a>
+            </li>
+
+            <li class="menu menu-heading">
                 <div class="heading"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-minus"><line x1="5" y1="12" x2="19" y2="12"></line></svg><span>MANAJEMEN ANGGOTA</span></div>
             </li>
 
             <li class="menu {{ __active('PeriodController', 'index') }}">
-                <a href="{{ route('periods') }}" aria-expanded="false" class="dropdown-toggle">
+                <a href="{{ route('periods') }}" aria-expanded="{{ __displayAria('PeriodController', 'index') }}" class="dropdown-toggle">
                     <div class="">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clock"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
                         <span>Periode</span>
@@ -110,7 +131,7 @@
                 </a>
             </li>
             <li class="menu {{ __active('ForceController', 'index') }}">
-                <a href="{{ route('forces') }}" aria-expanded="false" class="dropdown-toggle">
+                <a href="{{ route('forces') }}" aria-expanded="{{ __displayAria('ForceController', 'index') }}" class="dropdown-toggle">
                     <div class="">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-users"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
                         <span>Angkatan</span>
@@ -118,7 +139,7 @@
                 </a>
             </li>
             <li class="menu {{ __active('DivisionController', 'index') }}">
-                <a href="{{ route('divisions') }}" aria-expanded="false" class="dropdown-toggle">
+                <a href="{{ route('divisions') }}" aria-expanded="{{ __displayAria('DivisionController', 'index') }}" class="dropdown-toggle">
                     <div class="">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-layout"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
                         <span>Divisi</span>
@@ -126,7 +147,7 @@
                 </a>
             </li>
             <li class="menu {{ __active('PositionController', 'index') }}">
-                <a href="{{ route('positions') }}" aria-expanded="false" class="dropdown-toggle">
+                <a href="{{ route('positions') }}" aria-expanded="{{ __displayAria('PositionController', 'index') }}" class="dropdown-toggle">
                     <div class="">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clipboard"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>
                         <span>Jabatan</span>
@@ -134,7 +155,7 @@
                 </a>
             </li>
             <li class="menu {{ __active('MemberController', ['index', 'show']) }}">
-                <a href="{{ route('members') }}" aria-expanded="false" class="dropdown-toggle">
+                <a href="{{ route('members') }}" aria-expanded="{{ __displayAria('MemberController', ['index', 'show']) }}" class="dropdown-toggle">
                     <div class="">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-users"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
                         <span>Anggota</span>
@@ -142,7 +163,7 @@
                 </a>
             </li>
             <li class="menu {{ __active('AdministratorController', 'index') }}">
-                <a href="{{ route('administrators') }}" aria-expanded="false" class="dropdown-toggle">
+                <a href="{{ route('administrators') }}" aria-expanded="{{ __displayAria('AdministratorController', 'index') }}" class="dropdown-toggle">
                     <div class="">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clipboard"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>
                         <span>Pengurus</span>
@@ -176,7 +197,6 @@
                     </li>
                 </ul>
             </li>
-
         </ul>
     </nav>
 </div>

@@ -44,4 +44,9 @@ class User extends Authenticatable implements CanResetPassword, HasMedia
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function userForm()
+    {
+        return $this->belongsTo(Form::class);
+    }
 }

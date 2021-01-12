@@ -7,10 +7,12 @@ use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\DivisionController;
 use App\Http\Controllers\ForceController;
+use App\Http\Controllers\FormController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\PeriodController;
 use App\Http\Controllers\PositionController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\UserFormController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -67,4 +69,11 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/members/export', [MemberController::class, 'export'])->name('members.export');
 
     Route::get('/administrators', [AdministratorController::class, 'index'])->name('administrators');
+
+    Route::get('/forms/{form}/answer/{answer}', [FormController::class, 'answer'])->name('forms.answer');
+    Route::get('/forms/{form}/export', [FormController::class, 'exportAnswer'])->name('forms.answer.export');
+    Route::resource('forms', FormController::class);
 });
+
+Route::get('/form/{form}', [UserFormController::class, 'show'])->name('form.show');
+Route::post('/form/{form}/submit', [UserFormController::class, 'store'])->name('form.store');
