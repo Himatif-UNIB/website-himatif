@@ -14,7 +14,7 @@ class DropParentIdFromPositionsTable extends Migration
     public function up()
     {
         Schema::table('positions', function (Blueprint $table) {
-            $table->dropColumn('parent_id');
+            // $table->dropColumn('parent_id');
         });
     }
 
