@@ -26,9 +26,25 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+/*
+    Frontend Route
+*/
+
 Route::get('/', function () {
-    return view('welcome');
-})->name('home');
+    return view('frontend.beranda');
+})->name('beranda');
+
+Route::get('/struktur', function () {
+    return view('frontend.struktur');
+})->name('struktur');
+
+Route::get('/blog', function () {
+    return view('frontend.blog');
+})->name('blog');
+
+Route::get('/post', function () {
+    return view('frontend.post');
+})->name('blog.post');
 
 Route::get('/home', [AdminController::class, 'index'])->middleware('auth')->name('index');
 
@@ -45,7 +61,7 @@ Route::group(['prefix' => 'auth', 'as' => 'password.', 'middleware' => 'guest'],
     Route::get('/forgot-password', [ForgotPasswordController::class, 'index'])->name('forgot');
     Route::post('/forgot-password', [ForgotPasswordController::class, 'verifyEmail'])->name('email');
     Route::get('/reset-password/{token}', [ForgotPasswordController::class, 'resetPassword'])->name('reset');
-    Route::post('/reset-password', [ForgotPasswordController::class, ])->name('update');
+    Route::post('/reset-password', [ForgotPasswordController::class,])->name('update');
 });
 
 Route::group(['middleware' => ['auth']], function () {
