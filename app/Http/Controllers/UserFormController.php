@@ -11,6 +11,13 @@ class UserFormController extends Controller
 {
     public function show(Form $form)
     {
+        if ($form->status == 1) {
+            abort(404, 'Sepertinya formulir itu tidak ada...');
+        }
+        if ($form->status == 3) {
+            abort(410, 'Sayangnya, formulir tersebut sudah ditutup');
+        }
+
         $dateFields = $form->questions()->where('type', 6)->get();
         $timeFields = $form->questions()->where('type', 7)->get();
         $dateTimeFields = $form->questions()->where('type', 8)->get();

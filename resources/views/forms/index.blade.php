@@ -23,6 +23,7 @@
 
             <div class="col-xl-12 col-lg-12 col-sm-12  layout-spacing">
                 <div class="widget-content widget-content-area">
+                    @if (count($forms) > 0)
                     <div class="table-responsive">
                         <table class="table table-bordered table-striped table-hovered table-condensed">
                             <thead>
@@ -56,6 +57,11 @@
                         </table>
                     </div>
                     {{ $forms->links() }}
+                    @else
+                        <div class="alert alert-info">
+                            Belum ada formulir yang dibuat. Cobalah membuat satu!
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>

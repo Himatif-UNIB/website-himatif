@@ -70,10 +70,10 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::get('/administrators', [AdministratorController::class, 'index'])->name('administrators');
 
-    Route::get('/forms/{form}/answer/{answer}', [FormController::class, 'answer'])->name('forms.answer');
+    Route::get('/forms/{form}/answers', [FormController::class, 'answers'])->name('forms.answers');
     Route::get('/forms/{form}/export', [FormController::class, 'exportAnswer'])->name('forms.answer.export');
     Route::resource('forms', FormController::class);
 });
 
-Route::get('/form/{form}', [UserFormController::class, 'show'])->name('form.show');
+Route::get('/form/{form}-{slug}', [UserFormController::class, 'show'])->name('form.show');
 Route::post('/form/{form}/submit', [UserFormController::class, 'store'])->name('form.store');

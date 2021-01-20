@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b5ac0247a50f4ca2cd9b9accd68c966e",
+    "content-hash": "ba3af209e5d65cfe6a8604f975134a37",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -3791,6 +3791,72 @@
                 }
             ],
             "time": "2020-08-18T17:17:46+00:00"
+        },
+        {
+            "name": "shivella/laravel-bitly",
+            "version": "1.1.9",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Shivella/laravel-bitly.git",
+                "reference": "9abe97cc7d1cc8447b610556d4aac8a38d337777"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Shivella/laravel-bitly/zipball/9abe97cc7d1cc8447b610556d4aac8a38d337777",
+                "reference": "9abe97cc7d1cc8447b610556d4aac8a38d337777",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "guzzlehttp/guzzle": "~6.0 || ^7.0.1",
+                "illuminate/support": "^5.8 || ^6.0 || ^7.0 || ^8.0",
+                "php": ">=7.1"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^8.1",
+                "symfony/http-foundation": "^5.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Shivella\\Bitly\\BitlyServiceProvider"
+                    ],
+                    "aliases": {
+                        "Bitly": "Shivella\\Bitly\\Facade\\Bitly"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Shivella\\Bitly\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Wessel Strengholt",
+                    "email": "wessel.strengholt@gmail.com"
+                }
+            ],
+            "description": "Laravel package for generating bitly url",
+            "homepage": "https://github.com/Shivella/laravel-bitly",
+            "keywords": [
+                "bitly",
+                "laravel",
+                "link",
+                "package",
+                "short",
+                "url"
+            ],
+            "support": {
+                "issues": "https://github.com/Shivella/laravel-bitly/issues",
+                "source": "https://github.com/Shivella/laravel-bitly"
+            },
+            "time": "2020-10-27T10:54:22+00:00"
         },
         {
             "name": "spatie/image",

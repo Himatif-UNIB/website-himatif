@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class DropParentIdFromPositionsTable extends Migration
+class AddBitlyLinkToFormsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class DropParentIdFromPositionsTable extends Migration
      */
     public function up()
     {
-        Schema::table('positions', function (Blueprint $table) {
-            //$table->dropColumn('parent_id');
+        Schema::table('forms', function (Blueprint $table) {
+            $table->string('bitly_link')->nullable()->after('slug');
         });
     }
 
@@ -25,7 +25,7 @@ class DropParentIdFromPositionsTable extends Migration
      */
     public function down()
     {
-        Schema::table('positions', function (Blueprint $table) {
+        Schema::table('forms', function (Blueprint $table) {
             //
         });
     }
