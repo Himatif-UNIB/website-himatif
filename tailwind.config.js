@@ -3,6 +3,12 @@ module.exports = {
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {
+      width: {
+        mammoth : '100vw'
+      },
+      margin: {
+        '-half' : '-50vw',
+      },
       colors: {
         orange: {
           '500' : '#FFA573',

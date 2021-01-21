@@ -12,7 +12,7 @@
             <li class="px-6 hover:text-gray-50">
                 <a href="{{ route('blog') }}">Blog</a>
             </li>
-            <button class="border-2 rounded-xl px-5 py-1 border-dark-blue-200 focus:outline-none hover:bg-orange-600 hover:text-white hover:border-white">
+            <button class="border-2 rounded-xl px-5 py-1 border-dark-blue-200 focus:outline-none hover:bg-orange-600 hover:text-white hover:border-white ml-3">
                 Login
             </button>
         </ul>

@@ -1,5 +1,5 @@
 <!-- START FOOTER -->
-<div class="mt-64 py-24 bg-dark-blue border-t-8 border-dark-blue-200 overflow-hidden lg:overflow-visible">
+<div class="mt-64 py-24 bg-dark-blue border-t-2 border-dark-blue-200 overflow-hidden lg:overflow-visible">
     <div class="container mx-auto">
         <div class="flex items-center justify-center">
             <img src="{{ asset('assets/himatif-white.png') }}" alt="">

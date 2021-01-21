@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
     @include('includes.style')
+    @yield('style-after')
 
     <title>Himatif</title>
 </head>

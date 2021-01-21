@@ -46,6 +46,10 @@ Route::get('/post', function () {
     return view('frontend.post');
 })->name('blog.post');
 
+Route::get('/modal', function () {
+    return view('frontend.modal');
+})->name('modal');
+
 Route::get('/home', [AdminController::class, 'index'])->middleware('auth')->name('index');
 
 Route::get('/auth/login', function () {
