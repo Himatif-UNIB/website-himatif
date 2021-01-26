@@ -36,6 +36,9 @@ module.exports = {
       height: {
         mammoth : '36rem'
       },
+      fontFamily: {
+        poppins : ['Poppins']
+      },
     },
   },
   variants: {

@@ -5,9 +5,7 @@
 
     <!-- START JUMBOTRON -->
     <div class="relative">
-        <img class="relative lg:h-auto lg:static h-72 object-cover left-1/2 right-1/2 max-w-none lg:max-w-full -ml-half lg:ml-0" src="{{ asset('assets/bg-article.png') }}" style="
-        width: 100vw;
-        ">
+        <img class="relative lg:h-auto lg:static h-72 object-cover left-1/2 right-1/2 max-w-none lg:max-w-full -ml-half lg:ml-0 w-mammoth" src="{{ asset('assets/bg-article.png') }}">
         {{-- <img src="{{ asset('assets/bg-article.png') }}"> --}}
         <h1 class="px-8 lg:px-24 text-6xl lg:text-9xl font-serif text-white absolute bottom-0">Articles</h1>
     </div>
@@ -33,7 +31,7 @@
         <!-- END CATEGORY -->
 
         <!-- START CONTENT -->
-        <div class="grid md:grid-cols-3 gap-6 mt-16">
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mt-16">
             <div class="mb-12">
                 <div class="w-full h-56 bg-gray-400 rounded-xl overflow-hidden">
                     <a href="{{ route('blog.post') }}">
