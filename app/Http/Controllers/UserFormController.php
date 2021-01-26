@@ -5,18 +5,29 @@ namespace App\Http\Controllers;
 use App\Models\Form;
 use App\Models\Form_answer;
 use App\Models\Form_question_answer;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class UserFormController extends Controller
 {
     public function show(Form $form)
     {
+        //status = 1 (konsep), jangan boleh diakses
         if ($form->status == 1) {
             abort(404, 'Sepertinya formulir itu tidak ada...');
         }
+
+        //status = 3 (ditutup admin), jangan boleh diakses
         if ($form->status == 3) {
             abort(410, 'Sayangnya, formulir tersebut sudah ditutup');
         }
+
+        if ($form->closed_at != NULL) {
+            if ($form->closed_at < Carbon::now()) {
+                abort(410, 'Sayangnya, formulir tersebut sudah ditutup');
+            }
+        }
+
 
         $dateFields = $form->questions()->where('type', 6)->get();
         $timeFields = $form->questions()->where('type', 7)->get();

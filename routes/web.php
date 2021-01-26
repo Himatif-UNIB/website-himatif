@@ -13,6 +13,7 @@ use App\Http\Controllers\PeriodController;
 use App\Http\Controllers\PositionController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserFormController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -48,9 +49,8 @@ Route::get('/post', function () {
 
 Route::get('/home', [AdminController::class, 'index'])->middleware('auth')->name('index');
 
-Route::get('/auth/login', function () {
-    return view('auth.login');
-})->name('login');
+Route::get('/auth/login', [AuthController::class, 'index'])->name('login');
+Route::post('/auth/do-login', [AuthController::class, 'loginPost'])->name('login-post');
 
 Route::group(['as' => 'auth.', 'prefix' => 'auth'], function () {
     Route::post('/login', [AuthController::class, 'login'])->middleware('guest')->name('login');

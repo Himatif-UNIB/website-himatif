@@ -9,7 +9,7 @@
 @section('content')
     <div class="layout-px-spacing">
         <div class="row layout-top-spacing" id="cancel-row">
-            <div class="col-xl-12 col-lg-12 col-sm-12 mb-3">
+            <div class="col-md-8 mx-auto mb-3">
                 <div class="widget-content widget-content-area">
                     <h3>
                         {{ $form->title }}
@@ -20,7 +20,7 @@
                 </div>
             </div>
 
-            <div class="col-xl-12 col-lg-12 col-sm-12  layout-spacing">
+            <div class="col-md-8 mx-auto layout-spacing">
                 <form action="{{ route('forms.update', $form->id) }}" method="post">
                     @csrf
                     @method('PUT')
