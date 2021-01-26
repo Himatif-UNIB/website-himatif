@@ -17,4 +17,9 @@ class Form_question_answer extends Model implements HasMedia
     {
         return $this->belongsTo(Form_question::class);
     }
+
+    public function question()
+    {
+        return $this->hasOne(Form_question::class, 'id', 'question_id');
+    }
 }

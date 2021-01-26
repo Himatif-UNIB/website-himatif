@@ -13,6 +13,7 @@ use App\Http\Controllers\PeriodController;
 use App\Http\Controllers\PositionController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserFormController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -52,9 +53,8 @@ Route::get('/modal', function () {
 
 Route::get('/home', [AdminController::class, 'index'])->middleware('auth')->name('index');
 
-Route::get('/auth/login', function () {
-    return view('auth.login');
-})->name('login');
+Route::get('/auth/login', [AuthController::class, 'index'])->name('login');
+Route::post('/auth/do-login', [AuthController::class, 'loginPost'])->name('login-post');
 
 Route::group(['as' => 'auth.', 'prefix' => 'auth'], function () {
     Route::post('/login', [AuthController::class, 'login'])->middleware('guest')->name('login');
@@ -90,10 +90,10 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::get('/administrators', [AdministratorController::class, 'index'])->name('administrators');
 
-    Route::get('/forms/{form}/answer/{answer}', [FormController::class, 'answer'])->name('forms.answer');
+    Route::get('/forms/{form}/answers', [FormController::class, 'answers'])->name('forms.answers');
     Route::get('/forms/{form}/export', [FormController::class, 'exportAnswer'])->name('forms.answer.export');
     Route::resource('forms', FormController::class);
 });
 
-Route::get('/form/{form}', [UserFormController::class, 'show'])->name('form.show');
+Route::get('/form/{form}-{slug}', [UserFormController::class, 'show'])->name('form.show');
 Route::post('/form/{form}/submit', [UserFormController::class, 'store'])->name('form.store');

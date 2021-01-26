@@ -124,6 +124,10 @@ return [
     'cipher' => 'AES-256-CBC',
 
     /*
+    */
+    'ajax_login' => false,
+
+    /*
     |--------------------------------------------------------------------------
     | Autoloaded Service Providers
     |--------------------------------------------------------------------------
@@ -166,6 +170,7 @@ return [
          * Package Service Providers...
          */
         Maatwebsite\Excel\ExcelServiceProvider::class,
+        Shivella\Bitly\BitlyServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -228,7 +233,8 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
-
+        'Bitly' => Shivella\Bitly\Facade\Bitly::class,
+        
     ],
 
 ];

@@ -15,4 +15,9 @@ class Form_question extends Model
     {
         return $this->belongsTo(Form::class);
     }
+
+    public function questionOfAnswer()
+    {
+        return $this->belongsTo(Form_question_answer::class);
+    }
 }

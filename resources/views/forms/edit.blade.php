@@ -9,7 +9,7 @@
 @section('content')
     <div class="layout-px-spacing">
         <div class="row layout-top-spacing" id="cancel-row">
-            <div class="col-xl-12 col-lg-12 col-sm-12 mb-3">
+            <div class="col-md-8 mx-auto mb-3">
                 <div class="widget-content widget-content-area">
                     <h3>
                         {{ $form->title }}
@@ -20,170 +20,285 @@
                 </div>
             </div>
 
-            <div class="col-xl-12 col-lg-12 col-sm-12  layout-spacing">
+            <div class="col-md-8 mx-auto layout-spacing">
                 <form action="{{ route('forms.update', $form->id) }}" method="post">
                     @csrf
                     @method('PUT')
                     <input type="hidden" name="action" value="edit_form">
 
                     @if ($displayIdentity == true)
-                    <div class="widget-content widget-content-area br-6 mb-2">
-                        <div class="form-group">
-                            <label for="title">Judul Formulir: <span class="text-danger font-weight-bold">*</span></label>
-                            <input type="text" class="form-control @error('title') is-invalid @enderror"
-                                value="{{ old('title', $form->title) }}" id="title" name="title" required="required" maxlength="255"
-                                minlength="4">
-
-                            @error('title')
-                                <div class="invalid-feedback">
-                                    {{ $message }}
-                                </div>
-                            @enderror
-                        </div>
-
-                        <div class="form-group">
-                            <label for="picture">Gambar utama:</label>
-                            <input type="file" name="picture" id="picture"
-                                class="form-control @error('picture') is-invalid @enderror">
-
-                            @error('picture')
-                                <div class="invalid-feedback">
-                                    {{ $message }}
-                                </div>
-                            @enderror
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-6 col-sm-12">
+                        <div class="widget-content widget-content-area br-6 mb-2">
+                            <div class="text-right">
+                                <a href="#" data-toggle="collapse" data-target="#form-identity">
+                                    <i class="fa fa-expand"></i> Identitas Formulir
+                                </a>
+                            </div>
+                            <div class="collapse" id="form-identity">
                                 <div class="form-group">
-                                    <label for="description">Deskripsi:</label>
-                                    <textarea name="description" id="description"
-                                        class="form-control @error('description') is-invalid @enderror">{{ old('description', $form->description) }}</textarea>
+                                    <label for="title">Judul Formulir: <span
+                                            class="text-danger font-weight-bold">*</span></label>
+                                    <input type="text" class="form-control @error('title') is-invalid @enderror"
+                                        value="{{ old('title', $form->title) }}" id="title" name="title" required="required"
+                                        maxlength="255" minlength="4">
 
-                                    @error('description')
+                                    @error('title')
                                         <div class="invalid-feedback">
                                             {{ $message }}
                                         </div>
                                     @enderror
                                 </div>
-                            </div>
-                            <div class="col-md-6 col-sm-12">
-                                <div class="form-group">
-                                    <label for="post-message">Pesan setelah mengirim formulir:</label>
-                                    <textarea name="post_message" id="post-message"
-                                        class="form-control @error('post_message') is-invalid @enderror">{{ old('post_message', $form->post_message) }}</textarea>
 
-                                    @error('post_message')
+                                <div class="form-group">
+                                    <label for="picture">Gambar utama:</label>
+                                    <input type="file" name="picture" id="picture"
+                                        class="form-control @error('picture') is-invalid @enderror">
+
+                                    @error('picture')
                                         <div class="invalid-feedback">
                                             {{ $message }}
                                         </div>
                                     @enderror
                                 </div>
-                            </div>
-                        </div>
 
-                        <div class="row">
-                            <div class="col-md-6 col-sm-12">
-                                <div class="form-group">
-                                    <label for="auto-close">Otomatis tutup formulir pada:</label>
-                                    <input type="text"
-                                        class="form-control @error('auto_close_date') }} is-invalid @enderror"
-                                        id="auto-close" name="auto_close_date">
+                                <div class="row">
+                                    <div class="col-md-6 col-sm-12">
+                                        <div class="form-group">
+                                            <label for="description">Deskripsi:</label>
+                                            <textarea name="description" id="description"
+                                                class="form-control @error('description') is-invalid @enderror">{{ old('description', $form->description) }}</textarea>
 
-                                    @error('auto_close_date')
-                                        <div class="invalid-feedback">
-                                            {{ $message }}
+                                            @error('description')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
                                         </div>
-                                    @enderror
-                                    <span class="text-muted">Kosongkan jika tidak ingin menutup formulir secara
-                                        otomatis</span>
-                                </div>
-                            </div>
-                            <div class="col-md-6 col-sm-12">
-                                <div class="form-group">
-                                    <label for="auto-close-answer">Otomatis tutup formulir jika sudah mendapatkan
-                                        jawaban:</label>
-                                    <input type="number"
-                                        class="form-control @error('auto_close_answer') is-invalid @enderror"
-                                        id="auto-close-answer" name="auto_close_answer" value="{{ old('auto_close_answer', $form->auto_close_answer) }}">
+                                    </div>
+                                    <div class="col-md-6 col-sm-12">
+                                        <div class="form-group">
+                                            <label for="post-message">Pesan setelah mengirim formulir:</label>
+                                            <textarea name="post_message" id="post-message"
+                                                class="form-control @error('post_message') is-invalid @enderror">{{ old('post_message', $form->post_message) }}</textarea>
 
-                                    @error('auto_close_answer')
-                                        <div class="invalid-feedback">
-                                            {{ $message }}
+                                            @error('post_message')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
                                         </div>
-                                    @enderror
-                                    <span class="text-muted">Kosongkan jika tidak ingin menutup formulir secara
-                                        otomatis</span>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                    @endif
 
-                    @foreach ($form->questions as $item)
-                    <div class="widget-content widget-content-area br-6 container-{{ $item->id }} field-container mb-2" data-id="{{ $item->id }}">
-                        <div class="row">
-                            <div class="col-md-6 col-sm-12">
-                                <label for="question-{{ $item->id }}">Pertanyaan: <span
-                                        class="text-danger font-weight-bold">*</span></label>
-                                <input type="text" class="form-control field-question" id="question-{{ $item->id }}"
-                                    name="question[{{ $item->id }}][title]" value="{{ old('question['. $item->id .'][title]', $item->question) }}"
-                                    required="required">
-                            </div>
-                            <div class="col-md-6 col-sm-12">
-                                <label for="type-0">Jenis pertanyaan:</label>
-                                <select name="question[{{ $item->id }}][type]" id="type-{{ $item->id }}"
-                                    class="form-control field-type" data-id="{{ $item->id }}"
-                                    required="required">
-                                    <option disabled="disabled">Pilih:</option>
-                                    <option value="1" @if(old('question['. $item->id .'][type]', $item->type) == 1) selected="selected" @endif>Jawaban pendek</option>
-                                    <option value="2" @if(old('question['. $item->id .'][type]', $item->type) == 2) selected="selected" @endif>Jawaban panjang</option>
-                                    <option value="3" @if(old('question['. $item->id .'][type]', $item->type) == 3) selected="selected" @endif>Pilihan ganda</option>
-                                    <option value="4" @if(old('question['. $item->id .'][type]', $item->type) == 4) selected="selected" @endif>Pilihan centang</option>
-                                    <option value="5" @if(old('question['. $item->id .'][type]', $item->type) == 5) selected="selected" @endif>Dropdown</option>
-                                    <option value="6" @if(old('question['. $item->id .'][type]', $item->type) == 6) selected="selected" @endif>Tanggal</option>
-                                    <option value="7" @if(old('question['. $item->id .'][type]', $item->type) == 7) selected="selected" @endif>Waktu</option>
-                                    <option value="8" @if(old('question['. $item->id .'][type]', $item->type) == 8) selected="selected" @endif>Tanggal dan Waktu</option>
-                                    <option value="9" @if(old('question['. $item->id .'][type]', $item->type) == 9) selected="selected" @endif>Upload file</option>
-                                </select>
-                            </div>
-                        </div>
+                                <div class="row">
+                                    <div class="col-md-6 col-sm-12">
+                                        <div class="form-group">
+                                            <label for="auto-close">Otomatis tutup formulir pada:</label>
+                                            <input type="text"
+                                                class="form-control @error('auto_close_date') }} is-invalid @enderror"
+                                                id="auto-close" name="auto_close_date">
 
-                        <div class="type-container mt-2"></div>
+                                            @error('auto_close_date')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
+                                            <span class="text-muted">Kosongkan jika tidak ingin menutup formulir secara
+                                                otomatis</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-sm-12">
+                                        <div class="form-group">
+                                            <label for="auto-close-answer">Otomatis tutup formulir jika sudah mendapatkan
+                                                jawaban:</label>
+                                            <input type="number"
+                                                class="form-control @error('auto_close_answer') is-invalid @enderror"
+                                                id="auto-close-answer" name="auto_close_answer"
+                                                value="{{ old('auto_close_answer', $form->auto_close_answer) }}">
 
-                        <div class="row">
-                            <div class="col-12 mt-2">
-                                <div class="text-right">
-                                    <div class="form-group">
-                                        <input type="checkbox" name="question[{{ $item->id }}][is_required]" id="" value="1">
-                                        Kolom ini harus diisi?
+                                            @error('auto_close_answer')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
+                                            <span class="text-muted">Kosongkan jika tidak ingin menutup formulir secara
+                                                otomatis</span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-12">
-                                <div class="text-right">
-                                    <a href="#" class="btn-new-field">Tambah kolom</a>
-                                </div>
+                        </div>
+                    @endif
+
+                    @if (count($form->questions) > 0)
+                        @foreach ($form->questions as $item)
+                            <div class="widget-content widget-content-area br-6 container-{{ $item->id }} field-container mb-2"
+                                data-id="{{ $item->id }}">
+                                <div class="row">
+                                    <div class="col-md-6 col-sm-12">
+                                        <label for="question-{{ $item->id }}">Pertanyaan: <span
+                                                class="text-danger font-weight-bold">*</span></label>
+                                        <input type="text" class="form-control field-question" id="question-{{ $item->id }}"
+                                            name="question[{{ $item->id }}][title]"
+                                            value="{{ old('question[' . $item->id . '][title]', $item->question) }}"
+                                            required="required">
+                                    </div>
+                                    <div class="col-md-6 col-sm-12">
+                                        <label for="type-0">Jenis pertanyaan:</label>
+                                        <select name="question[{{ $item->id }}][type]" id="type-{{ $item->id }}"
+                                            class="form-control field-type" data-id="{{ $item->id }}" required="required">
+                                            <option disabled="disabled">Pilih:</option>
+                                            <option value="1" @if (old('question[' . $item->id . '][type]', $item->type) == 1)
+                                                selected="selected"
+                        @endif>Jawaban pendek</option>
+                        <option value="2" @if (old('question[' . $item->id . '][type]', $item->type) == 2) selected="selected"
+                    @endif>Jawaban panjang</option>
+                    <option value="3" @if (old('question[' . $item->id . '][type]', $item->type) == 3) selected="selected"
+                        @endif>Pilihan ganda</option>
+                    <option value="4" @if (old('question[' . $item->id . '][type]', $item->type) == 4) selected="selected"
+                        @endif>Pilihan centang</option>
+                    <option value="5" @if (old('question[' . $item->id . '][type]', $item->type) == 5) selected="selected"
+                        @endif>Dropdown</option>
+                    <option value="6" @if (old('question[' . $item->id . '][type]', $item->type) == 6) selected="selected"
+                        @endif>Tanggal</option>
+                    <option value="7" @if (old('question[' . $item->id . '][type]', $item->type) == 7) selected="selected"
+                        @endif>Waktu</option>
+                    <option value="8" @if (old('question[' . $item->id . '][type]', $item->type) == 8) selected="selected"
+                        @endif>Tanggal dan Waktu</option>
+                    <option value="9" @if (old('question[' . $item->id . '][type]', $item->type) == 9) selected="selected"
+                        @endif>Upload file</option>
+                    </select>
+            </div>
+        </div>
+
+        <div class="type-container mt-2">
+            @if ($item->type == 3 || $item->type == 4 || $item->type == 5)
+                @foreach (json_decode($item->multiple_options) as $option)
+                    <div class="form-group">
+                        <label>Pilihan ke 1</label>
+                        <div class="input-group">
+                            <input type="text" name="question[{{ $item->id }}][multiple_options][]"
+                                class="form-control" value="{{ $option }}">
+                            <div class="input-group-append">
+                                <span class="input-group-text">
+                                    <button type="button" data-number="1" data-id="{{ $item->id }}"
+                                        class="btn btn-primary btn-sm add-radio-btn"><i class="fa fa-plus"></i>
+                                    </button>
+                                </span>
                             </div>
                         </div>
                     </div>
-                    @endforeach
-
-                    <div class="new-field-container"></div>
-
-                    <div class="widget-content widget-content-area mt-2">
-                        <div class="text-right">
-                            @if ($form->status == 1)
-                                <input type="submit" value="Simpan Draft" name="save_as_draft" class="btn btn-secondary">
-                                <input type="submit" value="Terbitkan Formulir" class="btn btn-primary">
-                            @elseif ($form->status == 2)
-                                <input type="submit" value="Simpan Formulir" class="btn btn-primary">
-                            @endif
+                @endforeach
+            @endif
+            @if ($item->type == 9)
+            @php
+                $mimes = implode(',', json_decode($item->file_rules)->mimes);
+                $maxSize = json_decode($item->file_rules)->maxSize;
+            @endphp
+            <div class="row">
+                <div class="col-md-6 col-sm-12">
+                    <div class="form-group">
+                        <label>Format berkas yang diizinkan:</label>
+                        <input class="form-control" name="question[{{ $item->id }}][file_mimes]"
+                            value="{{ $mimes }}">
+                        <div class="text-muted">
+                            Pisahkan setiap format dengan koma. Contoh: <b>jpg,xlsx,pdf</b>.
+                            Kosongkan untuk mengizinkan semua jenis berkas.
                         </div>
                     </div>
-                </form>
+                </div>
+                <div class="col-md-6 col-sm-12">
+                    <div class="form-group">
+                        <label>Format berkas yang diizinkan:</label>
+                        <input type="number" class="form-control" name="question[{{ $item->id }}][file_max_size]"
+                            value="{{ $maxSize }}">
+                        <div class="text-muted">
+                            Masukkan dalam ukuran KB. Kosongkan untuk tidak membatasi ukuran maksimal file
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @endif
+        </div>
+
+        <div class="row">
+            <div class="col-12 mt-2">
+                <div class="text-right">
+                    <div class="form-group">
+                        <input type="checkbox" name="question[{{ $item->id }}][is_required]" @if ($item->is_required == 1) checked="checked" @endif
+                        id="" value="1">
+                        Kolom ini harus diisi?
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="text-right">
+                    <a href="#" class="btn-new-field">Tambah kolom</a>
+                </div>
             </div>
         </div>
+    </div>
+    @endforeach
+@else
+    <div class="widget-content widget-content-area br-6 container-0 field-container mb-2" data-id="0">
+        <div class="row">
+            <div class="col-md-6 col-sm-12">
+                <label for="question-0">Pertanyaan: <span class="text-danger font-weight-bold">*</span></label>
+                <input type="text" class="form-control field-question" id="question-0" name="question[0][title]"
+                    value="{{ old('question[0][title]') }}" required="required">
+            </div>
+            <div class="col-md-6 col-sm-12">
+                <label for="type-0">Jenis pertanyaan:</label>
+                <select name="question[0][type]" id="type-0" class="form-control field-type" data-id="0"
+                    required="required">
+                    <option disabled="disabled">Pilih:</option>
+                    <option value="1">Jawaban pendek</option>
+                    <option value="2">Jawaban panjang</option>
+                    <option value="3">Pilihan ganda</option>
+                    <option value="4">Pilihan centang</option>
+                    <option value="5">Dropdown</option>
+                    <option value="6">Tanggal</option>
+                    <option value="7">Waktu</option>
+                    <option value="8">Tanggal dan Waktu</option>
+                    <option value="9">Upload file</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="type-container mt-2"></div>
+
+        <div class="row">
+            <div class="col-12 mt-2">
+                <div class="text-right">
+                    <div class="form-group">
+                        <input type="checkbox" name="question[0][is_required]" id="" value="1">
+                        Kolom ini harus diisi?
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="text-right">
+                    <a href="#" class="btn-new-field">Tambah kolom</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    @endif
+
+    <div class="new-field-container"></div>
+
+    <div class="widget-content widget-content-area mt-2">
+        <div class="text-right">
+            @if ($form->status == 1)
+                <input type="submit" value="Simpan Draft" name="save_as_draft" class="btn btn-secondary">
+                <input type="submit" value="Terbitkan Formulir" class="btn btn-primary">
+            @elseif ($form->status == 2)
+                <input type="submit" value="Simpan Formulir" class="btn btn-primary">
+            @endif
+        </div>
+    </div>
+    </form>
+    </div>
+    </div>
     </div>
 @endsection
 
@@ -216,7 +331,7 @@
 
                     containerMessage.innerHTML =
                         `Kolom <b>pilihan </b> mengizinkan pengguna <u>memilih hanya satu</u> dari beberapa pilihan.
-                                    Klik "+" untuk menambah pilihan lain`;
+                                        Klik "+" untuk menambah pilihan lain`;
 
                     const optionGroup = document.createElement('div');
                     optionGroup.classList.add('form-group');
@@ -380,8 +495,8 @@
                     fileMimesHelp.classList.add('text-muted');
                     fileMimesHelp.innerHTML =
                         `Pisahkan setiap format dengan koma. Contoh: <b>jpg,xlsx,pdf</b>.
-                                Kosongkan untuk mengizinkan semua jenis berkas.
-                                `;
+                                    Kosongkan untuk mengizinkan semua jenis berkas.
+                                    `;
 
                     fileMimesDiv.appendChild(fileMimesLabel);
                     fileMimesDiv.appendChild(fileMimesInput);

@@ -15,7 +15,7 @@
                     <h3>
                         {{ $form->title }}
                     </h3>
-                    
+
                     @if (session()->has('success'))
                         <div class="text-success">
                             {{ session()->get('success') }}
@@ -58,131 +58,151 @@
                                     <table class="table table-bordered">
                                         <tr>
                                             <td>Judul</td>
-                                            <td>{{ $form->title }}</td>
+                                            <td><strong>{{ $form->title }}</strong></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Link</td>
+                                            <td><strong>{{ route('form.show', ['form' => $form->id, 'slug' => $form->slug]) }}</strong></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Link Bitly</td>
+                                            <td><strong>{{ $form->bitly_link }}</strong></td>
                                         </tr>
                                         <tr>
                                             <td>Deskripsi</td>
                                             <td>
-                                                @if ($form->description == NULL)
-                                                    Tidak ada deskripsi
-                                                @else
-                                                    {{ $form->post_message }}
-                                                @endif
+                                                <strong>
+                                                    @if ($form->description == null)
+                                                        Tidak ada deskripsi
+                                                    @else
+                                                        {{ $form->post_message }}
+                                                    @endif
+                                                </strong>
                                             </td>
                                         </tr>
                                         <tr>
                                             <td>Jumlah pertanyaan</td>
-                                            <td>{{ count($form->questions) }}</td>
+                                            <td><strong>{{ count($form->questions) }}</strong></td>
                                         </tr>
                                         <tr>
                                             <td>Dibuat oleh</td>
-                                            <td>{{ $form->author->name }}</td>
+                                            <td><strong>{{ $form->author->name }}</strong></td>
                                         </tr>
                                         <tr>
                                             <td>Jawaban</td>
-                                            <td>{{ count($form->answers) }}</td>
+                                            <td><strong>{{ count($form->answers) }}</strong></td>
                                         </tr>
                                         <tr>
                                             <td>Status</td>
                                             <td>
-                                                @if ($form->status == 1)
-                                                    <span class="badge badge-secondary">Konsep</span>
-                                                @elseif ($form->status == 2)
-                                                    <span class="badge badge-success">Dibuka</span>
-                                                @else
-                                                    <span class="badge badge-danger">Ditutup</span>
-                                                @endif
+                                                <strong>
+                                                    @if ($form->status == 1)
+                                                        <span class="badge badge-secondary">Konsep</span>
+                                                    @elseif ($form->status == 2)
+                                                        <span class="badge badge-success">Dibuka</span>
+                                                    @else
+                                                        <span class="badge badge-danger">Ditutup</span>
+                                                    @endif
+                                                </strong>
                                             </td>
                                         </tr>
                                         @if ($form->status == 3)
                                             <tr>
                                                 <td>Ditutup pada</td>
-                                                <td>{{ \Carbon\Carbon::parse($form->closed_at)->format('l, d M Y H:i') }}</td>
+                                                <td><strong>{{ \Carbon\Carbon::parse($form->closed_at)->format('l, d M Y H:i') }}</strong></td>
                                             </tr>
                                         @endif
                                         <tr>
                                             <td>Pesan setelah submit</td>
                                             <td>
-                                                @if ($form->post_message == NULL)
-                                                    Tidak ada pesan
-                                                @else
-                                                    {{ $form->post_message }}
-                                                @endif
+                                                <strong>
+                                                    @if ($form->post_message == null)
+                                                        Tidak ada pesan
+                                                    @else
+                                                        {{ $form->post_message }}
+                                                    @endif
+                                                </strong>
                                             </td>
                                         </tr>
                                         <tr>
                                             <td>Tutup otomatis pada</td>
                                             <td>
-                                                @if ($form->auto_close_date == NULL)
-                                                    Formulir tidak ditutup otomatis
-                                                @else
-                                                    {{ \Carbon\Carbon::parse($form->created_at)->format('l, d M Y H:i') }}
-                                                @endif
+                                                <strong>
+                                                    @if ($form->auto_close_date == null)
+                                                        Formulir tidak ditutup otomatis
+                                                    @else
+                                                        {{ \Carbon\Carbon::parse($form->created_at)->format('l, d M Y H:i') }}
+                                                    @endif
+                                                </strong>
                                             </td>
                                         </tr>
                                         <tr>
                                             <td>Tutup formulir jika sudah mendapat jawaban</td>
                                             <td>
-                                                @if ($form->auto_close_answer == NULL)
-                                                    Formulir tidak ditutup otomatis
-                                                @else
-                                                    {{ \Carbon\Carbon::parse($form->created_at)->format('l, d M Y H:i') }}
-                                                @endif
+                                                <strong>
+                                                    @if ($form->auto_close_answer == null)
+                                                        Formulir tidak ditutup otomatis
+                                                    @else
+                                                        {{ \Carbon\Carbon::parse($form->created_at)->format('l, d M Y H:i') }}
+                                                    @endif
+                                                </strong>
                                             </td>
                                         </tr>
                                         <tr>
                                             <td>Dibuat pada</td>
-                                            <td>{{ \Carbon\Carbon::parse($form->created_at)->format('l, d M Y H:i') }}</td>
+                                            <td><strong>{{ \Carbon\Carbon::parse($form->created_at)->format('l, d M Y H:i') }}</strong></td>
                                         </tr>
                                         <tr>
                                             <td>Dipublikasikan pada</td>
-                                            <td>{{ \Carbon\Carbon::parse($form->publish_at)->format('l, d M Y H:i') }}</td>
+                                            <td><strong>{{ \Carbon\Carbon::parse($form->publish_at)->format('l, d M Y H:i') }}</strong></td>
                                         </tr>
                                     </table>
                                 </div>
                             </div>
                             <div class="tab-pane fade" id="icon-answers" role="tabpanel"
                                 aria-labelledby="icon-answers-tab2">
-                                @if (count($form->answers) > 0)
                                 <div class="table-responsive">
-                                    <table class="table table-striped table-hover">
+                                    <table class="table table-striped table-hover table-bordered">
                                         <thead>
                                             <tr>
-                                                <th scope="col">#</th>
-                                                <th scope="col">Waktu</th>
+                                                @if (count($form->answers) > 0)
+                                                    <th scope="col">#</th>
+                                                    <th scope="col">Waktu</th>
+                                                @endif
                                                 @foreach ($form->questions as $item)
                                                     <th scope="col">{{ $item->question }}</th>
                                                 @endforeach
                                             </tr>
                                         </thead>
-                                        <tbody>
-                                            @foreach ($form->answers as $item)
-                                                <tr>
-                                                    <td>
-                                                        <a href="{{ route('forms.answer', ['form' => $form->id, 'answer' => $item->id]) }}">#{{ $item->id }}</a>
-                                                    </td>
-                                                    <td>
-                                                        {{ \Carbon\Carbon::parse($item->created_at)->format('d M Y H :i') }}
-                                                    </td>
-                                                    @foreach ($item->answers as $answer)
+                                        @if (count($form->answers) > 0)
+                                            <tbody>
+                                                @foreach ($form->answers as $item)
+                                                    <tr>
+                                                        <td>#{{ $item->id }}</td>
                                                         <td>
-                                                            @if (isset($answer->media[0]))
-                                                                <a href="{{ $answer->media[0]->getFullUrl() }}" target="_blank">{{ $answer->media[0]->file_name }}</a>
-                                                            @else
-                                                                @if ($answer->answer == NULL)
-                                                                    -
-                                                                @else
-                                                                    {{ $answer->answer }}
-                                                                @endif
-                                                            @endif
+                                                            {{ \Carbon\Carbon::parse($item->created_at)->format('d M Y H :i') }}
                                                         </td>
-                                                    @endforeach
-                                                </tr>
-                                            @endforeach
-                                        </tbody>
+                                                        @foreach ($item->answers as $answer)
+                                                            <td>
+                                                                @if (isset($answer->media[0]))
+                                                                    <a href="{{ $answer->media[0]->getFullUrl() }}"
+                                                                        target="_blank">{{ $answer->media[0]->file_name }}</a>
+                                                                @else
+                                                                    @if ($answer->answer == null)
+                                                                        -
+                                                                    @else
+                                                                        {{ $answer->answer }}
+                                                                    @endif
+                                                                @endif
+                                                            </td>
+                                                        @endforeach
+                                                    </tr>
+                                                @endforeach
+                                            </tbody>
+                                        @endif
                                     </table>
                                 </div>
-                                @else
+                                @if (count($form->answers) == 0)
                                     <div class="alert alert-info">
                                         Formulir ini belum memiliki jawaban.
                                     </div>
@@ -191,17 +211,25 @@
                         </div>
                     </div>
                     <div class="widget-footer text-right p-3">
+                        @if ($form->status == 2)
+                            <a href="{{ route('form.show', ['form' => $form->id, 'slug' => $form->slug]) }}" target="_blank" class="btn btn-info btn-sm">Lihat Formulir</a>
+                        @endif
                         @if (count($form->answers) > 0)
-                            <a href="{{ route('forms.answer.export', $form->id) }}" class="btn btn-info btn-sm">Download Jawaban</a>
+                            <a href="{{ route('forms.answer.export', $form->id) }}" class="btn btn-info btn-sm">Download
+                                Jawaban</a>
+                            <a href="{{ route('forms.answers', $form->id) }}" class="btn btn-info btn-sm">Lihat
+                                Jawaban</a>
                         @endif
                         @if ($form->status == 2)
-                            <a href="#" data-toggle="modal" data-target="#close-modal" class="btn btn-secondary btn-sm">Tutup Formulir</a>
+                            <a href="#" data-toggle="modal" data-target="#close-modal"
+                                class="btn btn-secondary btn-sm">Tutup Formulir</a>
                         @endif
                         @if ($form->status == 3)
-                            <a href="#" data-target="#open-modal" data-toggle="modal" class="btn btn-success btn-sm">Buka Formulir</a>
+                            <a href="#" data-target="#open-modal" data-toggle="modal" class="btn btn-success btn-sm">Buka
+                                Formulir</a>
                         @endif
                         <a href="{{ route('forms.edit', $form->id) }}" class="btn btn-warning btn-sm">Edit</a>
-                        <a href="#" class="btn btn-danger btn-sm">Hapus</a>
+                        <a href="#" data-toggle="modal" data-target="#delete-modal" class="btn btn-danger btn-sm">Hapus</a>
                     </div>
                 </div>
             </div>
@@ -210,63 +238,115 @@
 @endsection
 
 @section('custom_html')
-@if ($form->status == 2)
-<div class="modal fade" id="close-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <form action="{{ route('forms.update', $form->id) }}" method="post">
-                @csrf
-                @method('PUT')
-                <input type="hidden" name="action" value="close_form">
+    @if ($form->status == 2)
+        <div class="modal fade" id="close-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <form action="{{ route('forms.update', $form->id) }}" method="post">
+                        @csrf
+                        @method('PUT')
+                        <input type="hidden" name="action" value="close_form">
 
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Tutup Formulir?</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-                    </button>
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Tutup Formulir?</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round" class="feather feather-x">
+                                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <p class="modal-text">
+                                Yakin ingin menutup formulir? Formulir yang ditutup tidak bisa diisi lagi, tetapi Anda bisa
+                                membukanya kembali kapanpun.
+                            </p>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12"></i> Batal</button>
+                            <button type="submit" class="btn btn-primary">Tutup</button>
+                        </div>
+                    </form>
                 </div>
-                <div class="modal-body">
-                    <p class="modal-text">
-                        Yakin ingin menutup formulir? Formulir yang ditutup tidak bisa diisi lagi, tetapi Anda bisa membukanya kembali kapanpun.
-                    </p>
-                </div>
-                <div class="modal-footer">
-                    <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12"></i> Batal</button>
-                    <button type="submit" class="btn btn-primary">Tutup</button>
-                </div></form>
+            </div>
         </div>
-    </div>
-</div>
-@endif
+    @endif
 
-@if ($form->status == 3)
-<div class="modal fade" id="open-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <form action="{{ route('forms.update', $form->id) }}" method="post">
-                @csrf
-                @method('PUT')
-                <input type="hidden" name="action" value="open_form">
+    @if ($form->status == 3)
+        <div class="modal fade" id="open-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <form action="{{ route('forms.update', $form->id) }}" method="post">
+                        @csrf
+                        @method('PUT')
+                        <input type="hidden" name="action" value="open_form">
 
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Buka Kembali Formulir?</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-                    </button>
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Buka Kembali Formulir?</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round" class="feather feather-x">
+                                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <p class="modal-text">
+                                Formulir ini sebelumnya sudah ditutup. Jika anda membukanya kembali, seseorang dapat kembali
+                                memberikan jawaban.
+                                <br>
+                                Anda bisa menutup kembali formulir ini kapan saja.
+                            </p>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12"></i> Batal</button>
+                            <button type="submit" class="btn btn-primary">Buka</button>
+                        </div>
+                    </form>
                 </div>
-                <div class="modal-body">
-                    <p class="modal-text">
-                        Formulir ini sebelumnya sudah ditutup. Jika anda membukanya kembali, seseorang dapat kembali memberikan jawaban.
-                        <br>
-                        Anda bisa menutup kembali formulir ini kapan saja.
-                    </p>
-                </div>
-                <div class="modal-footer">
-                    <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12"></i> Batal</button>
-                    <button type="submit" class="btn btn-primary">Buka</button>
-                </div></form>
+            </div>
         </div>
-    </div>
-</div>
-@endif
+    @endif
+
+    <div class="modal fade" id="delete-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <form action="{{ route('forms.destroy', $form->id) }}" method="post">
+                        @csrf
+                        @method('DELETE')
+                        <input type="hidden" name="action" value="close_form">
+
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Hapus Formulir?</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round" class="feather feather-x">
+                                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <p class="modal-text">
+                                Anda yakin ingin menghapus formulir ini?
+                                <br>
+                                Menghapus formulir juga akan menghapus semua pertanyaan dalam formulir ini beserta jawabannya. Tindakan ini tidak dapat dibatalkan.
+                            </p>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12"></i> Batal</button>
+                            <button type="submit" class="btn btn-danger">Hapus</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
 @endsection

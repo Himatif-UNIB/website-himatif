@@ -10,6 +10,16 @@ use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
+    public function index()
+    {
+        if (config('app.ajax_login') == true) {
+            return view('auth.login');
+        }
+        else {
+            return view('auth.login-no-ajax');
+        }
+    }
+
     /**
      * Login user
      * 
@@ -99,5 +109,41 @@ class AuthController extends Controller
                 'success' => true,
                 'message' => 'Berhasil logout'
             ]);
+    }
+
+    public function loginPost(Request $request)
+    {
+        $request->validate([
+            'email' => ['required', 'email', 'min:10', 'max:128'],
+            'password' => ['required'],
+            'remember_me' => ['nullable', 'boolean']
+        ]);
+
+        $credentials = $request->only('email', 'password');
+
+        if (!Auth::attempt($credentials)) {
+            return redirect()
+                ->back()
+                ->withInput()
+                ->withErrors();
+        }
+
+        $user = auth()->user();
+        $tokenResult = $user->createToken('Personal Access Token');
+        $token = $tokenResult->token;
+
+        if ($request->remember_me)
+            $token->expires_at = Carbon::now()->addWeeks(1);
+
+        $token->save();
+
+        return redirect()
+            ->back()
+            ->with('success', true)
+            ->with('token', [
+                    'accessToken' => $tokenResult->accessToken,
+                    'expiresAt' => $tokenResult->token->expires_at
+                ]
+            );
     }
 }
