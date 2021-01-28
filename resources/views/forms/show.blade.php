@@ -103,6 +103,10 @@
                                                     @else
                                                         <span class="badge badge-danger">Ditutup</span>
                                                     @endif
+
+                                                    @if (($form->max_fill_date != NULL && $form->max_fill_date < \Carbon\Carbon::now()) || ($form->max_fill_answer != NULL && count($form->answers) >= $form->max_fill_answer))
+                                                        <span class="badge badge-secondary">Formulir sudah tidak menerima jawaban</span>
+                                                    @endif
                                                 </strong>
                                             </td>
                                         </tr>
@@ -125,25 +129,25 @@
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td>Tutup otomatis pada</td>
+                                            <td>Batas waktu pengisian formulir</td>
                                             <td>
                                                 <strong>
-                                                    @if ($form->auto_close_date == null)
-                                                        Formulir tidak ditutup otomatis
+                                                    @if ($form->max_fill_date == null)
+                                                        Tidak ada batas
                                                     @else
-                                                        {{ \Carbon\Carbon::parse($form->created_at)->format('l, d M Y H:i') }}
+                                                        {{ \Carbon\Carbon::parse($form->max_fill_date)->format('l, d M Y H:i') }}
                                                     @endif
                                                 </strong>
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td>Tutup formulir jika sudah mendapat jawaban</td>
+                                            <td>Batas jawaban yang diterima</td>
                                             <td>
                                                 <strong>
-                                                    @if ($form->auto_close_answer == null)
-                                                        Formulir tidak ditutup otomatis
+                                                    @if ($form->max_fill_answer == null)
+                                                        Tidak ada batas
                                                     @else
-                                                        {{ \Carbon\Carbon::parse($form->created_at)->format('l, d M Y H:i') }}
+                                                        {{ $form->max_fill_answer }}
                                                     @endif
                                                 </strong>
                                             </td>
@@ -154,7 +158,13 @@
                                         </tr>
                                         <tr>
                                             <td>Dipublikasikan pada</td>
-                                            <td><strong>{{ \Carbon\Carbon::parse($form->publish_at)->format('l, d M Y H:i') }}</strong></td>
+                                            <td><strong>
+                                                @if ($form->publish_at == NULL)
+                                                    -
+                                                @else
+                                                    {{ \Carbon\Carbon::parse($form->publish_at)->format('l, d M Y H:i') }}
+                                                @endif
+                                            </strong></td>
                                         </tr>
                                     </table>
                                 </div>

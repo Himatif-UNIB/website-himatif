@@ -3,6 +3,7 @@
         <tr>
             <th>No</th>
             <th>Waktu</th>
+            <th>Keterangan</th>
             @foreach ($fields as $item)
                 <th>{{ $item->question }}</th>
             @endforeach
@@ -14,6 +15,14 @@
             <tr>
                 <td>{{ $n }}</td>
                 <td>{{ \Carbon\Carbon::parse($item->created_at)->format('l, d M Y H:i:s') }}</td>
+                <td>
+                    @if ($item->is_over_date)
+                        Melewati batas waktu
+                    @endif
+                    @if ($item->is_over_answer)
+                        Melewati batas jawaban
+                    @endif
+                </td>
 
                 @foreach ($item->answers as $answer)
                     <td>

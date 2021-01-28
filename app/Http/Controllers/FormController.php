@@ -70,11 +70,11 @@ class FormController extends Controller
         $form->slug = Str::slug($request->title);
         $form->description = $request->description;
         $form->post_message = $request->post_message;
-        $form->auto_close_date = $request->auto_close_date;
-        $form->auto_close_answer = $request->auto_close_answer;
+        $form->max_fill_date = $request->max_fill_date;
+        $form->max_fill_answer = $request->max_fill_answer;
         $form->save();
 
-        //$form->bitly_link = Bitly::getUrl('https://google.com/');//Bitly::getUrl(route('form.show', ['form' => $form->id, 'slug' => $form->slug]));
+        //$form->bitly_link = Bitly::getUrl(route('form.show', ['form' => $form->id, 'slug' => $form->slug]));
         //$form->save();
 
         if ($request->hasFile('picture') && $request->file('picture')->isValid()) {
@@ -95,6 +95,7 @@ class FormController extends Controller
      */
     public function show(Form $form)
     {
+        //$isExpire =
         return view('forms.show', compact('form'));
     }
 
@@ -141,9 +142,20 @@ class FormController extends Controller
                     ->withSuccess('Formulir berhasil dibuka kembali.');
                 break;
             case 'edit_form':
+                $form->description = $request->description;
+                $form->post_message = $request->post_message;
                 $form->status = ($request->save_as_draft == NULL) ? 2 : 1;
                 $form->publish_at = ($request->save_as_draft == NULL) ? Carbon::now() : NULL;
                 $form->save();
+
+                if ($request->hasFile('picture') && $request->file('picture')->isValid()) {
+                    if (isset($form->media[0])) {
+                        $form->media[0]->delete();
+                    }
+
+                    $form->addMediaFromRequest('picture')
+                        ->toMediaCollection('formPicture');
+                }
 
                 if (count($form->questions) > 0) {
                     $form->questions()->where('form_id', $form->id)->delete();

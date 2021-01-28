@@ -47,6 +47,10 @@
                                             @else
                                                 <span class="badge badge-danger">Ditutup</span>
                                             @endif
+
+                                            @if ($item->max_fill_date != NULL && \Carbon\Carbon::parse($item->max_fill_date) <= \Carbon\Carbon::now())
+                                                <span class="badge badge-warning">Kadaluarsa</span>
+                                            @endif
                                         </td>
                                         <td>
                                             {{ \Carbon\Carbon::parse($item->created_at)->format('l, d M Y H:i') }}

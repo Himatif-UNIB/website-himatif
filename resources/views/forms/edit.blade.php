@@ -94,10 +94,10 @@
                                         <div class="form-group">
                                             <label for="auto-close">Otomatis tutup formulir pada:</label>
                                             <input type="text"
-                                                class="form-control @error('auto_close_date') }} is-invalid @enderror"
-                                                id="auto-close" name="auto_close_date">
+                                                class="form-control @error('max_fill_date') }} is-invalid @enderror"
+                                                id="auto-close" name="max_fill_date">
 
-                                            @error('auto_close_date')
+                                            @error('max_fill_date')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
                                                 </div>
@@ -111,11 +111,11 @@
                                             <label for="auto-close-answer">Otomatis tutup formulir jika sudah mendapatkan
                                                 jawaban:</label>
                                             <input type="number"
-                                                class="form-control @error('auto_close_answer') is-invalid @enderror"
-                                                id="auto-close-answer" name="auto_close_answer"
-                                                value="{{ old('auto_close_answer', $form->auto_close_answer) }}">
+                                                class="form-control @error('max_fill_answer') is-invalid @enderror"
+                                                id="auto-close-answer" name="max_fill_answer"
+                                                value="{{ old('max_fill_answer', $form->max_fill_answer) }}">
 
-                                            @error('auto_close_answer')
+                                            @error('max_fill_answer')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
                                                 </div>

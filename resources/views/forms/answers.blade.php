@@ -59,6 +59,26 @@
                                             @endif
                                         </tr>
                                     @endforeach
+                                    <tr>
+                                        <td>Waktu</td>
+                                        <td><strong>{{ \Carbon\Carbon::parse($item->created_at)->format('l, d M Y H:i') }}</strong></td>
+                                    </tr>
+                                    @if ($item->is_over_date || $item->is_over_answer)
+                                        <tr>
+                                            <td>Keterangan</td>
+                                            <td>
+                                                <strong>
+                                                    @if ($item->is_over_date)
+                                                        <span class="badge badge-info">Melewati batas waktu</span>
+                                                    @endif
+
+                                                    @if ($item->is_over_answer)
+                                                        <span class="badge badge-info">Melewati batas jumlah jawaban</span>
+                                                    @endif
+                                                </strong>
+                                            </td>
+                                        </tr>
+                                    @endif
                                 </table>
                             </div>
                         </div>
