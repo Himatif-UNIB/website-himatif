@@ -4,7 +4,9 @@ use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AdministratorController;
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\Auth\FacebookAuthController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
+use App\Http\Controllers\Auth\GoogleAuthController;
 use App\Http\Controllers\DivisionController;
 use App\Http\Controllers\ForceController;
 use App\Http\Controllers\FormController;
@@ -52,6 +54,11 @@ Route::get('/home', [AdminController::class, 'index'])->middleware('auth')->name
 Route::get('/auth/login', [AuthController::class, 'index'])->name('login');
 Route::post('/auth/do-login', [AuthController::class, 'loginPost'])->name('login-post');
 
+Route::get('/auth/login/facebook', [FacebookAuthController::class, 'login'])->name('login.facebook');
+Route::get('/auth/callback/facebook', [FacebookAuthController::class, 'callback'])->name('auth.facebook.callback');
+Route::get('/auth/login/google', [GoogleAuthController::class, 'login'])->name('login.google');
+Route::get('/auth/callback/google', [GoogleAuthController::class, 'callback'])->name('auth.google.callback');
+
 Route::group(['as' => 'auth.', 'prefix' => 'auth'], function () {
     Route::post('/login', [AuthController::class, 'login'])->middleware('guest')->name('login');
     Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:web')->name('logout');
@@ -89,6 +96,13 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/forms/{form}/answers', [FormController::class, 'answers'])->name('forms.answers');
     Route::get('/forms/{form}/export', [FormController::class, 'exportAnswer'])->name('forms.answer.export');
     Route::resource('forms', FormController::class);
+
+    Route::get('/auth/facebook/connect', [FacebookAuthController::class, 'connect'])->name('auth.facebook.connect');
+    Route::get('/auth/facebook/revoke', [FacebookAuthController::class, 'revoke'])->name('auth.facebook.revoke');
+
+    Route::get('/auth/google/connect', [GoogleAuthController::class, 'connect'])->name('auth.google.connect');
+    Route::get('/auth/google/verify', [GoogleAuthController::class, 'verify'])->name('auth.google.verify');
+    Route::get('/auth/google/revoke', [GoogleAuthController::class, 'revoke'])->name('auth.google.revoke');
 });
 
 Route::get('/form/{form}-{slug}', [UserFormController::class, 'show'])->name('form.show');

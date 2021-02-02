@@ -60,4 +60,22 @@ class Member extends Model
     {
         return $this->hasMany(Administrator::class);
     }
+
+    /**
+     * Invers relasi one to one
+     * 
+     * Membuat invers relasi one to one ke model
+     * App\Models\User
+     * 
+     * Memberikan data member (profile) dari user
+     * 
+     * @since   1.0.0
+     * @author  mulyosyahidin95
+     * 
+     * @return  Definisi invers relasi
+     */
+    public function memberUser()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

@@ -13,7 +13,7 @@
                 <a href="{{ route('blog') }}">Blog</a>
             </li>
             <button class="border-2 rounded-xl px-5 py-1 border-dark-blue-200 focus:outline-none hover:bg-orange-600 hover:text-white hover:border-white">
-                Login
+                <a href="{{ route('login') }}">Login</a>
             </button>
         </ul>
     </div>

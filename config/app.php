@@ -125,7 +125,7 @@ return [
 
     /*
     */
-    'ajax_login' => false,
+    'ajax_login' => true,
 
     /*
     |--------------------------------------------------------------------------
@@ -180,6 +180,7 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        Laravel\Socialite\SocialiteServiceProvider::class,
 
     ],
 
@@ -234,6 +235,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
         'Bitly' => Shivella\Bitly\Facade\Bitly::class,
+        'Socialite' => Laravel\Socialite\Facades\Socialite::class,
         
     ],
 

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Member;
+use App\Models\Social_auth;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -14,7 +16,10 @@ class ProfileController extends Controller
      */
     public function index()
     {
-        return view('profile.index');
+        $user = auth()->user()->with('member')->first();
+        $administrators = auth()->user()->member->administrators;
+
+        return view('profile.index', compact('user', 'administrators'));
     }
 
     /**
@@ -57,7 +62,35 @@ class ProfileController extends Controller
      */
     public function edit()
     {
-        return view('profile.edit');
+        $isConnectedWith = [
+            'facebook' => Social_auth::where(['user_id' => auth()->id(), 'driver' => 'facebook'])
+                ->exists(),
+            'google' => Social_auth::where(['user_id' => auth()->id(), 'driver' => 'google'])
+                ->exists(),
+        ];
+        $socialData = [
+            'facebook' => [
+                'data' => $isConnectedWith['facebook'] ? json_decode(Social_auth::where(['user_id' => auth()->id(), 'driver' => 'facebook'])
+                    ->first()
+                    ->social_data) : NULL,
+                'picture_url' => $isConnectedWith['facebook'] ? Social_auth::where(['user_id' => auth()->user()->id, 'driver' => 'facebook'])
+                    ->first()
+                    ->media[0]
+                    ->getFullUrl() : NULL
+            ],
+            'google' => [
+                'data' => $isConnectedWith['google'] ? json_decode(Social_auth::where(['user_id' => auth()->id(), 'driver' => 'google'])
+                    ->first()
+                    ->social_data) : NULL,
+                'picture_url' => $isConnectedWith['google'] ? Social_auth::where(['user_id' => auth()->user()->id, 'driver' => 'google'])
+                    ->first()
+                    ->media[0]
+                    ->getFullUrl() : NULL
+            ]
+        ];
+        $user = auth()->user()->with('member')->first();
+       
+        return view('profile.edit', compact('isConnectedWith', 'socialData', 'user'));
     }
 
     /**
@@ -83,6 +116,14 @@ class ProfileController extends Controller
             $user->password = password_hash($request->password, PASSWORD_BCRYPT);
         }
         $user->save();
+
+        $profile = Member::where(['user_id' => $user->id])->first();
+        $profile->name = $user->name;
+        $profile->birth_place = $request->birth_place;
+        $profile->birth_date = $request->birth_date;
+        $profile->phone_number = $request->phone_number;
+        $profile->address = $request->address;
+        $profile->save();
 
         if ($request->hasFile('picture') && $request->file('picture')->isValid()) {
             if (isset($user->media[0])) {

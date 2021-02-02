@@ -45,8 +45,42 @@ class User extends Authenticatable implements CanResetPassword, HasMedia
         'email_verified_at' => 'datetime',
     ];
 
+    /**
+     * Invers relasi one to many
+     * 
+     * Membuat invers relasi one to many ke model
+     * App\Models\Form
+     * 
+     * Data formulir yang dibuat oleh user {user}
+     * 
+     * @since   1.0.0
+     * @author  mulyosyahidin95
+     * 
+     * @return  Definisi relasi one to many
+     */
     public function userForm()
     {
         return $this->belongsTo(Form::class);
+    }
+
+    /**
+     * Relasi one to one
+     * 
+     * Membuat relasi one to one ke model
+     * App\Models\Member
+     * 
+     * Mendapatkan data profil dari user {user}
+     * 
+     * @since   1.0.0
+     * @author  mulyosyahidin95
+     * 
+     * @return  Definisi iners relasi one to one
+     */
+    public function member() {
+        return $this->hasOne(Member::class, 'user_id', 'id');
+    }
+
+    public function socialAuth() {
+        return $this->hasOne(Social_auth::class, 'user_id', 'id');
     }
 }
