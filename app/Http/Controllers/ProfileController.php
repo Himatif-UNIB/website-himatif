@@ -16,8 +16,8 @@ class ProfileController extends Controller
      */
     public function index()
     {
-        $user = auth()->user()->with('member')->first();
-        $administrators = auth()->user()->member->administrators;
+        $user = isset(auth()->user()->member) ? auth()->user()->member : auth()->user();
+        $administrators = isset(auth()->user()->member->administrators) ? auth()->user()->member->administrators : [];
 
         return view('profile.index', compact('user', 'administrators'));
     }
@@ -88,9 +88,11 @@ class ProfileController extends Controller
                     ->getFullUrl() : NULL
             ]
         ];
-        $user = auth()->user()->with('member')->first();
+        
+        $user = auth()->user();
+        $member = isset(auth()->user()->member) ? auth()->user()->member : [];
        
-        return view('profile.edit', compact('isConnectedWith', 'socialData', 'user'));
+        return view('profile.edit', compact('isConnectedWith', 'socialData', 'user','member' ));
     }
 
     /**

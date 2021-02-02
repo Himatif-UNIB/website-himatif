@@ -76,6 +76,6 @@ class Member extends Model
      */
     public function memberUser()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
 }

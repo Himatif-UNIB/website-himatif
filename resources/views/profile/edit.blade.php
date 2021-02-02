@@ -50,7 +50,7 @@
                                                                 class="form-control @error('name') is-invalid @enderror"
                                                                 name="name" id="fullName" placeholder="Nama lengkap"
                                                                 minlength="4" maxlength="128"
-                                                                value="{{ old('name', $user->member->name) }}" required>
+                                                                value="{{ old('name', isset($member->name) ? $member->name : $user->name) }}" required>
 
                                                             @error('name')
                                                                 <div class="invalid-feedback">
@@ -58,11 +58,12 @@
                                                                 </div>
                                                             @enderror
                                                         </div>
+                                                        @isset($user->member)
                                                         <div class="row">
                                                             <div class="col-md-6 col-xs-12">
                                                                 <label for="birth-place">Tempat Lahir:</label>
-                                                                <input type="text" name="birth_place" value="{{ old('birth_place', $user->member->birth_place) }}" id="birth-place"
-                                                                    maxlength="64" class="form-control @error('birth_place') is-invalid @enderror">
+                                                                <input type="text" name="birth_place" value="{{ old('birth_place', isset($member->birth_place) ? $member->birth_place : '') }}" id="birth-place"
+                                                                    placeholder="Tempat Lahir" maxlength="64" class="form-control @error('birth_place') is-invalid @enderror">
 
                                                                 @error('birth_place')
                                                                     <div class="invalid-feedback">
@@ -72,7 +73,8 @@
                                                             </div>
                                                             <div class="col-md-6 col-xs-12">
                                                                 <label for="birth-date">Tanggal Lahir:</label>
-                                                                <input type="text" name="birth_date" value="{{ old('birth_date', $user->member->birth_date) }}" id="birth-date"
+                                                                <input type="text" name="birth_date" value="{{ old('birth_date', isset($member->birth_date) ? $member->birth_date : '') }}" id="birth-date"
+                                                                    placeholder="Tanggal lahir"
                                                                     maxlength="10" class="form-control @error('birth_date') is-invalid @enderror">
 
                                                                 @error('password')
@@ -88,7 +90,7 @@
                                                                 class="form-control @error('phone_number') is-invalid @enderror"
                                                                 name="phone_number" id="phone-number" placeholder="No WhatsApp"
                                                                 minlength="9" maxlength="16"
-                                                                value="{{ old('phone_number', $user->member->phone_number) }}" required>
+                                                                value="{{ old('phone_number', isset($member->phone_number) ? $member->phone_number : '') }}" >
 
                                                             @error('phone_number')
                                                                 <div class="invalid-feedback">
@@ -98,7 +100,8 @@
                                                         </div>
                                                         <div class="form-group mt-3">
                                                             <label for="address">Alamat:</label>
-                                                            <textarea name="address" id="address" class="form-control @error('address') is-invalid @enderror" maxlength="255">{{ old('address', $user->member->address) }}</textarea>
+                                                            <textarea name="address" id="address" class="form-control @error('address') is-invalid @enderror" maxlength="255"
+                                                                placeholder="Alamat tinggal">{{ old('address', isset($member->address) ? $member->address : '') }}</textarea>
                                                         
                                                             @error('address')
                                                                 <div class="invalid-feedback">
@@ -106,6 +109,11 @@
                                                                 </div>
                                                             @enderror
                                                         </div>
+                                                        @else
+                                                        <div class="alert alert-info">
+                                                            Edit profil hanya tersedia untuk Anggota
+                                                        </div>
+                                                        @endisset
                                                     </div>
                                                 </div>
                                             </div>

@@ -359,3 +359,23 @@ if (!function_exists('__displayAria')) {
         return 'false';
     }
 }
+
+if ( ! function_exists('isEmail'))
+{
+    /**
+     * Memberiksa apakah string adalah email
+     * 
+     * Memeriksa apakah `$str` adalah email atau bukan
+     * 
+     * @param string $str
+     * 
+     * @since   1.0.0
+     * @author  mulyosyahidin95
+     * 
+     * @return Boolean
+     */
+    function isEmail($str)
+    {
+        return filter_var($str, FILTER_VALIDATE_EMAIL);
+    }
+}

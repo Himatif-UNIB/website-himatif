@@ -221,7 +221,7 @@
                                     <a href="{{ route('forces') }}" target="_blank">manajemen angkatan</a>. Jika belum terdaftar,
                                     maka tahun <b>{{ now()->year }}</b> akan digunakan sebagai data tahun.
                                 </li>
-                                <li>Jika data NPM yang diimpor sudah terdaftar, maka data yang lama akan ditimpa dengan data yang baru.</li>
+                                <li>Jika data NPM yang diimpor sudah terdaftar, maka data yang lama akan ditimpa dengan data yang baru (data login juga direset).</li>
                             </ol>
                         </div>
     
@@ -234,6 +234,16 @@
     
                         <div class="alert alert-info">
                             Proses impor akan membutuhkan beberapa waktu, jangan tutup <i>pop up</i> ini sebelum proses impor selesai.
+                        </div>
+
+                        <div class="alert alert-info">
+                            Setiap anggota yang baru diimport akan mendapatkan akun baru dengan data login:
+                            <br>
+                            Username: <b>NPM yang digunakan</b>
+                            <br>
+                            Password: <b>12345678</b>
+                            <br><br>
+                            <b>Note:</b> User dapat mengganti password melalui dasbor.
                         </div>
                     </div>
                     <div class="modal-footer md-button">
@@ -309,7 +319,7 @@
                 },
                 {
                     "data": function (data, type, row) {
-                        return `${data.force.name} ${data.force.year}`;
+                        return (data.force_id == null) ? '-' : `${data.force.name} ${data.force.year}`;
                     }
                 },
                 {
