@@ -19,11 +19,15 @@ if (!function_exists('getSetting')) {
      */
     function getSetting($key)
     {
-        $setting = DB::table('settings')->select('value')
-            ->where('key', $key)
-            ->first();
+        if (DB::table('settings')->where('key', $key)->exists()) {
+            $setting = DB::table('settings')->select('value')
+                ->where('key', $key)
+                ->first();
 
-        return $setting->value;
+            return $setting->value;
+        }
+        
+        return "{KEY_NOT_DEFINED|$key}";
     }
 }
 

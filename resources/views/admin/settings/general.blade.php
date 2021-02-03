@@ -51,6 +51,47 @@
                 <div class="widget-header">
                     <div class="row">
                         <div class="col-xl-12 col-md-12 col-sm-12 col-12">
+                            <h4>Himpunan</h4>
+                        </div>                 
+                    </div>
+                </div>
+                <div class="widget-content widget-content-area">
+                    <form action="{{ route('admin.settings.update') }}" method="post">
+                        @csrf
+                        @method('put')
+                        <input type="hidden" name="section" value="organization">
+
+                        <div class="form-group">
+                            <label for="organization-name">Nama Himpunan:</label>
+                            <input type="text" class="form-control @error('settings.organizationName') is-invalid @enderror" id="organization-name" name="settings[organizationName]" value="{{ old('settings.organizationName', getSetting('organizationName')) }}">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="university-name">Nama Universitas:</label>
+                            <input type="text" class="form-control @error('settings.organizationUniversity') is-invalid @enderror" id="university-name" name="settings[organizationUniversity]" value="{{ old('settings.organizationUniversity', getSetting('organizationUniversity')) }}">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="organization-tag-line"><i>Tag Line</i>:</label>
+                            <input type="text" class="form-control @error('settings.organizationTagLine') is-invalid @enderror" id="organization-tag-line" name="settings[organizationTagLine]" value="{{ old('settings.organizationTagLine', getSetting('organizationTagLine')) }}">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="organization-desc">Tentang Organisasi:</label>
+                            <textarea name="settings[organizationDesc]" id="organization-desc" class="form-control">{{ old('settings.organizationDesc', getSetting('organizationDesc')) }}</textarea>
+                        </div>
+
+                        <div class="text-right">
+                            <button type="submit" class="btn btn-primary">Simpan</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="statbox widget box box-shadow layout-top-spacing">
+                <div class="widget-header">
+                    <div class="row">
+                        <div class="col-xl-12 col-md-12 col-sm-12 col-12">
                             <h4>Kontak</h4>
                         </div>                 
                     </div>

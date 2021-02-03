@@ -7,7 +7,7 @@
 
     @include('includes.style')
 
-    <title>Himatif</title>
+    <title>{{ getSetting('organizationName') }}</title>
 </head>
 
 <body @if (Request::segment(1) !== null) class="bg-dark-blue relative" @endif>

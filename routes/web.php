@@ -10,6 +10,7 @@ use App\Http\Controllers\Auth\GoogleAuthController;
 use App\Http\Controllers\DivisionController;
 use App\Http\Controllers\ForceController;
 use App\Http\Controllers\FormController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\PeriodController;
 use App\Http\Controllers\PositionController;
@@ -33,9 +34,7 @@ use Illuminate\Support\Facades\Route;
     Frontend Route
 */
 
-Route::get('/', function () {
-    return view('frontend.beranda');
-})->name('beranda');
+Route::get('/', [HomeController::class, 'index'])->name('beranda');
 
 Route::get('/struktur', function () {
     return view('frontend.struktur');

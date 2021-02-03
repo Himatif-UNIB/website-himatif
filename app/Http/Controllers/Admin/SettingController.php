@@ -75,6 +75,19 @@ class SettingController extends Controller
                     ->back()
                     ->withSuccess('Berhasil menyimpan pengaturan logo');
             break;
+            case 'organization':
+                $allowedFields = ['organizationName', 'organizationUniversity', 'organizationDesc', 'organizationTagLine'];
+                foreach ($allowedFields as $field) {
+                    Setting::where('key', $field)
+                        ->update(
+                            ['value' => $request->settings[$field]]
+                        );
+                }
+
+                return redirect()
+                    ->back()
+                    ->withSuccess('Berhasil menyimpan pengaturan');
+            break;
         }
     }
 }

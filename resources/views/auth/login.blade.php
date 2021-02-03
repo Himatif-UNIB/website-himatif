@@ -113,10 +113,10 @@
 
                         @if (auth()->check() && ! session()->has('success'))
                             <div class="avatar avatar-xl">
-                                <img alt="{{ auth()->user()->member->name }}" src="{{ getProfilePicture() }}"
+                                <img alt="{{ auth()->user()->name }}" src="{{ getProfilePicture() }}"
                                     class="rounded-circle" />
                             </div>
-                            <h5 class="mt-2">Halo, <i>{{ auth()->user()->member->name }}</i></h5>
+                            <h5 class="mt-2">Halo, <i>{{ auth()->user()->name }}</i></h5>
 
                             <div class="row mt-5">
                                 <div class="col-xs-12 col-8 mx-auto">
