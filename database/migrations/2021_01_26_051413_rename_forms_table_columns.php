@@ -14,8 +14,8 @@ class RenameFormsTableColumns extends Migration
     public function up()
     {
         Schema::table('forms', function (Blueprint $table) {
-            $table->renameColumn('max_fill_date', 'max_fill_date');
-            $table->renameColumn('max_fill_answer', 'max_fill_answer');
+            $table->renameColumn('auto_close_date', 'max_fill_date');
+            $table->renameColumn('auto_close_answer', 'max_fill_answer');
         });
     }
 

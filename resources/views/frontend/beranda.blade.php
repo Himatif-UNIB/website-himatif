@@ -40,12 +40,16 @@
             Bidang Organisasi
         </h2>
         <div class="grid grid-row md:grid-cols-2 lg:grid-cols-3 place-items-center"  data-aos="fade-up" data-aos-delay="500">
-            @foreach ($divisions as $item)
+            @forelse ($divisions as $item)
             <div class="border-2 cursor-pointer hover:border-gray-400 transition duration-500 ease-in-out w-64 h-64 lg:w-80 lg:h-80 rounded-3xl p-5 mb-5 flex flex-wrap content-center">
                 <img class="mx-auto" src="{{ $item->media[0]->getFullUrl() }}" alt="{{ $item->name }}"
                     title="Bidang {{ $item->name }}">
             </div>
-            @endforeach
+            @empty
+            <div>
+                Tidak ada data untuk ditampilkan
+            </div>
+            @endforelse
         </div>
     </div>
 </div>

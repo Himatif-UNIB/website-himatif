@@ -171,6 +171,7 @@ return [
          */
         Maatwebsite\Excel\ExcelServiceProvider::class,
         Shivella\Bitly\BitlyServiceProvider::class,
+        Spatie\Permission\PermissionServiceProvider::class,
 
         /*
          * Application Service Providers...
