@@ -119,13 +119,15 @@ class ProfileController extends Controller
         }
         $user->save();
 
-        $profile = Member::where(['user_id' => $user->id])->first();
-        $profile->name = $user->name;
-        $profile->birth_place = $request->birth_place;
-        $profile->birth_date = $request->birth_date;
-        $profile->phone_number = $request->phone_number;
-        $profile->address = $request->address;
-        $profile->save();
+        if (Member::where(['user_id' => $user->id])->exists()) {
+            $profile = Member::where(['user_id' => $user->id])->first();
+            $profile->name = $user->name;
+            $profile->birth_place = $request->birth_place;
+            $profile->birth_date = $request->birth_date;
+            $profile->phone_number = $request->phone_number;
+            $profile->address = $request->address;
+            $profile->save();
+        }
 
         if ($request->hasFile('picture') && $request->file('picture')->isValid()) {
             if (isset($user->media[0])) {

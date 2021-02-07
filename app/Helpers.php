@@ -223,6 +223,8 @@ if (!function_exists('__active')) {
             }
         } else if (isController($controller) && isAction($action)) {
             return ' active';
+        } else if ($controller !== '' && $action === '') {
+            return isController($controller) ? ' active' : '';
         }
     }
 }
@@ -358,6 +360,8 @@ if (!function_exists('__displayAria')) {
             }
         } else if (isController($controller) && isAction($action)) {
             return 'true';
+        }  else if ($controller !== '' && $action === '') {
+            return isController($controller) ? 'true' : '';
         }
 
         return 'false';

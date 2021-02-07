@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\ForceController;
 use App\Http\Controllers\Api\MemberController;
 use App\Http\Controllers\Api\PeriodController;
 use App\Http\Controllers\Api\PositionController;
+use App\Http\Controllers\Api\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -32,4 +33,5 @@ Route::group(['middleware' => ['auth:api'], 'as' => 'api.'], function () {
     Route::apiResource('/members', MemberController::class);
 
     Route::apiResource('/administrators', AdministratorController::class);
+    Route::apiResource('/users', UserController::class)->only(['index', 'store', 'destroy']);
 });

@@ -17,31 +17,51 @@ class RolePermissionSeeder extends Seeder
     {
         //daftar role atau peran
         $roles = [
-            'super_admin', 'builder', 'dpo', 'bpo', 'chairman', 'vice_chairman', 'secretary', 'treasurer', 'head_of_division', 'administrator', 'member'
+            ['name' => 'super_admin', 'label' => 'Super Admin'],
+            ['name' => 'builder', 'label' => 'Pembina'],
+            ['name' => 'dpo', 'label' => 'Dewan Penasehat Organisasi'],
+            ['name' => 'bpo', 'label' => 'Badan Penasehat Organisasi'],
+            ['name' => 'chairman','label' => 'Ketua Umum'],
+            ['name' => 'vice_chairman', 'label' => 'Wakil Ketua Umum'],
+            ['name' => 'secretary', 'label' => 'Sekretaris'],
+            ['name' => 'treasurer', 'label' => 'Bendahara'],
+            ['name' => 'head_of_division', 'label' => 'Kepala Divisi'],
+            ['name' => 'staff', 'label' => 'Pengurus / Staff'],
+            ['name' => 'member','label' => 'Anggota'],
         ];
 
-        foreach ($roles as $role) {
-            Role::create(['name' => $role]);
+        foreach ($roles as $item => $role) {
+            Role::create([
+                'name' => $role['name'],
+                'label' => $role['label']
+            ]);
         }
 
         //permissions atau hak akses
         //hak akses akan diberikan kepada setiap role
         $permissions = [
-            'create_user', 'read_user', 'update_user', 'delete_user',
-            'create_site_setting', 'read_site_setting', 'update_site_setting', 'delete_site_setting',
-            'create_blog_post', 'read_blog_post', 'update_blog_post', 'delete_blog_post',
-            'create_blog_comment', 'read_blog_comment', 'update_blog_comment', 'delete_blog_comment',
-            'create_member', 'read_member', 'update_member', 'delete_member',
-            'create_mail', 'read_mail', 'update_mail', 'delete_mail',
-            'create_inventory', 'read_inventory', 'update_inventory', 'delete_inventory',
-            'create_finance', 'read_finance', 'update_finance', 'delete_finance',
-            'create_form', 'read_form', 'update_form', 'delete_form',
-            'create_archive', 'read_archive', 'update_archive', 'delete_archive',
-            'create_gallery', 'read_gallery', 'update_gallery', 'delete_gallery',
+            ['name' => 'create_user', 'label' => 'Menambah User'], ['name' => 'read_user', 'label' => 'Melihat User'], ['name' => 'update_user', 'label' => 'Mengubah User'], ['name' => 'delete_user', 'label' => 'Menghapus User'],
+            ['name' => 'create_site_setting', 'label' => 'Menambah Pengaturan Situs'], ['name' => 'read_site_setting', 'label' => 'Melihat Pengaturan Situs'], ['name' => 'update_site_setting', 'label' => 'Mengubah User'], ['name' => 'delete_site_setting', 'label' => 'Menghapus Pengaturan Situs'],
+            ['name' => 'create_blog_post', 'label' => 'Menambah Posting Blog'], ['name' => 'read_blog_post', 'label' => 'Melihat Posting Blog'], ['name' => 'update_blog_post', 'label' => 'Mengubah Posting Blog'], ['name' => 'delete_blog_post', 'label' => 'Menghapus Posting Blog'],
+            ['name' => 'create_blog_comment', 'label' => 'Menambah Komentar Posting Blog'], ['name' => 'read_blog_comment', 'label' => 'Melihat Komentar Posting Blog'], ['name' => 'update_blog_comment', 'label' => 'Mengubah Komentar Posting BLog'], ['name' => 'delete_blog_comment', 'label' => 'Menghapus Komentar Posting Blog'],
+            ['name' => 'create_member', 'label' => 'Menambah Anggota'], ['name' => 'read_member', 'label' => 'Melihat Anggota'], ['name' => 'update_member', 'label' => 'Mengubah Anggota'], ['name' => 'delete_member', 'label' => 'Menghapus Anggota'],
+            ['name' => 'create_period', 'label' => 'Menambah Periode'], ['name' => 'read_period', 'label' => 'Melihat Periode'], ['name' => 'update_period', 'label' => 'Mengubah Periode'], ['name' => 'delete_period', 'label' => 'Menghapus Periode'],
+            ['name' => 'create_division', 'label' => 'Menambah Divisi'], ['name' => 'read_division', 'label' => 'Melihat Divisi'], ['name' => 'update_division', 'label' => 'Mengubah Divisi'], ['name' => 'delete_division', 'label' => 'Menghapus Divisi'],
+            ['name' => 'create_position', 'label' => 'Menambah Jabatan'], ['name' => 'read_position', 'label' => 'Melihat Jabatan'], ['name' => 'update_position', 'label' => 'Mengubah Jabatan'], ['name' => 'delete_position', 'label' => 'Menghapus Jabatan'],
+            ['name' => 'create_staff', 'label' => 'Menambah Pengurus / Staff'], ['name' => 'read_staff', 'label' => 'Melihat Pengurus / Staff'], ['name' => 'update_staff', 'label' => 'Mengubah Pengurus / Staff'], ['name' => 'delete_staff', 'label' => 'Menghapus Pengurus / Staff'],
+            ['name' => 'create_mail', 'label' => 'Menambah Surat Menyurat'], ['name' => 'read_mail', 'label' => 'Melihat Surat Menyurat'], ['name' => 'update_mail', 'label' => 'Mengubah Surat Menyurat'], ['name' => 'delete_mail', 'label' => 'Menghapus Surat Menyurat'],
+            ['name' => 'create_inventory', 'label' => 'Menambah Inventaris'], ['name' => 'read_inventory', 'label' => 'Melihat Inventaris'], ['name' => 'update_inventory', 'label' => 'Mengubah Inventaris'], ['name' => 'delete_inventory', 'label' => 'Menghapus Inventaris'],
+            ['name' => 'create_finance', 'label' => 'Menambah Keuangan'], ['name' => 'read_finance', 'label' => 'Melihat Keuangan'], ['name' => 'update_finance', 'label' => 'Mengubah Keuangan'], ['name' => 'delete_finance', 'label' => 'Menghapus Keuangan'],
+            ['name' => 'create_form', 'label' => 'Menambah Formulir'], ['name' => 'read_form', 'label' => 'Melihat Formulir'], ['name' => 'update_form', 'label' => 'Mengubah Formulir'], ['name' => 'delete_form', 'label' => 'Menghapus Formulir'],
+            ['name' => 'create_archive', 'label' => 'Menambah File dan Arsip'], ['name' => 'read_archive', 'label' => 'Melihat File dan Arsip'], ['name' => 'update_archive', 'label' => 'Mengubah File dan Arsip'], ['name' => 'delete_archive', 'label' => 'Menghapus File dan Arsip'],
+            ['name' => 'create_gallery', 'label' => 'Menambah Galeri Foto'], ['name' => 'read_gallery', 'label' => 'Melihat Galeri Foto'], ['name' => 'update_gallery', 'label' => 'Mengubah Galeri Foto'], ['name' => 'delete_gallery', 'label' => 'Menghapus Galeri Foto'],
         ];
 
-        foreach ($permissions as $permission) {
-            Permission::create(['name' => $permission]);
+        foreach ($permissions as $item => $permission) {
+            Permission::create([
+                'name' => $permission['name'],
+                'label' => $permission['label']
+            ]);
         }
 
         //berikan hak akses ke super admin
@@ -51,11 +71,16 @@ class RolePermissionSeeder extends Seeder
             Permission::findByName('read_blog_post'),
             Permission::findByName('read_blog_comment'),
             Permission::findByName('read_member'),
+            Permission::findByName('read_period'),
+            Permission::findByName('read_division'),
+            Permission::findByName('read_position'),
+            Permission::findByName('read_staff'),
             Permission::findByName('read_mail'),
             Permission::findByName('read_inventory'),
             Permission::findByName('read_finance'),
             Permission::findByName('read_form'),
-            Permission::findByName('read_archive')
+            Permission::findByName('read_archive'),
+            Permission::findByName('read_gallery')
         ]);
 
         //berikan hak akses ke pembina
@@ -64,11 +89,16 @@ class RolePermissionSeeder extends Seeder
             Permission::findByName('create_blog_post'), Permission::findByName('read_blog_post'), Permission::findByName('update_blog_post'), Permission::findByName('delete_blog_post'),
             Permission::findByName('read_blog_comment'),
             Permission::findByName('read_member'),
+            Permission::findByName('read_period'),
+            Permission::findByName('read_division'),
+            Permission::findByName('read_position'),
+            Permission::findByName('read_staff'),
             Permission::findByName('read_mail'),
             Permission::findByName('read_inventory'),
             Permission::findByName('read_finance'),
             Permission::findByName('read_form'),
-            Permission::findByName('read_archive')
+            Permission::findByName('read_archive'),
+            Permission::findByName('read_gallery')
         ]);
 
         //berikan hak akses ke dpo
@@ -77,11 +107,16 @@ class RolePermissionSeeder extends Seeder
             Permission::findByName('create_blog_post'), Permission::findByName('read_blog_post'), Permission::findByName('update_blog_post'), Permission::findByName('delete_blog_post'),
             Permission::findByName('read_blog_comment'),
             Permission::findByName('read_member'),
+            Permission::findByName('read_period'),
+            Permission::findByName('read_division'),
+            Permission::findByName('read_position'),
+            Permission::findByName('read_staff'),
             Permission::findByName('read_mail'),
             Permission::findByName('read_inventory'),
             Permission::findByName('read_finance'),
             Permission::findByName('read_form'),
-            Permission::findByName('read_archive')
+            Permission::findByName('read_archive'),
+            Permission::findByName('read_gallery')
         ]);
 
         //berikan hak akses ke bpo
@@ -90,11 +125,16 @@ class RolePermissionSeeder extends Seeder
             Permission::findByName('create_blog_post'), Permission::findByName('read_blog_post'), Permission::findByName('update_blog_post'), Permission::findByName('delete_blog_post'),
             Permission::findByName('read_blog_comment'),
             Permission::findByName('read_member'),
+            Permission::findByName('read_period'),
+            Permission::findByName('read_division'),
+            Permission::findByName('read_position'),
+            Permission::findByName('read_staff'),
             Permission::findByName('read_mail'),
             Permission::findByName('read_inventory'),
             Permission::findByName('read_finance'),
             Permission::findByName('read_form'),
-            Permission::findByName('read_archive')
+            Permission::findByName('read_archive'),
+            Permission::findByName('read_gallery')
         ]);
 
         //berikan hak akses ke ketua umum
@@ -104,11 +144,16 @@ class RolePermissionSeeder extends Seeder
             Permission::findByName('create_blog_post'), Permission::findByName('read_blog_post'), Permission::findByName('update_blog_post'), Permission::findByName('delete_blog_post'),
             Permission::findByName('read_blog_comment'),
             Permission::findByName('read_member'),
+            Permission::findByName('read_period'),
+            Permission::findByName('read_division'),
+            Permission::findByName('read_position'),
+            Permission::findByName('read_staff'),
             Permission::findByName('read_mail'),
             Permission::findByName('read_inventory'),
             Permission::findByName('read_finance'),
             Permission::findByName('read_form'),
-            Permission::findByName('create_archive'), Permission::findByName('read_archive'),  Permission::findByName('update_archive'),  Permission::findByName('delete_archive')
+            Permission::findByName('create_archive'), Permission::findByName('read_archive'),  Permission::findByName('update_archive'),  Permission::findByName('delete_archive'),
+            Permission::findByName('read_gallery')
         ]);
 
         //berikan hak akses ke wakil ketua umum
@@ -118,11 +163,16 @@ class RolePermissionSeeder extends Seeder
             Permission::findByName('create_blog_post'), Permission::findByName('read_blog_post'), Permission::findByName('update_blog_post'), Permission::findByName('delete_blog_post'),
             Permission::findByName('read_blog_comment'),
             Permission::findByName('read_member'),
+            Permission::findByName('read_period'),
+            Permission::findByName('read_division'),
+            Permission::findByName('read_position'),
+            Permission::findByName('read_staff'),
             Permission::findByName('read_mail'),
             Permission::findByName('read_inventory'),
             Permission::findByName('read_finance'),
             Permission::findByName('read_form'),
-            Permission::findByName('create_archive'), Permission::findByName('read_archive'),  Permission::findByName('update_archive'),  Permission::findByName('delete_archive')
+            Permission::findByName('create_archive'), Permission::findByName('read_archive'),  Permission::findByName('update_archive'),  Permission::findByName('delete_archive'),
+            Permission::findByName('read_gallery')
         ]);
 
         //berikan hak akses ke sekretaris
@@ -132,10 +182,15 @@ class RolePermissionSeeder extends Seeder
             Permission::findByName('create_blog_post'), Permission::findByName('read_blog_post'), Permission::findByName('update_blog_post'), Permission::findByName('delete_blog_post'),
             Permission::findByName('read_blog_comment'), Permission::findByName('delete_blog_comment'),
             Permission::findByName('create_member'), Permission::findByName('read_member'), Permission::findByName('update_member'), Permission::findByName('read_member'),
+            Permission::findByName('create_period'), Permission::findByName('read_period'), Permission::findByName('update_period'), Permission::findByName('read_period'),
+            Permission::findByName('create_division'), Permission::findByName('read_division'), Permission::findByName('update_division'), Permission::findByName('read_division'),
+            Permission::findByName('create_position'), Permission::findByName('read_position'), Permission::findByName('update_position'), Permission::findByName('read_position'),
+            Permission::findByName('create_staff'), Permission::findByName('read_staff'), Permission::findByName('update_staff'), Permission::findByName('read_staff'),
             Permission::findByName('create_mail'), Permission::findByName('read_mail'), Permission::findByName('update_mail'), Permission::findByName('delete_mail'),
             Permission::findByName('create_inventory'), Permission::findByName('read_inventory'), Permission::findByName('update_inventory'), Permission::findByName('delete_inventory'),
             Permission::findByName('create_form'), Permission::findByName('read_form'), Permission::findByName('update_form'), Permission::findByName('delete_form'),
-            Permission::findByName('create_archive'), Permission::findByName('read_archive'),  Permission::findByName('update_archive'),  Permission::findByName('delete_archive')
+            Permission::findByName('create_archive'), Permission::findByName('read_archive'),  Permission::findByName('update_archive'),  Permission::findByName('delete_archive'),
+            Permission::findByName('create_gallery'), Permission::findByName('read_gallery'),  Permission::findByName('update_gallery'),  Permission::findByName('delete_gallery')
         ]);
 
         //berikan hak akses ke bendahara
@@ -146,7 +201,8 @@ class RolePermissionSeeder extends Seeder
             Permission::findByName('read_inventory'),
             Permission::findByName('create_finance'), Permission::findByName('read_finance'), Permission::findByName('update_finance'), Permission::findByName('delete_finance'),
             Permission::findByName('create_form'), Permission::findByName('read_form'),
-            Permission::findByName('create_archive'), Permission::findByName('read_archive'),  Permission::findByName('update_archive'),  Permission::findByName('delete_archive')
+            Permission::findByName('create_archive'), Permission::findByName('read_archive'),  Permission::findByName('update_archive'),  Permission::findByName('delete_archive'),
+            Permission::findByName('read_gallery')
         ]);
 
         //berikan hak akses ke kepala bidang
@@ -155,18 +211,24 @@ class RolePermissionSeeder extends Seeder
             Permission::findByName('create_blog_post'), Permission::findByName('read_blog_post'), Permission::findByName('update_blog_post'), Permission::findByName('delete_blog_post'),
             Permission::findByName('read_blog_comment'),
             Permission::findByName('read_member'),
+            Permission::findByName('read_period'),
+            Permission::findByName('read_division'),
+            Permission::findByName('read_position'),
+            Permission::findByName('read_staff'),
             Permission::findByName('read_inventory'),
             Permission::findByName('create_form'), Permission::findByName('read_form'), Permission::findByName('update_form'), Permission::findByName('delete_form'),
-            Permission::findByName('create_archive'), Permission::findByName('read_archive'),  Permission::findByName('update_archive'),  Permission::findByName('delete_archive')
+            Permission::findByName('create_archive'), Permission::findByName('read_archive'),  Permission::findByName('update_archive'),  Permission::findByName('delete_archive'),
+            Permission::findByName('create_gallery'), Permission::findByName('read_gallery'),  Permission::findByName('update_gallery'),  Permission::findByName('delete_gallery')
         ]);
 
         //berikan hak akses ke pengurus
-        $administratorRole = Role::findByName('administrator');
-        $administratorRole->givePermissionTo([
+        $staffRole = Role::findByName('staff');
+        $staffRole->givePermissionTo([
             Permission::findByName('create_blog_post'), Permission::findByName('read_blog_post'), Permission::findByName('update_blog_post'), Permission::findByName('delete_blog_post'),
             Permission::findByName('read_blog_comment'),
             Permission::findByName('read_inventory'),
-            Permission::findByName('create_archive'), Permission::findByName('read_archive'),  Permission::findByName('update_archive'),  Permission::findByName('delete_archive')
+            Permission::findByName('create_archive'), Permission::findByName('read_archive'),  Permission::findByName('update_archive'),  Permission::findByName('delete_archive'),
+            Permission::findByName('read_gallery')
         ]);
 
         //berikan hak akses ke anggota
@@ -174,7 +236,8 @@ class RolePermissionSeeder extends Seeder
         $memberRole->givePermissionTo([
             Permission::findByName('create_blog_post'), Permission::findByName('read_blog_post'), Permission::findByName('update_blog_post'), Permission::findByName('delete_blog_post'),
             Permission::findByName('read_blog_comment'),
-            Permission::findByName('read_inventory')
+            Permission::findByName('read_inventory'),
+            Permission::findByName('read_gallery')
         ]);
     }
 }

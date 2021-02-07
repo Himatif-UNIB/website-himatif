@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\SettingController;
+use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AdministratorController;
 use App\Http\Controllers\Auth\AuthController;
@@ -75,6 +77,14 @@ Route::group(['middleware' => ['auth']], function () {
         Route::group(['as' => 'settings.', 'prefix' => 'settings'], function () {
             Route::get('/', [SettingController::class, 'general'])->name('general');
             Route::put('/update', [SettingController::class, 'update'])->name('update');
+        });
+
+        Route::group(['middleware' => ['role:super_admin']], function () {
+            Route::get('/users/roles', [PermissionController::class, 'roles'])->name('users.roles');
+            Route::get('/users/permissions', [PermissionController::class, 'permissions'])->name('users.permissions');
+            Route::get('/users/permissions/{role}', [PermissionController::class, 'edit'])->name('users.permissions.edit');
+            Route::put('/users/permissions/{role}', [PermissionController::class, 'update'])->name('users.permissions.update');
+            Route::resource('users', UserController::class);
         });
     });
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
