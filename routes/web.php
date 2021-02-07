@@ -4,18 +4,14 @@ use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\AdminController;
-use App\Http\Controllers\AdministratorController;
+use App\Http\Controllers\StaffController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\FacebookAuthController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\GoogleAuthController;
-use App\Http\Controllers\DivisionController;
-use App\Http\Controllers\ForceController;
 use App\Http\Controllers\FormController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MemberController;
-use App\Http\Controllers\PeriodController;
-use App\Http\Controllers\PositionController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserFormController;
 use Illuminate\Support\Facades\Auth;
@@ -91,16 +87,16 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::put('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
 
-    Route::get('/divisions', [DivisionController::class, 'index'])->name('divisions');
-    Route::get('/periods', [PeriodController::class, 'index'])->name('periods');
-    Route::get('/forces', [ForceController::class, 'index'])->name('forces');
-    Route::get('/positions', [PositionController::class, 'index'])->name('positions');
+    Route::get('/divisions', [MemberController::class, 'divisions'])->name('divisions');
+    Route::get('/periods', [MemberController::class, 'periods'])->name('periods');
+    Route::get('/forces', [MemberController::class, 'forces'])->name('forces');
+    Route::get('/positions', [MemberController::class, 'positions'])->name('positions');
 
     Route::get('/members', [MemberController::class, 'index'])->name('members');
     Route::get('/members/{member}', [MemberController::class, 'show'])->name('members.show');
     Route::get('/members/export', [MemberController::class, 'export'])->name('members.export');
 
-    Route::get('/administrators', [AdministratorController::class, 'index'])->name('administrators');
+    Route::get('/staffs', [MemberController::class, 'staff'])->name('staffs');
 
     Route::get('/forms/{form}/answers', [FormController::class, 'answers'])->name('forms.answers');
     Route::get('/forms/{form}/export', [FormController::class, 'exportAnswer'])->name('forms.answer.export');

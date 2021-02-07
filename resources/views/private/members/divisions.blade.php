@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-@section('title', 'Manajemen Periode')
+@section('title', 'Kelola Divisi')
 
 @section('custom_head')
     <link rel="stylesheet" type="text/css"
@@ -12,16 +12,19 @@
 
 @section('content')
     <div class="layout-px-spacing">
+
         <div class="row layout-top-spacing" id="cancel-row">
             <div class="col-xl-12 col-lg-12 col-sm-12 mb-3">
                 <div class="widget-content widget-content-area">
                     <h3>
-                        Manajemen Periode
+                        Manajemen Divisi
+                        @if (current_user_can('create_division'))
                         <span class="float-right">
                             <a href="#" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#add-modal">
                                 <i class="fa fa-plus"></i>
                             </a>
                         </span>
+                        @endif
                     </h3>
                 </div>
             </div>
@@ -29,12 +32,11 @@
             <div class="col-xl-12 col-lg-12 col-sm-12  layout-spacing">
                 <div class="widget-content widget-content-area br-6">
                     <div class="table-responsive mb-4 mt-4">
-                        <table id="period-table" class="table table-hover non-hover" style="width:100%">
+                        <table id="divisions-table" class="table table-hover non-hover" style="width:100%">
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>Periode</th>
-                                    <th>Aktif?</th>
+                                    <th>Divisi</th>
                                     <th></th>
                                 </tr>
                             </thead>
@@ -43,17 +45,20 @@
                     </div>
                 </div>
             </div>
+
         </div>
+
     </div>
 @endsection
 
 @section('custom_html')
+    @if (current_user_can('create_division'))
     <div id="add-modal" class="modal animated rotateInDownLeft custo-rotateInDownLeft" role="dialog">
         <div class="modal-dialog">
             <!-- Modal content-->
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Tambah Data Periode</h5>
+                    <h5 class="modal-title">Tambah Data Divisi</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                             viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -63,38 +68,41 @@
                         </svg>
                     </button>
                 </div>
-                <form action="#" method="post">
+                <form action="#" method="post" enctype="multipart/form-data">
                     <div class="modal-body">
                         <div class="message-container"></div>
 
-                        <div class="form-group" id="period-name-field">
-                            <label for="period-name">Nama:</label>
-                            <input type="text" class="form-control" id="period-name" name="period-name" required>
+                        <div class="form-group" id="division-name-field">
+                            <label for="division-name">Nama:</label>
+                            <input type="text" class="form-control" id="division-name" name="division-name" required>
 
-                            <div class="invalid-feedback period-name-feedback"></div>
+                            <div class="invalid-feedback division-name-feedback"></div>
                         </div>
-                        <div class="form-group" id="period-active-field">
-                            <label for="period-active">
-                                <input type="checkbox" name="is_active" id="period-active" class="is_active_check" value="1">
-                                Periode Aktif
-                            </label>
+                        <div class="form-group" id="division-picture-field">
+                            <label for="division-picture">Picture:</label>
+                            <input type="file" name="division-picture" id="division-picture" class="form-control"
+                                required="required">
+
+                            <div class="invalid-feedback division-picture-feedback"></div>
                         </div>
                     </div>
                     <div class="modal-footer md-button">
                         <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12"></i> Batal</button>
-                        <button type="submit" class="btn btn-primary add-period-btn">Tambah</button>
+                        <button type="submit" class="btn btn-primary add-division-btn">Tambah</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
+    @endif
 
+    @if (current_user_can('update_division'))
     <div id="edit-modal" class="modal animated rotateInDownRight custo-rotateInDownRight" role="dialog">
         <div class="modal-dialog">
             <!-- Modal content-->
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Ubah Data Periode</h5>
+                    <h5 class="modal-title">Ubah Data Divisi</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                             viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -104,38 +112,41 @@
                         </svg>
                     </button>
                 </div>
-                <form action="#" method="post">
+                <form action="#" method="post" enctype="multipart/form-data">
                     <div class="modal-body">
                         <div class="message-container"></div>
 
-                        <div class="form-group" id="edit-period-name-field">
-                            <label for="edit-period-name">Nama:</label>
-                            <input type="text" class="form-control" id="edit-period-name" name="period-name" required>
+                        <div class="form-group" id="edit-division-name-field">
+                            <label for="edit-division-name">Nama:</label>
+                            <input type="text" class="form-control" id="edit-division-name" name="division-name" required>
 
-                            <div class="invalid-feedback period-name-feedback"></div>
+                            <div class="invalid-feedback division-name-feedback"></div>
                         </div>
-                        <div class="form-group" id="edit-period-active-field">
-                            <label for="period-active">
-                                <input type="checkbox" name="is_active" id="edit-period-active" class="is_active_check" value="1">
-                                Periode Aktif
-                            </label>
+                        <div class="form-group" id="edit-division-picture-field">
+                            <label for="edit-division-picture">Picture:</label>
+                            <input type="file" name="division-picture" id="edit-division-picture" class="form-control">
+
+                            <div class="invalid-feedback division-picture-feedback"></div>
+                            <div class="text-muted">Pilih gambar baru untuk mengganti yang lama.</div>
                         </div>
                     </div>
                     <div class="modal-footer md-button">
                         <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12"></i> Batal</button>
-                        <button type="submit" class="btn btn-primary save-period-btn">Simpan</button>
+                        <button type="submit" class="btn btn-primary save-division-btn">Simpan</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
+    @endif
 
+    @if (current_user_can('delete_division'))
     <div id="delete-modal" class="modal fade in" role="dialog">
         <div class="modal-dialog">
             <!-- Modal content-->
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Hapus Periode?</h5>
+                    <h5 class="modal-title">Hapus Divisi?</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                             viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -147,49 +158,54 @@
                 </div>
                 <div class="modal-body">
                     <div class="alert alert-info delete-message-container">
-                        Yakin ingin menghapus data periode?
+                        Yakin ingin menghapus data divisi?
                         <br>
-                        Semua <i>record</i> pengurus yang ada dalam periode ini juga akan dihapus.
+                        Semua anggota yang berada dalam divisi ini akan ditandai dalam divisi "NULL"
                     </div>
                 </div>
                 <div class="modal-footer md-button">
                     <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12"></i> Batal</button>
-                    <button type="submit" class="btn btn-danger btn-delete-period">Hapus</button>
+                    <button type="submit" class="btn btn-danger btn-delete-division">Hapus</button>
                 </div>
             </div>
         </div>
     </div>
+    @endif
 @endsection
 
 @push('custom_js')
-<script src="{{ asset('assets/plugins/table/datatable/datatables.js') }}"></script>
+    <script src="{{ asset('assets/plugins/table/datatable/datatables.js') }}"></script>
     <script>
-        let periodTable = $('#period-table').DataTable({
+        let divisionTable = $('#divisions-table').DataTable({
             ajax: {
-                url: '{{ route('api.periods.index') }}',
+                url: '{{ route('api.divisions.index') }}',
                 headers: {
                     'Authorization': `Bearer ${passportAccessToken}`
                 }
             },
             dom: '<"row"<"col-md-12"<"row"<"col-md-6"B><"col-md-6"f> > ><"col-md-12"rt> <"col-md-12"<"row"<"col-md-5"i><"col-md-7"p>>> >',
-            columns: [
-                {"data": "id"},
+            columns: [{
+                    "data": function(data, row, type) {
+                        return `<div class="d-flex">
+                                    <div class="usr-img-frame mr-2 rounded-circle">
+                                        <img alt="${data.name} Featured Image" class="img-fluid rounded-circle" src="${data.picture}">
+                                    </div>
+                                </div>`;
+                    }
+                },
                 {
                     "data": "name"
                 },
                 {
                     data: function(data, row, type) {
-                        return (data.is_active == 1) ?
-                            `<span class="badge badge-success">Aktif</span>` :
-                            `<span class="badge badge-secondary">Tidak</span>`;
-                    }
-                },
-                {
-                    data: function(data, row, type) {
                         return `
                                     <div class="text-right">
-                                        <a href="#" class="btn btn-warning btn-sm btn-edit" data-id="${data.id}"><i class="fa fa-edit"></i></a>
-                                        <a href="#" class="btn btn-danger btn-sm btn-delete" data-id="${data.id}"><i class="fa fa-trash"></i></a>
+                                        @if (current_user_can('update_division'))
+                                            <a href="#" class="btn btn-warning btn-sm btn-edit" data-id="${data.id}"><i class="fa fa-edit"></i></a>
+                                        @endif
+                                        @if (current_user_can('delete_division'))
+                                            <a href="#" class="btn btn-danger btn-sm btn-delete" data-id="${data.id}"><i class="fa fa-trash"></i></a>
+                                        @endif
                                     </div>
                                 `;
                     }
@@ -210,58 +226,60 @@
             "pageLength": 10
         });
 
-        const addPeriodModal = document.querySelector('#add-modal');
-        const addPeriodForm = addPeriodModal.querySelector('form');
-        const addPeriodBtn = addPeriodForm.querySelector('.add-period-btn');
-        const addPeriodNameField = addPeriodForm.querySelector('#period-name-field');
-        const addPeriodActiveField = addPeriodForm.querySelector('#period-active-field');
+        @if (current_user_can('create_division'))
+        const addDivisionModal = document.querySelector('#add-modal');
+        const addDivisionForm = addDivisionModal.querySelector('form');
+        const addDivisionBtn = addDivisionForm.querySelector('.add-division-btn');
+        const addDivisionNameField = addDivisionForm.querySelector('#division-name-field');
+        const addDivisionPictureField = addDivisionForm.querySelector('#division-picture-field');
 
-        const addPeriodNameInput = addPeriodNameField.querySelector('#period-name');
-        const addPeriodNameFeedback = addPeriodNameField.querySelector('.invalid-feedback');
+        const addDivisionNameInput = addDivisionNameField.querySelector('#division-name');
+        const addDivisionNameFeedback = addDivisionNameField.querySelector('.invalid-feedback');
 
-        const addPeriodActiveInput = addPeriodActiveField.querySelector('#period-active');
+        const addDivisionPictureInput = addDivisionPictureField.querySelector('#division-picture');
+        const addDivisionPictureFeedback = addDivisionPictureField.querySelector('.invalid-feedback');
 
-        const addMessageContainer = addPeriodForm.querySelector('.message-container');
+        const addMessageContainer = addDivisionForm.querySelector('.message-container');
 
-        addPeriodForm.addEventListener('submit', function(e) {
+        addDivisionForm.addEventListener('submit', function(e) {
             e.preventDefault();
 
-            addPeriodBtn.innerHTML = '<i class="fa fa-spin fa-spinner"></i> Menambah...';
-            if (addPeriodNameInput != '') {
-                addPeriodBtn.setAttribute('disabled', 'disabled');
+            addDivisionBtn.innerHTML = '<i class="fa fa-spin fa-spinner"></i> Menambah...';
+            if (addDivisionNameInput != '') {
+                let divisionData = new FormData();
+                divisionData.append('name', addDivisionNameInput.value);
+                divisionData.append('picture', addDivisionPictureInput.files[0]);
 
-                fetch('{{ route('api.periods.store') }}', {
+                addDivisionBtn.setAttribute('disabled', 'disabled');
+
+                fetch('{{ route('api.divisions.store') }}', {
                             method: 'POST',
                             headers: {
-                                'Authorization': `Bearer ${passportAccessToken}`,
-                                'Content-Type': 'application/json'
+                                'Authorization': `Bearer ${passportAccessToken}`
                             },
-                            body: JSON.stringify({
-                                name: addPeriodNameInput.value,
-                                is_active: addPeriodActiveInput.checked
-                            })
+                            body: divisionData
                         })
                     .then(res => res.json())
                     .then(res => {
-                        addPeriodBtn.removeAttribute('disabled');
+                        addDivisionBtn.removeAttribute('disabled');
 
                         if (res.error) {
-                            addPeriodBtn.innerHTML = 'Tambah';
+                            addDivisionBtn.innerHTML = 'Tambah';
 
                             if (res.validations) {
                                 const validation = res.validations;
                                 if (validation.name) {
-                                    addPeriodNameInput.classList.add('is-invalid');
-                                    addPeriodNameFeedback.innerHTML = validation.name[0]
+                                    addDivisionNameInput.classList.add('is-invalid');
+                                    addDivisionNameFeedback.innerHTML = validation.name[0]
                                 }
-                                if (validation.active) {
-                                    addPeriodActiveInput.classList.add('is-invalid');
-                                    addPeriodActiveFeedback.innerHTML = validation.active[0]
+                                if (validation.picture) {
+                                    addDivisionPictureInput.classList.add('is-invalid');
+                                    addDivisionPictureFeedback.innerHTML = validation.picture[0]
                                 }
                             }
                         } else if (res.success) {
-                            addPeriodBtn.innerHTML = '<i class="fa fa-check"></i> Berhasil!';
-                            periodTable.ajax.reload();
+                            addDivisionBtn.innerHTML = '<i class="fa fa-check"></i> Berhasil!';
+                            divisionTable.ajax.reload();
 
                             if (!addMessageContainer.classList.contains('alert')) {
                                 addMessageContainer.classList.add('alert');
@@ -270,21 +288,21 @@
                                 addMessageContainer.classList.remove('alert-info');
                             }
 
-                            if (addPeriodNameInput.classList.contains('is-invalid')) {
-                                addPeriodNameInput.classList.remove('is-invalid');
-                                addPeriodNameFeedback.innerHTML = '';
+                            if (addDivisionNameInput.classList.contains('is-invalid')) {
+                                addDivisionNameInput.classList.remove('is-invalid');
+                                addDivisionNameFeedback.innerHTML = '';
                             }
-                            if (addPeriodActiveInput.classList.contains('is-invalid')) {
-                                addPeriodActiveInput.classList.remove('is-invalid');
-                                addPeriodActiveFeedback.innerHTML = '';
+                            if (addDivisionPictureInput.classList.contains('is-invalid')) {
+                                addDivisionPictureInput.classList.remove('is-invalid');
+                                addDivisionPictureFeedback.innerHTML = '';
                             }
 
                             addMessageContainer.classList.add('alert-success');
                             addMessageContainer.innerHTML = res.message;
 
                             $('#add-modal').on('hidden.bs.modal', function(e) {
-                                addPeriodBtn.innerHTML = 'Tambah';
-                                addPeriodForm.reset();
+                                addDivisionBtn.innerHTML = 'Tambah';
+                                addDivisionForm.reset();
 
                                 addMessageContainer.classList.remove('alert');
                                 addMessageContainer.classList.remove('alert-success');
@@ -293,7 +311,7 @@
                         }
                     })
                     .catch(errors => {
-                        addPeriodBtn.innerHTML = 'Tambah';
+                        addDivisionBtn.innerHTML = 'Tambah';
 
                         if (!addMessageContainer.classList.contains('alert')) {
                             addMessageContainer.classList.add('alert');
@@ -307,83 +325,22 @@
                     });
             }
         });
+        @endif
 
-        let delete_id = 0;
-        $(document).on('click', '.btn-delete', function (e) {
-            e.preventDefault();
+        @if (current_user_can('update_division'))
+        const editDivisionModal = document.querySelector('#edit-modal');
+        const editDivisionForm = editDivisionModal.querySelector('form');
+        const editDivisionBtn = editDivisionForm.querySelector('.save-division-btn');
+        const editDivisionNameField = editDivisionForm.querySelector('#edit-division-name-field');
+        const editDivisionPictureField = editDivisionForm.querySelector('#edit-division-picture-field');
 
-            const id = $(this).data('id');
-            delete_id = id;
+        const editDivisionNameInput = editDivisionNameField.querySelector('#edit-division-name');
+        const editDivisionNameFeedback = editDivisionNameField.querySelector('.invalid-feedback');
 
-            $('#delete-modal').modal('show');
-        });
+        const editDivisionPictureInput = editDivisionPictureField.querySelector('#edit-division-picture');
+        const editDivisionPictureFeedback = editDivisionPictureField.querySelector('.invalid-feedback');
 
-        const deleteBtn = document.querySelector('.btn-delete-period');
-        const deleteMessageContainer = document.querySelector('.delete-message-container');
-
-        deleteBtn.addEventListener('click', function (e) {
-            e.preventDefault();
-
-            deleteBtn.setAttribute('disabled', 'disabled');
-            deleteBtn.innerHTML = '<i class="fa fa-spin fa-spinner"></i> Menghapus...';
-            
-            fetch(`{{ route('api.periods.destroy', false) }}/${delete_id}`, {
-                method: 'DELETE',
-                headers: {
-                    'Authorization': `Bearer ${passportAccessToken}`
-                }
-            })
-            .then(res => res.json())
-            .then(res => {
-                if (res.success) {
-                    periodTable.ajax.reload();
-                    deleteMessageContainer.innerHTML = res.message;
-
-                    deleteBtn.innerHTML = '<i class="fa fa-check"></i> Berhasil!';
-
-                    $('#delete-modal').on('hidden.bs.modal', function(e) {
-                        deleteMessageContainer.innerHTML = `Yakin ingin menghapus data periode?
-                        <br>
-                        Semua <i>record</i> pengurus yang ada dalam periode ini juga akan dihapus.`;
-
-                        deleteBtn.innerHTML = 'Hapus';
-                        deleteBtn.removeAttribute('disabled');
-                    });
-                }
-                else if (res.error) {
-                    deleteMessageContainer.innerHTML = res.message;
-
-                    deleteBtn.innerHTML = 'Hapus';
-                    deleteBtn.removeAttribute('disabled');
-
-                    $('#delete-modal').on('hidden.bs.modal', function(e) {
-                        deleteMessageContainer.innerHTML = `Yakin ingin menghapus data periode?
-                        <br>
-                        Semua <i>record</i> pengurus yang ada dalam periode ini juga akan dihapus.`;
-
-                        deleteBtn.innerHTML = 'Hapus';
-                        deleteBtn.removeAttribute('disabled');
-                    });
-                }
-            })
-            .catch(errors => {
-                deleteMessageContainer.innerHTML = errors;
-            });
-        });
-
-        const editPeriodModal = document.querySelector('#edit-modal');
-        const editPeriodForm = editPeriodModal.querySelector('form');
-        const editPeriodBtn = editPeriodForm.querySelector('.save-period-btn');
-        const editPeriodNameField = editPeriodForm.querySelector('#edit-period-name-field');
-        const editPeriodActiveField = editPeriodForm.querySelector('#edit-period-active-field');
-
-        const editPeriodNameInput = editPeriodNameField.querySelector('#edit-period-name');
-        const editPeriodNameFeedback = editPeriodNameField.querySelector('.invalid-feedback');
-
-        const editPeriodActiveInput = editPeriodActiveField.querySelector('#edit-period-active');
-        const editPeriodActiveFeedback = editPeriodActiveField.querySelector('.invalid-feedback');
-
-        const editMessageContainer = editPeriodForm.querySelector('.message-container');
+        const editMessageContainer = editDivisionForm.querySelector('.message-container');
         let edit_id = 0;
 
         $(document).on('click', '.btn-edit', function(e) {
@@ -392,22 +349,14 @@
             const id = $(this).data('id');
             edit_id = id;
 
-            fetch(`{{ route('api.periods.show', false) }}/${id}`, {
+            fetch(`{{ route('api.divisions.show', false) }}/${id}`, {
                     headers: {
                         'Authorization': `Bearer ${passportAccessToken}`
                     }
                 })
                 .then(res => res.json())
                 .then(res => {
-                    editPeriodNameInput.value = res.name;
-                    if (res.is_active == 1) {
-                        editPeriodActiveInput.setAttribute('checked', 'checked');
-                    }
-                    else {
-                        if (editPeriodActiveInput.hasAttribute('checked')) {
-                            editPeriodActiveInput.removeAttribute('checked');
-                        }
-                    }
+                    editDivisionNameInput.value = res.name;
 
                     $('#edit-modal').modal('show');
                 })
@@ -416,44 +365,47 @@
                 });
         });
 
-        editPeriodForm.addEventListener('submit', function(e) {
+        editDivisionForm.addEventListener('submit', function(e) {
             e.preventDefault();
 
-            editPeriodBtn.innerHTML = '<i class="fa fa-spin fa-spinner"></i> Menyimpan...';
-            editPeriodBtn.setAttribute('disabled', 'disabled');
+            editDivisionBtn.innerHTML = '<i class="fa fa-spin fa-spinner"></i> Menyimpan...';
+            editDivisionBtn.setAttribute('disabled', 'disabled');
 
-            fetch(`{{ route('api.periods.update', false) }}/${edit_id}`, {
-                    method: 'PUT',
+            const newDivisionData = new FormData();
+            newDivisionData.append('name', editDivisionNameInput.value);
+            if (editDivisionPictureInput.files[0]) {
+                newDivisionData.append('picture', editDivisionPictureInput.files[0]);
+            }
+            newDivisionData.append('_method', 'PUT');
+
+            fetch(`{{ route('api.divisions.update', false) }}/${edit_id}`, {
+                    method: 'POST',
                     headers: {
-                        'Authorization': `Bearer ${passportAccessToken}`,
-                        'Content-Type': 'application/json'
+                        'Authorization': `Bearer ${passportAccessToken}`
                     },
-                    body: JSON.stringify({
-                        name: editPeriodNameInput.value,
-                        is_active: editPeriodActiveInput.checked
-                    })
+                    body: newDivisionData
                 })
                 .then(res => res.json())
                 .then(res => {
-                    editPeriodBtn.removeAttribute('disabled');
+                    editDivisionBtn.removeAttribute('disabled');
 
                     if (res.error) {
-                        editPeriodBtn.innerHTML = 'Simpan';
+                        editDivisionBtn.innerHTML = 'Simpan';
 
                         if (res.validations) {
                             const validation = res.validations;
                             if (validation.name) {
-                                editPeriodNameInput.classList.add('is-invalid');
-                                editPeriodNameFeedback.innerHTML = validation.name[0]
+                                editDivisionNameInput.classList.add('is-invalid');
+                                editDivisionNameFeedback.innerHTML = validation.name[0]
                             }
-                            if (validation.active) {
-                                editPeriodActiveInput.classList.add('is-invalid');
-                                editPeriodActiveFeedback.innerHTML = validation.active[0]
+                            if (validation.picture) {
+                                editDivisionPictureInput.classList.add('is-invalid');
+                                editDivisionPictureFeedback.innerHTML = validation.picture[0]
                             }
                         }
                     } else if (res.success) {
-                        editPeriodBtn.innerHTML = '<i class="fa fa-check"></i> Berhasil!';
-                        periodTable.ajax.reload();
+                        editDivisionBtn.innerHTML = '<i class="fa fa-check"></i> Berhasil!';
+                        divisionTable.ajax.reload();
 
                         if (!editMessageContainer.classList.contains('alert')) {
                             editMessageContainer.classList.add('alert');
@@ -462,21 +414,21 @@
                             editMessageContainer.classList.remove('alert-info');
                         }
 
-                        if (editPeriodNameInput.classList.contains('is-invalid')) {
-                            editPeriodNameInput.classList.remove('is-invalid');
-                            editPeriodNameFeedback.innerHTML = '';
+                        if (editDivisionNameInput.classList.contains('is-invalid')) {
+                            editDivisionNameInput.classList.remove('is-invalid');
+                            editDivisionNameFeedback.innerHTML = '';
                         }
-                        if (editPeriodActiveInput.classList.contains('is-invalid')) {
-                            editPeriodActiveInput.classList.remove('is-invalid');
-                            editPeriodActiveFeedback.innerHTML = '';
+                        if (editDivisionPictureInput.classList.contains('is-invalid')) {
+                            editDivisionPictureInput.classList.remove('is-invalid');
+                            editDivisionPictureFeedback.innerHTML = '';
                         }
 
                         editMessageContainer.classList.add('alert-success');
                         editMessageContainer.innerHTML = res.message;
 
                         $('#edit-modal').on('hidden.bs.modal', function(e) {
-                            editPeriodBtn.innerHTML = 'Simpan';
-                            editPeriodForm.reset();
+                            editDivisionBtn.innerHTML = 'Simpan';
+                            editDivisionForm.reset();
 
                             editMessageContainer.classList.remove('alert');
                             editMessageContainer.classList.remove('alert-success');
@@ -485,7 +437,7 @@
                     }
                 })
                 .catch(errors => {
-                    editPeriodBtn.innerHTML = 'Simpan';
+                    editDivisionBtn.innerHTML = 'Simpan';
 
                     if (!editMessageContainer.classList.contains('alert')) {
                         editMessageContainer.classList.add('alert');
@@ -498,5 +450,56 @@
                     editMessageContainer.innerHTML = errors;
                 });
         });
+        @endif
+
+        @if (current_user_can('delete_division'))
+        let delete_id = 0;
+        $(document).on('click', '.btn-delete', function (e) {
+            e.preventDefault();
+
+            const id = $(this).data('id');
+            delete_id = id;
+
+            $('#delete-modal').modal('show');
+        });
+
+        const deleteBtn = document.querySelector('.btn-delete-division');
+        const deleteMessageContainer = document.querySelector('.delete-message-container');
+
+        deleteBtn.addEventListener('click', function (e) {
+            e.preventDefault();
+
+            deleteBtn.setAttribute('disabled', 'disabled');
+            deleteBtn.innerHTML = '<i class="fa fa-spin fa-spinner"></i> Menghapus...';
+            
+            fetch(`{{ route('api.divisions.destroy', false) }}/${delete_id}`, {
+                method: 'DELETE',
+                headers: {
+                    'Authorization': `Bearer ${passportAccessToken}`
+                }
+            })
+            .then(res => res.json())
+            .then(res => {
+                if (res.success) {
+                    divisionTable.ajax.reload();
+                    deleteMessageContainer.innerHTML = 'Berhasil menghapus data divisi';
+
+                    deleteBtn.innerHTML = '<i class="fa fa-check"></i> Berhasil!';
+
+                    $('#delete-modal').on('hidden.bs.modal', function(e) {
+                        deleteMessageContainer.innerHTML = `Yakin ingin menghapus data divisi?
+                        <br>
+                        Semua anggota yang berada dalam divisi ini akan ditandai dalam divisi "NULL"`;
+
+                        deleteBtn.innerHTML = 'Hapus';
+                        deleteBtn.removeAttribute('disabled');
+                    });
+                }
+            })
+            .catch(errors => {
+                deleteMessageContainer.innerHTML = errors;
+            });
+        });
+        @endif
     </script>
 @endpush

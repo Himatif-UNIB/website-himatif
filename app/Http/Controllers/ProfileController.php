@@ -17,9 +17,9 @@ class ProfileController extends Controller
     public function index()
     {
         $user = isset(auth()->user()->member) ? auth()->user()->member : auth()->user();
-        $administrators = isset(auth()->user()->member->administrators) ? auth()->user()->member->administrators : [];
+        $staffs = isset(auth()->user()->member->staffs) ? auth()->user()->member->staffs : [];
 
-        return view('profile.index', compact('user', 'administrators'));
+        return view('private.profile.index', compact('user', 'staffs'));
     }
 
     /**
@@ -92,7 +92,7 @@ class ProfileController extends Controller
         $user = auth()->user();
         $member = isset(auth()->user()->member) ? auth()->user()->member : [];
        
-        return view('profile.edit', compact('isConnectedWith', 'socialData', 'user','member' ));
+        return view('private.profile.edit', compact('isConnectedWith', 'socialData', 'user','member' ));
     }
 
     /**

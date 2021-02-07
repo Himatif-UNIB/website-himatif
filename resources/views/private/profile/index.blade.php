@@ -93,7 +93,7 @@
                     <div class="widget-content widget-content-area">
                         <h3 class="">HIMATIF</h3>
                         <div class="timeline-alter">
-                            @forelse ($administrators as $item)
+                            @forelse ($staffs as $item)
                             <div class="item-timeline">
                                 <div class="t-meta-date">
                                     <p class="">{{ $item->period->name }}</p>

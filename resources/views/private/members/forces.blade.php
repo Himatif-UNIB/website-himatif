@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-@section('title', 'Kelola Divisi')
+@section('title', 'Manajemen Angkatan')
 
 @section('custom_head')
     <link rel="stylesheet" type="text/css"
@@ -12,17 +12,18 @@
 
 @section('content')
     <div class="layout-px-spacing">
-
         <div class="row layout-top-spacing" id="cancel-row">
             <div class="col-xl-12 col-lg-12 col-sm-12 mb-3">
                 <div class="widget-content widget-content-area">
                     <h3>
-                        Manajemen Divisi
+                        Manajemen Angkatan
+                        @if (current_user_can('create_force'))
                         <span class="float-right">
                             <a href="#" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#add-modal">
                                 <i class="fa fa-plus"></i>
                             </a>
                         </span>
+                        @endif
                     </h3>
                 </div>
             </div>
@@ -30,11 +31,12 @@
             <div class="col-xl-12 col-lg-12 col-sm-12  layout-spacing">
                 <div class="widget-content widget-content-area br-6">
                     <div class="table-responsive mb-4 mt-4">
-                        <table id="divisions-table" class="table table-hover non-hover" style="width:100%">
+                        <table id="force-table" class="table table-hover non-hover" style="width:100%">
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>Divisi</th>
+                                    <th>Tahun Angkatan</th>
+                                    <th>Nama Angkatan</th>
                                     <th></th>
                                 </tr>
                             </thead>
@@ -43,19 +45,18 @@
                     </div>
                 </div>
             </div>
-
         </div>
-
     </div>
 @endsection
 
 @section('custom_html')
+    @if (current_user_can('create_force'))
     <div id="add-modal" class="modal animated rotateInDownLeft custo-rotateInDownLeft" role="dialog">
         <div class="modal-dialog">
             <!-- Modal content-->
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Tambah Data Divisi</h5>
+                    <h5 class="modal-title">Tambah Data Angkatan</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                             viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -65,39 +66,40 @@
                         </svg>
                     </button>
                 </div>
-                <form action="#" method="post" enctype="multipart/form-data">
+                <form action="#" method="post">
                     <div class="modal-body">
                         <div class="message-container"></div>
 
-                        <div class="form-group" id="division-name-field">
-                            <label for="division-name">Nama:</label>
-                            <input type="text" class="form-control" id="division-name" name="division-name" required>
+                        <div class="form-group" id="force-name-field">
+                            <label for="force-name">Nama Angkatan:</label>
+                            <input type="text" class="form-control" id="force-name" name="force-name" required>
 
-                            <div class="invalid-feedback division-name-feedback"></div>
+                            <div class="invalid-feedback force-name-feedback"></div>
                         </div>
-                        <div class="form-group" id="division-picture-field">
-                            <label for="division-picture">Picture:</label>
-                            <input type="file" name="division-picture" id="division-picture" class="form-control"
-                                required="required">
+                        <div class="form-group" id="force-year-field">
+                            <label for="force-year">Tahun Angkatan:</label>
+                            <input type="number" class="form-control" id="force-year" name="force-year" required>
 
-                            <div class="invalid-feedback division-picture-feedback"></div>
+                            <div class="invalid-feedback force-year-feedback"></div>
                         </div>
                     </div>
                     <div class="modal-footer md-button">
                         <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12"></i> Batal</button>
-                        <button type="submit" class="btn btn-primary add-division-btn">Tambah</button>
+                        <button type="submit" class="btn btn-primary add-force-btn">Tambah</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
+    @endif
 
+    @if (current_user_can('update_force'))
     <div id="edit-modal" class="modal animated rotateInDownRight custo-rotateInDownRight" role="dialog">
         <div class="modal-dialog">
             <!-- Modal content-->
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Ubah Data Divisi</h5>
+                    <h5 class="modal-title">Ubah Data Angkatan</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                             viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -107,39 +109,40 @@
                         </svg>
                     </button>
                 </div>
-                <form action="#" method="post" enctype="multipart/form-data">
+                <form action="#" method="post">
                     <div class="modal-body">
                         <div class="message-container"></div>
 
-                        <div class="form-group" id="edit-division-name-field">
-                            <label for="edit-division-name">Nama:</label>
-                            <input type="text" class="form-control" id="edit-division-name" name="division-name" required>
+                        <div class="form-group" id="edit-force-name-field">
+                            <label for="edit-force-name">Nama Angkatan:</label>
+                            <input type="text" class="form-control" id="edit-force-name" name="force-name" required>
 
-                            <div class="invalid-feedback division-name-feedback"></div>
+                            <div class="invalid-feedback force-name-feedback"></div>
                         </div>
-                        <div class="form-group" id="edit-division-picture-field">
-                            <label for="edit-division-picture">Picture:</label>
-                            <input type="file" name="division-picture" id="edit-division-picture" class="form-control">
+                        <div class="form-group" id="edit-force-year-field">
+                            <label for="edit-force-year">Tahun Angkatan:</label>
+                            <input type="number" class="form-control" id="edit-force-year" name="edit-force-year" required>
 
-                            <div class="invalid-feedback division-picture-feedback"></div>
-                            <div class="text-muted">Pilih gambar baru untuk mengganti yang lama.</div>
+                            <div class="invalid-feedback force-year-feedback"></div>
                         </div>
                     </div>
                     <div class="modal-footer md-button">
                         <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12"></i> Batal</button>
-                        <button type="submit" class="btn btn-primary save-division-btn">Simpan</button>
+                        <button type="submit" class="btn btn-primary save-force-btn">Simpan</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
+    @endif
 
+    @if (current_user_can('delete_force'))
     <div id="delete-modal" class="modal fade in" role="dialog">
         <div class="modal-dialog">
             <!-- Modal content-->
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Hapus Divisi?</h5>
+                    <h5 class="modal-title">Hapus Angkatan?</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                             viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -151,40 +154,35 @@
                 </div>
                 <div class="modal-body">
                     <div class="alert alert-info delete-message-container">
-                        Yakin ingin menghapus data divisi?
+                        Yakin ingin menghapus data angkatan?
                         <br>
-                        Semua anggota yang berada dalam divisi ini akan ditandai dalam divisi "NULL"
+                        Semua anggota dengan angkatan ini akan ditandai "NULL"
                     </div>
                 </div>
                 <div class="modal-footer md-button">
                     <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12"></i> Batal</button>
-                    <button type="submit" class="btn btn-danger btn-delete-division">Hapus</button>
+                    <button type="submit" class="btn btn-danger btn-delete-force">Hapus</button>
                 </div>
             </div>
         </div>
     </div>
+    @endif
 @endsection
 
 @push('custom_js')
-    <script src="{{ asset('assets/plugins/table/datatable/datatables.js') }}"></script>
+<script src="{{ asset('assets/plugins/table/datatable/datatables.js') }}"></script>
     <script>
-        let divisionTable = $('#divisions-table').DataTable({
+        let forceTable = $('#force-table').DataTable({
             ajax: {
-                url: '{{ route('api.divisions.index') }}',
+                url: '{{ route('api.forces.index') }}',
                 headers: {
                     'Authorization': `Bearer ${passportAccessToken}`
                 }
             },
             dom: '<"row"<"col-md-12"<"row"<"col-md-6"B><"col-md-6"f> > ><"col-md-12"rt> <"col-md-12"<"row"<"col-md-5"i><"col-md-7"p>>> >',
-            columns: [{
-                    "data": function(data, row, type) {
-                        return `<div class="d-flex">
-                                    <div class="usr-img-frame mr-2 rounded-circle">
-                                        <img alt="${data.name} Featured Image" class="img-fluid rounded-circle" src="${data.picture}">
-                                    </div>
-                                </div>`;
-                    }
-                },
+            columns: [
+                {"data": "id"},
+                {"data": "year"},
                 {
                     "data": "name"
                 },
@@ -192,8 +190,12 @@
                     data: function(data, row, type) {
                         return `
                                     <div class="text-right">
-                                        <a href="#" class="btn btn-warning btn-sm btn-edit" data-id="${data.id}"><i class="fa fa-edit"></i></a>
-                                        <a href="#" class="btn btn-danger btn-sm btn-delete" data-id="${data.id}"><i class="fa fa-trash"></i></a>
+                                        @if (current_user_can('update_force'))
+                                            <a href="#" class="btn btn-warning btn-sm btn-edit" data-id="${data.id}"><i class="fa fa-edit"></i></a>
+                                        @endif
+                                        @if (current_user_can('delete_force'))
+                                            <a href="#" class="btn btn-danger btn-sm btn-delete" data-id="${data.id}"><i class="fa fa-trash"></i></a>
+                                        @endif
                                     </div>
                                 `;
                     }
@@ -214,59 +216,59 @@
             "pageLength": 10
         });
 
-        const addDivisionModal = document.querySelector('#add-modal');
-        const addDivisionForm = addDivisionModal.querySelector('form');
-        const addDivisionBtn = addDivisionForm.querySelector('.add-division-btn');
-        const addDivisionNameField = addDivisionForm.querySelector('#division-name-field');
-        const addDivisionPictureField = addDivisionForm.querySelector('#division-picture-field');
+        @if (current_user_can('create_force'))
+        const addForceModal = document.querySelector('#add-modal');
+        const addForceForm = addForceModal.querySelector('form');
+        const addForceBtn = addForceForm.querySelector('.add-force-btn');
+        const addForceNameField = addForceForm.querySelector('#force-name-field');
+        const addForceYearField = addForceForm.querySelector('#force-year-field');
 
-        const addDivisionNameInput = addDivisionNameField.querySelector('#division-name');
-        const addDivisionNameFeedback = addDivisionNameField.querySelector('.invalid-feedback');
+        const addForceNameInput = addForceNameField.querySelector('#force-name');
+        const addForceNameFeedback = addForceNameField.querySelector('.invalid-feedback');
+        const addForceYearInput = addForceYearField.querySelector('#force-year');
+        const addForceYearFeedback = addForceYearField.querySelector('.invalid-feedback');
 
-        const addDivisionPictureInput = addDivisionPictureField.querySelector('#division-picture');
-        const addDivisionPictureFeedback = addDivisionPictureField.querySelector('.invalid-feedback');
+        const addMessageContainer = addForceForm.querySelector('.message-container');
 
-        const addMessageContainer = addDivisionForm.querySelector('.message-container');
-
-        addDivisionForm.addEventListener('submit', function(e) {
+        addForceForm.addEventListener('submit', function(e) {
             e.preventDefault();
 
-            addDivisionBtn.innerHTML = '<i class="fa fa-spin fa-spinner"></i> Menambah...';
-            if (addDivisionNameInput != '') {
-                let divisionData = new FormData();
-                divisionData.append('name', addDivisionNameInput.value);
-                divisionData.append('picture', addDivisionPictureInput.files[0]);
+            addForceBtn.innerHTML = '<i class="fa fa-spin fa-spinner"></i> Menambah...';
+            if (addForceNameInput != '' && addForceYearInput != '') {
+                addForceBtn.setAttribute('disabled', 'disabled');
 
-                addDivisionBtn.setAttribute('disabled', 'disabled');
-
-                fetch('{{ route('api.divisions.store') }}', {
+                fetch('{{ route('api.forces.store') }}', {
                             method: 'POST',
                             headers: {
-                                'Authorization': `Bearer ${passportAccessToken}`
+                                'Authorization': `Bearer ${passportAccessToken}`,
+                                'Content-Type': 'application/json'
                             },
-                            body: divisionData
+                            body: JSON.stringify({
+                                name: addForceNameInput.value,
+                                year: addForceYearInput.value
+                            })
                         })
                     .then(res => res.json())
                     .then(res => {
-                        addDivisionBtn.removeAttribute('disabled');
+                        addForceBtn.removeAttribute('disabled');
 
                         if (res.error) {
-                            addDivisionBtn.innerHTML = 'Tambah';
+                            addForceBtn.innerHTML = 'Tambah';
 
                             if (res.validations) {
                                 const validation = res.validations;
                                 if (validation.name) {
-                                    addDivisionNameInput.classList.add('is-invalid');
-                                    addDivisionNameFeedback.innerHTML = validation.name[0]
+                                    addForceNameInput.classList.add('is-invalid');
+                                    addForceNameFeedback.innerHTML = validation.name[0]
                                 }
-                                if (validation.picture) {
-                                    addDivisionPictureInput.classList.add('is-invalid');
-                                    addDivisionPictureFeedback.innerHTML = validation.picture[0]
+                                if (validation.year) {
+                                    addForceYearInput.classList.add('is-invalid');
+                                    addForceYearFeedback.innerHTML = validation.year[0]
                                 }
                             }
                         } else if (res.success) {
-                            addDivisionBtn.innerHTML = '<i class="fa fa-check"></i> Berhasil!';
-                            divisionTable.ajax.reload();
+                            addForceBtn.innerHTML = '<i class="fa fa-check"></i> Berhasil!';
+                            forceTable.ajax.reload();
 
                             if (!addMessageContainer.classList.contains('alert')) {
                                 addMessageContainer.classList.add('alert');
@@ -275,21 +277,21 @@
                                 addMessageContainer.classList.remove('alert-info');
                             }
 
-                            if (addDivisionNameInput.classList.contains('is-invalid')) {
-                                addDivisionNameInput.classList.remove('is-invalid');
-                                addDivisionNameFeedback.innerHTML = '';
+                            if (addForceNameInput.classList.contains('is-invalid')) {
+                                addForceNameInput.classList.remove('is-invalid');
+                                addForceNameFeedback.innerHTML = '';
                             }
-                            if (addDivisionPictureInput.classList.contains('is-invalid')) {
-                                addDivisionPictureInput.classList.remove('is-invalid');
-                                addDivisionPictureFeedback.innerHTML = '';
+                            if (addForceYearInput.classList.contains('is-invalid')) {
+                                addForceYearInput.classList.remove('is-invalid');
+                                addForceYearFeedback.innerHTML = '';
                             }
 
                             addMessageContainer.classList.add('alert-success');
                             addMessageContainer.innerHTML = res.message;
 
                             $('#add-modal').on('hidden.bs.modal', function(e) {
-                                addDivisionBtn.innerHTML = 'Tambah';
-                                addDivisionForm.reset();
+                                addForceBtn.innerHTML = 'Tambah';
+                                addForceForm.reset();
 
                                 addMessageContainer.classList.remove('alert');
                                 addMessageContainer.classList.remove('alert-success');
@@ -298,7 +300,7 @@
                         }
                     })
                     .catch(errors => {
-                        addDivisionBtn.innerHTML = 'Tambah';
+                        addForceBtn.innerHTML = 'Tambah';
 
                         if (!addMessageContainer.classList.contains('alert')) {
                             addMessageContainer.classList.add('alert');
@@ -312,20 +314,86 @@
                     });
             }
         });
+        @endif
 
-        const editDivisionModal = document.querySelector('#edit-modal');
-        const editDivisionForm = editDivisionModal.querySelector('form');
-        const editDivisionBtn = editDivisionForm.querySelector('.save-division-btn');
-        const editDivisionNameField = editDivisionForm.querySelector('#edit-division-name-field');
-        const editDivisionPictureField = editDivisionForm.querySelector('#edit-division-picture-field');
+        @if (current_user_can('delete_force'))
+        let delete_id = 0;
+        $(document).on('click', '.btn-delete', function (e) {
+            e.preventDefault();
 
-        const editDivisionNameInput = editDivisionNameField.querySelector('#edit-division-name');
-        const editDivisionNameFeedback = editDivisionNameField.querySelector('.invalid-feedback');
+            const id = $(this).data('id');
+            delete_id = id;
 
-        const editDivisionPictureInput = editDivisionPictureField.querySelector('#edit-division-picture');
-        const editDivisionPictureFeedback = editDivisionPictureField.querySelector('.invalid-feedback');
+            $('#delete-modal').modal('show');
+        });
 
-        const editMessageContainer = editDivisionForm.querySelector('.message-container');
+        const deleteBtn = document.querySelector('.btn-delete-force');
+        const deleteMessageContainer = document.querySelector('.delete-message-container');
+
+        deleteBtn.addEventListener('click', function (e) {
+            e.preventDefault();
+
+            deleteBtn.setAttribute('disabled', 'disabled');
+            deleteBtn.innerHTML = '<i class="fa fa-spin fa-spinner"></i> Menghapus...';
+            
+            fetch(`{{ route('api.forces.destroy', false) }}/${delete_id}`, {
+                method: 'DELETE',
+                headers: {
+                    'Authorization': `Bearer ${passportAccessToken}`
+                }
+            })
+            .then(res => res.json())
+            .then(res => {
+                if (res.success) {
+                    forceTable.ajax.reload();
+                    deleteMessageContainer.innerHTML = res.message;
+
+                    deleteBtn.innerHTML = '<i class="fa fa-check"></i> Berhasil!';
+
+                    $('#delete-modal').on('hidden.bs.modal', function(e) {
+                        deleteMessageContainer.innerHTML = `Yakin ingin menghapus data angkatan?
+                        <br>
+                        Semua anggota dengan angkatan ini akan ditandai "NULL"`;
+
+                        deleteBtn.innerHTML = 'Hapus';
+                        deleteBtn.removeAttribute('disabled');
+                    });
+                }
+                else if (res.error) {
+                    deleteMessageContainer.innerHTML = res.message;
+
+                    deleteBtn.innerHTML = 'Hapus';
+                    deleteBtn.removeAttribute('disabled');
+
+                    $('#delete-modal').on('hidden.bs.modal', function(e) {
+                        deleteMessageContainer.innerHTML = `Yakin ingin menghapus data angkatan?
+                        <br>
+                        Semua anggota dengan angkatan ini akan ditandai "NULL"`;
+
+                        deleteBtn.innerHTML = 'Hapus';
+                        deleteBtn.removeAttribute('disabled');
+                    });
+                }
+            })
+            .catch(errors => {
+                deleteMessageContainer.innerHTML = errors;
+            });
+        });
+        @endif
+
+        @if (current_user_can('update_force'))
+        const editForceModal = document.querySelector('#edit-modal');
+        const editForceForm = editForceModal.querySelector('form');
+        const editForceBtn = editForceForm.querySelector('.save-force-btn');
+        const editForceNameField = editForceForm.querySelector('#edit-force-name-field');
+        const editForceYearField = editForceForm.querySelector('#edit-force-year-field');
+
+        const editForceNameInput = editForceNameField.querySelector('#edit-force-name');
+        const editForceNameFeedback = editForceNameField.querySelector('.invalid-feedback');
+        const editForceYearInput = editForceYearField.querySelector('#edit-force-year');
+        const editForceYearFeedback = editForceYearField.querySelector('.invalid-feedback');
+
+        const editMessageContainer = editForceForm.querySelector('.message-container');
         let edit_id = 0;
 
         $(document).on('click', '.btn-edit', function(e) {
@@ -334,15 +402,16 @@
             const id = $(this).data('id');
             edit_id = id;
 
-            fetch(`{{ route('api.divisions.show', false) }}/${id}`, {
+            fetch(`{{ route('api.forces.show', false) }}/${id}`, {
                     headers: {
                         'Authorization': `Bearer ${passportAccessToken}`
                     }
                 })
                 .then(res => res.json())
                 .then(res => {
-                    editDivisionNameInput.value = res.name;
-
+                    editForceNameInput.value = res.name;
+                    editForceYearInput.value = res.year;
+                    
                     $('#edit-modal').modal('show');
                 })
                 .catch(errors => {
@@ -350,47 +419,50 @@
                 });
         });
 
-        editDivisionForm.addEventListener('submit', function(e) {
+        editForceForm.addEventListener('submit', function(e) {
             e.preventDefault();
 
-            editDivisionBtn.innerHTML = '<i class="fa fa-spin fa-spinner"></i> Menyimpan...';
-            editDivisionBtn.setAttribute('disabled', 'disabled');
-
-            const newDivisionData = new FormData();
-            newDivisionData.append('name', editDivisionNameInput.value);
-            if (editDivisionPictureInput.files[0]) {
-                newDivisionData.append('picture', editDivisionPictureInput.files[0]);
+            if (editForceYearInput.value.length != 4 || editForceYearInput.value < 1970) {
+                editForceYearInput.classList.add('is-invalid');
+                editForceYearFeedback.innerHTML = 'Masukkan tahun dengan benar';
+                return false;
             }
-            newDivisionData.append('_method', 'PUT');
 
-            fetch(`{{ route('api.divisions.update', false) }}/${edit_id}`, {
-                    method: 'POST',
+            editForceBtn.innerHTML = '<i class="fa fa-spin fa-spinner"></i> Menyimpan...';
+            editForceBtn.setAttribute('disabled', 'disabled');
+
+            fetch(`{{ route('api.forces.update', false) }}/${edit_id}`, {
+                    method: 'PUT',
                     headers: {
-                        'Authorization': `Bearer ${passportAccessToken}`
+                        'Authorization': `Bearer ${passportAccessToken}`,
+                        'Content-Type': 'application/json'
                     },
-                    body: newDivisionData
+                    body: JSON.stringify({
+                        name: editForceNameInput.value,
+                        year: editForceYearInput.value
+                    })
                 })
                 .then(res => res.json())
                 .then(res => {
-                    editDivisionBtn.removeAttribute('disabled');
+                    editForceBtn.removeAttribute('disabled');
 
                     if (res.error) {
-                        editDivisionBtn.innerHTML = 'Simpan';
+                        editForceBtn.innerHTML = 'Simpan';
 
                         if (res.validations) {
                             const validation = res.validations;
                             if (validation.name) {
-                                editDivisionNameInput.classList.add('is-invalid');
-                                editDivisionNameFeedback.innerHTML = validation.name[0]
+                                editForceNameInput.classList.add('is-invalid');
+                                editForceNameFeedback.innerHTML = validation.name[0]
                             }
-                            if (validation.picture) {
-                                editDivisionPictureInput.classList.add('is-invalid');
-                                editDivisionPictureFeedback.innerHTML = validation.picture[0]
+                            if (validation.active) {
+                                editForceYearInput.classList.add('is-invalid');
+                                editForceYearFeedback.innerHTML = validation.active[0]
                             }
                         }
                     } else if (res.success) {
-                        editDivisionBtn.innerHTML = '<i class="fa fa-check"></i> Berhasil!';
-                        divisionTable.ajax.reload();
+                        editForceBtn.innerHTML = '<i class="fa fa-check"></i> Berhasil!';
+                        forceTable.ajax.reload();
 
                         if (!editMessageContainer.classList.contains('alert')) {
                             editMessageContainer.classList.add('alert');
@@ -399,21 +471,21 @@
                             editMessageContainer.classList.remove('alert-info');
                         }
 
-                        if (editDivisionNameInput.classList.contains('is-invalid')) {
-                            editDivisionNameInput.classList.remove('is-invalid');
-                            editDivisionNameFeedback.innerHTML = '';
+                        if (editForceNameInput.classList.contains('is-invalid')) {
+                            editForceNameInput.classList.remove('is-invalid');
+                            editForceNameFeedback.innerHTML = '';
                         }
-                        if (editDivisionPictureInput.classList.contains('is-invalid')) {
-                            editDivisionPictureInput.classList.remove('is-invalid');
-                            editDivisionPictureFeedback.innerHTML = '';
+                        if (editForceYearInput.classList.contains('is-invalid')) {
+                            editForceYearInput.classList.remove('is-invalid');
+                            editForceYearFeedback.innerHTML = '';
                         }
 
                         editMessageContainer.classList.add('alert-success');
                         editMessageContainer.innerHTML = res.message;
 
                         $('#edit-modal').on('hidden.bs.modal', function(e) {
-                            editDivisionBtn.innerHTML = 'Simpan';
-                            editDivisionForm.reset();
+                            editForceBtn.innerHTML = 'Simpan';
+                            editForceForm.reset();
 
                             editMessageContainer.classList.remove('alert');
                             editMessageContainer.classList.remove('alert-success');
@@ -422,7 +494,8 @@
                     }
                 })
                 .catch(errors => {
-                    editDivisionBtn.innerHTML = 'Simpan';
+                    editForceBtn.innerHTML = 'Simpan';
+                    editForceBtn.removeAttribute('disabled');
 
                     if (!editMessageContainer.classList.contains('alert')) {
                         editMessageContainer.classList.add('alert');
@@ -435,53 +508,6 @@
                     editMessageContainer.innerHTML = errors;
                 });
         });
-
-        let delete_id = 0;
-        $(document).on('click', '.btn-delete', function (e) {
-            e.preventDefault();
-
-            const id = $(this).data('id');
-            delete_id = id;
-
-            $('#delete-modal').modal('show');
-        });
-
-        const deleteBtn = document.querySelector('.btn-delete-division');
-        const deleteMessageContainer = document.querySelector('.delete-message-container');
-
-        deleteBtn.addEventListener('click', function (e) {
-            e.preventDefault();
-
-            deleteBtn.setAttribute('disabled', 'disabled');
-            deleteBtn.innerHTML = '<i class="fa fa-spin fa-spinner"></i> Menghapus...';
-            
-            fetch(`{{ route('api.divisions.destroy', false) }}/${delete_id}`, {
-                method: 'DELETE',
-                headers: {
-                    'Authorization': `Bearer ${passportAccessToken}`
-                }
-            })
-            .then(res => res.json())
-            .then(res => {
-                if (res.success) {
-                    divisionTable.ajax.reload();
-                    deleteMessageContainer.innerHTML = 'Berhasil menghapus data divisi';
-
-                    deleteBtn.innerHTML = '<i class="fa fa-check"></i> Berhasil!';
-
-                    $('#delete-modal').on('hidden.bs.modal', function(e) {
-                        deleteMessageContainer.innerHTML = `Yakin ingin menghapus data divisi?
-                        <br>
-                        Semua anggota yang berada dalam divisi ini akan ditandai dalam divisi "NULL"`;
-
-                        deleteBtn.innerHTML = 'Hapus';
-                        deleteBtn.removeAttribute('disabled');
-                    });
-                }
-            })
-            .catch(errors => {
-                deleteMessageContainer.innerHTML = errors;
-            });
-        });
+        @endif
     </script>
 @endpush

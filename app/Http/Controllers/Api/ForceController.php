@@ -10,6 +10,22 @@ use Illuminate\Support\Facades\Validator;
 class ForceController extends Controller
 {
     /**
+     * Membatasi akses ke api
+     * 
+     * - create_force -> store()
+     * - read_force -> index(), show()
+     * - update_force -> update()
+     * - delete_force -> destroy()
+     */
+    public function __construct()
+    {
+        $this->middleware(['permission:create_force'])->only('store');
+        $this->middleware(['permission:read_force'])->only(['index', 'show']);
+        $this->middleware(['permission:update_force'])->only('update');
+        $this->middleware(['permission:delete_force'])->only('destroy');
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response

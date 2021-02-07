@@ -17,11 +17,13 @@
                 <div class="widget-content widget-content-area">
                     <h3>
                         Manajemen Jabatan
+                        @if (current_user_can('create_position'))
                         <span class="float-right">
                             <a href="#" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#add-modal">
                                 <i class="fa fa-plus"></i>
                             </a>
                         </span>
+                        @endif
                     </h3>
                 </div>
             </div>
@@ -49,6 +51,7 @@
 @endsection
 
 @section('custom_html')
+    @if (current_user_can('create_position'))
     <div id="add-modal" class="modal animated rotateInDownLeft custo-rotateInDownLeft" role="dialog">
         <div class="modal-dialog">
             <!-- Modal content-->
@@ -95,7 +98,9 @@
             </div>
         </div>
     </div>
+    @endif
 
+    @if (current_user_can('update_position'))
     <div id="edit-modal" class="modal animated rotateInDownRight custo-rotateInDownRight" role="dialog">
         <div class="modal-dialog">
             <!-- Modal content-->
@@ -142,7 +147,9 @@
             </div>
         </div>
     </div>
+    @endif
 
+    @if (current_user_can('delete_position'))
     <div id="delete-modal" class="modal fade in" role="dialog">
         <div class="modal-dialog">
             <!-- Modal content-->
@@ -174,6 +181,7 @@
             </div>
         </div>
     </div>
+    @endif
 @endsection
 
 @push('custom_js')
@@ -247,8 +255,12 @@
                     data: function(data, row, type) {
                         return `
                                         <div class="text-right">
-                                            <a href="#" class="btn btn-warning btn-sm btn-edit" data-id="${data.id}"><i class="fa fa-edit"></i></a>
-                                            <a href="#" class="btn btn-danger btn-sm btn-delete" data-id="${data.id}"><i class="fa fa-trash"></i></a>
+                                            @if (current_user_can('update_position'))
+                                                <a href="#" class="btn btn-warning btn-sm btn-edit" data-id="${data.id}"><i class="fa fa-edit"></i></a>
+                                            @endif
+                                            @if (current_user_can('delete_position'))
+                                                <a href="#" class="btn btn-danger btn-sm btn-delete" data-id="${data.id}"><i class="fa fa-trash"></i></a>
+                                            @endif
                                         </div>
                                     `;
                     }
@@ -272,6 +284,7 @@
             "pageLength": 10
         });
 
+        @if (current_user_can('create_position'))
         $('#add-modal').on('show.bs.modal', function () {
             loadDivisions(document.querySelector('#position-division'));
         });
@@ -394,7 +407,9 @@
                     });
             }
         });
+        @endif
 
+        @if (current_user_can('delete_position'))
         let delete_id = 0;
         $(document).on('click', '.btn-delete', function (e) {
             e.preventDefault();
@@ -457,7 +472,9 @@
                 deleteMessageContainer.innerHTML = errors;
             });
         });
+        @endif
 
+        @if (current_user_can('update_position'))
         const editPositionModal = document.querySelector('#edit-modal');
         const editPositionForm = editPositionModal.querySelector('form');
         const editPositionBtn = editPositionForm.querySelector('.save-position-btn');
@@ -593,5 +610,6 @@
                     editMessageContainer.innerHTML = errors;
                 });
         });
+        @endif
     </script>
 @endpush

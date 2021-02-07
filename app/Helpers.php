@@ -387,3 +387,58 @@ if ( ! function_exists('isEmail'))
         return filter_var($str, FILTER_VALIDATE_EMAIL);
     }
 }
+
+if ( ! function_exists('current_user_can'))
+{
+    /**
+     * Memeriksa apakah user dapat melakukan tindakan
+     * 
+     * Memeriksa apakah user yang sedang login dapat melakukan
+     * tindakan yang ditanyakan atau tidak.
+     * `$permissions` bisa berisi single string atau array.
+     * Operand merupakan operand perbandingan, hanya berlaku jika
+     * `$permissions` adalah array
+     * 
+     * 
+     * @param string    $permissions
+     * @param string    $operand
+     * 
+     * @since   1.0.0
+     * @author  mulyosyahidin95
+     * 
+     * @return Boolean
+     */
+    function current_user_can($permissions = NULL, $operand = 'OR')
+    {
+        if ($permissions == NULL) {
+            return false;
+        }
+
+        if (is_array($permissions) && count($permissions) > 0) {
+            $can = false;
+            $count = 0;
+
+            if ($operand == 'OR') {
+                foreach ($permissions as $permission) {
+                    if (auth()->user()->can($permission)) {
+                        $count += 1;
+                    }
+                }
+
+                return ($count > 0);
+            }
+            else if ($operand == 'AND') {
+                foreach ($permissions as $permission) {
+                    if (auth()->user()->can($permission)) {
+                        $count += 1;
+                    }
+                }
+
+                return (count($permissions) === $count);
+            }
+        }
+        else {
+            return auth()->user()->can($permissions);
+        }
+    }
+}

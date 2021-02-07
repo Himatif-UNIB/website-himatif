@@ -84,7 +84,7 @@
                                         <div class="form-group">
                                             <label for="permission-{{ $permission->id }}">
                                                 <input type="checkbox" name="permissions[]" value="{{ $permission->name }}"
-                                                    id="permission-{{ $permission->id }}" @if ($role->hasPermissionTo($permission->name)) checked="checked" @endif>
+                                                    id="permission-{{ $permission->id }}" @if ($user->can($permission->name)) checked="checked" @endif>
                                                 {{ $permission->label }}
                                             </label>
                                         </div>
@@ -96,6 +96,9 @@
                         <div class="alert alert-warning">
                             Hak akses merupakan pintu keamanan yang penting, hanya berikan hak akses pada user
                             yang Anda percaya. Memberikan hak akses dengan tidak tepat adalah tindakan berbahaya.
+                        </div>
+                        <div class="alert alert-info">
+                            Hak akses yang diturunkan dari <i>role</i> tidak dapat dihapus.
                         </div>
 
                         <div class="mt-2 text-right">

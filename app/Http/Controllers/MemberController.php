@@ -20,11 +20,11 @@ class MemberController extends Controller
      * @since   1.0.0
      * @author  mulyosyahidin95
      * 
-     * @return  View\Factory@admin.members
+     * @return  View\Factory@private.members.members
      */
     public function index()
     {
-        return view('admin.members');
+        return view('private.members.members');
     }
 
     /**
@@ -35,11 +35,11 @@ class MemberController extends Controller
      * @since   1.0.0
      * @author  mulyosyahidin95
      * 
-     * @return  View\Factory@admin.member-show
+     * @return  View\Factory@private.members.member-show
      */
     public function show(Member $member)
     {
-        return view('admin.member-show', compact('member'));
+        return view('private.members.member-show', compact('member'));
     }
 
     /**
@@ -56,5 +56,84 @@ class MemberController extends Controller
     public function export()
     {
         return Excel::download(new MembersExport, 'Data Anggota HIMATIF - '. time() .'.xlsx');
+    }
+
+    /**
+     * Menampilkan halaman manajemen periode kepengurusan
+     * 
+     * Halaman manajemen periode kepengurusan adalah
+     * halaman yang menampilkan manajemen periode kepengurusan
+     * 
+     * @since   1.0.0
+     * @author  mulyosyahidin95
+     * 
+     * @return  View\Factory@private.members.periods
+     */
+    public function periods()
+    {
+        return view('private.members.periods');
+    }
+
+    /**
+     * Menampilkan halaman manajemen angkatan
+     * 
+     * Halaman manajemen angkatan adalah
+     * halaman yang menampilkan manajemen angkatan
+     * 
+     * @since   1.0.0
+     * @author  mulyosyahidin95
+     * 
+     * @return  View\Factory@private.members.forces
+     */
+    public function forces()
+    {
+        return view('private.members.forces');
+    }
+
+    /**
+     * Menampilkan halaman manajemen divisi
+     * 
+     * Halaman manajemen divisi adalah
+     * halaman yang menampilkan manajemen divisi
+     * 
+     * @since   1.0.0
+     * @author  mulyosyahidin95
+     * 
+     * @return  View\Factory@private.members.divisions
+     */
+    public function divisions()
+    {
+        return view('private.members.divisions');
+    }
+
+    /* Menampilkan halaman manajemen jabatan
+     * 
+     * Halaman manajemen jabatan adalah halaman
+     * yang digunakan untuk mengelola jabatan pengurus
+     * 
+     * @since   1.0.0
+     * @author  mulyosyahidin95
+     * 
+     * @return  View\Factory@private.members.positions
+     */
+    public function positions()
+    {
+        return view('private.members.positions');
+    }
+
+    /**
+     * Menampilkan halaman manajemen pengurus
+     * 
+     * Halaman manajemen pengurus adalah halaman untuk
+     * mengelola data pengurus
+     * 
+     * @since   1.0.0
+     * @author  mulyosyahidin95
+     * 
+     * @return  View\Factory@private.members.staff
+     */
+    public function staff()
+    {
+        return view('private.members.staff');
     }
 }

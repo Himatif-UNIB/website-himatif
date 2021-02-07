@@ -15,15 +15,15 @@ class Period extends Model
      * Invers relasi one to one
      * 
      * Membuat invers relasi dari model
-     * App\Models\Administrator
+     * App\Models\Staff
      * 
      * @since   1.0.0
      * @author  mulyosyahidin95
      * 
      * @return  Definisi invers relasi
      */
-    public function administratorPeriod()
+    public function staffPeriod()
     {
-        return $this->belongsTo('App\Models\Administrator');
+        return $this->belongsTo('App\Models\Staff');
     }
 }

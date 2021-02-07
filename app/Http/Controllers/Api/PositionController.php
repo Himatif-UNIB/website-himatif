@@ -10,6 +10,22 @@ use Illuminate\Support\Facades\Validator;
 class PositionController extends Controller
 {
     /**
+     * Membatasi akses ke api
+     * 
+     * - create_position -> store()
+     * - read_position -> index(), show()
+     * - update_position -> update()
+     * - delete_position -> destroy()
+     */
+    public function __construct()
+    {
+        $this->middleware(['permission:create_position'])->only('store');
+        $this->middleware(['permission:read_position'])->only(['index', 'show']);
+        $this->middleware(['permission:update_position'])->only('update');
+        $this->middleware(['permission:delete_position'])->only('destroy');
+    }
+    
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response

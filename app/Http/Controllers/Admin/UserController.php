@@ -22,7 +22,7 @@ class UserController extends Controller
         $roles = Role::where('name', '!=', 'super_admin')->get();
         $forces = Force::all();
 
-        return view('admin.users.index', compact('roles', 'forces'));
+        return view('private.admin.users.index', compact('roles', 'forces'));
     }
 
     /**
@@ -54,7 +54,7 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        return view('admin.users.show', compact('user'));
+        return view('private.admin.users.show', compact('user'));
     }
 
     /**
@@ -68,7 +68,7 @@ class UserController extends Controller
         $roles = Role::all();
         $permissions = Permission::all();
 
-        return view('admin.users.edit', compact('user', 'roles', 'permissions'));
+        return view('private.admin.users.edit', compact('user', 'roles', 'permissions'));
     }
 
     /**

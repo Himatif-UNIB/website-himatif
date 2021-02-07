@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title', 'Selamat Datang, Admin!')
+@section('title', 'Dasbor '. getSetting('siteName'))
 
 @section('custom_head')
     <link href="{{ asset('assets/plugins/apex/apexcharts.css') }}" rel="stylesheet" type="text/css">

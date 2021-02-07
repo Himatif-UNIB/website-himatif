@@ -5,15 +5,15 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 /**
- * Tabel `administrators`
+ * Tabel `staffs`
  * 
- * Tabel `administrators` adalah tabel yang menyimpan
+ * Tabel `staffs` adalah tabel yang menyimpan
  * data kepengurusan.
  * 
  * @since   1.0.0
  * @author  mulyosyahidin95
  */
-class CreateAdministratorsTable extends Migration
+class CreateStaffTable extends Migration
 {
     /**
      * Run the migrations.
@@ -22,7 +22,7 @@ class CreateAdministratorsTable extends Migration
      */
     public function up()
     {
-        Schema::create('administrators', function (Blueprint $table) {
+        Schema::create('staff', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('period_id')->nullable();
             $table->unsignedBigInteger('position_id')->nullable();
@@ -45,6 +45,6 @@ class CreateAdministratorsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('administrators');
+        Schema::dropIfExists('staffs');
     }
 }

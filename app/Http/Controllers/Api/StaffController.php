@@ -3,12 +3,28 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\Administrator;
+use App\Models\Staff;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-class AdministratorController extends Controller
+class StaffController extends Controller
 {
+    /**
+     * Membatasi akses ke api
+     * 
+     * - create_staff -> store()
+     * - read_staff -> index(), show()
+     * - update_staff -> update()
+     * - delete_staff -> destroy()
+     */
+    public function __construct()
+    {
+        $this->middleware(['permission:create_staff'])->only('store');
+        $this->middleware(['permission:read_staff'])->only(['index', 'show']);
+        $this->middleware(['permission:update_staff'])->only('update');
+        $this->middleware(['permission:delete_staff'])->only('destroy');
+    }
+    
     /**
      * Display a listing of the resource.
      *
@@ -16,7 +32,7 @@ class AdministratorController extends Controller
      */
     public function index()
     {
-        return ['data' => Administrator::with(['member', 'position', 'period', 'position.division'])->get()];
+        return ['data' => Staff::with(['member', 'position', 'period', 'position.division'])->get()];
     }
 
     /**
@@ -41,7 +57,7 @@ class AdministratorController extends Controller
                 ], 422);
         }
         
-        $checkIsMemberIsAdministrated = Administrator::where(['member_id' => $request->member_id, 'period_id' => $request->period_id])->first();
+        $checkIsMemberIsAdministrated = Staff::where(['member_id' => $request->member_id, 'period_id' => $request->period_id])->first();
 
         if ($checkIsMemberIsAdministrated != NULL) {
             return response()
@@ -55,11 +71,11 @@ class AdministratorController extends Controller
                 ], 422);
         }
 
-        $administrator = new Administrator;
-        $administrator->member_id = $request->member_id;
-        $administrator->position_id = $request->position_id;
-        $administrator->period_id = $request->period_id;
-        $administrator->save();
+        $staff = new Staff;
+        $staff->member_id = $request->member_id;
+        $staff->position_id = $request->position_id;
+        $staff->period_id = $request->period_id;
+        $staff->save();
 
         return response()
             ->json([
@@ -71,22 +87,22 @@ class AdministratorController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Administrator  $administrator
+     * @param  \App\Models\Staff  $staff
      * @return \Illuminate\Http\Response
      */
-    public function show(Administrator $administrator)
+    public function show(Staff $staff)
     {
-        return $administrator;
+        return $staff;
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Administrator  $administrator
+     * @param  \App\Models\Staff  $staff
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Administrator $administrator)
+    public function update(Request $request, Staff $staff)
     {
         $validator = Validator::make($request->all(), [
             'member_id' => ['required', 'numeric'],
@@ -102,10 +118,10 @@ class AdministratorController extends Controller
                 ], 422);
         }
 
-        $administrator->member_id = $request->member_id;
-        $administrator->position_id = $request->position_id;
-        $administrator->period_id = $request->period_id;
-        $administrator->save();
+        $staff->member_id = $request->member_id;
+        $staff->position_id = $request->position_id;
+        $staff->period_id = $request->period_id;
+        $staff->save();
 
         return response()
             ->json([
@@ -117,12 +133,12 @@ class AdministratorController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Administrator  $administrator
+     * @param  \App\Models\Staff  $staff
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Administrator $administrator)
+    public function destroy(Staff $staff)
     {
-        $administrator->delete();
+        $staff->delete();
 
         return response()
             ->json([

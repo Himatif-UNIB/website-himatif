@@ -64,6 +64,10 @@
                     @else
                         <div class="alert alert-info">
                             Belum ada formulir yang dibuat. Cobalah membuat satu!
+                            @if ( ! current_user_can('create_form'))
+                                <br>
+                                <b>Anda tidak mempunyai hak akses untuk membuat formulir.</b>
+                            @endif
                         </div>
                     @endif
                 </div>

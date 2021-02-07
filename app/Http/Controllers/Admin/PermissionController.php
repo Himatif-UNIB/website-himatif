@@ -19,13 +19,13 @@ class PermissionController extends Controller
      * @since   1.0.0
      * @author  mulyosyahidin95
      * 
-     * @return  View\Factory@admin.permissions.roles
+     * @return  View\Factory@private.admin.permissions.roles
      */
     public function roles()
     {
         $roles = Role::all();
 
-        return view('admin.permissions.roles', compact('roles'));
+        return view('private.admin.permissions.roles', compact('roles'));
     }
 
     /**
@@ -38,24 +38,46 @@ class PermissionController extends Controller
      * @since   1.0.0
      * @author  mulyosyahidin95
      * 
-     * @return  View\Factory@admin.permissions.roles
+     * @return  View\Factory@private.admin.permissions.permissions
      */
     public function permissions()
     {
         $roles = Role::all();
         $permissions = Permission::all();
 
-        return view('admin.permissions.permissions', compact('roles', 'permissions'));
+        return view('private.admin.permissions.permissions', compact('roles', 'permissions'));
     }
 
+    /**
+     * Menampilkan halaman edit role
+     * 
+     * Halaman edit role berguna untuk melakukan
+     * manajemen pada role, seperti mengatur hak akses yang
+     * diberikan kepada role
+     * 
+     * @since   1.0.0
+     * @author  mulyosyahidin95
+     * 
+     * @return  View\Factory@private.admin.permissions.edit
+     */
     public function edit(Role $role)
     {
         $roles = Role::all();
         $permissions = Permission::all();
 
-        return view('admin.permissions.edit', compact('role', 'roles', 'permissions'));
+        return view('private.admin.permissions.edit', compact('role', 'roles', 'permissions'));
     }
 
+    /**
+     * Action mengedit role
+     * 
+     * Menyimpan data penyimpanan role
+     * 
+     * @since   1.0.0
+     * @author  mulyosyahidin95
+     * 
+     * @return  void
+     */
     public function update(Request $request, Role $role)
     {
         $permissions = $request->permissions;

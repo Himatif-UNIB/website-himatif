@@ -31,23 +31,23 @@ class Member extends Model
      * Invers relasi one to one
      * 
      * Membuat definisi invers relasi dari model
-     * App\Models\Administrator
+     * App\Models\Staff
      * 
      * @since   1.0.0
      * @author  mulyosyahidin95
      * 
      * @return  Definisi invers relasi
      */
-    public function administratorMember()
+    public function staffMember()
     {
-        return $this->belongsTo('App\Models\Administrator');
+        return $this->belongsTo('App\Models\Staff');
     }
 
     /**
      * Relasi one to many
      * 
      * Membuat relasi one to many ke model
-     * App\Models\Administrator
+     * App\Models\Staff
      * 
      * Mengambil semua data kepengurusan dari anggota
      * 
@@ -56,9 +56,9 @@ class Member extends Model
      * 
      * @return  Definisi relasi one to many
      */
-    public function administrators()
+    public function staffs()
     {
-        return $this->hasMany(Administrator::class);
+        return $this->hasMany(Staff::class);
     }
 
     /**

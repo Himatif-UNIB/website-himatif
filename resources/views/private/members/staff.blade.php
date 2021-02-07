@@ -18,11 +18,13 @@
                 <div class="widget-content widget-content-area">
                     <h3>
                         Manajemen Pengurus
+                        @if (current_user_can('create_staff'))
                         <span class="float-right">
                             <a href="#" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#add-modal">
                                 <i class="fa fa-plus"></i>
                             </a>
                         </span>
+                        @endif
                     </h3>
                 </div>
             </div>
@@ -30,7 +32,7 @@
             <div class="col-xl-12 col-lg-12 col-sm-12  layout-spacing">
                 <div class="widget-content widget-content-area br-6">
                     <div class="table-responsive mb-4 mt-4">
-                        <table id="administrator-table" class="table table-hover non-hover" style="width:100%">
+                        <table id="staff-table" class="table table-hover non-hover" style="width:100%">
                             <thead>
                                 <tr>
                                     <th>#</th>
@@ -51,6 +53,7 @@
 @endsection
 
 @section('custom_html')
+    @if (current_user_can('create_staff'))
     <div id="add-modal" tabindex="-1" class="modal animated rotateInDownLeft custo-rotateInDownLeft" role="dialog">
         <div class="modal-dialog">
             <!-- Modal content-->
@@ -72,34 +75,36 @@
                             Seorang anggota hanya bisa menempati satu posisi dalam kepengurusan dalam satu periode.
                         </div>
 
-                        <div class="form-group" id="administrator-name-field">
-                            <label for="administrator-name">Nama Pengurus:</label>
-                            <select class="form-control" id="administrator-name" name="administrator-name" required></select>
+                        <div class="form-group" id="staff-name-field">
+                            <label for="staff-name">Nama Pengurus:</label>
+                            <select class="form-control" id="staff-name" name="staff-name" required></select>
 
-                            <div class="invalid-feedback administrator-name-feedback"></div>
+                            <div class="invalid-feedback staff-name-feedback"></div>
                         </div>
-                        <div class="form-group" id="administrator-position-field">
-                            <label for="administrator-position">Jabatan:</label>
-                            <select class="form-control" id="administrator-position" name="administrator-position" required></select>
+                        <div class="form-group" id="staff-position-field">
+                            <label for="staff-position">Jabatan:</label>
+                            <select class="form-control" id="staff-position" name="staff-position" required></select>
                         
-                            <div class="invalid-feedback administrator-position-feedback"></div>
+                            <div class="invalid-feedback staff-position-feedback"></div>
                         </div>
-                        <div class="form-group" id="administrator-period-field">
-                            <label for="administrator-period">Periode Kepengurusan:</label>
-                            <select class="form-control" id="administrator-period" name="administrator-period" required></select>
+                        <div class="form-group" id="staff-period-field">
+                            <label for="staff-period">Periode Kepengurusan:</label>
+                            <select class="form-control" id="staff-period" name="staff-period" required></select>
 
-                            <div class="invalid-feedback administrator-period-feedback"></div>
+                            <div class="invalid-feedback staff-period-feedback"></div>
                         </div>
                     </div>
                     <div class="modal-footer md-button">
                         <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12"></i> Batal</button>
-                        <button type="submit" class="btn btn-primary add-administrator-btn">Tambah</button>
+                        <button type="submit" class="btn btn-primary add-staff-btn">Tambah</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
+    @endif
 
+    @if (current_user_can('update_staff'))
     <div id="edit-modal" class="modal animated rotateInDownRight custo-rotateInDownRight" role="dialog">
         <div class="modal-dialog">
             <!-- Modal content-->
@@ -119,34 +124,36 @@
                     <div class="modal-body">
                         <div class="message-container"></div>
 
-                        <div class="form-group" id="edit-administrator-name-field">
-                            <label for="edit-administrator-name">Nama Pengurus:</label>
-                            <select class="form-control" id="edit-administrator-name" name="administrator-name" required></select>
+                        <div class="form-group" id="edit-staff-name-field">
+                            <label for="edit-staff-name">Nama Pengurus:</label>
+                            <select class="form-control" id="edit-staff-name" name="staff-name" required></select>
 
-                            <div class="invalid-feedback edit-administrator-name-feedback"></div>
+                            <div class="invalid-feedback edit-staff-name-feedback"></div>
                         </div>
-                        <div class="form-group" id="edit-administrator-position-field">
-                            <label for="edit-administrator-position">Jabatan:</label>
-                            <select class="form-control" id="edit-administrator-position" name="administrator-position" required></select>
+                        <div class="form-group" id="edit-staff-position-field">
+                            <label for="edit-staff-position">Jabatan:</label>
+                            <select class="form-control" id="edit-staff-position" name="staff-position" required></select>
                         
-                            <div class="invalid-feedback edit-administrator-position-feedback"></div>
+                            <div class="invalid-feedback edit-staff-position-feedback"></div>
                         </div>
-                        <div class="form-group" id="edit-administrator-period-field">
-                            <label for="edit-administrator-period">Periode Kepengurusan:</label>
-                            <select class="form-control" id="edit-administrator-period" name="administrator-period" required></select>
+                        <div class="form-group" id="edit-staff-period-field">
+                            <label for="edit-staff-period">Periode Kepengurusan:</label>
+                            <select class="form-control" id="edit-staff-period" name="staff-period" required></select>
 
-                            <div class="invalid-feedback edit-administrator-period-feedback"></div>
+                            <div class="invalid-feedback edit-staff-period-feedback"></div>
                         </div>
                     </div>
                     <div class="modal-footer md-button">
                         <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12"></i> Batal</button>
-                        <button type="submit" class="btn btn-primary save-administrator-btn">Simpan</button>
+                        <button type="submit" class="btn btn-primary save-staff-btn">Simpan</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
+    @endif
 
+    @if (current_user_can('delete_staff'))
     <div id="delete-modal" class="modal fade in" role="dialog">
         <div class="modal-dialog">
             <!-- Modal content-->
@@ -169,11 +176,12 @@
                 </div>
                 <div class="modal-footer md-button">
                     <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12"></i> Batal</button>
-                    <button type="submit" class="btn btn-danger btn-delete-administrator">Hapus</button>
+                    <button type="submit" class="btn btn-danger btn-delete-staff">Hapus</button>
                 </div>
             </div>
         </div>
     </div>
+    @endif
 @endsection
 
 @push('custom_js')
@@ -181,9 +189,9 @@
     <script src="{{ asset('assets/plugins/select2/select2.min.js') }}"></script>
 
     <script>
-        let administratorTable = $('#administrator-table').DataTable({
+        let staffTable = $('#staff-table').DataTable({
             ajax: {
-                url: '{{ route('api.administrators.index') }}',
+                url: '{{ route('api.staffs.index') }}',
                 headers: {
                     'Authorization': `Bearer ${passportAccessToken}`
                 }
@@ -204,8 +212,12 @@
                     data: function(data, row, type) {
                         return `
                                     <div class="text-right">
-                                        <a href="#" class="btn btn-warning btn-sm btn-edit" data-id="${data.id}"><i class="fa fa-edit"></i></a>
-                                        <a href="#" class="btn btn-danger btn-sm btn-delete" data-id="${data.id}"><i class="fa fa-trash"></i></a>
+                                        @if (current_user_can('update_staff'))
+                                            <a href="#" class="btn btn-warning btn-sm btn-edit" data-id="${data.id}"><i class="fa fa-edit"></i></a>
+                                        @endif
+                                        @if (current_user_can('delete_staff'))
+                                            <a href="#" class="btn btn-danger btn-sm btn-delete" data-id="${data.id}"><i class="fa fa-trash"></i></a>
+                                        @endif
                                     </div>
                                 `;
                     }
@@ -319,67 +331,67 @@
                 });
         }
 
+        @if (current_user_can('create_staff'))
+        const addStaffModal = document.querySelector('#add-modal');
+        const addStaffForm = addStaffModal.querySelector('form');
+        const addStaffBtn = addStaffForm.querySelector('.add-staff-btn');
+        const addStaffNameField = addStaffForm.querySelector('#staff-name-field');
+        const addStaffPositionField = addStaffForm.querySelector('#staff-position-field');
+        const addStaffPeriodField = addStaffForm.querySelector('#staff-period-field');
 
-        const addAdministratorModal = document.querySelector('#add-modal');
-        const addAdministratorForm = addAdministratorModal.querySelector('form');
-        const addAdministratorBtn = addAdministratorForm.querySelector('.add-administrator-btn');
-        const addAdministratorNameField = addAdministratorForm.querySelector('#administrator-name-field');
-        const addAdministratorPositionField = addAdministratorForm.querySelector('#administrator-position-field');
-        const addAdministratorPeriodField = addAdministratorForm.querySelector('#administrator-period-field');
+        const addStaffNameInput = addStaffNameField.querySelector('#staff-name');
+        const addStaffNameFeedback = addStaffNameField.querySelector('.invalid-feedback');
+        const addStaffPositionInput = addStaffPositionField.querySelector('#staff-position');
+        const addStaffPositionFeedback = addStaffPositionField.querySelector('.invalid-feedback');
+        const addStaffPeriodInput = addStaffPeriodField.querySelector('#staff-period');
+        const addStaffPeriodFeedback = addStaffPeriodField.querySelector('.invalid-feedback');
 
-        const addAdministratorNameInput = addAdministratorNameField.querySelector('#administrator-name');
-        const addAdministratorNameFeedback = addAdministratorNameField.querySelector('.invalid-feedback');
-        const addAdministratorPositionInput = addAdministratorPositionField.querySelector('#administrator-position');
-        const addAdministratorPositionFeedback = addAdministratorPositionField.querySelector('.invalid-feedback');
-        const addAdministratorPeriodInput = addAdministratorPeriodField.querySelector('#administrator-period');
-        const addAdministratorPeriodFeedback = addAdministratorPeriodField.querySelector('.invalid-feedback');
+        const addMessageContainer = addStaffForm.querySelector('.message-container');
 
-        const addMessageContainer = addAdministratorForm.querySelector('.message-container');
-
-        addAdministratorForm.addEventListener('submit', function(e) {
+        addStaffForm.addEventListener('submit', function(e) {
             e.preventDefault();
 
-            addAdministratorBtn.innerHTML = '<i class="fa fa-spin fa-spinner"></i> Menambah...';
-            if (addAdministratorNameInput != '' && addAdministratorPositionInput != '') {
-                addAdministratorBtn.setAttribute('disabled', 'disabled');
+            addStaffBtn.innerHTML = '<i class="fa fa-spin fa-spinner"></i> Menambah...';
+            if (addStaffNameInput != '' && addStaffPositionInput != '') {
+                addStaffBtn.setAttribute('disabled', 'disabled');
 
-                fetch('{{ route('api.administrators.store') }}', {
+                fetch('{{ route('api.staffs.store') }}', {
                             method: 'POST',
                             headers: {
                                 'Authorization': `Bearer ${passportAccessToken}`,
                                 'Content-Type': 'application/json'
                             },
                             body: JSON.stringify({
-                                member_id: addAdministratorNameInput.value,
-                                position_id: addAdministratorPositionInput.value,
-                                period_id: addAdministratorPeriodInput.value
+                                member_id: addStaffNameInput.value,
+                                position_id: addStaffPositionInput.value,
+                                period_id: addStaffPeriodInput.value
                             })
                         })
                     .then(res => res.json())
                     .then(res => {
-                        addAdministratorBtn.removeAttribute('disabled');
+                        addStaffBtn.removeAttribute('disabled');
 
                         if (res.error) {
-                            addAdministratorBtn.innerHTML = 'Tambah';
+                            addStaffBtn.innerHTML = 'Tambah';
 
                             if (res.validations) {
                                 const validation = res.validations;
                                 if (validation.member_id) {
-                                    addAdministratorNameInput.classList.add('is-invalid');
-                                    addAdministratorNameFeedback.innerHTML = validation.member_id[0]
+                                    addStaffNameInput.classList.add('is-invalid');
+                                    addStaffNameFeedback.innerHTML = validation.member_id[0]
                                 }
                                 if (validation.position_id) {
-                                    addAdministratorPositionInput.classList.add('is-invalid');
-                                    addAdministratorPositionFeedback.innerHTML = validation.position_id[0]
+                                    addStaffPositionInput.classList.add('is-invalid');
+                                    addStaffPositionFeedback.innerHTML = validation.position_id[0]
                                 }
                                 if (validation.period_id) {
-                                    addAdministratorPeriodInput.classList.add('is-invalid');
-                                    addAdministratorPeriodFeedback.innerHTML = validation.period_id[0]
+                                    addStaffPeriodInput.classList.add('is-invalid');
+                                    addStaffPeriodFeedback.innerHTML = validation.period_id[0]
                                 }
                             }
                         } else if (res.success) {
-                            addAdministratorBtn.innerHTML = '<i class="fa fa-check"></i> Berhasil!';
-                            administratorTable.ajax.reload();
+                            addStaffBtn.innerHTML = '<i class="fa fa-check"></i> Berhasil!';
+                            staffTable.ajax.reload();
 
                             if (!addMessageContainer.classList.contains('alert')) {
                                 addMessageContainer.classList.add('alert');
@@ -388,25 +400,25 @@
                                 addMessageContainer.classList.remove('alert-info');
                             }
 
-                            if (addAdministratorNameInput.classList.contains('is-invalid')) {
-                                addAdministratorNameInput.classList.remove('is-invalid');
-                                addAdministratorNameFeedback.innerHTML = '';
+                            if (addStaffNameInput.classList.contains('is-invalid')) {
+                                addStaffNameInput.classList.remove('is-invalid');
+                                addStaffNameFeedback.innerHTML = '';
                             }
-                            if (addAdministratorPositionInput.classList.contains('is-invalid')) {
-                                addAdministratorPositionInput.classList.remove('is-invalid');
-                                addAdministratorPositionFeedback.innerHTML = '';
+                            if (addStaffPositionInput.classList.contains('is-invalid')) {
+                                addStaffPositionInput.classList.remove('is-invalid');
+                                addStaffPositionFeedback.innerHTML = '';
                             }
-                            if (addAdministratorPeriodInput.classList.contains('is-invalid')) {
-                                addAdministratorPeriodInput.classList.remove('is-invalid');
-                                addAdministratorPeriodFeedback.innerHTML = '';
+                            if (addStaffPeriodInput.classList.contains('is-invalid')) {
+                                addStaffPeriodInput.classList.remove('is-invalid');
+                                addStaffPeriodFeedback.innerHTML = '';
                             }
 
                             addMessageContainer.classList.add('alert-success');
                             addMessageContainer.innerHTML = res.message;
 
                             $('#add-modal').on('hidden.bs.modal', function(e) {
-                                addAdministratorBtn.innerHTML = 'Tambah';
-                                addAdministratorForm.reset();
+                                addStaffBtn.innerHTML = 'Tambah';
+                                addStaffForm.reset();
 
                                 addMessageContainer.classList.remove('alert');
                                 addMessageContainer.classList.remove('alert-success');
@@ -415,7 +427,7 @@
                         }
                     })
                     .catch(errors => {
-                        addAdministratorBtn.innerHTML = 'Tambah';
+                        addStaffBtn.innerHTML = 'Tambah';
 
                         if (!addMessageContainer.classList.contains('alert')) {
                             addMessageContainer.classList.add('alert');
@@ -429,7 +441,9 @@
                     });
             }
         });
+        @endif
 
+        @if (current_user_can('delete_staff'))
         let delete_id = 0;
         $(document).on('click', '.btn-delete', function (e) {
             e.preventDefault();
@@ -440,7 +454,7 @@
             $('#delete-modal').modal('show');
         });
 
-        const deleteBtn = document.querySelector('.btn-delete-administrator');
+        const deleteBtn = document.querySelector('.btn-delete-staff');
         const deleteMessageContainer = document.querySelector('.delete-message-container');
 
         deleteBtn.addEventListener('click', function (e) {
@@ -449,7 +463,7 @@
             deleteBtn.setAttribute('disabled', 'disabled');
             deleteBtn.innerHTML = '<i class="fa fa-spin fa-spinner"></i> Menghapus...';
             
-            fetch(`{{ route('api.administrators.destroy', false) }}/${delete_id}`, {
+            fetch(`{{ route('api.staffs.destroy', false) }}/${delete_id}`, {
                 method: 'DELETE',
                 headers: {
                     'Authorization': `Bearer ${passportAccessToken}`
@@ -458,7 +472,7 @@
             .then(res => res.json())
             .then(res => {
                 if (res.success) {
-                    administratorTable.ajax.reload();
+                    staffTable.ajax.reload();
                     deleteMessageContainer.innerHTML = res.message;
 
                     deleteBtn.innerHTML = '<i class="fa fa-check"></i> Berhasil!';
@@ -488,22 +502,24 @@
                 deleteMessageContainer.innerHTML = errors;
             });
         });
+        @endif
 
-        const editAdministratorModal = document.querySelector('#edit-modal');
-        const editAdministratorForm = editAdministratorModal.querySelector('form');
-        const editAdministratorBtn = editAdministratorForm.querySelector('.save-administrator-btn');
-        const editAdministratorNameField = editAdministratorForm.querySelector('#edit-administrator-name-field');
-        const editAdministratorPositionField = editAdministratorForm.querySelector('#edit-administrator-position-field');
-        const editAdministratorPeriodField = editAdministratorForm.querySelector('#edit-administrator-period-field');
+        @if (current_user_can('update_staff'))
+        const editStaffModal = document.querySelector('#edit-modal');
+        const editStaffForm = editStaffModal.querySelector('form');
+        const editStaffBtn = editStaffForm.querySelector('.save-staff-btn');
+        const editStaffNameField = editStaffForm.querySelector('#edit-staff-name-field');
+        const editStaffPositionField = editStaffForm.querySelector('#edit-staff-position-field');
+        const editStaffPeriodField = editStaffForm.querySelector('#edit-staff-period-field');
 
-        const editAdministratorNameInput = editAdministratorNameField.querySelector('#edit-administrator-name');
-        const editAdministratorNameFeedback = editAdministratorNameField.querySelector('.invalid-feedback');
-        const editAdministratorPositionInput = editAdministratorPositionField.querySelector('#edit-administrator-position');
-        const editAdministratorPositionFeedback = editAdministratorPositionField.querySelector('.invalid-feedback');
-        const editAdministratorPeriodInput = editAdministratorPeriodField.querySelector('#edit-administrator-period');
-        const editAdministratorPeriodFeedback = editAdministratorPeriodField.querySelector('.invalid-feedback');
+        const editStaffNameInput = editStaffNameField.querySelector('#edit-staff-name');
+        const editStaffNameFeedback = editStaffNameField.querySelector('.invalid-feedback');
+        const editStaffPositionInput = editStaffPositionField.querySelector('#edit-staff-position');
+        const editStaffPositionFeedback = editStaffPositionField.querySelector('.invalid-feedback');
+        const editStaffPeriodInput = editStaffPeriodField.querySelector('#edit-staff-period');
+        const editStaffPeriodFeedback = editStaffPeriodField.querySelector('.invalid-feedback');
 
-        const editMessageContainer = editAdministratorForm.querySelector('.message-container');
+        const editMessageContainer = editStaffForm.querySelector('.message-container');
         let edit_id = 0;
 
         $(document).on('click', '.btn-edit', function(e) {
@@ -512,16 +528,16 @@
             const id = $(this).data('id');
             edit_id = id;
 
-            fetch(`{{ route('api.administrators.show', false) }}/${id}`, {
+            fetch(`{{ route('api.staffs.show', false) }}/${id}`, {
                     headers: {
                         'Authorization': `Bearer ${passportAccessToken}`
                     }
                 })
                 .then(res => res.json())
                 .then(res => {
-                    loadMembers(document.querySelector('#edit-administrator-name'), res.member_id);
-                    loadPositions(document.querySelector('#edit-administrator-position'), res.position_id);
-                    loadPeriods(document.querySelector('#edit-administrator-period'), res.period_id);
+                    loadMembers(document.querySelector('#edit-staff-name'), res.member_id);
+                    loadPositions(document.querySelector('#edit-staff-position'), res.position_id);
+                    loadPeriods(document.querySelector('#edit-staff-period'), res.period_id);
                     
                     $('#edit-modal').modal('show');
                 })
@@ -530,50 +546,50 @@
                 });
         });
 
-        editAdministratorForm.addEventListener('submit', function(e) {
+        editStaffForm.addEventListener('submit', function(e) {
             e.preventDefault();
 
-            editAdministratorBtn.innerHTML = '<i class="fa fa-spin fa-spinner"></i> Menyimpan...';
-            editAdministratorBtn.setAttribute('disabled', 'disabled');
+            editStaffBtn.innerHTML = '<i class="fa fa-spin fa-spinner"></i> Menyimpan...';
+            editStaffBtn.setAttribute('disabled', 'disabled');
 
-            fetch(`{{ route('api.administrators.update', false) }}/${edit_id}`, {
+            fetch(`{{ route('api.staffs.update', false) }}/${edit_id}`, {
                     method: 'PUT',
                     headers: {
                         'Authorization': `Bearer ${passportAccessToken}`,
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({
-                        member_id: editAdministratorNameInput.value,
-                        position_id: editAdministratorPositionInput.value,
-                        period_id: editAdministratorPeriodInput.value
+                        member_id: editStaffNameInput.value,
+                        position_id: editStaffPositionInput.value,
+                        period_id: editStaffPeriodInput.value
                     })
                 })
                 .then(res => res.json())
                 .then(res => {
-                    editAdministratorBtn.removeAttribute('disabled');
+                    editStaffBtn.removeAttribute('disabled');
 
                     if (res.error) {
-                        editAdministratorBtn.innerHTML = 'Simpan';
+                        editStaffBtn.innerHTML = 'Simpan';
 
                         if (res.validations) {
                             const validation = res.validations;
 
                             if (validation.member_id) {
-                                editAdministratorNameInput.classList.add('is-invalid');
-                                editAdministratorNameFeedback.innerHTML = validation.member_id[0]
+                                editStaffNameInput.classList.add('is-invalid');
+                                editStaffNameFeedback.innerHTML = validation.member_id[0]
                             }
                             if (validation.position_id) {
-                                editAdministratorPositionInput.classList.add('is-invalid');
-                                editAdministratorPositionFeedback.innerHTML = validation.position_id[0]
+                                editStaffPositionInput.classList.add('is-invalid');
+                                editStaffPositionFeedback.innerHTML = validation.position_id[0]
                             }
                             if (validation.period_id) {
-                                editAdministratorPeriodInput.classList.add('is-invalid');
-                                editAdministratorPeriodFeedback.innerHTML = validation.period_id[0]
+                                editStaffPeriodInput.classList.add('is-invalid');
+                                editStaffPeriodFeedback.innerHTML = validation.period_id[0]
                             }
                         }
                     } else if (res.success) {
-                        editAdministratorBtn.innerHTML = '<i class="fa fa-check"></i> Berhasil!';
-                        administratorTable.ajax.reload();
+                        editStaffBtn.innerHTML = '<i class="fa fa-check"></i> Berhasil!';
+                        staffTable.ajax.reload();
 
                         if (!editMessageContainer.classList.contains('alert')) {
                             editMessageContainer.classList.add('alert');
@@ -582,25 +598,25 @@
                             editMessageContainer.classList.remove('alert-info');
                         }
 
-                        if (editAdministratorNameInput.classList.contains('is-invalid')) {
-                            editAdministratorNameInput.classList.remove('is-invalid');
-                            editAdministratorNameFeedback.innerHTML = '';
+                        if (editStaffNameInput.classList.contains('is-invalid')) {
+                            editStaffNameInput.classList.remove('is-invalid');
+                            editStaffNameFeedback.innerHTML = '';
                         }
-                        if (editAdministratorPositionInput.classList.contains('is-invalid')) {
-                            editAdministratorPositionInput.classList.remove('is-invalid');
-                            editAdministratorPositionFeedback.innerHTML = '';
+                        if (editStaffPositionInput.classList.contains('is-invalid')) {
+                            editStaffPositionInput.classList.remove('is-invalid');
+                            editStaffPositionFeedback.innerHTML = '';
                         }
-                        if (editAdministratorPeriodInput.classList.contains('is-invalid')) {
-                            editAdministratorPeriodInput.classList.remove('is-invalid');
-                            editAdministratorPeriodFeedback.innerHTML = '';
+                        if (editStaffPeriodInput.classList.contains('is-invalid')) {
+                            editStaffPeriodInput.classList.remove('is-invalid');
+                            editStaffPeriodFeedback.innerHTML = '';
                         }
 
                         editMessageContainer.classList.add('alert-success');
                         editMessageContainer.innerHTML = res.message;
 
                         $('#edit-modal').on('hidden.bs.modal', function(e) {
-                            editAdministratorBtn.innerHTML = 'Simpan';
-                            editAdministratorForm.reset();
+                            editStaffBtn.innerHTML = 'Simpan';
+                            editStaffForm.reset();
 
                             editMessageContainer.classList.remove('alert');
                             editMessageContainer.classList.remove('alert-success');
@@ -609,8 +625,8 @@
                     }
                 })
                 .catch(errors => {
-                    editAdministratorBtn.innerHTML = 'Simpan';
-                    editAdministratorBtn.removeAttribute('disabled');
+                    editStaffBtn.innerHTML = 'Simpan';
+                    editStaffBtn.removeAttribute('disabled');
 
                     if (!editMessageContainer.classList.contains('alert')) {
                         editMessageContainer.classList.add('alert');
@@ -623,33 +639,42 @@
                     editMessageContainer.innerHTML = errors;
                 });
         });
+        @endif
 
+        @if (current_user_can('create_staff'))
         $('#add-modal').on('show.bs.modal', function () {
-            loadMembers(document.querySelector('#administrator-name'));
-            loadPositions(document.querySelector('#administrator-position'));
-            loadPeriods(document.querySelector('#administrator-period'));
+            loadMembers(document.querySelector('#staff-name'));
+            loadPositions(document.querySelector('#staff-position'));
+            loadPeriods(document.querySelector('#staff-period'));
         });
+        @endif
 
+        @if (current_user_can(['create_staff', 'update_staff']))
         $(document).ready(function () {
-            $('#administrator-name').select2({
+            @if (current_user_can('create_staff'))
+            $('#staff-name').select2({
                 dropdownParent: $('#add-modal')
             });
-            $('#administrator-position').select2({
+            $('#staff-position').select2({
                 dropdownParent: $('#add-modal')
             });
-            $('#administrator-period').select2({
+            $('#staff-period').select2({
                 dropdownParent: $('#add-modal')
             });
+            @endif
 
-            $('#edit-administrator-name').select2({
+            @if (current_user_can('update_staff'))
+            $('#edit-staff-name').select2({
                 dropdownParent: $('#edit-modal')
             });
-            $('#edit-administrator-position').select2({
+            $('#edit-staff-position').select2({
                 dropdownParent: $('#edit-modal')
             });
-            $('#edit-administrator-period').select2({
+            $('#edit-staff-period').select2({
                 dropdownParent: $('#edit-modal')
             });
+            @endif
         });
+        @endif
     </script>
 @endpush

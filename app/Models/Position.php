@@ -15,16 +15,16 @@ class Position extends Model
      * Invers relasi one to one
      * 
      * Membuat definisi invers relasi dari model
-     * App\Models\Administrator
+     * App\Models\Staff
      * 
      * @since   1.0.0
      * @author  mulyosyahidin95
      * 
      * @return  Definisi invers relasi
      */
-    public function administratorPosition()
+    public function staffPosition()
     {
-        return $this->belongsTo('App\Models\Administrator');
+        return $this->belongsTo('App\Models\Staff');
     }
 
     /**

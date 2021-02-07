@@ -16,9 +16,14 @@ class GeneralSeeder extends Seeder
     {
         $year = now()->year;
         
-        DB::table('periods')->insert([
+        DB::table('periods')->insertOrIgnore([
             'name' => $year,
             'is_active' => true
+        ]);
+
+        DB::table('forces')->insertOrIgnore([
+            'name' => 'Angkatan '. $year,
+            'year' => $year
         ]);
     }
 }

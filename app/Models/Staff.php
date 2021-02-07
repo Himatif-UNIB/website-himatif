@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Administrator extends Model
+class Staff extends Model
 {
     use HasFactory;
 
@@ -77,7 +77,7 @@ class Administrator extends Model
      * 
      * @return  Invers relasi
      */
-    public function memberAdministrator()
+    public function memberStaff()
     {
         return $this->belongsTo(Member::class);
     }

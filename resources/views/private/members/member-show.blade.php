@@ -59,7 +59,7 @@
                     <div class="widget-content widget-content-area">
                         <h3 class="">Kepengurusan</h3>
                         <div class="timeline-alter">
-                            @forelse ($member->administrators as $item)
+                            @forelse ($member->staffs as $item)
                             <div class="item-timeline">
                                 <div class="t-meta-date">
                                     <p class="">{{ $item->period->name }}</p>

@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Api\AdministratorController;
+use App\Http\Controllers\Api\StaffController;
 use App\Http\Controllers\Api\DivisionController;
 use App\Http\Controllers\Api\ForceController;
 use App\Http\Controllers\Api\MemberController;
@@ -32,6 +32,6 @@ Route::group(['middleware' => ['auth:api'], 'as' => 'api.'], function () {
     Route::post('/members/import', [MemberController::class, 'import'])->name('members.import');
     Route::apiResource('/members', MemberController::class);
 
-    Route::apiResource('/administrators', AdministratorController::class);
+    Route::apiResource('/staffs', StaffController::class);
     Route::apiResource('/users', UserController::class)->only(['index', 'store', 'destroy']);
 });

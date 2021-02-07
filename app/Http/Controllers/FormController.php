@@ -15,6 +15,22 @@ use Shivella\Bitly\Facade\Bitly;
 class FormController extends Controller
 {
     /**
+     * Membatasi akses user
+     * 
+     * - create_form -> create(), store()
+     * - read_form -> index(), show()
+     * - update_form -> edit(), update()
+     * - delete_form -> destroy()
+     */
+    public function __construct()
+    {
+        $this->middleware(['permission:create_form'])->only(['create', 'store']);
+        $this->middleware(['permission:update_form'])->only(['edit', 'update']);
+        $this->middleware(['permission:delete_form'])->only(['destroy']);
+        $this->middleware(['permission:read_form'])->only(['index', 'show', 'answers', 'exportAnswers']);
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -23,7 +39,7 @@ class FormController extends Controller
     {
         $forms = Form::orderBy('created_at', 'DESC')->paginate();
 
-        return view('forms.index', compact('forms'));
+        return view('private.forms.index', compact('forms'));
     }
 
     /**
@@ -38,14 +54,14 @@ class FormController extends Controller
             $form = Form::findOrFail($form_id);
 
             if ($request->session()->has('success')) {
-                return view('forms.edit', compact('form'))
+                return view('private.forms.edit', compact('form'))
                     ->with(['displayIdentity' => false]);
             } else {
                 return redirect()
-                    ->route('forms.edit', $form_id);
+                    ->route('private.forms.edit', $form_id);
             }
         } else {
-            return view('forms.create');
+            return view('private.forms.create');
         }
     }
 
@@ -96,7 +112,7 @@ class FormController extends Controller
     public function show(Form $form)
     {
         //$isExpire =
-        return view('forms.show', compact('form'));
+        return view('private.forms.show', compact('form'));
     }
 
     /**
@@ -107,7 +123,7 @@ class FormController extends Controller
      */
     public function edit(Form $form)
     {
-        return view('forms.edit', compact('form'))
+        return view('private.forms.edit', compact('form'))
             ->with(['displayIdentity' => true]);
     }
 
@@ -216,11 +232,30 @@ class FormController extends Controller
             ->withSuccess('Berhasil menghapus formulir');
     }
 
+    /**
+     * Menampilkan halaman jawaban formulir
+     * 
+     * @since   1.0.0
+     * @author  mulyosyahidin95
+     * 
+     * @return  View\Factory@private.forms.answers
+     */
     public function answers(Form $form)
     {
-        return view('forms.answers', compact('form'));
+        return view('private.forms.answers', compact('form'));
     }
 
+    /**
+     * Action untuk export jawaban formulir
+     * 
+     * Action untuk melakukan export jawaban formulir
+     * ke format Excel.
+     * 
+     * @since   1.0.0
+     * @author  mulyosyahidin95
+     * 
+     * @return  Excel
+     */
     public function exportAnswer(Form $form)
     {
         return Excel::download(new ExportFormAnswers($form->questions, $form->answers), 'Jawaban Formulir ' . $form->title . '.xlsx');
