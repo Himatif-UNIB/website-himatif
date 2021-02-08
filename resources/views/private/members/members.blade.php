@@ -18,6 +18,7 @@
                     <h3>
                         Manajemen Anggota
                         <span class="float-right">
+                            @if (current_user_can('read_member'))
                             <a href="{{ route('members.export') }}" class="btn btn-info btn-sm" data-toggle="tooltip" title="Ekspor ke Excel">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-upload">
                                     <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
@@ -25,6 +26,8 @@
                                     <line x1="12" y1="3" x2="12" y2="15"></line>
                                 </svg>
                             </a>
+                            @endif
+                            @if (current_user_can('create_member'))
                             <a href="#" class="btn btn-info btn-sm import-btn" data-toggle="tooltip" data-placement="top" title="Impor dari Excel">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-download">
                                     <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
@@ -32,9 +35,12 @@
                                     <line x1="12" y1="15" x2="12" y2="3"></line>
                                 </svg>
                             </a>
+                            @endif
+                            @if (current_user_can('create_member'))
                             <a href="#" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#add-modal">
                                 <i class="fa fa-plus"></i>
                             </a>
+                            @endif
                         </span>
                     </h3>
                 </div>
@@ -46,7 +52,6 @@
                         <table id="member-table" class="table table-hover non-hover" style="width:100%">
                             <thead>
                                 <tr>
-                                    <th>#</th>
                                     <th>NPM</th>
                                     <th>Nama</th>
                                     <th>Angkatan</th>
@@ -63,6 +68,7 @@
 @endsection
 
 @section('custom_html')
+    @if (current_user_can('create_member'))
     <div id="add-modal" class="modal animated rotateInDownLeft custo-rotateInDownLeft" role="dialog">
         <div class="modal-dialog">
             <!-- Modal content-->
@@ -109,7 +115,9 @@
             </div>
         </div>
     </div>
+    @endif
 
+    @if (current_user_can('update_member'))
     <div id="edit-modal" class="modal animated rotateInDownRight custo-rotateInDownRight" role="dialog">
         <div class="modal-dialog">
             <!-- Modal content-->
@@ -156,7 +164,9 @@
             </div>
         </div>
     </div>
+    @endif
 
+    @if (current_user_can('delete_member'))
     <div id="delete-modal" class="modal fade in" role="dialog">
         <div class="modal-dialog">
             <!-- Modal content-->
@@ -184,7 +194,9 @@
             </div>
         </div>
     </div>
+    @endif
 
+    @if (current_user_can('create_member'))
     <div id="import-modal" class="modal fade in" role="dialog">
         <div class="modal-dialog modal-lg">
             <!-- Modal content-->
@@ -217,11 +229,14 @@
     
                         <div>
                             <ol>
-                                <li>Pada kolom <b>Tahun Angkatan</b>, pastikan tahun angkatan tersebut sudah terdaftar dalam
-                                    <a href="{{ route('forces') }}" target="_blank">manajemen angkatan</a>. Jika belum terdaftar,
-                                    maka tahun <b>{{ now()->year }}</b> akan digunakan sebagai data tahun.
+                                <li>
+                                    Jika data NPM yang diimpor sudah terdaftar, maka data baru akan diabaikan.
+                                    Misalnya jika NPM <b>G1A019001</b> sudah ada di <i>database</i>, maka data
+                                    dalam Excel dengan NPM <b>G1A019001</b> akan diabaikan.
                                 </li>
-                                <li>Jika data NPM yang diimpor sudah terdaftar, maka data yang lama akan ditimpa dengan data yang baru (data login juga direset).</li>
+                                <li>
+                                    Dalam sekali impor hanya bisa mengimpor untuk satu angkatan saja.
+                                </li>
                             </ol>
                         </div>
     
@@ -230,6 +245,16 @@
                             <input type="file" name="file" id="select-file" class="form-control" required="required">
 
                             <div class="invalid-feedback import-file-feedback"></div>
+                        </div>
+                        <div class="form-group" id="force-field">
+                            <label for="force">Angkatan:</label>
+                            <select name="force" id="force" class="form-control">
+                                @foreach ($forces as $force)
+                                    <option value="{{ $force->id }}">{{ $force->name }}</option>
+                                @endforeach
+                            </select>
+
+                            <div class="invalid-feedback force-feedback"></div>
                         </div>
     
                         <div class="alert alert-info">
@@ -254,11 +279,13 @@
             </div>
         </div>
     </div>
+    @endif
 @endsection
 
 @push('custom_js')
 <script src="{{ asset('assets/plugins/table/datatable/datatables.js') }}"></script>
     <script>
+        @if (current_user_can('create_member'))
         let importModalBtn = document.querySelector('.import-btn');
         importModalBtn.addEventListener('click', (e) => {
             e.preventDefault();
@@ -268,6 +295,7 @@
                 keyboard: false
             });
         });
+        @endif
 
         function loadForces(loadTo, defaultSelected = null) {
             fetch('{{ route('api.forces.index') }}', {
@@ -308,9 +336,8 @@
                     'Authorization': `Bearer ${passportAccessToken}`
                 }
             },
-            dom: '<"row"<"col-md-12"<"row"<"col-md-6"B><"col-md-6"f> > ><"col-md-12"rt> <"col-md-12"<"row"<"col-md-5"i><"col-md-7"p>>> >',
+            dom: '<"row"<"col-md-12"<"row"<"col-md-6"l><"col-md-6"f> > ><"col-md-12"rt> <"col-md-12"<"row"<"col-md-5"i><"col-md-7"p>>> >',
             columns: [
-                {"data": "id"},
                 {"data": "npm"},
                 {
                     data: function (data, row, type) {
@@ -326,8 +353,12 @@
                     data: function(data, row, type) {
                         return `
                                     <div class="text-right">
-                                        <a href="#" class="btn btn-warning btn-sm btn-edit" data-id="${data.id}"><i class="fa fa-edit"></i></a>
-                                        <a href="#" class="btn btn-danger btn-sm btn-delete" data-id="${data.id}"><i class="fa fa-trash"></i></a>
+                                        @if (current_user_can('update_member'))
+                                            <a href="#" class="btn btn-warning btn-sm btn-edit" data-id="${data.id}"><i class="fa fa-edit"></i></a>
+                                        @endif
+                                        @if (current_user_can('delete_member'))
+                                            <a href="#" class="btn btn-danger btn-sm btn-delete" data-id="${data.id}"><i class="fa fa-trash"></i></a>
+                                        @endif
                                     </div>
                                 `;
                     }
@@ -348,6 +379,7 @@
             "pageLength": 10
         });
 
+        @if (current_user_can('create_member'))
         const addMemberModal = document.querySelector('#add-modal');
         const addMemberForm = addMemberModal.querySelector('form');
         const addMemberBtn = addMemberForm.querySelector('.add-member-btn');
@@ -444,6 +476,7 @@
                     })
                     .catch(errors => {
                         addMemberBtn.innerHTML = 'Tambah';
+                        addMemberBtn.removeAttribute('disabled');
 
                         if (!addMessageContainer.classList.contains('alert')) {
                             addMessageContainer.classList.add('alert');
@@ -457,7 +490,9 @@
                     });
             }
         });
+        @endif
 
+        @if (current_user_can('delete_member'))
         let delete_id = 0;
         $(document).on('click', '.btn-delete', function (e) {
             e.preventDefault();
@@ -516,7 +551,9 @@
                 deleteMessageContainer.innerHTML = errors;
             });
         });
+        @endif
 
+        @if (current_user_can('update_member'))
         const editMemberModal = document.querySelector('#edit-modal');
         const editMemberForm = editMemberModal.querySelector('form');
         const editMemberBtn = editMemberForm.querySelector('.save-member-btn');
@@ -652,7 +689,9 @@
                     editMessageContainer.innerHTML = errors;
                 });
         });
+        @endif
 
+        @if (current_user_can('create_member'))
         $('#add-modal').on('show.bs.modal', function () {
             loadForces(document.querySelector('#member-force'));
         });
@@ -661,6 +700,9 @@
         let importFileField = importForm.querySelector('#import-file-field');
         let importFileInput = importFileField.querySelector('#select-file');
         let importFileFeedback =  importFileField.querySelector('.invalid-feedback');
+        let importForceField = importForm.querySelector('#force-field');
+        let importForceInput = importForceField.querySelector('#force');
+        let importForceFeedback =  importForceField.querySelector('.invalid-feedback');
         let importBtn = importForm.querySelector('.btn-import-member');
 
         let importMessageContainer = importForm.querySelector('.import-message-container');
@@ -673,6 +715,7 @@
 
             const memberFile = new FormData();
             memberFile.append('file', importFileInput.files[0]);
+            memberFile.append('force_id', importForceInput.value);
 
             fetch('{{ route('api.members.import') }}', {
                 method: 'POST',
@@ -747,5 +790,6 @@
                 });
 
         });
+        @endif
     </script>
 @endpush

@@ -26,7 +26,7 @@ class CreateMembersTable extends Migration
             $table->id();
             $table->unsignedBigInteger('force_id')->nullable();
             $table->string('name');
-            $table->string('npm', 16)->unique();
+            $table->string('npm', 16)->nullable();
             $table->timestamps();
 
             $table->index('force_id');

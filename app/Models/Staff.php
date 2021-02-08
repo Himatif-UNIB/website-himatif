@@ -25,9 +25,9 @@ class Staff extends Model
      * 
      * @return  Definisi relasi one to one
      */
-    public function member()
+    public function user()
     {
-        return $this->hasOne('App\Models\Member', 'id', 'member_id');
+        return $this->hasOne('App\Models\User', 'id', 'user_id');
     }
 
     /**

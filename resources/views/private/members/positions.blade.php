@@ -234,7 +234,7 @@
                     'Authorization': `Bearer ${passportAccessToken}`
                 }
             },
-            dom: '<"row"<"col-md-12"<"row"<"col-md-6"B><"col-md-6"f> > ><"col-md-12"rt> <"col-md-12"<"row"<"col-md-5"i><"col-md-7"p>>> >',
+            dom: '<"row"<"col-md-12"<"row"<"col-md-6"l><"col-md-6"f> > ><"col-md-12"rt> <"col-md-12"<"row"<"col-md-5"i><"col-md-7"p>>> >',
             columns: [
                 {
                     "data": "id"
@@ -394,6 +394,7 @@
                     })
                     .catch(errors => {
                         addPositionBtn.innerHTML = 'Tambah';
+                        addPositionBtn.removeAttribute('disabled');
 
                         if (!addMessageContainer.classList.contains('alert')) {
                             addMessageContainer.classList.add('alert');

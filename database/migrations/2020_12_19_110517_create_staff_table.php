@@ -26,15 +26,15 @@ class CreateStaffTable extends Migration
             $table->id();
             $table->unsignedBigInteger('period_id')->nullable();
             $table->unsignedBigInteger('position_id')->nullable();
-            $table->unsignedBigInteger('member_id')->nullable();
+            $table->unsignedBigInteger('user_id')->nullable();
 
             $table->index('period_id');
             $table->index('position_id');
-            $table->index('member_id');
+            $table->index('user_id');
 
             $table->foreign('period_id')->references('id')->on('periods')->onDelete('CASCADE')->onUpdate('CASCADE');
             $table->foreign('position_id')->references('id')->on('positions')->onDelete('CASCADE')->onUpdate('CASCADE');
-            $table->foreign('member_id')->references('id')->on('members')->onDelete('CASCADE')->onUpdate('CASCADE');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('CASCADE')->onUpdate('CASCADE');
         });
     }
 
