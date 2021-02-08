@@ -46,6 +46,14 @@ Route::get('/post', function () {
     return view('frontend.post');
 })->name('blog.post');
 
+Route::get('/modal', function () {
+    return view('frontend.modal');
+})->name('modal');
+
+Route::get('/galeri', function () {
+    return view('frontend.galeri');
+})->name('galeri');
+
 Route::get('/home', [AdminController::class, 'index'])->middleware('auth')->name('index');
 
 Route::get('/auth/login', [AuthController::class, 'index'])->name('login');
