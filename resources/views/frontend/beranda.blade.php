@@ -73,15 +73,10 @@
             Bidang Organisasi
         </h2>
         <div class="grid grid-row md:grid-cols-2 lg:grid-cols-3 place-items-center"  data-aos="fade-up" data-aos-delay="500">
-<<<<<<< HEAD
-            <div class="modal-open border-2 cursor-pointer hover:border-gray-400 transition duration-500 ease-in-out w-64 h-64 lg:w-80 lg:h-80 rounded-3xl p-5 mb-5 flex flex-wrap content-center">
-                <img class="mx-auto" src="{{ asset('assets/bidang/KWU.png') }}" alt="">
-=======
             @forelse ($divisions as $item)
             <div class="border-2 cursor-pointer hover:border-gray-400 transition duration-500 ease-in-out w-64 h-64 lg:w-80 lg:h-80 rounded-3xl p-5 mb-5 flex flex-wrap content-center">
                 <img class="mx-auto" src="{{ $item->media[0]->getFullUrl() }}" alt="{{ $item->name }}"
                     title="Bidang {{ $item->name }}">
->>>>>>> 181972b0f30c71ced6859c91e184e476d3e17d5e
             </div>
             @empty
             <div>
