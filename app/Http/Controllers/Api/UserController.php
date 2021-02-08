@@ -19,7 +19,9 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::with('roles')->get();
+        $users = User::with('member')->whereHas('roles', function ($role) {
+            return $role->where('name', '!=', 'super_admin');
+        })->get();
         
         return ['data' => $users];
     }

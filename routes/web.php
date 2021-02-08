@@ -1,10 +1,8 @@
 <?php
 
 use App\Http\Controllers\Admin\PermissionController;
-use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\AdminController;
-use App\Http\Controllers\StaffController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\FacebookAuthController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
@@ -13,6 +11,8 @@ use App\Http\Controllers\FormController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SettingController;
+use App\Http\Controllers\StaffController;
 use App\Http\Controllers\UserFormController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -70,7 +70,7 @@ Route::group(['prefix' => 'auth', 'as' => 'password.', 'middleware' => 'guest'],
 
 Route::group(['middleware' => ['auth']], function () {
     Route::group(['as' => 'admin.', 'prefix' => 'admin'], function () {
-        Route::group(['as' => 'settings.', 'prefix' => 'settings'], function () {
+        Route::group(['as' => 'settings.', 'prefix' => 'settings', 'middleware' => ['permission:read_setting|update_setting']], function () {
             Route::get('/', [SettingController::class, 'general'])->name('general');
             Route::put('/update', [SettingController::class, 'update'])->name('update');
         });
@@ -96,7 +96,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/members/{member}', [MemberController::class, 'show'])->name('members.show');
     Route::get('/members/export', [MemberController::class, 'export'])->name('members.export');
 
-    Route::get('/staffs', [MemberController::class, 'staff'])->name('staffs');
+    Route::get('/staff', [StaffController::class, 'index'])->name('staff');
 
     Route::get('/forms/{form}/answers', [FormController::class, 'answers'])->name('forms.answers');
     Route::get('/forms/{form}/export', [FormController::class, 'exportAnswer'])->name('forms.answer.export');

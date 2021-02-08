@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Imports\MembersImport;
 use App\Models\Member;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Validator;
@@ -19,7 +20,7 @@ class MemberController extends Controller
      */
     public function index()
     {
-        return ['data' => Member::with('force')->get()];
+        return ['data' => Member::with('force')->orderBY('npm', 'ASC')->get()];
     }
 
     /**
@@ -96,6 +97,10 @@ class MemberController extends Controller
         $member->force_id = $request->force_id;
         $member->save();
 
+        $user = User::findOrFail($member->user_id);
+        $user->name = $request->name;
+        $user->save();
+
         return response()
             ->json([
                 'success' => true,
@@ -134,7 +139,8 @@ class MemberController extends Controller
     public function import(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'file' => ['required', 'max:10240', 'mimes:xlsx,xls']
+            'file' => ['required', 'max:10240', 'mimes:xlsx,xls'],
+            'force_id' => ['required', 'numeric']
         ]);
 
         if ($validator->fails()) {
@@ -146,13 +152,15 @@ class MemberController extends Controller
         }
 
         if ($request->hasFile('file') && $request->file('file')->isValid()) {
+            $force_id = $request->force_id;
+
             $file = $request->file('file');
             $fileName = '_temp_'. time() .'_'. $file->getClientOriginalName();
             $filePath = 'uploads/members-import/'. $fileName;
 
             $file->move('uploads/members-import', $fileName);
 
-            Excel::import(new MembersImport, $filePath);
+            Excel::import(new MembersImport($force_id), $filePath);
 
             File::delete($filePath);
 

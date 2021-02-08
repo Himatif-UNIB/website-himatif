@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Staff;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -32,7 +33,7 @@ class StaffController extends Controller
      */
     public function index()
     {
-        return ['data' => Staff::with(['member', 'position', 'period', 'position.division'])->get()];
+        return ['data' => Staff::with(['user.member', 'position', 'period', 'position.division'])->get()];
     }
 
     /**
@@ -44,9 +45,10 @@ class StaffController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'member_id' => ['required', 'numeric'],
+            'user_id' => ['required', 'numeric'],
             'position_id' => ['required', 'numeric'],
-            'period_id' => ['required', 'numeric']
+            'period_id' => ['required', 'numeric'],
+            'role' => ['required', 'string']
         ]);
 
         if ($validator->fails()) {
@@ -57,14 +59,14 @@ class StaffController extends Controller
                 ], 422);
         }
         
-        $checkIsMemberIsAdministrated = Staff::where(['member_id' => $request->member_id, 'period_id' => $request->period_id])->first();
+        $checkIsMemberIsAdministrated = Staff::where(['user_id' => $request->user_id, 'period_id' => $request->period_id])->first();
 
         if ($checkIsMemberIsAdministrated != NULL) {
             return response()
                 ->json([
                     'error' => true,
                     'validations' => [
-                        'member_id' => [
+                        'user_id' => [
                             'Anggota tersebut sudah menjadi pengurus di periode ini dengan jabatan lain'
                         ]
                     ]
@@ -72,10 +74,13 @@ class StaffController extends Controller
         }
 
         $staff = new Staff;
-        $staff->member_id = $request->member_id;
+        $staff->user_id = $request->user_id;
         $staff->position_id = $request->position_id;
         $staff->period_id = $request->period_id;
         $staff->save();
+
+        $user = User::findOrFail($request->user_id);
+        $user->assignRole($request->role);
 
         return response()
             ->json([
@@ -92,7 +97,16 @@ class StaffController extends Controller
      */
     public function show(Staff $staff)
     {
-        return $staff;
+        $data = new \stdClass();
+
+        $data = $staff;
+        $role = $staff->user->roles[0]->name;
+        $data->role = $role;
+        
+        unset($data->user);
+
+        return response()
+            ->json($data);
     }
 
     /**
@@ -105,9 +119,10 @@ class StaffController extends Controller
     public function update(Request $request, Staff $staff)
     {
         $validator = Validator::make($request->all(), [
-            'member_id' => ['required', 'numeric'],
+            'user_id' => ['required', 'numeric'],
             'position_id' => ['required', 'numeric'],
-            'period_id' => ['required', 'numeric']
+            'period_id' => ['required', 'numeric'],
+            'role' => ['required', 'string']
         ]);
 
         if ($validator->fails()) {
@@ -118,10 +133,13 @@ class StaffController extends Controller
                 ], 422);
         }
 
-        $staff->member_id = $request->member_id;
+        $staff->user_id = $request->user_id;
         $staff->position_id = $request->position_id;
         $staff->period_id = $request->period_id;
         $staff->save();
+
+        $user = User::findOrFail($request->user_id);
+        $user->syncRoles([$request->role]);
 
         return response()
             ->json([

@@ -55,7 +55,7 @@
 @section('custom_html')
     @if (current_user_can('create_staff'))
     <div id="add-modal" tabindex="-1" class="modal animated rotateInDownLeft custo-rotateInDownLeft" role="dialog">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-lg">
             <!-- Modal content-->
             <div class="modal-content">
                 <div class="modal-header">
@@ -81,11 +81,29 @@
 
                             <div class="invalid-feedback staff-name-feedback"></div>
                         </div>
-                        <div class="form-group" id="staff-position-field">
-                            <label for="staff-position">Jabatan:</label>
-                            <select class="form-control" id="staff-position" name="staff-position" required></select>
-                        
-                            <div class="invalid-feedback staff-position-feedback"></div>
+                        <div class="row">
+                            <div class="col-6 col-xs-12">
+                                <div class="form-group" id="staff-position-field">
+                                    <label for="staff-position">Jabatan:</label>
+                                    <select class="form-control" id="staff-position" name="staff-position" required></select>
+                                
+                                    <div class="invalid-feedback staff-position-feedback"></div>
+                                </div>
+                            </div>
+                            <div class="col-6 col-xs-12">
+                                <div class="form-group" id="role-field">
+                                    <label for="role">Role:</label>
+                                    <select name="role" id="role" class="form-control" required="required">
+                                        @foreach ($roles as $role)
+                                            <option value="{{ $role->name }}">{{ $role->label }}</option>
+                                        @endforeach
+                                    </select>
+        
+                                    <span class="text-muted">Pilih role yang sesuai dengan jabatan</span>
+        
+                                    <div class="invalid-feedback role-feedback"></div>
+                                </div>
+                            </div>
                         </div>
                         <div class="form-group" id="staff-period-field">
                             <label for="staff-period">Periode Kepengurusan:</label>
@@ -106,7 +124,7 @@
 
     @if (current_user_can('update_staff'))
     <div id="edit-modal" class="modal animated rotateInDownRight custo-rotateInDownRight" role="dialog">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-lg">
             <!-- Modal content-->
             <div class="modal-content">
                 <div class="modal-header">
@@ -120,7 +138,7 @@
                         </svg>
                     </button>
                 </div>
-                <form action="#" method="post">
+                <form action="#" method="post" id="edit-form">
                     <div class="modal-body">
                         <div class="message-container"></div>
 
@@ -130,12 +148,31 @@
 
                             <div class="invalid-feedback edit-staff-name-feedback"></div>
                         </div>
-                        <div class="form-group" id="edit-staff-position-field">
-                            <label for="edit-staff-position">Jabatan:</label>
-                            <select class="form-control" id="edit-staff-position" name="staff-position" required></select>
-                        
-                            <div class="invalid-feedback edit-staff-position-feedback"></div>
+                        <div class="row">
+                            <div class="col-6 col-xs-12">
+                                <div class="form-group" id="edit-staff-position-field">
+                                    <label for="edit-staff-position">Jabatan:</label>
+                                    <select class="form-control" id="edit-staff-position" name="staff-position" required></select>
+                                
+                                    <div class="invalid-feedback edit-staff-position-feedback"></div>
+                                </div>
+                            </div>
+                            <div class="col-6 col-xs-12">
+                                <div class="form-group" id="edit-role-field">
+                                    <label for="edit-role">Role:</label>
+                                    <select name="role" id="edit-role" class="form-control" required="required">
+                                        @foreach ($roles as $role)
+                                            <option value="{{ $role->name }}" class="{{ $role->name }}">{{ $role->label }}</option>
+                                        @endforeach
+                                    </select>
+        
+                                    <span class="text-muted">Pilih role yang sesuai dengan jabatan</span>
+        
+                                    <div class="invalid-feedback role-feedback"></div>
+                                </div>
+                            </div>
                         </div>
+
                         <div class="form-group" id="edit-staff-period-field">
                             <label for="edit-staff-period">Periode Kepengurusan:</label>
                             <select class="form-control" id="edit-staff-period" name="staff-period" required></select>
@@ -196,10 +233,14 @@
                     'Authorization': `Bearer ${passportAccessToken}`
                 }
             },
-            dom: '<"row"<"col-md-12"<"row"<"col-md-6"B><"col-md-6"f> > ><"col-md-12"rt> <"col-md-12"<"row"<"col-md-5"i><"col-md-7"p>>> >',
+            dom: '<"row"<"col-md-12"<"row"<"col-md-6"l><"col-md-6"f> > ><"col-md-12"rt> <"col-md-12"<"row"<"col-md-5"i><"col-md-7"p>>> >',
             columns: [
                 {"data": "id"},
-                {"data": "member.name"},
+                {
+                    data: function (data, row, type) {
+                        return (data.user.member == null) ? data.user.name : data.user.member.name;
+                    }
+                },
                 {"data": "position.name"},
                 {
                     data: function (data, row, type) {
@@ -239,7 +280,7 @@
         });
 
         function loadMembers(loadTo, defaultSelected = null) {
-            fetch('{{ route('api.members.index') }}', {
+            fetch('{{ route('api.users.index') }}', {
                 method: 'GET',
                 headers: {
                     'Authorization': `Bearer ${passportAccessToken}`
@@ -252,13 +293,13 @@
                             loadTo.removeChild(loadTo.firstChild);
                         }
 
-                        res.data.forEach((member) => {
+                        res.data.forEach((user) => {
                             let option = document.createElement('option');
-                            option.setAttribute('value', member.id);
-                            if (defaultSelected != null && defaultSelected == member.id) {
+                            option.setAttribute('value', user.id);
+                            if (defaultSelected != null && defaultSelected == user.id) {
                                 option.setAttribute('selected', 'selected');
                             }
-                            option.innerHTML = member.name;
+                            option.innerHTML = (user.member == null) ? user.name : `${user.name} (${user.member.npm})`;
 
                             loadTo.appendChild(option);
                         });
@@ -317,7 +358,8 @@
                         res.data.forEach((period) => {
                             let option = document.createElement('option');
                             option.setAttribute('value', period.id);
-                            if (defaultSelected != null && defaultSelected == period.id) {
+                            if (defaultSelected != null && defaultSelected == period.id
+                                || period.is_active) {
                                 option.setAttribute('selected', 'selected');
                             }
                             option.innerHTML = period.name;
@@ -336,11 +378,14 @@
         const addStaffForm = addStaffModal.querySelector('form');
         const addStaffBtn = addStaffForm.querySelector('.add-staff-btn');
         const addStaffNameField = addStaffForm.querySelector('#staff-name-field');
+        const addRoleField = addStaffForm.querySelector('#role-field');
         const addStaffPositionField = addStaffForm.querySelector('#staff-position-field');
         const addStaffPeriodField = addStaffForm.querySelector('#staff-period-field');
 
         const addStaffNameInput = addStaffNameField.querySelector('#staff-name');
         const addStaffNameFeedback = addStaffNameField.querySelector('.invalid-feedback');
+        const addRoleInput = addRoleField.querySelector('#role');
+        const addRoleFeedback = addRoleField.querySelector('.invalid-feedback');
         const addStaffPositionInput = addStaffPositionField.querySelector('#staff-position');
         const addStaffPositionFeedback = addStaffPositionField.querySelector('.invalid-feedback');
         const addStaffPeriodInput = addStaffPeriodField.querySelector('#staff-period');
@@ -362,9 +407,10 @@
                                 'Content-Type': 'application/json'
                             },
                             body: JSON.stringify({
-                                member_id: addStaffNameInput.value,
+                                user_id: addStaffNameInput.value,
                                 position_id: addStaffPositionInput.value,
-                                period_id: addStaffPeriodInput.value
+                                period_id: addStaffPeriodInput.value,
+                                role: addRoleInput.value
                             })
                         })
                     .then(res => res.json())
@@ -376,9 +422,9 @@
 
                             if (res.validations) {
                                 const validation = res.validations;
-                                if (validation.member_id) {
+                                if (validation.user_id) {
                                     addStaffNameInput.classList.add('is-invalid');
-                                    addStaffNameFeedback.innerHTML = validation.member_id[0]
+                                    addStaffNameFeedback.innerHTML = validation.user_id[0]
                                 }
                                 if (validation.position_id) {
                                     addStaffPositionInput.classList.add('is-invalid');
@@ -428,6 +474,7 @@
                     })
                     .catch(errors => {
                         addStaffBtn.innerHTML = 'Tambah';
+                        addPositionBtn.removeAttribute('disabled');
 
                         if (!addMessageContainer.classList.contains('alert')) {
                             addMessageContainer.classList.add('alert');
@@ -509,11 +556,14 @@
         const editStaffForm = editStaffModal.querySelector('form');
         const editStaffBtn = editStaffForm.querySelector('.save-staff-btn');
         const editStaffNameField = editStaffForm.querySelector('#edit-staff-name-field');
+        const editRoleField = editStaffForm.querySelector('#edit-role-field');
         const editStaffPositionField = editStaffForm.querySelector('#edit-staff-position-field');
         const editStaffPeriodField = editStaffForm.querySelector('#edit-staff-period-field');
 
         const editStaffNameInput = editStaffNameField.querySelector('#edit-staff-name');
         const editStaffNameFeedback = editStaffNameField.querySelector('.invalid-feedback');
+        const editRoleInput = editRoleField.querySelector('#edit-role');
+        const editRoleFeedback = editRoleField.querySelector('.invalid-feedback');
         const editStaffPositionInput = editStaffPositionField.querySelector('#edit-staff-position');
         const editStaffPositionFeedback = editStaffPositionField.querySelector('.invalid-feedback');
         const editStaffPeriodInput = editStaffPeriodField.querySelector('#edit-staff-period');
@@ -528,6 +578,8 @@
             const id = $(this).data('id');
             edit_id = id;
 
+            $(this).html('<i class="fa fa-spin fa-spinner"></i>');
+
             fetch(`{{ route('api.staffs.show', false) }}/${id}`, {
                     headers: {
                         'Authorization': `Bearer ${passportAccessToken}`
@@ -535,10 +587,15 @@
                 })
                 .then(res => res.json())
                 .then(res => {
-                    loadMembers(document.querySelector('#edit-staff-name'), res.member_id);
+                    loadMembers(document.querySelector('#edit-staff-name'), res.user_id);
                     loadPositions(document.querySelector('#edit-staff-position'), res.position_id);
                     loadPeriods(document.querySelector('#edit-staff-period'), res.period_id);
-                    
+
+                    $('#edit-form #role option').removeAttr('selected');
+                    $('#edit-form #role .'+ res.role).attr('selected', 'selected');
+
+                    $(this).html('<i class="fa fa-edit"></i>');
+
                     $('#edit-modal').modal('show');
                 })
                 .catch(errors => {
@@ -559,9 +616,10 @@
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({
-                        member_id: editStaffNameInput.value,
+                        user_id: editStaffNameInput.value,
                         position_id: editStaffPositionInput.value,
-                        period_id: editStaffPeriodInput.value
+                        period_id: editStaffPeriodInput.value,
+                        role: editRoleInput.value
                     })
                 })
                 .then(res => res.json())
@@ -574,9 +632,9 @@
                         if (res.validations) {
                             const validation = res.validations;
 
-                            if (validation.member_id) {
+                            if (validation.user_id) {
                                 editStaffNameInput.classList.add('is-invalid');
-                                editStaffNameFeedback.innerHTML = validation.member_id[0]
+                                editStaffNameFeedback.innerHTML = validation.user_id[0]
                             }
                             if (validation.position_id) {
                                 editStaffPositionInput.classList.add('is-invalid');

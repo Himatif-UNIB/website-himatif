@@ -48,7 +48,7 @@
                             <img src="{{ getProfilePicture() }}" class="img-fluid mr-2" alt="avatar">
                             <div class="media-body">
                                 <h5>{{ printUserName(auth()->user()->name) }}</h5>
-                                <p>Project Leader</p>
+                                <p>{{ auth()->user()->roles[0]->label ?? 'User' }}</p>
                             </div>
                         </div>
                     </div>

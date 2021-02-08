@@ -5,6 +5,7 @@ namespace App\Imports;
 use App\Models\Force;
 use App\Models\Member;
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
@@ -12,41 +13,40 @@ use Maatwebsite\Excel\Concerns\WithHeadingRow;
 class MembersImport implements ToModel, WithHeadingRow
 {
     /**
+     * @var   int $force_id
+     * 
+     * ID angkatan yang akan diimport
+     */
+    private $force_id;
+
+    /**
+     * @param   int $force  ID angkatan yang akan diimport
+     */
+    public function __construct($force_id) {
+        $this->force_id = $force_id;
+    }
+
+    /**
     * @param array $row
     *
     * @return \Illuminate\Database\Eloquent\Model|null
     */
     public function model(array $row)
     {
-        $forceID = now()->year;
-        $givenForceYear = $row['angkatan'];
+        if ( ! Member::where('npm', $row['npm'])->exists()) {
+            $userId = DB::table('users')->insertGetId(
+                ['name' => $row['nama'], 'password' => Hash::make('12345678'), 'email' => $row['npm'] .'@default.test', 'created_at' => now()]
+            );
 
-        $givenForceData = Force::where('year', $givenForceYear)->first();
-        if ($givenForceData != NULL) {
-            $forceID = $givenForceData->id;
+            User::find($userId)->assignRole('member');
+
+            DB::table('members')->insert([
+                'user_id' => $userId,
+                'name' => $row['nama'],
+                'npm' => $row['npm'],
+                'force_id' => $this->force_id,
+                'created_at' => now()
+            ]);
         }
-
-        $checkIfNPMExist = Member::where('npm', $row['npm'])->first();
-        if ($checkIfNPMExist != null) {
-            $user_id = $checkIfNPMExist->user_id;
-
-            $checkIfNPMExist->delete();
-            User::where('id', $user_id)->delete();
-        }
-
-        $user = new User();
-        $user->name = $row['nama'];
-        $user->password = Hash::make('12345678');
-        $user->email = $row['npm'] .'@default.test';
-        $user->save();
-
-        $user_id = $user->id;
-
-        $member = new Member();
-        $member->user_id = $user_id;
-        $member->name = $row['nama'];
-        $member->npm = $row['npm'];
-        $member->force_id = $forceID;
-        $member->save();
     }
 }

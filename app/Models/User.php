@@ -82,7 +82,54 @@ class User extends Authenticatable implements CanResetPassword, HasMedia
         return $this->hasOne(Member::class, 'user_id', 'id');
     }
 
+    /**
+     * Relasi one to one
+     * 
+     * Membuat relasi one to one ke model
+     * App\Models\Social_auth
+     * 
+     * Mendapatkan data login sosial media user
+     * 
+     * @since   1.0.0
+     * @author  mulyosyahidin95
+     * 
+     * @return  Definisi iners relasi one to one
+     */
     public function socialAuth() {
         return $this->hasOne(Social_auth::class, 'user_id', 'id');
+    }
+
+    /**
+     * Invers relasi one to one
+     * 
+     * Membuat definisi invers relasi dari model
+     * App\Models\Staff
+     * 
+     * @since   1.0.0
+     * @author  mulyosyahidin95
+     * 
+     * @return  Definisi invers relasi
+     */
+    public function staffUser()
+    {
+        return $this->belongsTo('App\Models\Staff');
+    }
+
+    /**
+     * Relasi one to many
+     * 
+     * Membuat relasi one to many ke model
+     * App\Models\Staff
+     * 
+     * Mengambil semua data kepengurusan dari anggota
+     * 
+     * @since   1.0.0
+     * @author  mulyosyahidin95
+     * 
+     * @return  Definisi relasi one to many
+     */
+    public function staffs()
+    {
+        return $this->hasMany(Staff::class);
     }
 }

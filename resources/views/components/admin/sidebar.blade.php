@@ -4,16 +4,16 @@
         <div class="profile-info">
             <figure class="user-cover-image"></figure>
             <div class="user-info">
-                <img src="{{ asset('assets/themes/cork/img/90x90.jpg') }}" alt="{{ auth()->user()->name }}">
+                <img src="{{ getProfilePicture() }}" alt="{{ auth()->user()->name }}">
                 <h6 class="">{{ auth()->user()->name }}</h6>
-                <p class="">Web Developer</p>
+                <p class=""></p>
             </div>
         </div>
 
         <div class="shadow-bottom"></div>
         <ul class="list-unstyled menu-categories" id="accordionExample">
-            <li class="menu {{ __active('AdminController', 'index') }}">
-                <a href="{{ route('index') }}" aria-expanded="{{ __displayAria('AdminController', 'index') }}" class="dropdown-toggle">
+            <li class="menu {{ __active(['AdminController', 'ProfileController'], 'index') }}">
+                <a href="{{ route('index') }}" aria-expanded="{{ __displayAria(['AdminController', 'ProfileController'], 'index') }}" class="dropdown-toggle">
                     <div class="">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-home"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
                         <span>Dasbor</span>
@@ -245,8 +245,8 @@
             </li>
             @endif
             @if (current_user_can(['create_staff', 'read_staff', 'update_staff', 'delete_staff']))
-            <li class="menu {{ __active('MemberController', 'staff') }}">
-                <a href="{{ route('staffs') }}" aria-expanded="{{ __displayAria('MemberController', 'staff') }}" class="dropdown-toggle">
+            <li class="menu {{ __active('StaffController') }}">
+                <a href="{{ route('staff') }}" aria-expanded="{{ __displayAria('StaffController') }}" class="dropdown-toggle">
                     <div class="">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clipboard"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>
                         <span>Pengurus</span>
@@ -256,12 +256,13 @@
             @endif
             @endif
 
+            @if (current_user_can(['read_site_setting', 'update_site_setting']))
             <li class="menu menu-heading">
                 <div class="heading"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-minus"><line x1="5" y1="12" x2="19" y2="12"></line></svg><span>PENGATURAN</span></div>
             </li>
 
-            <li class="menu">
-                <a href="#components" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+            <li class="menu {{ __active('SettingController', 'general') }}">
+                <a href="#settings" data-toggle="collapse" aria-expanded=" {{ __displayAria('SettingController', 'general') }}" class="dropdown-toggle">
                     <div class="">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-settings">
                             <circle cx="12" cy="12" r="3"></circle>
@@ -273,7 +274,7 @@
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>
                     </div>
                 </a>
-                <ul class="collapse submenu list-unstyled" id="components" data-parent="#accordionExample">
+                <ul class="collapse submenu list-unstyled" id="settings" data-parent="#accordionExample">
                     <li>
                         <a href="{{ route('admin.settings.general') }}">Umum</a>
                     </li>
@@ -282,6 +283,7 @@
                     </li>
                 </ul>
             </li>
+            @endif
         </ul>
     </nav>
 </div>

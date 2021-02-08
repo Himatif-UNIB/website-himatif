@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Exports\MembersExport;
+use App\Models\Force;
 use App\Models\Member;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
@@ -24,7 +25,9 @@ class MemberController extends Controller
      */
     public function index()
     {
-        return view('private.members.members');
+        $forces = Force::all();
+
+        return view('private.members.members', compact('forces'));
     }
 
     /**
@@ -119,21 +122,5 @@ class MemberController extends Controller
     public function positions()
     {
         return view('private.members.positions');
-    }
-
-    /**
-     * Menampilkan halaman manajemen pengurus
-     * 
-     * Halaman manajemen pengurus adalah halaman untuk
-     * mengelola data pengurus
-     * 
-     * @since   1.0.0
-     * @author  mulyosyahidin95
-     * 
-     * @return  View\Factory@private.members.staff
-     */
-    public function staff()
-    {
-        return view('private.members.staff');
     }
 }
