@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Member;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -41,7 +43,7 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'email' => ['required', 'email', 'min:10', 'max:128'],
+            'email' => ['required', 'min:8', 'max:128'],
             'password' => ['required'],
             'remember_me' => ['nullable', 'boolean']
         ]);
@@ -54,13 +56,50 @@ class AuthController extends Controller
                 ], 422);
         }
 
-        $credentials = $request->only('email', 'password');
+        $email = $request->email;
+        $canLogin = false;
 
-        if (!Auth::attempt($credentials)) {
+        if (isEmail($email)) {
+            /**
+             * Jika login menggunakan email,
+             * lakukan login seperti biasa
+             */
+            $credentials = $request->only('email', 'password');
+            if (Auth::attempt($credentials)) {
+                $canLogin = true;
+            }
+        }
+        else {
+            /**
+             * Jika login menggunakan NPM,
+             * periksa apakah NPM terdaftar di table `members`
+             * atau tidak.
+             * 
+             * Jika iya, ambil data tabel `users` berdasarkan kolom `user_id`
+             */
+            $npm = $email;
+            $password = $request->password;
+
+            $isNPMRegistered = Member::where('npm', $npm)->exists();
+            if ($isNPMRegistered) {
+                $getMemberData = Member::where('npm', $npm)->first();
+                $userID = $getMemberData->user_id;
+
+                $getUserData = User::where('id', $userID)->first();
+                $userPassword = $getUserData->password;
+
+                if (password_verify($password, $userPassword)) {
+                    Auth::loginUsingId($userID);
+                    $canLogin = true;
+                }
+            }
+        }
+
+        if ($canLogin == false) {
             return response()
                 ->json([
                     'error' => true,
-                    'message' => 'Username atau password salah'
+                    'message' => 'Email / NPM atau password salah'
                 ], 401);
         }
 
@@ -124,8 +163,7 @@ class AuthController extends Controller
         if (!Auth::attempt($credentials)) {
             return redirect()
                 ->back()
-                ->withInput()
-                ->withErrors();
+                ->withInput();
         }
 
         $user = auth()->user();

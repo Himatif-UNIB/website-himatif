@@ -5,15 +5,17 @@ namespace App\Models;
 use Illuminate\Contracts\Auth\CanResetPassword;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable implements CanResetPassword, HasMedia
 {
-    use HasApiTokens, HasFactory, InteractsWithMedia, Notifiable;
+    use HasApiTokens, HasFactory, HasRoles, InteractsWithMedia, Notifiable, SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -45,8 +47,42 @@ class User extends Authenticatable implements CanResetPassword, HasMedia
         'email_verified_at' => 'datetime',
     ];
 
+    /**
+     * Invers relasi one to many
+     * 
+     * Membuat invers relasi one to many ke model
+     * App\Models\Form
+     * 
+     * Data formulir yang dibuat oleh user {user}
+     * 
+     * @since   1.0.0
+     * @author  mulyosyahidin95
+     * 
+     * @return  Definisi relasi one to many
+     */
     public function userForm()
     {
         return $this->belongsTo(Form::class);
+    }
+
+    /**
+     * Relasi one to one
+     * 
+     * Membuat relasi one to one ke model
+     * App\Models\Member
+     * 
+     * Mendapatkan data profil dari user {user}
+     * 
+     * @since   1.0.0
+     * @author  mulyosyahidin95
+     * 
+     * @return  Definisi iners relasi one to one
+     */
+    public function member() {
+        return $this->hasOne(Member::class, 'user_id', 'id');
+    }
+
+    public function socialAuth() {
+        return $this->hasOne(Social_auth::class, 'user_id', 'id');
     }
 }

@@ -19,11 +19,15 @@ if (!function_exists('getSetting')) {
      */
     function getSetting($key)
     {
-        $setting = DB::table('settings')->select('value')
-            ->where('key', $key)
-            ->first();
+        if (DB::table('settings')->where('key', $key)->exists()) {
+            $setting = DB::table('settings')->select('value')
+                ->where('key', $key)
+                ->first();
 
-        return $setting->value;
+            return $setting->value;
+        }
+        
+        return "{KEY_NOT_DEFINED|$key}";
     }
 }
 
@@ -219,6 +223,8 @@ if (!function_exists('__active')) {
             }
         } else if (isController($controller) && isAction($action)) {
             return ' active';
+        } else if ($controller !== '' && $action === '') {
+            return isController($controller) ? ' active' : '';
         }
     }
 }
@@ -354,8 +360,85 @@ if (!function_exists('__displayAria')) {
             }
         } else if (isController($controller) && isAction($action)) {
             return 'true';
+        }  else if ($controller !== '' && $action === '') {
+            return isController($controller) ? 'true' : '';
         }
 
         return 'false';
+    }
+}
+
+if ( ! function_exists('isEmail'))
+{
+    /**
+     * Memberiksa apakah string adalah email
+     * 
+     * Memeriksa apakah `$str` adalah email atau bukan
+     * 
+     * @param string $str
+     * 
+     * @since   1.0.0
+     * @author  mulyosyahidin95
+     * 
+     * @return Boolean
+     */
+    function isEmail($str)
+    {
+        return filter_var($str, FILTER_VALIDATE_EMAIL);
+    }
+}
+
+if ( ! function_exists('current_user_can'))
+{
+    /**
+     * Memeriksa apakah user dapat melakukan tindakan
+     * 
+     * Memeriksa apakah user yang sedang login dapat melakukan
+     * tindakan yang ditanyakan atau tidak.
+     * `$permissions` bisa berisi single string atau array.
+     * Operand merupakan operand perbandingan, hanya berlaku jika
+     * `$permissions` adalah array
+     * 
+     * 
+     * @param string    $permissions
+     * @param string    $operand
+     * 
+     * @since   1.0.0
+     * @author  mulyosyahidin95
+     * 
+     * @return Boolean
+     */
+    function current_user_can($permissions = NULL, $operand = 'OR')
+    {
+        if ($permissions == NULL) {
+            return false;
+        }
+
+        if (is_array($permissions) && count($permissions) > 0) {
+            $can = false;
+            $count = 0;
+
+            if ($operand == 'OR') {
+                foreach ($permissions as $permission) {
+                    if (auth()->user()->can($permission)) {
+                        $count += 1;
+                    }
+                }
+
+                return ($count > 0);
+            }
+            else if ($operand == 'AND') {
+                foreach ($permissions as $permission) {
+                    if (auth()->user()->can($permission)) {
+                        $count += 1;
+                    }
+                }
+
+                return (count($permissions) === $count);
+            }
+        }
+        else {
+            return auth()->user()->can($permissions);
+        }
     }
 }

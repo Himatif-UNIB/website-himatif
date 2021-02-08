@@ -4,11 +4,11 @@
         <div class="flex items-center justify-center">
             <img src="{{ asset('assets/himatif-white.png') }}" alt="">
             <span class="text-white text-4xl font-serif ml-3">
-                Himatif.Unib
+                {{ getSetting('siteName') }}
             </span>
         </div>
         <span class="flex justify-center mt-8 px-8 lg:px-80 text-center text-dark-blue-400 font-semibold">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Necessitatibus inventore suscipit quaerat quam harum sapiente perferendis molestiae tempore non?
+            {{ getSetting('organizationTagLine') }}
         </span>
         <span class="flex justify-center text-bold text-white text-xl uppercase mt-6">
             Follow Us

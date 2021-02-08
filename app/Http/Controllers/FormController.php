@@ -15,6 +15,22 @@ use Shivella\Bitly\Facade\Bitly;
 class FormController extends Controller
 {
     /**
+     * Membatasi akses user
+     * 
+     * - create_form -> create(), store()
+     * - read_form -> index(), show()
+     * - update_form -> edit(), update()
+     * - delete_form -> destroy()
+     */
+    public function __construct()
+    {
+        $this->middleware(['permission:create_form'])->only(['create', 'store']);
+        $this->middleware(['permission:update_form'])->only(['edit', 'update']);
+        $this->middleware(['permission:delete_form'])->only(['destroy']);
+        $this->middleware(['permission:read_form'])->only(['index', 'show', 'answers', 'exportAnswers']);
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -23,7 +39,7 @@ class FormController extends Controller
     {
         $forms = Form::orderBy('created_at', 'DESC')->paginate();
 
-        return view('forms.index', compact('forms'));
+        return view('private.forms.index', compact('forms'));
     }
 
     /**
@@ -38,14 +54,14 @@ class FormController extends Controller
             $form = Form::findOrFail($form_id);
 
             if ($request->session()->has('success')) {
-                return view('forms.edit', compact('form'))
+                return view('private.forms.edit', compact('form'))
                     ->with(['displayIdentity' => false]);
             } else {
                 return redirect()
-                    ->route('forms.edit', $form_id);
+                    ->route('private.forms.edit', $form_id);
             }
         } else {
-            return view('forms.create');
+            return view('private.forms.create');
         }
     }
 
@@ -70,11 +86,11 @@ class FormController extends Controller
         $form->slug = Str::slug($request->title);
         $form->description = $request->description;
         $form->post_message = $request->post_message;
-        $form->auto_close_date = $request->auto_close_date;
-        $form->auto_close_answer = $request->auto_close_answer;
+        $form->max_fill_date = $request->max_fill_date;
+        $form->max_fill_answer = $request->max_fill_answer;
         $form->save();
 
-        //$form->bitly_link = Bitly::getUrl('https://google.com/');//Bitly::getUrl(route('form.show', ['form' => $form->id, 'slug' => $form->slug]));
+        //$form->bitly_link = Bitly::getUrl(route('form.show', ['form' => $form->id, 'slug' => $form->slug]));
         //$form->save();
 
         if ($request->hasFile('picture') && $request->file('picture')->isValid()) {
@@ -95,7 +111,8 @@ class FormController extends Controller
      */
     public function show(Form $form)
     {
-        return view('forms.show', compact('form'));
+        //$isExpire =
+        return view('private.forms.show', compact('form'));
     }
 
     /**
@@ -106,7 +123,7 @@ class FormController extends Controller
      */
     public function edit(Form $form)
     {
-        return view('forms.edit', compact('form'))
+        return view('private.forms.edit', compact('form'))
             ->with(['displayIdentity' => true]);
     }
 
@@ -141,9 +158,20 @@ class FormController extends Controller
                     ->withSuccess('Formulir berhasil dibuka kembali.');
                 break;
             case 'edit_form':
+                $form->description = $request->description;
+                $form->post_message = $request->post_message;
                 $form->status = ($request->save_as_draft == NULL) ? 2 : 1;
                 $form->publish_at = ($request->save_as_draft == NULL) ? Carbon::now() : NULL;
                 $form->save();
+
+                if ($request->hasFile('picture') && $request->file('picture')->isValid()) {
+                    if (isset($form->media[0])) {
+                        $form->media[0]->delete();
+                    }
+
+                    $form->addMediaFromRequest('picture')
+                        ->toMediaCollection('formPicture');
+                }
 
                 if (count($form->questions) > 0) {
                     $form->questions()->where('form_id', $form->id)->delete();
@@ -204,11 +232,30 @@ class FormController extends Controller
             ->withSuccess('Berhasil menghapus formulir');
     }
 
+    /**
+     * Menampilkan halaman jawaban formulir
+     * 
+     * @since   1.0.0
+     * @author  mulyosyahidin95
+     * 
+     * @return  View\Factory@private.forms.answers
+     */
     public function answers(Form $form)
     {
-        return view('forms.answers', compact('form'));
+        return view('private.forms.answers', compact('form'));
     }
 
+    /**
+     * Action untuk export jawaban formulir
+     * 
+     * Action untuk melakukan export jawaban formulir
+     * ke format Excel.
+     * 
+     * @since   1.0.0
+     * @author  mulyosyahidin95
+     * 
+     * @return  Excel
+     */
     public function exportAnswer(Form $form)
     {
         return Excel::download(new ExportFormAnswers($form->questions, $form->answers), 'Jawaban Formulir ' . $form->title . '.xlsx');

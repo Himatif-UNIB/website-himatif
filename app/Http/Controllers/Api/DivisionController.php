@@ -10,6 +10,22 @@ use Illuminate\Support\Facades\Validator;
 class DivisionController extends Controller
 {
     /**
+     * Membatasi akses ke api
+     * 
+     * - create_division -> store()
+     * - read_division -> index(), show()
+     * - update_division -> update()
+     * - delete_division -> destroy()
+     */
+    public function __construct()
+    {
+        $this->middleware(['permission:create_division'])->only('store');
+        $this->middleware(['permission:read_division'])->only(['index', 'show']);
+        $this->middleware(['permission:update_division'])->only('update');
+        $this->middleware(['permission:delete_division'])->only('destroy');
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response

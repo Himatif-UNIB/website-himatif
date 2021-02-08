@@ -14,7 +14,7 @@
 
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-    <title>Himatif</title>
+    <title>{{ getSetting('organizationName') }}</title>
 </head>
 
 <body @if (Request::segment(1) !== null) class="bg-dark-blue relative" @endif>

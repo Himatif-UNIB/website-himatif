@@ -10,6 +10,22 @@ use Illuminate\Support\Facades\Validator;
 class PeriodController extends Controller
 {
     /**
+     * Membatasi akses ke api
+     * 
+     * - create_period -> store()
+     * - read_period -> index(), show()
+     * - update_period -> update()
+     * - delete_period -> destroy()
+     */
+    public function __construct()
+    {
+        $this->middleware(['permission:create_period'])->only('store');
+        $this->middleware(['permission:read_period'])->only(['index', 'show']);
+        $this->middleware(['permission:update_period'])->only('update');
+        $this->middleware(['permission:delete_period'])->only('destroy');
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response

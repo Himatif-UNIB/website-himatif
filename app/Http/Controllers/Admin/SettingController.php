@@ -8,13 +8,35 @@ use Illuminate\Http\Request;
 
 class SettingController extends Controller
 {
+    /**
+     * Menampilkan halaman pengaturan
+     * 
+     * Halaman pengaturan adalah halaman untuk
+     * mengatur website, seperti nama, logo,
+     * deskripsi, sambutan, dan sebagainya.
+     * 
+     * @since   1.0.0
+     * @author  mulyosyahidin95
+     * 
+     * @return  View\Factory@private.settings.general
+     */
     public function general()
     {
         $logo = Setting::where('key', 'organizationLogo')->first()->media;
 
-        return view('admin.settings.general', compact('logo'));
+        return view('private.settings.general', compact('logo'));
     }
 
+    /**
+     * Menyimpan data pengaturan
+     * 
+     * Menyimpan data pengaturan situs
+     * 
+     * @since   1.0.0
+     * @author  mulyosyahidin95
+     * 
+     * @return  View\Factory@private.settings.general
+     */
     public function update(Request $request)
     {
         $section = $request->section;
@@ -74,6 +96,19 @@ class SettingController extends Controller
                 return redirect()
                     ->back()
                     ->withSuccess('Berhasil menyimpan pengaturan logo');
+            break;
+            case 'organization':
+                $allowedFields = ['organizationName', 'organizationUniversity', 'organizationDesc', 'organizationTagLine'];
+                foreach ($allowedFields as $field) {
+                    Setting::where('key', $field)
+                        ->update(
+                            ['value' => $request->settings[$field]]
+                        );
+                }
+
+                return redirect()
+                    ->back()
+                    ->withSuccess('Berhasil menyimpan pengaturan');
             break;
         }
     }

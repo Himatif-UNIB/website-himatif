@@ -22,12 +22,13 @@ class UserFormController extends Controller
             abort(410, 'Sayangnya, formulir tersebut sudah ditutup');
         }
 
-        if ($form->closed_at != NULL) {
-            if ($form->closed_at < Carbon::now()) {
-                abort(410, 'Sayangnya, formulir tersebut sudah ditutup');
-            }
+        if ($form->closed_at != NULL && $form->closed_at < Carbon::now()) {
+            abort(410, 'Sayangnya, formulir tersebut sudah ditutup');
         }
 
+        if (($form->max_fill_date != NULL && $form->max_fill_date < Carbon::now()) || ($form->max_fill_answer != NULL && count($form->answers) >= $form->max_fill_answer)) {
+            abort(410, 'Formulir ini sudah tidak menerima jawaban.');
+        }
 
         $dateFields = $form->questions()->where('type', 6)->get();
         $timeFields = $form->questions()->where('type', 7)->get();
@@ -58,6 +59,8 @@ class UserFormController extends Controller
         $answer = new Form_answer;
         $answer->form_id = $form_id;
         $answer->ip_address = $request->getClientIp();
+        $answer->is_over_date = ($form->max_fill_date != NULL && (Carbon::parse($form->max_fill_date) < Carbon::now()));
+        $answer->is_over_answer = ($form->max_fill_answer != NULL && (count($form->answers) >= $form->max_fill_answer));
         $answer->user_agent = $request->userAgent();
         $answer->save();
 
@@ -73,6 +76,10 @@ class UserFormController extends Controller
                 $form_question_answer->addMediaFromRequest('question.'. $question->id)
                     ->toMediaCollection('formUploadFile');
             }
+        }
+
+        if ($form->is_over_date) {
+            abort(410, 'Formulir ini sudah melewati batas waktu maksimal pengisian.');
         }
 
         return redirect()

@@ -15,7 +15,7 @@ class CreateFormsTable extends Migration
     {
         Schema::create('forms', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('creator_id')->nullable();
+            $table->unsignedBigInteger('user_id')->nullable();
             $table->string('title');
             $table->mediumText('description')->nullable();
             $table->text('post_message')->nullable();
@@ -25,9 +25,9 @@ class CreateFormsTable extends Migration
             $table->dateTime('closed_at')->nullable();
             $table->timestamps();
 
-            $table->index('creator_id');
+            $table->index('user_id');
 
-            $table->foreign('creator_id')->references('id')->on('users')->onDelete('SET NULL')->onUpdate('NO ACTION');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('SET NULL')->onUpdate('NO ACTION');
         });
     }
 
