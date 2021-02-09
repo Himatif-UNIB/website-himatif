@@ -415,7 +415,6 @@ if ( ! function_exists('current_user_can'))
         }
 
         if (is_array($permissions) && count($permissions) > 0) {
-            $can = false;
             $count = 0;
 
             if ($operand == 'OR') {
@@ -440,5 +439,21 @@ if ( ! function_exists('current_user_can'))
         else {
             return auth()->user()->can($permissions);
         }
+    }
+}
+
+if ( ! function_exists('getActivePeriod'))
+{
+    /**
+     * Mendapatkan data periode yang sedang aktif
+     * 
+     * @since   1.0.0
+     * @author  mulyosyahidin95
+     * 
+     * @return  \Illuminate\Database\Eloquent\Model   data periode aktif
+     */
+    function getActivePeriod()
+    {
+        return DB::table('periods')->where('is_active', true)->first();
     }
 }

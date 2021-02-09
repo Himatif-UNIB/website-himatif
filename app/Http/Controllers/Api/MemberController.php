@@ -6,8 +6,11 @@ use App\Http\Controllers\Controller;
 use App\Imports\MembersImport;
 use App\Models\Member;
 use App\Models\User;
+use App\Rules\UniqueNpm;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -20,7 +23,9 @@ class MemberController extends Controller
      */
     public function index()
     {
-        return ['data' => Member::with('force')->orderBY('npm', 'ASC')->get()];
+        return ['data' => Member::whereHas('memberUser', function ($user) {
+                return $user->where('deleted_at', null);
+            })->with('force')->orderBy('npm', 'ASC')->get()];
     }
 
     /**
@@ -33,7 +38,7 @@ class MemberController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name' => ['required', 'min:4', 'max:128'],
-            'npm' => ['required', 'min:9', 'max:16', 'unique:members,npm'],
+            'npm' => ['required', 'min:9', 'max:16', new UniqueNpm],
             'force_id' => ['required', 'numeric']
         ]);
 
@@ -45,7 +50,16 @@ class MemberController extends Controller
                 ], 422);
         }
 
+        $user = new User();
+        $user->name = $request->name;
+        $user->email = $request->npm .'@default.test';
+        $user->password = Hash::make('12345678');
+        $user->save();
+
+        $user->assignRole('member');
+
         $member = new Member;
+        $member->user_id = $user->id;
         $member->name = $request->name;
         $member->npm = $request->npm;
         $member->force_id = $request->force_id;
@@ -116,7 +130,8 @@ class MemberController extends Controller
      */
     public function destroy(Member $member)
     {
-        $member->delete();
+        $userId = $member->user_id;
+        User::find($userId)->delete();
 
         return response()
             ->json([

@@ -1,14 +1,15 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Site;
 
+use App\Http\Controllers\Controller;
 use App\Models\Form;
 use App\Models\Form_answer;
 use App\Models\Form_question_answer;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
-class UserFormController extends Controller
+class FormController extends Controller
 {
     public function show(Form $form)
     {

@@ -464,6 +464,15 @@
                             addMessageContainer.classList.add('alert-success');
                             addMessageContainer.innerHTML = res.message;
 
+                            setTimeout(function () {
+                                addMemberBtn.innerHTML = 'Tambah';
+                                addMemberForm.reset();
+
+                                addMessageContainer.classList.remove('alert');
+                                addMessageContainer.classList.remove('alert-success');
+                                addMessageContainer.innerHTML = '';
+                            }, 2500);
+
                             $('#add-modal').on('hidden.bs.modal', function(e) {
                                 addMemberBtn.innerHTML = 'Tambah';
                                 addMemberForm.reset();
@@ -471,6 +480,13 @@
                                 addMessageContainer.classList.remove('alert');
                                 addMessageContainer.classList.remove('alert-success');
                                 addMessageContainer.innerHTML = '';
+
+                                addMemberNameInput.classList.remove('is-invalid');
+                                addMemberNameFeedback.innerHTML = '';
+                                addMemberNPMInput.classList.remove('is-invalid');
+                                addMemberNPMFeedback.innerHTML = '';
+                                addMemberForceInput.classList.remove('is-invalid');
+                                addMemberForceFeedback.innerHTML = '';
                             });
                         }
                     })
@@ -663,6 +679,15 @@
 
                         editMessageContainer.classList.add('alert-success');
                         editMessageContainer.innerHTML = res.message;
+
+                        setTimeout(function () {
+                            editMemberBtn.innerHTML = 'Simpan';
+                            editMemberForm.reset();
+
+                            editMessageContainer.classList.remove('alert');
+                            editMessageContainer.classList.remove('alert-success');
+                            editMessageContainer.innerHTML = '';
+                        }, 2500);
 
                         $('#edit-modal').on('hidden.bs.modal', function(e) {
                             editMemberBtn.innerHTML = 'Simpan';

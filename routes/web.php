@@ -12,6 +12,8 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SettingController;
+use App\Http\Controllers\Site\FormController as SiteFormController;
+use App\Http\Controllers\Site\StaffController as SiteStaffController;
 use App\Http\Controllers\StaffController;
 use App\Http\Controllers\UserFormController;
 use Illuminate\Support\Facades\Auth;
@@ -34,9 +36,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('beranda');
 
-Route::get('/struktur', function () {
-    return view('frontend.struktur');
-})->name('struktur');
+Route::get('/struktur', [SiteStaffController::class, 'index'])->name('struktur');
 
 Route::get('/blog', function () {
     return view('frontend.blog');
@@ -78,7 +78,7 @@ Route::group(['prefix' => 'auth', 'as' => 'password.', 'middleware' => 'guest'],
 
 Route::group(['middleware' => ['auth']], function () {
     Route::group(['as' => 'admin.', 'prefix' => 'admin'], function () {
-        Route::group(['as' => 'settings.', 'prefix' => 'settings', 'middleware' => ['permission:read_setting|update_setting']], function () {
+        Route::group(['as' => 'settings.', 'prefix' => 'settings', 'middleware' => ['permission:read_site_setting|update_site_setting']], function () {
             Route::get('/', [SettingController::class, 'general'])->name('general');
             Route::put('/update', [SettingController::class, 'update'])->name('update');
         });
@@ -91,6 +91,7 @@ Route::group(['middleware' => ['auth']], function () {
             Route::resource('users', UserController::class);
         });
     });
+    
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
     Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::put('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
@@ -104,7 +105,10 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/members/{member}', [MemberController::class, 'show'])->name('members.show');
     Route::get('/members/export', [MemberController::class, 'export'])->name('members.export');
 
-    Route::get('/staff', [StaffController::class, 'index'])->name('staff');
+    Route::get('/staff', [StaffController::class, 'index'])->name('staff.index');
+    Route::get('/staff/create', [StaffController::class, 'create'])->name('staff.create');
+    Route::post('/staff', [StaffController::class, 'store'])->name('staff.store');
+    Route::get('/staff/show', [StaffController::class, 'show'])->name('staff.show');
 
     Route::get('/forms/{form}/answers', [FormController::class, 'answers'])->name('forms.answers');
     Route::get('/forms/{form}/export', [FormController::class, 'exportAnswer'])->name('forms.answer.export');
@@ -118,5 +122,5 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/auth/google/revoke', [GoogleAuthController::class, 'revoke'])->name('auth.google.revoke');
 });
 
-Route::get('/form/{form}-{slug}', [UserFormController::class, 'show'])->name('form.show');
-Route::post('/form/{form}/submit', [UserFormController::class, 'store'])->name('form.store');
+Route::get('/form/{form}-{slug}', [SiteFormController::class, 'show'])->name('form.show');
+Route::post('/form/{form}/submit', [SiteFormController::class, 'store'])->name('form.store');
