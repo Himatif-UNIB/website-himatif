@@ -225,9 +225,9 @@
                             <a href="{{ route('form.show', ['form' => $form->id, 'slug' => $form->slug]) }}" target="_blank" class="btn btn-info btn-sm">Lihat Formulir</a>
                         @endif
                         @if (count($form->answers) > 0)
-                            <a href="{{ route('forms.answer.export', $form->id) }}" class="btn btn-info btn-sm">Download
+                            <a href="{{ route('admin.forms.answer.export', $form->id) }}" class="btn btn-info btn-sm">Download
                                 Jawaban</a>
-                            <a href="{{ route('forms.answers', $form->id) }}" class="btn btn-info btn-sm">Lihat
+                            <a href="{{ route('admin.forms.answers', $form->id) }}" class="btn btn-info btn-sm">Lihat
                                 Jawaban</a>
                         @endif
                         @if ($form->status == 2)
@@ -238,7 +238,7 @@
                             <a href="#" data-target="#open-modal" data-toggle="modal" class="btn btn-success btn-sm">Buka
                                 Formulir</a>
                         @endif
-                        <a href="{{ route('forms.edit', $form->id) }}" class="btn btn-warning btn-sm">Edit</a>
+                        <a href="{{ route('admin.forms.edit', $form->id) }}" class="btn btn-warning btn-sm">Edit</a>
                         <a href="#" data-toggle="modal" data-target="#delete-modal" class="btn btn-danger btn-sm">Hapus</a>
                     </div>
                 </div>
@@ -253,7 +253,7 @@
             aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
-                    <form action="{{ route('forms.update', $form->id) }}" method="post">
+                    <form action="{{ route('admin.forms.update', $form->id) }}" method="post">
                         @csrf
                         @method('PUT')
                         <input type="hidden" name="action" value="close_form">
@@ -290,7 +290,7 @@
             aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
-                    <form action="{{ route('forms.update', $form->id) }}" method="post">
+                    <form action="{{ route('admin.forms.update', $form->id) }}" method="post">
                         @csrf
                         @method('PUT')
                         <input type="hidden" name="action" value="open_form">
@@ -328,7 +328,7 @@
             aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
-                    <form action="{{ route('forms.destroy', $form->id) }}" method="post">
+                    <form action="{{ route('admin.forms.destroy', $form->id) }}" method="post">
                         @csrf
                         @method('DELETE')
                         <input type="hidden" name="action" value="close_form">

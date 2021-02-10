@@ -7,8 +7,6 @@ use Illuminate\Contracts\Validation\Rule;
 
 class uniqueNpm implements Rule
 {
-    private $data;
-
     /**
      * Create a new rule instance.
      *
@@ -33,18 +31,11 @@ class uniqueNpm implements Rule
     
         if ($member->exists()) {
             $data = $member->first();
-            $this->data = $data;
 
-            if ($data->member_user == null) {
-                return true;
-            }
-            else {
-                return false;
-            }
+            return ($data->memberUser === null);
         }
-        else {
-            return true;
-        }
+        
+        return true;
     }
 
     /**
@@ -54,6 +45,6 @@ class uniqueNpm implements Rule
      */
     public function message()
     {
-        return json_encode($this->data);//'NPM tersebut sudah terdaftar');
+        return 'NPM tersebut sudah terdaftar';
     }
 }

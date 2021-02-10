@@ -37,7 +37,7 @@
                                 @foreach ($forms as $item)
                                     <tr>
                                         <th scope="row">{{ $item->id }}</th>
-                                        <td><a href="{{ route('forms.show', $item->id) }}">{{ $item->title }}</a></td>
+                                        <td><a href="{{ route('admin.forms.show', $item->id) }}">{{ $item->title }}</a></td>
                                         <td>{{ count($item->answers) }}</td>
                                         <td>
                                             @if ($item->status == 1)

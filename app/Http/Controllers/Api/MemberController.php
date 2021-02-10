@@ -94,7 +94,7 @@ class MemberController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name' => ['required', 'min:4', 'max:128'],
-            'npm' => ['required', 'min:9', 'max:16'],
+            'npm' => ['required', 'min:9', 'max:16', new UniqueNpm],
             'force_id' => ['required', 'numeric']
         ]);
 

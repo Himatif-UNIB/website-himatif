@@ -43,6 +43,7 @@ class RolePermissionSeeder extends Seeder
             ['name' => 'create_user', 'label' => 'Menambah User'], ['name' => 'read_user', 'label' => 'Melihat User'], ['name' => 'update_user', 'label' => 'Mengubah User'], ['name' => 'delete_user', 'label' => 'Menghapus User'],
             ['name' => 'create_site_setting', 'label' => 'Menambah Pengaturan Situs'], ['name' => 'read_site_setting', 'label' => 'Melihat Pengaturan Situs'], ['name' => 'update_site_setting', 'label' => 'Mengubah User'], ['name' => 'delete_site_setting', 'label' => 'Menghapus Pengaturan Situs'],
             ['name' => 'create_blog_post', 'label' => 'Menambah Posting Blog'], ['name' => 'read_blog_post', 'label' => 'Melihat Posting Blog'], ['name' => 'update_blog_post', 'label' => 'Mengubah Posting Blog'], ['name' => 'delete_blog_post', 'label' => 'Menghapus Posting Blog'],
+            ['name' => 'create_blog_category', 'label' => 'Menambah Kategori Blog'], ['name' => 'read_blog_category', 'label' => 'Melihat Kategori Blog'], ['name' => 'update_blog_category', 'label' => 'Mengubah Kategori Blog'], ['name' => 'delete_blog_category', 'label' => 'Menghapus Kategori Blog'],
             ['name' => 'create_blog_comment', 'label' => 'Menambah Komentar Posting Blog'], ['name' => 'read_blog_comment', 'label' => 'Melihat Komentar Posting Blog'], ['name' => 'update_blog_comment', 'label' => 'Mengubah Komentar Posting BLog'], ['name' => 'delete_blog_comment', 'label' => 'Menghapus Komentar Posting Blog'],
             ['name' => 'create_member', 'label' => 'Menambah Anggota'], ['name' => 'read_member', 'label' => 'Melihat Anggota'], ['name' => 'update_member', 'label' => 'Mengubah Anggota'], ['name' => 'delete_member', 'label' => 'Menghapus Anggota'],
             ['name' => 'create_period', 'label' => 'Menambah Periode'], ['name' => 'read_period', 'label' => 'Melihat Periode'], ['name' => 'update_period', 'label' => 'Mengubah Periode'], ['name' => 'delete_period', 'label' => 'Menghapus Periode'],
@@ -70,6 +71,7 @@ class RolePermissionSeeder extends Seeder
         $superAdminRole->givePermissionTo([
             Permission::findByName('create_user'), Permission::findByName('read_user'), Permission::findByName('update_user'), Permission::findByName('delete_user'),
             Permission::findByName('read_blog_post'),
+            Permission::findByName('read_blog_category'),
             Permission::findByName('read_blog_comment'),
             Permission::findByName('read_member'),
             Permission::findByName('read_period'),
@@ -89,6 +91,7 @@ class RolePermissionSeeder extends Seeder
         $builderRole = Role::findByName('builder');
         $builderRole->givePermissionTo([
             Permission::findByName('create_blog_post'), Permission::findByName('read_blog_post'), Permission::findByName('update_blog_post'), Permission::findByName('delete_blog_post'),
+            Permission::findByName('read_blog_category'),
             Permission::findByName('read_blog_comment'),
             Permission::findByName('read_member'),
             Permission::findByName('read_period'),
@@ -108,6 +111,7 @@ class RolePermissionSeeder extends Seeder
         $dpoRole = Role::findByName('dpo');
         $dpoRole->givePermissionTo([
             Permission::findByName('create_blog_post'), Permission::findByName('read_blog_post'), Permission::findByName('update_blog_post'), Permission::findByName('delete_blog_post'),
+            Permission::findByName('read_blog_category'),
             Permission::findByName('read_blog_comment'),
             Permission::findByName('read_member'),
             Permission::findByName('read_period'),
@@ -127,6 +131,7 @@ class RolePermissionSeeder extends Seeder
         $bpoRole = Role::findByName('bpo');
         $bpoRole->givePermissionTo([
             Permission::findByName('create_blog_post'), Permission::findByName('read_blog_post'), Permission::findByName('update_blog_post'), Permission::findByName('delete_blog_post'),
+            Permission::findByName('read_blog_category'),
             Permission::findByName('read_blog_comment'),
             Permission::findByName('read_member'),
             Permission::findByName('read_period'),
@@ -147,6 +152,7 @@ class RolePermissionSeeder extends Seeder
         $chairmanRole->givePermissionTo([
             Permission::findByName('read_site_setting'), Permission::findByName('update_site_setting'),
             Permission::findByName('create_blog_post'), Permission::findByName('read_blog_post'), Permission::findByName('update_blog_post'), Permission::findByName('delete_blog_post'),
+            Permission::findByName('read_blog_category'),
             Permission::findByName('read_blog_comment'),
             Permission::findByName('read_member'),
             Permission::findByName('read_period'),
@@ -167,6 +173,7 @@ class RolePermissionSeeder extends Seeder
         $viceChairmanRole->givePermissionTo([
             Permission::findByName('read_site_setting'), Permission::findByName('update_site_setting'),
             Permission::findByName('create_blog_post'), Permission::findByName('read_blog_post'), Permission::findByName('update_blog_post'), Permission::findByName('delete_blog_post'),
+            Permission::findByName('read_blog_category'),
             Permission::findByName('read_blog_comment'),
             Permission::findByName('read_member'),
             Permission::findByName('read_period'),
@@ -187,6 +194,7 @@ class RolePermissionSeeder extends Seeder
         $secretaryRole->givePermissionTo([
             Permission::findByName('read_site_setting'), Permission::findByName('update_site_setting'),
             Permission::findByName('create_blog_post'), Permission::findByName('read_blog_post'), Permission::findByName('update_blog_post'), Permission::findByName('delete_blog_post'),
+            Permission::findByName('create_blog_category'), Permission::findByName('read_blog_category'), Permission::findByName('update_blog_category'), Permission::findByName('delete_blog_category'),
             Permission::findByName('read_blog_comment'), Permission::findByName('delete_blog_comment'),
             Permission::findByName('create_member'), Permission::findByName('read_member'), Permission::findByName('update_member'), Permission::findByName('delete_member'),
             Permission::findByName('create_period'), Permission::findByName('read_period'), Permission::findByName('update_period'), Permission::findByName('delete_period'),
@@ -205,6 +213,7 @@ class RolePermissionSeeder extends Seeder
         $treasurerRole = Role::findByName('treasurer');
         $treasurerRole->givePermissionTo([
             Permission::findByName('create_blog_post'), Permission::findByName('read_blog_post'), Permission::findByName('update_blog_post'), Permission::findByName('delete_blog_post'),
+            Permission::findByName('read_blog_category'),
             Permission::findByName('read_blog_comment'),
             Permission::findByName('read_inventory'),
             Permission::findByName('create_finance'), Permission::findByName('read_finance'), Permission::findByName('update_finance'), Permission::findByName('delete_finance'),
@@ -217,6 +226,7 @@ class RolePermissionSeeder extends Seeder
         $headOfDivisionRole = Role::findByName('head_of_division');
         $headOfDivisionRole->givePermissionTo([
             Permission::findByName('create_blog_post'), Permission::findByName('read_blog_post'), Permission::findByName('update_blog_post'), Permission::findByName('delete_blog_post'),
+            Permission::findByName('read_blog_category'),
             Permission::findByName('read_blog_comment'),
             Permission::findByName('read_member'),
             Permission::findByName('read_period'),
@@ -234,6 +244,7 @@ class RolePermissionSeeder extends Seeder
         $staffRole = Role::findByName('staff');
         $staffRole->givePermissionTo([
             Permission::findByName('create_blog_post'), Permission::findByName('read_blog_post'), Permission::findByName('update_blog_post'), Permission::findByName('delete_blog_post'),
+            Permission::findByName('read_blog_category'),
             Permission::findByName('read_blog_comment'),
             Permission::findByName('read_inventory'),
             Permission::findByName('create_archive'), Permission::findByName('read_archive'),  Permission::findByName('update_archive'),  Permission::findByName('delete_archive'),
@@ -244,6 +255,7 @@ class RolePermissionSeeder extends Seeder
         $memberRole = Role::findByName('member');
         $memberRole->givePermissionTo([
             Permission::findByName('create_blog_post'), Permission::findByName('read_blog_post'), Permission::findByName('update_blog_post'), Permission::findByName('delete_blog_post'),
+            Permission::findByName('read_blog_category'),
             Permission::findByName('read_blog_comment'),
             Permission::findByName('read_inventory'),
             Permission::findByName('read_gallery')

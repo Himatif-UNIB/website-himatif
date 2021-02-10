@@ -23,6 +23,6 @@ class Form extends Model implements HasMedia
 
     public function author()
     {
-        return $this->hasOne(User::class, 'id', 'creator_id');
+        return $this->hasOne(User::class, 'id', 'user_id');
     }
 }

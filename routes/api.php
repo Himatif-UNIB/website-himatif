@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\Blog\CategoryController;
 use App\Http\Controllers\Api\StaffController;
 use App\Http\Controllers\Api\DivisionController;
 use App\Http\Controllers\Api\ForceController;
@@ -34,4 +35,8 @@ Route::group(['middleware' => ['auth:api'], 'as' => 'api.'], function () {
 
     Route::apiResource('/staffs', StaffController::class);
     Route::apiResource('/users', UserController::class)->only(['index', 'store', 'destroy']);
+
+    Route::group(['as' => 'blog.', 'prefix' => 'blog'], function() {
+        Route::apiResource('/blog_category', CategoryController::class);
+    });
 });

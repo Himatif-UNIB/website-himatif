@@ -21,7 +21,7 @@
             </div>
 
             <div class="col-md-8 mx-auto layout-spacing">
-                <form action="{{ route('forms.update', $form->id) }}" method="post">
+                <form action="{{ route('admin.forms.update', $form->id) }}" method="post">
                     @csrf
                     @method('PUT')
                     <input type="hidden" name="action" value="edit_form">

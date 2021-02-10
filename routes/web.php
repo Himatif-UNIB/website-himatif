@@ -7,11 +7,14 @@ use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\FacebookAuthController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\GoogleAuthController;
+use App\Http\Controllers\Blog\CategoryController;
+use App\Http\Controllers\Blog\PostController;
 use App\Http\Controllers\FormController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SettingController;
+use App\Http\Controllers\Site\BlogController;
 use App\Http\Controllers\Site\FormController as SiteFormController;
 use App\Http\Controllers\Site\StaffController as SiteStaffController;
 use App\Http\Controllers\StaffController;
@@ -37,14 +40,11 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [HomeController::class, 'index'])->name('beranda');
 
 Route::get('/struktur', [SiteStaffController::class, 'index'])->name('struktur');
-
-Route::get('/blog', function () {
-    return view('frontend.blog');
-})->name('blog');
-
-Route::get('/post', function () {
-    return view('frontend.post');
-})->name('blog.post');
+Route::group(['prefix' => 'blog', 'as' => 'blog.'], function () {
+    Route::get('/', [BlogController::class, 'index'])->name('index');
+    Route::get('/read/{id?}/{slug?}', [BlogController::class, 'post'])->name('post');
+    Route::get('/category/{id?}/{slug?}', [BlogController::class, 'category'])->name('category');
+});
 
 Route::get('/modal', function () {
     return view('frontend.modal');
@@ -76,13 +76,8 @@ Route::group(['prefix' => 'auth', 'as' => 'password.', 'middleware' => 'guest'],
     Route::post('/reset-password', [ForgotPasswordController::class,])->name('update');
 });
 
-Route::group(['middleware' => ['auth']], function () {
+Route::group(['middleware' => ['auth'], 'prefix' => 'himatif-admin', 'as' => 'admin.'], function () {
     Route::group(['as' => 'admin.', 'prefix' => 'admin'], function () {
-        Route::group(['as' => 'settings.', 'prefix' => 'settings', 'middleware' => ['permission:read_site_setting|update_site_setting']], function () {
-            Route::get('/', [SettingController::class, 'general'])->name('general');
-            Route::put('/update', [SettingController::class, 'update'])->name('update');
-        });
-
         Route::group(['middleware' => ['role:super_admin']], function () {
             Route::get('/users/roles', [PermissionController::class, 'roles'])->name('users.roles');
             Route::get('/users/permissions', [PermissionController::class, 'permissions'])->name('users.permissions');
@@ -90,6 +85,11 @@ Route::group(['middleware' => ['auth']], function () {
             Route::put('/users/permissions/{role}', [PermissionController::class, 'update'])->name('users.permissions.update');
             Route::resource('users', UserController::class);
         });
+    });
+
+    Route::group(['as' => 'settings.', 'prefix' => 'settings', 'middleware' => ['permission:read_site_setting|update_site_setting']], function () {
+        Route::get('/', [SettingController::class, 'general'])->name('general');
+        Route::put('/update', [SettingController::class, 'update'])->name('update');
     });
     
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
@@ -120,6 +120,16 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/auth/google/connect', [GoogleAuthController::class, 'connect'])->name('auth.google.connect');
     Route::get('/auth/google/verify', [GoogleAuthController::class, 'verify'])->name('auth.google.verify');
     Route::get('/auth/google/revoke', [GoogleAuthController::class, 'revoke'])->name('auth.google.revoke');
+
+    //Manajemen blog
+    Route::group(['prefix' => 'blog', 'as' => 'blog.'], function () {
+        Route::get('/category', [CategoryController::class, 'index'])->name('category');
+        Route::get('/posts/trash', [PostController::class, 'trash'])->name('posts.trash');
+        Route::get('/posts/deleted', [PostController::class, 'deleted'])->name('posts.deleted');
+        Route::put('/posts/restore', [PostController::class, 'restore'])->name('posts.restore');
+        Route::delete('/posts/force-delete', [PostController::class, 'force_delete'])->name('posts.force_delete');
+        Route::resource('posts', PostController::class);
+    });
 });
 
 Route::get('/form/{form}-{slug}', [SiteFormController::class, 'show'])->name('form.show');

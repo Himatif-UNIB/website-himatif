@@ -90,7 +90,7 @@ class ForceController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name' => ['required'],
-            'year' => ['required']
+            'year' => ['required', 'string']
         ]);
 
         if ($validator->fails()) {

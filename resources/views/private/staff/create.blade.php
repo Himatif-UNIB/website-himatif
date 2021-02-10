@@ -24,7 +24,7 @@
                         </div>
                     @endif
 
-                    <form action="{{ route('staff.store') }}" method="post">
+                    <form action="{{ route('admin.staff.store') }}" method="post">
                         @csrf
 
                         <div class="form-group">
@@ -45,7 +45,7 @@
                             Sebelum mengatur struktur kepengurusan, Anda harus mengatur data jabatan mulai dari pembina hingga anggota.
                             <br>
                             <br>
-                            <a href="{{ route('positions') }}" target="_blank">Atur jabatan &raquo;</a>
+                            <a href="{{ route('admin.positions') }}" target="_blank">Atur jabatan &raquo;</a>
                         </div>
 
                         <div class="alert alert-info">

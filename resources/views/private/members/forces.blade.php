@@ -301,6 +301,7 @@
                     })
                     .catch(errors => {
                         addForceBtn.innerHTML = 'Tambah';
+                        addForceBtn.removeAttribute('disabled');
 
                         if (!addMessageContainer.classList.contains('alert')) {
                             addMessageContainer.classList.add('alert');

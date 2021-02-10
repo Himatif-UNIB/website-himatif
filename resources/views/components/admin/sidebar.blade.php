@@ -108,7 +108,7 @@
             </li>
 
             <li class="menu {{ __active('PermissionController', 'roles') }}">
-                <a href="{{ route('admin.users.roles') }}" aria-expanded="{{ __displayAria('PermissionController', 'roles') }}" class="dropdown-toggle">
+                <a href="{{ route('admin.admin.users.roles') }}" aria-expanded="{{ __displayAria('PermissionController', 'roles') }}" class="dropdown-toggle">
                     <div class="">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-users">
                             <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
@@ -165,7 +165,7 @@
 
                 @if (current_user_can(['read_form', 'update_form', 'delete_form']))
                     <li class="menu {{ __active('FormController', ['index', 'edit', 'answer', 'show', 'answers']) }}">
-                        <a href="{{ route('forms.index') }}" aria-expanded="{{ __displayAria('FormController', ['index', 'edit', 'answer', 'show', 'answers']) }}" class="dropdown-toggle">
+                        <a href="{{ route('admin.forms.index') }}" aria-expanded="{{ __displayAria('FormController', ['index', 'edit', 'answer', 'show', 'answers']) }}" class="dropdown-toggle">
                             <div class="">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-mail"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
                                 <span>Kelola Formulir</span>
@@ -175,10 +175,51 @@
                 @endif
                 @if (current_user_can('create_form'))
                     <li class="menu {{ __active('FormController', 'create') }}">
-                        <a href="{{ route('forms.create') }}" aria-expanded="{{ __displayAria('FormController', 'create') }}" class="dropdown-toggle">
+                        <a href="{{ route('admin.forms.create') }}" aria-expanded="{{ __displayAria('FormController', 'create') }}" class="dropdown-toggle">
                             <div class="">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus-square"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>
                                 <span>Buat Formulir</span>
+                            </div>
+                        </a>
+                    </li>
+                @endif
+            @endif
+
+            @if (current_user_can(['create_blog_post', 'read_blog_post', 'update_blog_post', 'delete_blog_post'])
+                || current_user_can(['create_blog_comment', 'read_blog_comment', 'update_blog_comment', 'delete_blog_comment'])
+                || current_user_can(['create_blog_category', 'read_blog_category', 'update_blog_category', 'delete_blog_category']))
+                <li class="menu menu-heading">
+                    <div class="heading">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-minus">
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                        </svg>
+                        <span>BLOG</span></div>
+                </li>
+
+                @if (current_user_can(['create_blog_post', 'read_blog_post', 'update_blog_post', 'delete_blog_post']))
+                <li class="menu {{ __active('PostController', 'create') }}">
+                    <a href="{{ route('admin.blog.posts.create') }}" aria-expanded="{{ __displayAria('PostController', 'create') }}" class="dropdown-toggle">
+                        <div class="">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                            <span>Tambah Posting</span>
+                        </div>
+                    </a>
+                </li>
+                    <li class="menu {{ __active('PostController', ['index', 'edit', 'show', 'trash', 'deleted']) }}">
+                        <a href="{{ route('admin.blog.posts.index') }}" aria-expanded="{{ __displayAria('PostController', ['index', 'edit', 'show', 'trash', 'deleted']) }}" class="dropdown-toggle">
+                            <div class="">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-book"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+                                <span>Kelola Posting</span>
+                            </div>
+                        </a>
+                    </li>
+                @endif
+                @if (current_user_can(['create_blog_category', 'read_blog_category', 'update_blog_category', 'delete_blog_category']))
+                    <li class="menu {{ __active('CategoryController') }}">
+                        <a href="{{ route('admin.blog.category') }}" aria-expanded="{{ __displayAria('CategoryController') }}" class="dropdown-toggle">
+                            <div class="">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-list"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+                                <span>Kelola Kategori</span>
                             </div>
                         </a>
                     </li>
@@ -196,7 +237,7 @@
 
             @if (current_user_can(['create_period', 'read_period', 'update_period', 'delete_period']))
             <li class="menu {{ __active('MemberController', 'periods') }}">
-                <a href="{{ route('periods') }}" aria-expanded="{{ __displayAria('MemberController', 'periods') }}" class="dropdown-toggle">
+                <a href="{{ route('admin.periods') }}" aria-expanded="{{ __displayAria('MemberController', 'periods') }}" class="dropdown-toggle">
                     <div class="">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clock"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
                         <span>Periode</span>
@@ -206,7 +247,7 @@
             @endif
             @if (current_user_can(['create_force', 'read_force', 'update_force', 'delete_force']))
             <li class="menu {{ __active('MemberController', 'forces') }}">
-                <a href="{{ route('forces') }}" aria-expanded="{{ __displayAria('MemberController', 'forces') }}" class="dropdown-toggle">
+                <a href="{{ route('admin.forces') }}" aria-expanded="{{ __displayAria('MemberController', 'forces') }}" class="dropdown-toggle">
                     <div class="">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-users"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
                         <span>Angkatan</span>
@@ -216,7 +257,7 @@
             @endif
             @if (current_user_can(['create_division', 'read_division', 'update_division', 'delete_division']))
             <li class="menu {{ __active('MemberController', 'divisions') }}">
-                <a href="{{ route('divisions') }}" aria-expanded="{{ __displayAria('MemberController', 'divisions') }}" class="dropdown-toggle">
+                <a href="{{ route('admin.divisions') }}" aria-expanded="{{ __displayAria('MemberController', 'divisions') }}" class="dropdown-toggle">
                     <div class="">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-layout"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
                         <span>Divisi</span>
@@ -226,7 +267,7 @@
             @endif
             @if (current_user_can(['create_position', 'read_position', 'update_position', 'delete_position']))
             <li class="menu {{ __active('MemberController', 'positions') }}">
-                <a href="{{ route('positions') }}" aria-expanded="{{ __displayAria('MemberController', 'positions') }}" class="dropdown-toggle">
+                <a href="{{ route('admin.positions') }}" aria-expanded="{{ __displayAria('MemberController', 'positions') }}" class="dropdown-toggle">
                     <div class="">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clipboard"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>
                         <span>Jabatan</span>
@@ -236,7 +277,7 @@
             @endif
             @if (current_user_can(['create_member', 'read_member', 'update_member', 'delete_member']))
             <li class="menu {{ __active('MemberController', ['index', 'show']) }}">
-                <a href="{{ route('members') }}" aria-expanded="{{ __displayAria('MemberController', ['index', 'show']) }}" class="dropdown-toggle">
+                <a href="{{ route('admin.members') }}" aria-expanded="{{ __displayAria('MemberController', ['index', 'show']) }}" class="dropdown-toggle">
                     <div class="">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-users"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
                         <span>Anggota</span>
@@ -246,7 +287,7 @@
             @endif
             @if (current_user_can(['create_staff', 'read_staff', 'update_staff', 'delete_staff']))
             <li class="menu {{ __active('StaffController') }}">
-                <a href="{{ route('staff.index') }}" aria-expanded="{{ __displayAria('StaffController') }}" class="dropdown-toggle">
+                <a href="{{ route('admin.staff.index') }}" aria-expanded="{{ __displayAria('StaffController') }}" class="dropdown-toggle">
                     <div class="">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clipboard"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>
                         <span>Pengurus</span>
