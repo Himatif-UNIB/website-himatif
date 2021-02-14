@@ -18,6 +18,6 @@ class DatabaseSeeder extends Seeder
         //$this->call(RolePermissionSeeder::class);
         //$this->call(GeneralSeeder::class);
         //$this->call(BlogCategoryRoleSeeder::class);
-        $this->call(DefaultCategorySeeder::class);
+        //$this->call(DefaultCategorySeeder::class);
     }
 }

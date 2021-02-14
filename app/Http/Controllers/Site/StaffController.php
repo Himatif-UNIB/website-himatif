@@ -9,6 +9,17 @@ use Illuminate\Http\Request;
 
 class StaffController extends Controller
 {
+    /**
+     * Halaman struktur kepengurusan
+     * 
+     * Menampilkan halaman struktur kepengurusan
+     * berdasarkan data yang sudah diinput oleh sekretaris
+     * 
+     * @since   1.0.0
+     * @author  mulyosyahidin95
+     * 
+     * @return  View\Factory@frontend.struktur
+     */
     public function index()
     {
         $staff = Staff::where('period_id', getActivePeriod()->id)->with('position', 'user.media')->get();

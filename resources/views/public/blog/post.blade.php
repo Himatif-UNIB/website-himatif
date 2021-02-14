@@ -21,8 +21,13 @@
             <h1 class="text-white text-center text-2xl lg:text-4xl font-bold">{{ $post->title }}</h1>
             <div class="flex justify-center mt-12">
                 <div class="w-16 h-16 lg:w-28 lg:h-28">
-                    <img class="rounded-full"
-                        src="https://widgetwhats.com/app/uploads/2019/11/free-profile-photo-whatsapp-4.png" alt="">
+                    @isset($post->user->media[0])
+                        <img class="rounded-full"
+                            src="{{ $post->user->media[0]->getFullUrl() }}" alt="{{ $post->user->name }}">
+                    @else
+                        <img class="rounded-full"
+                            src="{{ asset('assets/images/avatar-1.png') }}" alt="{{ $post->user->name }}">
+                    @endisset
                 </div>
             </div>
             <div class="flexs justify-center mt-2 text-dark-blue-400 font-semibold text-center">
@@ -43,7 +48,13 @@
             <div class="mb-24 mt-24 lg:mt-36 lg:mb-0">
                 <div class="flex items-center">
                     <div class="w-14 h-14 rounded-full bg-gray-400 overflow-hidden">
-                        <img class="w-full h-full object-cover object-center" src="{{ $post->user->media[0]->getFullUrl() }}" alt="">
+                        @isset($post->user->media[0])
+                            <img class="w-full h-full object-cover object-center"
+                                src="{{ $post->user->media[0]->getFullUrl() }}" alt="{{ $post->user->name }}">
+                        @else
+                            <img class="w-full h-full object-cover object-center"
+                                src="{{ asset('assets/images/avatar-1.png') }}" alt="{{ $post->user->name }}">
+                        @endisset
                     </div>
                     <div class="flex flex-col ml-4">
                         <span class="font-semibold text-white">{{ $post->user->name }}</span>
@@ -54,7 +65,56 @@
             </div>
             <!-- END COMMENT -->
 
+            <x-site.blog.comments :comments="$comments" :post="$post" />
+            <x-site.blog.comment-form :post="$post" />
+
         </div>
     </div>
     <!-- END POST -->
 @endsection
+
+@push('custom_js')
+    <script src="https://cdn.jsdelivr.net/gh/cferdinandi/smooth-scroll@16.1.3/dist/smooth-scroll.min.js"></script>
+    <script>
+        let scroll = new SmoothScroll({
+            easing: 'linear'
+        });
+        let commentForm = document.querySelector('#comment-form');
+        
+        @if (session()->has('errors') || session()->has('success'))
+            scroll.animateScroll(commentForm);
+        @endif
+
+        let replyComments = document.querySelectorAll('.reply-comment');
+        let giveReplyMessageContainer = document.querySelector('.give-reply');
+        let replyToField = document.querySelector('#reply-to');
+        let replyToName = document.querySelector('#reply-to-name');
+
+        replyComments.forEach((btn) => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+
+                let id = btn.getAttribute('data-reply-to');
+                let name = btn.getAttribute('data-reply-to-name');
+
+                giveReplyMessageContainer.classList.add('mb-5');
+                giveReplyMessageContainer.innerHTML = `Berikan balasan untuk komentar <b>${name}</b><br>
+                <a href="#" class="cancel-give-reply text-orange-600">Batal</a>`;
+
+                replyToField.value = id;
+                replyToName.value = name;
+
+                let commentForm = document.querySelector('#comment-form');
+                scroll.animateScroll(commentForm);
+            })
+        });
+
+        $(document).on('click', '.cancel-give-reply', function (e) {
+            e.preventDefault();
+
+            replyToField.value = 0;
+            giveReplyMessageContainer.classList.remove('mb-5');
+            giveReplyMessageContainer.innerHTML = '';
+        });
+    </script>
+@endpush

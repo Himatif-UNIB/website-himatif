@@ -8,6 +8,7 @@ use App\Http\Controllers\Auth\FacebookAuthController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\GoogleAuthController;
 use App\Http\Controllers\Blog\CategoryController;
+use App\Http\Controllers\Blog\CommentController;
 use App\Http\Controllers\Blog\PostController;
 use App\Http\Controllers\FormController;
 use App\Http\Controllers\HomeController;
@@ -42,8 +43,9 @@ Route::get('/', [HomeController::class, 'index'])->name('beranda');
 Route::get('/struktur', [SiteStaffController::class, 'index'])->name('struktur');
 Route::group(['prefix' => 'blog', 'as' => 'blog.'], function () {
     Route::get('/', [BlogController::class, 'index'])->name('index');
-    Route::get('/read/{id?}/{slug?}', [BlogController::class, 'post'])->name('post');
+    Route::get('/read/{post?}/{slug?}', [BlogController::class, 'post'])->name('post');
     Route::get('/category/{id?}/{slug?}', [BlogController::class, 'category'])->name('category');
+    Route::post('/read/{post?}/{slug?}', [BlogController::class, 'post_comment'])->name('post_comment');
 });
 
 Route::get('/modal', function () {
@@ -89,6 +91,7 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'himatif-admin', 'as' => 'ad
 
     Route::group(['as' => 'settings.', 'prefix' => 'settings', 'middleware' => ['permission:read_site_setting|update_site_setting']], function () {
         Route::get('/', [SettingController::class, 'general'])->name('general');
+        Route::get('/blog', [SettingController::class, 'blog'])->name('blog');
         Route::put('/update', [SettingController::class, 'update'])->name('update');
     });
     
@@ -129,6 +132,12 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'himatif-admin', 'as' => 'ad
         Route::put('/posts/restore', [PostController::class, 'restore'])->name('posts.restore');
         Route::delete('/posts/force-delete', [PostController::class, 'force_delete'])->name('posts.force_delete');
         Route::resource('posts', PostController::class);
+
+        Route::group(['prefix' => 'comments', 'as' => 'comments.'], function () {
+            Route::get('', [CommentController::class, 'index'])->name('index');
+            Route::get('/post/{post?}', [CommentController::class, 'post'])->name('post');
+            Route::get('/user/{user?}', [CommentController::class, 'user'])->name('user');
+        });
     });
 });
 

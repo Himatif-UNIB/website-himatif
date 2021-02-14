@@ -43,4 +43,9 @@ class Blog_post extends Model implements HasMedia
     {
         return $this->hasOne(User::class, 'id', 'user_id');
     }
+
+    public function comments()
+    {
+        return $this->hasMany(Blog_comment::class, 'post_id');
+    }
 }

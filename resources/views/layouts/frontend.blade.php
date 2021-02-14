@@ -34,5 +34,7 @@
 
     @include('includes.script')
 
+    @stack('custom_js')
+
 </body>
 </html>

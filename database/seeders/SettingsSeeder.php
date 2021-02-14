@@ -26,7 +26,9 @@ class SettingsSeeder extends Seeder
             'organizationName' => 'HIMATIF',
             'organizationUniversity' => 'UNIVERSITAS BENGKULU',
             'organizationDesc' => 'Himpunan Mahasiswa Teknik Informatika (HIMATIF) di bentuk di Bengkulu (Universitas Bengkulu) pada tanggal 22 september 2006 Himatif merupakan tempat bagi mahasiswa Teknik Informatika Universitas Bengkulu untuk berkarya serta mengabdi sebagai kewajiban seorang mahasiswa. Kepengurusan HIMATIF di bagi menjadi 6 devisi bidang, yaitu Bidang Kerohanian, Bidang IT, Bidang Pendidikan, Bidang Olahraga dan Kesenian, Bidang Pengabdian Masyarakat, Bidang Kewirausahaan',
-            'organizationTagLine' => 'Wadah bagi mahasiswa Teknik Informatika Universitas Bengkulu untuk berkarya dan mengabdi.'
+            'organizationTagLine' => 'Wadah bagi mahasiswa Teknik Informatika Universitas Bengkulu untuk berkarya dan mengabdi.',
+            'allowComment' => true,
+            'moderateComment' => false,
         ];
 
         foreach ($data as $key => $value) {

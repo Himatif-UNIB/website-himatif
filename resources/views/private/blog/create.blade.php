@@ -181,23 +181,40 @@
                                     data-parent="#iconsAccordion">
                                     <div class="card-body">
                                         <div class="form-group">
-                                            <div class="row">
-                                                <div class="col-3">
+                                            <div class="row mb-4">
+                                                <div class="col-2">
                                                     <label class="switch s-icons s-outline s-outline-success mr-2">
-                                                        <input type="checkbox" name="allow_comment" value="1">
+                                                        <input type="checkbox" name="allow_comment" value="1" id="allow-comment"
+                                                            @if (getSetting('allowComment') == false) disabled @endif>
                                                         <span class="slider round"></span>
                                                     </label>
                                                 </div>
-                                                <div class="col-9">Izinkan komentar pada posting ini</div>
+                                                <div class="col-10">
+                                                    <label for="allow-comment">Izinkan komentar pada posting ini</label>
+                                                </div>
+
+                                                @if (getSetting('allowComment') == false)
+                                                    <div class="col-12">
+                                                        <span class="text-muted">Admin menonaktifkan izin komentar</span>
+                                                    </div>
+                                                @endif
                                             </div>
                                             <div class="row">
-                                                <div class="col-3">
+                                                <div class="col-2">
                                                     <label class="switch s-icons s-outline s-outline-info mr-2">
-                                                        <input type="checkbox" name="moderate_comment" value="1">
+                                                        <input type="checkbox" name="moderate_comment" value="1" id="moderate-comment"
+                                                            @if (getSetting('moderateComment') == true) checked disabled @endif>
                                                         <span class="slider round"></span>
                                                     </label>
                                                 </div>
-                                                <div class="col-9">Moderasi komentar yang masuk</div>
+                                                <div class="col-10">
+                                                    <label for="moderate-comment">Moderasi komentar yang masuk</label>
+                                                </div>
+                                                @if (getSetting('moderateComment') == true)
+                                                    <div class="col-12">
+                                                        <span class="text-muted">Admin mengaktikan moderasi komentar</span>
+                                                    </div>
+                                                @endif
                                             </div>
                                         </div>
                                     </div>

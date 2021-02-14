@@ -28,7 +28,7 @@ class ExportFormAnswers implements FromView, ShouldAutoSize, WithEvents
 
     public function view(): View
     {
-        return view('forms.export', [
+        return view('private.forms.export', [
             'fields' => $this->fields,
             'answers' => $this->answers
         ]);

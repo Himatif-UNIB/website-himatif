@@ -35,15 +35,34 @@ class PostController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $isSecretary = (auth()->user()->roles[0]->name === 'secretary');
+        $writer_id = $request->writer;
+        $category_id = $request->category_id;
 
         if ($isSecretary) {
-            $posts = Blog_post::where('status', '!=', 'deleted')->paginate();
+            //Sekretaris dapat melihat semua posting dari user,
+            //tetapi hanya bisa melihat, tidak bisa mengubah
+            //atau menghapus
+
+            $posts = Blog_post::where('status', '!=', 'deleted')
+                ->whereHas('user', function ($post) use ($writer_id, $request) {
+                    if ($writer_id != '') {
+                        return $post->where('user_id', $writer_id);
+                    }
+                })
+                ->whereHas('categories', function ($post) use ($category_id) {
+                    if ($category_id != '') {
+                        return $post->with('categories');
+                    }
+                })->orderBy('created_at', 'DESC')->paginate();
         }
         else {
-            $posts = Blog_post::where(['user_id' => auth()->user()->id, 'status !=' => 'deleted'])->paginate();
+            //user biasa hanya bisa melihat, mengubah dan menghapus posting miliknya
+            
+            $posts = Blog_post::where('user_id', auth()->user()->id)
+                ->where('status', '!=', 'deleted')->orderBy('created_at', 'DESC')->paginate();
         }
 
         return view('private.blog.index', compact('isSecretary', 'posts'));

@@ -74,13 +74,15 @@
                                             @if (count($post->categories) > 0)
                                                 <div class="mt-1">
                                                     @foreach ($post->categories as $category)
-                                                    <span class="badge badge-info">{{ $category->name }}</span>
+                                                    <span class="badge badge-info">
+                                                        <a class="text-white" href="{{ route('admin.blog.posts.index', ['category' => $category->id]) }}">{{ $category->name }}</a>
+                                                    </span>
                                                 @endforeach
                                                 </div>
                                             @endif
                                         </td>
                                         @if ($isSecretary)
-                                            <td>{{ $post->user->name }}</td>
+                                            <td><a href="{{ route('admin.blog.posts.index', ['writer' => $post->user_id]) }}">{{ $post->user->name }}</a></td>
                                         @endif
                                         <td>
                                             @if ($post->status == 'draft')
@@ -92,7 +94,7 @@
                                             @endif
                                         </td>
                                         @if (current_user_can('read_blog_comment'))
-                                            <td></td>
+                                            <td><a href="{{ route('admin.blog.comments.post', $post->id) }}">{{ count($post->comments) }}</a></td>
                                         @endif
                                         <td>{{ \Carbon\Carbon::parse($post->created_at)->format('l, d M Y H:i') }}</td>
                                         <td>
@@ -101,7 +103,7 @@
                                                 <a href="{{ route('admin.blog.posts.show', $post->id) }}"
                                                     class="btn btn-success btn-sm"><i class="fa fa-eye"></i></a>
                                                 @endif
-                                                @if (current_user_can('update_blog_post'))
+                                                @if (current_user_can('update_blog_post') && $post->user_id == auth()->user()->id)
                                                 <a href="{{ route('admin.blog.posts.edit', $post->id) }}"
                                                     class="btn btn-info btn-sm"><i class="fa fa-edit"></i></a>
                                                 @endif
