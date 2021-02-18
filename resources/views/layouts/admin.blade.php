@@ -82,6 +82,7 @@
 
     <script>
         const passportAccessToken = localStorage.getItem('passportAccessToken');
+        const CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
         let logoutButton =  document.querySelector('.logout-btn');
         logoutButton.addEventListener('click', function (e) {

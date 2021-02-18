@@ -216,6 +216,12 @@ class PostController extends Controller
         if (isset($request->categories) && count($request->categories) > 0) {
             $post->categories()->sync($request->categories);
         }
+        else {
+            $uncategorized = Blog_category::getUncategorizedData();
+            if ($uncategorized != null) {
+                $post->categories()->attach($uncategorized->id);
+            }
+        }
 
         return redirect()
             ->route('admin.blog.posts.index')

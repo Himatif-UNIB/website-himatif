@@ -11,6 +11,7 @@ use App\Http\Controllers\Blog\CategoryController;
 use App\Http\Controllers\Blog\CommentController;
 use App\Http\Controllers\Blog\PostController;
 use App\Http\Controllers\FormController;
+use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\ProfileController;
@@ -139,6 +140,10 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'himatif-admin', 'as' => 'ad
             Route::get('/user/{user?}', [CommentController::class, 'user'])->name('user');
         });
     });
+
+    //manajemen galeri
+    Route::get('/gallery/category', [GalleryController::class, 'categories'])->name('gallery.categories');
+    Route::resource('gallery', GalleryController::class);
 });
 
 Route::get('/form/{form}-{slug}', [SiteFormController::class, 'show'])->name('form.show');

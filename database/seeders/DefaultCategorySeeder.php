@@ -19,5 +19,10 @@ class DefaultCategorySeeder extends Seeder
             'slug' => 'tak-berkategori',
             'display' => false
         ]);
+        DB::table('gallery_categories')->insertOrIgnore([
+            'name' => 'Tak Berkategori',
+            'slug' => 'tak-berkategori',
+            'display' => false
+        ]);
     }
 }
