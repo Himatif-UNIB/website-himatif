@@ -29,6 +29,13 @@ class SettingsSeeder extends Seeder
             'organizationTagLine' => 'Wadah bagi mahasiswa Teknik Informatika Universitas Bengkulu untuk berkarya dan mengabdi.',
             'allowComment' => true,
             'moderateComment' => false,
+            'googleVerifyCode' => null,
+            'alexaVerifyCode' => null,
+            'bingVerifyCode' => null,
+            'yandexVerifyCode' => null,
+            'googleAnalyticsId' => null,
+            'facebookAuthorId' => null,
+            'facebookAppId' => null
         ];
 
         foreach ($data as $key => $value) {

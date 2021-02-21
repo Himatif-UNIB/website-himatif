@@ -80,13 +80,14 @@ Route::group(['prefix' => 'auth', 'as' => 'password.', 'middleware' => 'guest'],
 });
 
 Route::group(['middleware' => ['auth'], 'prefix' => 'himatif-admin', 'as' => 'admin.'], function () {
-    Route::group(['as' => 'admin.', 'prefix' => 'admin'], function () {
+    Route::group(['prefix' => 'admin'], function () {
         Route::group(['middleware' => ['role:super_admin']], function () {
             Route::get('/users/roles', [PermissionController::class, 'roles'])->name('users.roles');
             Route::get('/users/permissions', [PermissionController::class, 'permissions'])->name('users.permissions');
             Route::get('/users/permissions/{role}', [PermissionController::class, 'edit'])->name('users.permissions.edit');
             Route::put('/users/permissions/{role}', [PermissionController::class, 'update'])->name('users.permissions.update');
             Route::resource('users', UserController::class);
+            Route::get('/settings/webmaster', [SettingController::class, 'webmaster'])->name('settings.webmaster');
         });
     });
 
@@ -105,10 +106,10 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'himatif-admin', 'as' => 'ad
     Route::get('/forces', [MemberController::class, 'forces'])->name('forces');
     Route::get('/positions', [MemberController::class, 'positions'])->name('positions');
 
+    Route::get('/members/export', [MemberController::class, 'export'])->name('members.export');
     Route::get('/members', [MemberController::class, 'index'])->name('members');
     Route::get('/members/{member}', [MemberController::class, 'show'])->name('members.show');
-    Route::get('/members/export', [MemberController::class, 'export'])->name('members.export');
-
+    
     Route::get('/staff', [StaffController::class, 'index'])->name('staff.index');
     Route::get('/staff/create', [StaffController::class, 'create'])->name('staff.create');
     Route::post('/staff', [StaffController::class, 'store'])->name('staff.store');

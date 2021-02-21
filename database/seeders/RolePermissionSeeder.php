@@ -70,7 +70,7 @@ class RolePermissionSeeder extends Seeder
         $superAdminRole = Role::findByName('super_admin');
         $superAdminRole->givePermissionTo([
             Permission::findByName('create_user'), Permission::findByName('read_user'), Permission::findByName('update_user'), Permission::findByName('delete_user'),
-            Permission::findByName('read_blog_post'),
+            Permission::findByName('create_blog_post'), Permission::findByName('read_blog_post'),
             Permission::findByName('read_blog_category'),
             Permission::findByName('read_blog_comment'),
             Permission::findByName('read_member'),
@@ -84,7 +84,8 @@ class RolePermissionSeeder extends Seeder
             Permission::findByName('read_finance'),
             Permission::findByName('read_form'),
             Permission::findByName('read_archive'),
-            Permission::findByName('read_gallery')
+            Permission::findByName('read_gallery'),
+            Permission::findByName('read_site_setting'), Permission::findByName('update_site_setting')
         ]);
 
         //berikan hak akses ke pembina

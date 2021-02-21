@@ -53,6 +53,9 @@
                                                                     </div>
                                                                 @endisset
                                                                 <h5 class="card-title">{{ $data['user']->name }}</h5>
+                                                                @isset($data['user']->member->npm)
+                                                                    {{ $data['user']->member->npm }}
+                                                                @endisset
                                                                 <p class="card-text">{{ $data['position']->name }}</p>
                                                             </div>
                                                             @if (isset($childs[$data['position']->id]) && count($childs[$data['position']->id]) > 0)

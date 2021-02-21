@@ -39,7 +39,11 @@
             <div class="mb-12">
                 <div class="w-full h-56 bg-gray-400 rounded-xl overflow-hidden">
                     <a href="{{ route('blog.post') }}">
-                        <img class="w-full h-full object-cover object-center" src="{{ $post->media[0]->getFullUrl() }}" alt="{{ $post->title }}">
+                        @isset($post->media[0])
+                            <img class="w-full h-full object-cover object-center" src="{{ $post->media[0]->getFullUrl() }}" alt="{{ $post->title }}">
+                        @else
+                            <img class="w-full h-full object-cover object-center" src="{{ asset('assets/bg-article.png') }}" alt="{{ $post->title }}">
+                        @endisset
                     </a>
                 </div>
                 <div class="text-white text-lg font-bold mt-3">

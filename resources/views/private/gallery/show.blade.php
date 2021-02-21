@@ -42,6 +42,14 @@
                                     </b></td>
                             </tr>
                             <tr>
+                                <td>Kategori</td>
+                                <td>
+                                    @foreach ($gallery->categories as $category)
+                                        <span class="badge badge-info mr-1">{{ $category->name }}</span>
+                                    @endforeach
+                                </td>
+                            </tr>
+                            <tr>
                                 <td>Jumlah foto</td>
                                 <td><b>{{ count($gallery->media) }}</b></td>
                             </tr>

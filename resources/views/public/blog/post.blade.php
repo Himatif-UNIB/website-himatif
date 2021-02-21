@@ -12,7 +12,7 @@
                 <img class="w-full h-full object-cover" src="{{ $post->media[0]->getFullUrl() }}" alt="{{ $post->title }}">
             @else
                 <img class="w-full h-full object-cover"
-                    src="https://upload.wikimedia.org/wikipedia/commons/f/f5/Poster-sized_portrait_of_Barack_Obama.jpg"
+                    src="{{ asset('assets/bg-article.png') }}"
                     alt="{{ $post->title }}">
             @endisset
         </div>
