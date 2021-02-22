@@ -24,7 +24,7 @@ class Position extends Model
      */
     public function staffPosition()
     {
-        return $this->belongsTo('App\Models\Staff');
+        return $this->belongsTo('App\Models\Staff', 'id', 'position_id');
     }
 
     /**

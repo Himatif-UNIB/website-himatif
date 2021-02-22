@@ -7,11 +7,18 @@ use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\FacebookAuthController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\GoogleAuthController;
+use App\Http\Controllers\Blog\CategoryController;
+use App\Http\Controllers\Blog\CommentController;
+use App\Http\Controllers\Blog\PostController;
 use App\Http\Controllers\FormController;
+use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SettingController;
+use App\Http\Controllers\Site\BlogController;
+use App\Http\Controllers\Site\FormController as SiteFormController;
+use App\Http\Controllers\Site\StaffController as SiteStaffController;
 use App\Http\Controllers\StaffController;
 use App\Http\Controllers\UserFormController;
 use Illuminate\Support\Facades\Auth;
@@ -34,17 +41,13 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('beranda');
 
-Route::get('/struktur', function () {
-    return view('frontend.struktur');
-})->name('struktur');
-
-Route::get('/blog', function () {
-    return view('frontend.blog');
-})->name('blog');
-
-Route::get('/post', function () {
-    return view('frontend.post');
-})->name('blog.post');
+Route::get('/struktur', [SiteStaffController::class, 'index'])->name('struktur');
+Route::group(['prefix' => 'blog', 'as' => 'blog.'], function () {
+    Route::get('/', [BlogController::class, 'index'])->name('index');
+    Route::get('/read/{post?}/{slug?}', [BlogController::class, 'post'])->name('post');
+    Route::get('/category/{id?}/{slug?}', [BlogController::class, 'category'])->name('category');
+    Route::post('/read/{post?}/{slug?}', [BlogController::class, 'post_comment'])->name('post_comment');
+});
 
 Route::get('/modal', function () {
     return view('frontend.modal');
@@ -76,6 +79,7 @@ Route::group(['prefix' => 'auth', 'as' => 'password.', 'middleware' => 'guest'],
     Route::post('/reset-password', [ForgotPasswordController::class,])->name('update');
 });
 
+<<<<<<< HEAD
 Route::group(['middleware' => ['auth']], function () {
     Route::group(['as' => 'admin.', 'prefix' => 'admin'], function () {
         Route::group(['as' => 'settings.', 'prefix' => 'settings', 'middleware' => ['permission:read_site_setting|update_site_setting']], function () {
@@ -83,14 +87,26 @@ Route::group(['middleware' => ['auth']], function () {
             Route::put('/update', [SettingController::class, 'update'])->name('update');
         });
 
+=======
+Route::group(['middleware' => ['auth'], 'prefix' => 'himatif-admin', 'as' => 'admin.'], function () {
+    Route::group(['prefix' => 'admin'], function () {
+>>>>>>> 330bf35bfadaa854e5f1dafcf801f18b13af2443
         Route::group(['middleware' => ['role:super_admin']], function () {
             Route::get('/users/roles', [PermissionController::class, 'roles'])->name('users.roles');
             Route::get('/users/permissions', [PermissionController::class, 'permissions'])->name('users.permissions');
             Route::get('/users/permissions/{role}', [PermissionController::class, 'edit'])->name('users.permissions.edit');
             Route::put('/users/permissions/{role}', [PermissionController::class, 'update'])->name('users.permissions.update');
             Route::resource('users', UserController::class);
+            Route::get('/settings/webmaster', [SettingController::class, 'webmaster'])->name('settings.webmaster');
         });
     });
+
+    Route::group(['as' => 'settings.', 'prefix' => 'settings', 'middleware' => ['permission:read_site_setting|update_site_setting']], function () {
+        Route::get('/', [SettingController::class, 'general'])->name('general');
+        Route::get('/blog', [SettingController::class, 'blog'])->name('blog');
+        Route::put('/update', [SettingController::class, 'update'])->name('update');
+    });
+    
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
     Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::put('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
@@ -100,11 +116,14 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/forces', [MemberController::class, 'forces'])->name('forces');
     Route::get('/positions', [MemberController::class, 'positions'])->name('positions');
 
+    Route::get('/members/export', [MemberController::class, 'export'])->name('members.export');
     Route::get('/members', [MemberController::class, 'index'])->name('members');
     Route::get('/members/{member}', [MemberController::class, 'show'])->name('members.show');
-    Route::get('/members/export', [MemberController::class, 'export'])->name('members.export');
-
-    Route::get('/staff', [StaffController::class, 'index'])->name('staff');
+    
+    Route::get('/staff', [StaffController::class, 'index'])->name('staff.index');
+    Route::get('/staff/create', [StaffController::class, 'create'])->name('staff.create');
+    Route::post('/staff', [StaffController::class, 'store'])->name('staff.store');
+    Route::get('/staff/show', [StaffController::class, 'show'])->name('staff.show');
 
     Route::get('/forms/{form}/answers', [FormController::class, 'answers'])->name('forms.answers');
     Route::get('/forms/{form}/export', [FormController::class, 'exportAnswer'])->name('forms.answer.export');
@@ -116,7 +135,27 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/auth/google/connect', [GoogleAuthController::class, 'connect'])->name('auth.google.connect');
     Route::get('/auth/google/verify', [GoogleAuthController::class, 'verify'])->name('auth.google.verify');
     Route::get('/auth/google/revoke', [GoogleAuthController::class, 'revoke'])->name('auth.google.revoke');
+
+    //Manajemen blog
+    Route::group(['prefix' => 'blog', 'as' => 'blog.'], function () {
+        Route::get('/category', [CategoryController::class, 'index'])->name('category');
+        Route::get('/posts/trash', [PostController::class, 'trash'])->name('posts.trash');
+        Route::get('/posts/deleted', [PostController::class, 'deleted'])->name('posts.deleted');
+        Route::put('/posts/restore', [PostController::class, 'restore'])->name('posts.restore');
+        Route::delete('/posts/force-delete', [PostController::class, 'force_delete'])->name('posts.force_delete');
+        Route::resource('posts', PostController::class);
+
+        Route::group(['prefix' => 'comments', 'as' => 'comments.'], function () {
+            Route::get('', [CommentController::class, 'index'])->name('index');
+            Route::get('/post/{post?}', [CommentController::class, 'post'])->name('post');
+            Route::get('/user/{user?}', [CommentController::class, 'user'])->name('user');
+        });
+    });
+
+    //manajemen galeri
+    Route::get('/gallery/category', [GalleryController::class, 'categories'])->name('gallery.categories');
+    Route::resource('gallery', GalleryController::class);
 });
 
-Route::get('/form/{form}-{slug}', [UserFormController::class, 'show'])->name('form.show');
-Route::post('/form/{form}/submit', [UserFormController::class, 'store'])->name('form.store');
+Route::get('/form/{form}-{slug}', [SiteFormController::class, 'show'])->name('form.show');
+Route::post('/form/{form}/submit', [SiteFormController::class, 'store'])->name('form.store');

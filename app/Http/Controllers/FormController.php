@@ -58,7 +58,7 @@ class FormController extends Controller
                     ->with(['displayIdentity' => false]);
             } else {
                 return redirect()
-                    ->route('private.forms.edit', $form_id);
+                    ->route('admin.forms.edit', $form_id);
             }
         } else {
             return view('private.forms.create');
@@ -99,7 +99,7 @@ class FormController extends Controller
         }
 
         return redirect()
-            ->route('forms.create', ['form' => $form->id])
+            ->route('admin.forms.create', ['form' => $form->id])
             ->withSuccess($form->id);
     }
 
@@ -200,7 +200,7 @@ class FormController extends Controller
                 }
 
                 return redirect()
-                    ->route('forms.show', $form->id)
+                    ->route('admin.forms.show', $form->id)
                     ->withSuccess(($request->save_as_draft == NULL) ? 'Berhasil membuat formulir' : 'Draft berhasil disimpan');
                 break;
         }
@@ -228,7 +228,7 @@ class FormController extends Controller
         $form->delete();
 
         return redirect()
-            ->route('forms.index')
+            ->route('admin.forms.index')
             ->withSuccess('Berhasil menghapus formulir');
     }
 

@@ -20,7 +20,7 @@
                 <div class="scrollspy-example" data-spy="scroll" data-target="#account-settings-scroll" data-offset="-100">
                     <div class="row">
                         <div class="col-xl-12 col-lg-12 col-md-12 layout-spacing">
-                            <form id="general-info" action="{{ route('profile.update') }}" method="post"
+                            <form id="general-info" action="{{ route('admin.profile.update') }}" method="post"
                                 enctype="multipart/form-data">
                                 @method('put')
                                 @csrf
@@ -183,7 +183,7 @@
                                                             </div>
                                                             </div>
                                                             <h5 class="info-heading">{{ $socialData['facebook']['data']->name }}</h5>
-                                                            <a class="info-link" href="{{ route('auth.facebook.revoke') }}">Putuskan</a>
+                                                            <a class="info-link" href="{{ route('admin.auth.facebook.revoke') }}">Putuskan</a>
                                                         </div>
                                                         @else
                                                         <div class="infobox-3">
@@ -194,7 +194,7 @@
                                                             <p class="info-text">
                                                                 Hubungkan akun Facebook kamu dengan akun HIMATIF.
                                                             </p>
-                                                            <a class="info-link" href="{{ route('auth.facebook.connect') }}">
+                                                            <a class="info-link" href="{{ route('admin.auth.facebook.connect') }}">
                                                                 Hubungkan
                                                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right">
                                                                     <line x1="5" y1="12" x2="19" y2="12"></line>
@@ -215,7 +215,7 @@
                                                             </div>
                                                             </div>
                                                             <h5 class="info-heading" style="word-wrap: break-word;">{{ $socialData['google']['data']->email }}</h5>
-                                                            <a class="info-link" href="{{ route('auth.google.revoke') }}">Putuskan</a>
+                                                            <a class="info-link" href="{{ route('admin.auth.google.revoke') }}">Putuskan</a>
                                                         </div>
                                                         @else
                                                         <div class="infobox-3">
@@ -226,7 +226,7 @@
                                                             <p class="info-text">
                                                                 Hubungkan akun Google kamu dengan akun HIMATIF.
                                                             </p>
-                                                            <a class="info-link" href="{{ route('auth.google.connect') }}">
+                                                            <a class="info-link" href="{{ route('admin.auth.google.connect') }}">
                                                                 Hubungkan
                                                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right">
                                                                     <line x1="5" y1="12" x2="19" y2="12"></line>

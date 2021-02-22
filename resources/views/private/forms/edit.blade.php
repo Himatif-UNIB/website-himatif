@@ -20,30 +20,32 @@ href="{{ asset('assets/plugins/@fortawesome/fontawesome-free/css/all.min.css') }
             </div>
         </div>
 
-        <div class="col-md-8 mx-auto layout-spacing">
-            <form action="{{ route('forms.update', $form->id) }}" method="post">
-                @csrf
-                @method('PUT')
-                <input type="hidden" name="action" value="edit_form">
+            <div class="col-md-8 mx-auto layout-spacing">
+                <form action="{{ route('admin.forms.update', $form->id) }}" method="post">
+                    @csrf
+                    @method('PUT')
+                    <input type="hidden" name="action" value="edit_form">
 
-                @if ($displayIdentity == true)
-                <div class="widget-content widget-content-area br-6 mb-2">
-                    <div class="text-right">
-                        <a href="#" data-toggle="collapse" data-target="#form-identity">
-                            <i class="fa fa-expand"></i> Identitas Formulir
-                        </a>
-                    </div>
-                    <div class="collapse" id="form-identity">
-                        <div class="form-group">
-                            <label for="title">Judul Formulir: <span
-                                class="text-danger font-weight-bold">*</span></label>
-                                <input type="text" class="form-control @error('title') is-invalid @enderror"
-                                value="{{ old('title', $form->title) }}" id="title" name="title" required="required"
-                                maxlength="255" minlength="4">
+                    @if ($displayIdentity == true)
+                        <div class="widget-content widget-content-area br-6 mb-2">
+                            <div class="text-right">
+                                <a href="#" data-toggle="collapse" data-target="#form-identity">
+                                    <i class="fa fa-expand"></i> Identitas Formulir
+                                </a>
+                            </div>
+                            <div class="collapse" id="form-identity">
+                                <div class="form-group">
+                                    <label for="title">Judul Formulir: <span
+                                            class="text-danger font-weight-bold">*</span></label>
+                                    <input type="text" class="form-control @error('title') is-invalid @enderror"
+                                        value="{{ old('title', $form->title) }}" id="title" name="title" required="required"
+                                        maxlength="255" minlength="4">
 
-                                @error('title')
-                                <div class="invalid-feedback">
-                                    {{ $message }}
+                                    @error('title')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
                                 </div>
                                 @enderror
                             </div>

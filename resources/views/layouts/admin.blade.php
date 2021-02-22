@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -9,10 +10,10 @@
 
     <title>@yield('title')</title>
 
-    @if (getSiteLogo() == NULL)
-        <link rel="icon" type="image/x-icon" href="{{ asset('assets/images/icons/favicon.ico') }}"/>
+    @if (getSiteLogo() == null)
+        <link rel="icon" type="image/x-icon" href="{{ asset('assets/images/icons/favicon.ico') }}" />
     @else
-        <link rel="icon" href="{{ getSiteLogo() }}"/>
+        <link rel="icon" href="{{ getSiteLogo() }}" />
     @endif
     <link href="{{ asset('assets/themes/cork/css/loader.css') }}" rel="stylesheet" type="text/css" />
 
@@ -26,11 +27,16 @@
     @yield('custom_head')
     <!-- END PAGE LEVEL PLUGINS/CUSTOM STYLES -->
 </head>
+
 <body>
     <!-- BEGIN LOADER -->
-    <div id="load_screen"> <div class="loader"> <div class="loader-content">
-        <div class="spinner-grow align-self-center"></div>
-    </div></div></div>
+    <div id="load_screen">
+        <div class="loader">
+            <div class="loader-content">
+                <div class="spinner-grow align-self-center"></div>
+            </div>
+        </div>
+    </div>
     <!--  END LOADER -->
 
     <!--  BEGIN NAVBAR  -->
@@ -46,7 +52,7 @@
         <!--  BEGIN SIDEBAR  -->
         <x-admin.sidebar />
         <!--  END SIDEBAR  -->
-        
+
         <!--  BEGIN CONTENT AREA  -->
         <div id="content" class="main-content">
             @yield('content')
@@ -71,10 +77,12 @@
         $(document).ready(function() {
             App.init();
 
-            $(document).on('click', '.user-profile-dropdown .dropdown-menu .dropdown-item a.logout-btn', function (e) {
-                e.stopPropagation();
-            });
+            $(document).on('click', '.user-profile-dropdown .dropdown-menu .dropdown-item a.logout-btn',
+                function(e) {
+                    e.stopPropagation();
+                });
         });
+
     </script>
     <script src="{{ asset('assets/themes/cork/js/custom.js') }}"></script>
     <script src="{{ asset('assets/themes/cork/js/loader.js') }}"></script>
@@ -82,46 +90,68 @@
 
     <script>
         const passportAccessToken = localStorage.getItem('passportAccessToken');
+        const CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
-        let logoutButton =  document.querySelector('.logout-btn');
-        logoutButton.addEventListener('click', function (e) {
+        let logoutButton = document.querySelector('.logout-btn');
+        logoutButton.addEventListener('click', function(e) {
             e.preventDefault();
 
             logoutButton.querySelector('span')
                 .innerHTML = 'Log Out...';
             fetch('{{ route('auth.logout') }}', {
-                headers: {
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                },
-                method: 'POST'
-            })
-            .then(res => res.json())
-            .then(res => {
-                if (res.success) {
-                    logoutButton.querySelector('span')
-                        .innerHTML = 'Berhasil!';
+                    headers: {
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    method: 'POST'
+                })
+                .then(res => res.json())
+                .then(res => {
+                    if (res.success) {
+                        logoutButton.querySelector('span')
+                            .innerHTML = 'Berhasil!';
 
-                    localStorage.removeItem('passportAccessToken');
-                    localStorage.removeItem('passportAccessTokenType');
-                    localStorage.removeItem('passportAccessTokenExpireAt');
+                        localStorage.removeItem('passportAccessToken');
+                        localStorage.removeItem('passportAccessTokenType');
+                        localStorage.removeItem('passportAccessTokenExpireAt');
 
-                    setTimeout(function () {
-                        window.location = '{{ route('login') }}';
-                    }, 2000);
-                }
-            })
-            .catch(errors => {
-                console.log(errors);
-            });
+                        setTimeout(function() {
+                            window.location = '{{ route('login') }}';
+                        }, 2000);
+                    }
+                })
+                .catch(errors => {
+                    console.log(errors);
+                });
         });
 
-        $(function () {
+        $(function() {
             $('[data-toggle="tooltip"]').tooltip()
         });
+
     </script>
 
     <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
     @stack('custom_js')
     <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
+
+    @if (getSetting('googleAnalyticsId'))
+    <script>
+        (function(i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r;
+            i[r] = i[r] || function() {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date();
+            a = s.createElement(o),
+                m = s.getElementsByTagName(o)[0];
+            a.async = 1;
+            a.src = g;
+            m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+
+        ga('create', '{{ getSetting('googleAnalyticsId') }}', 'auto');
+        ga('send', 'pageview');
+    </script>
+    @endif
 </body>
+
 </html>

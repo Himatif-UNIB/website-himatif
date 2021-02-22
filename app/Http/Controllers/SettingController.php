@@ -27,6 +27,11 @@ class SettingController extends Controller
         return view('private.settings.general', compact('logo'));
     }
 
+    public function webmaster()
+    {
+        return view('private.settings.webmaster');
+    }
+
     /**
      * Menyimpan data pengaturan
      * 
@@ -110,6 +115,39 @@ class SettingController extends Controller
                     ->back()
                     ->withSuccess('Berhasil menyimpan pengaturan');
             break;
+            case 'blog' :
+                $allowedFields = ['allowComment', 'moderateComment'];
+
+                foreach ($allowedFields as $field) {
+                    Setting::where('key', $field)
+                        ->update(
+                            ['value' => isset($request->settings[$field]) ? $request->settings[$field] : false]
+                        );
+                }
+
+                return redirect()
+                    ->back()
+                    ->withSuccess('Berhasil menyimpan pengaturan');
+            break;
+            case 'webmaster':
+                $allowedFields = ['googleVerifyCode', 'alexaVerifyCode', 'bingVerifyCode', 'yandexVerifyCode', 'googleAnalyticsId', 'facebookAuthorId', 'facebookAppId'];
+
+                foreach ($allowedFields as $field) {
+                    Setting::where('key', $field)
+                    ->update(
+                        ['value' => isset($request->settings[$field]) ? $request->settings[$field] : null]
+                    );
+                }
+
+                return redirect()
+                    ->back()
+                    ->withSuccess('Berhasil menyimpan pengaturan');
+                break;
         }
+    }
+
+    public function blog()
+    {
+        return view('private.settings.blog');
     }
 }

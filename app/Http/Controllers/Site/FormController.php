@@ -1,15 +1,29 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Site;
 
+use App\Http\Controllers\Controller;
 use App\Models\Form;
 use App\Models\Form_answer;
 use App\Models\Form_question_answer;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
-class UserFormController extends Controller
+class FormController extends Controller
 {
+    /**
+     * Menampilkan formulir
+     * 
+     * Menampilkan formulir dari database berdasarkan
+     * Id yang dipilih
+     * 
+     * @param   Form    $form   Instance form yang akan diakses
+     * 
+     * @since   1.0.0
+     * @author  mulyosyahidin95
+     * 
+     * @return  View\Factory@public.forms.show
+     */
     public function show(Form $form)
     {
         //status = 1 (konsep), jangan boleh diakses
@@ -37,6 +51,18 @@ class UserFormController extends Controller
         return view('public.forms.show', compact('dateFields', 'dateTimeFields', 'form', 'timeFields'));
     }
 
+    /**
+     * Simpan jawaban form
+     * 
+     * Menyimpan jawaban form yang diisikan oleh user
+     * 
+     * @param   Request $request    HTTP Request data
+     * 
+     * @since   1.0.0
+     * @author  mulyosyahidin95
+     * 
+     * @return  redirectBack
+     */
     public function store(Request $request)
     {
         $form_id = $request->form_id;
@@ -79,6 +105,9 @@ class UserFormController extends Controller
         }
 
         if ($form->is_over_date) {
+            //tampilkan peringatan jika user mengisi formulir melewati
+            //batas waktu yang sudah ditentukan. Namun, data tetap disimpan
+            
             abort(410, 'Formulir ini sudah melewati batas waktu maksimal pengisian.');
         }
 

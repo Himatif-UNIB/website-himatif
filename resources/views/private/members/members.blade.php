@@ -19,7 +19,7 @@
                         Manajemen Anggota
                         <span class="float-right">
                             @if (current_user_can('read_member'))
-                            <a href="{{ route('members.export') }}" class="btn btn-info btn-sm" data-toggle="tooltip" title="Ekspor ke Excel">
+                            <a href="{{ route('admin.members.export') }}" class="btn btn-info btn-sm" data-toggle="tooltip" title="Ekspor ke Excel">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-upload">
                                     <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
                                     <polyline points="17 8 12 3 7 8"></polyline>
@@ -341,7 +341,7 @@
                 {"data": "npm"},
                 {
                     data: function (data, row, type) {
-                        return `<a href="{{ route('members.show', false) }}/${data.id}" target="_blank">${data.name}</a>`;
+                        return `<a href="{{ route('admin.members.show', false) }}/${data.id}" target="_blank">${data.name}</a>`;
                     }
                 },
                 {
@@ -464,6 +464,15 @@
                             addMessageContainer.classList.add('alert-success');
                             addMessageContainer.innerHTML = res.message;
 
+                            setTimeout(function () {
+                                addMemberBtn.innerHTML = 'Tambah';
+                                addMemberForm.reset();
+
+                                addMessageContainer.classList.remove('alert');
+                                addMessageContainer.classList.remove('alert-success');
+                                addMessageContainer.innerHTML = '';
+                            }, 2500);
+
                             $('#add-modal').on('hidden.bs.modal', function(e) {
                                 addMemberBtn.innerHTML = 'Tambah';
                                 addMemberForm.reset();
@@ -471,6 +480,13 @@
                                 addMessageContainer.classList.remove('alert');
                                 addMessageContainer.classList.remove('alert-success');
                                 addMessageContainer.innerHTML = '';
+
+                                addMemberNameInput.classList.remove('is-invalid');
+                                addMemberNameFeedback.innerHTML = '';
+                                addMemberNPMInput.classList.remove('is-invalid');
+                                addMemberNPMFeedback.innerHTML = '';
+                                addMemberForceInput.classList.remove('is-invalid');
+                                addMemberForceFeedback.innerHTML = '';
                             });
                         }
                     })
@@ -663,6 +679,15 @@
 
                         editMessageContainer.classList.add('alert-success');
                         editMessageContainer.innerHTML = res.message;
+
+                        setTimeout(function () {
+                            editMemberBtn.innerHTML = 'Simpan';
+                            editMemberForm.reset();
+
+                            editMessageContainer.classList.remove('alert');
+                            editMessageContainer.classList.remove('alert-success');
+                            editMessageContainer.innerHTML = '';
+                        }, 2500);
 
                         $('#edit-modal').on('hidden.bs.modal', function(e) {
                             editMemberBtn.innerHTML = 'Simpan';

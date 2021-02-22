@@ -55,8 +55,8 @@ class GeneralSeeder extends Seeder
         $treasurerPositionId = DB::table('positions')->insertGetId(['order_level' => 5, 'name' => 'Bendahara']);
 
         DB::table('positions')->insert([
-            ['order_level' => 6, 'name' => 'Biro Kestari', 'parent_id' => $secretaryPositionId],
-            ['order_level' => 6, 'name' => 'Biro Dana Usaha', 'parent_id' => $treasurerPositionId]
+            ['order_level' => 6, 'name' => 'Biro Kestari'],
+            ['order_level' => 6, 'name' => 'Biro Dana Usaha']
         ]);
 
         $headOfDivisionsId = [];

@@ -19,7 +19,7 @@
             </div>
 
             <div class="col-xl-12 col-lg-12 col-sm-12  layout-spacing">
-                <form action="{{ route('forms.store') }}" method="post" enctype="multipart/form-data">
+                <form action="{{ route('admin.forms.store') }}" method="post" enctype="multipart/form-data">
                     @csrf
 
                     <div class="widget-content widget-content-area br-6">

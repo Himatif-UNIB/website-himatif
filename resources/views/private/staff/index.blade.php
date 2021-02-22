@@ -20,7 +20,15 @@
                         Manajemen Pengurus
                         @if (current_user_can('create_staff'))
                         <span class="float-right">
-                            <a href="#" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#add-modal">
+                            <a href="{{ route('admin.staff.show') }}" class="btn btn-success btn-sm"
+                                data-toggle="tooltip" title="Lihat Struktur Pengurus">
+                                <i class="fa fa-eye"></i>
+                            </a>
+                            <a href="{{ route('admin.staff.create') }}" class="btn btn-info btn-sm"
+                                data-toggle="tooltip" title="Ubah Struktur Pengurus">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                            <a href="#" class="btn btn-primary btn-sm d-none" data-toggle="modal" data-target="#add-modal">
                                 <i class="fa fa-plus"></i>
                             </a>
                         </span>
