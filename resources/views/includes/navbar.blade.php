@@ -1,6 +1,9 @@
 <!-- START NAVBAR -->
-<div class="flex justify-between items-center">
-    <img class="" src="{{ getSiteLogo() }}" alt="{{ getSetting('organizationName') }} Logo">
+<div id="navbar" class="flex justify-between items-center">
+    <div class="flex items-center">
+        <img class="" src="{{ getSiteLogo() }}" alt="{{ getSetting('organizationName') }} Logo">
+        <span class="ml-3 text-white font-bold text-2xl uppercase">Himatif</span>
+    </div>
     <div class="text-dark-blue-400 invisible lg:visible">
         <ul class="flex items-center">
             <li class="px-6 hover:text-gray-50">

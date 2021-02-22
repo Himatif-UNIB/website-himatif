@@ -237,7 +237,7 @@ return [
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
         'Bitly' => Shivella\Bitly\Facade\Bitly::class,
         'Socialite' => Laravel\Socialite\Facades\Socialite::class,
-        
+
     ],
 
 ];

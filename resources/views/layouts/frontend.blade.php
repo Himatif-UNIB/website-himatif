@@ -35,6 +35,7 @@
     @include('includes.bottom-navbar')
 
     @include('includes.script')
+    @yield('script-after')
 
 </body>
 </html>

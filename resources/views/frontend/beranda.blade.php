@@ -75,17 +75,12 @@
         <div class="grid grid-row md:grid-cols-2 lg:grid-cols-3 place-items-center"  data-aos="fade-up" data-aos-delay="500">
             @forelse ($divisions as $item)
             <div class="border-2 cursor-pointer hover:border-gray-400 transition duration-500 ease-in-out w-64 h-64 lg:w-80 lg:h-80 rounded-3xl p-5 mb-5 flex flex-wrap content-center">
-<<<<<<< HEAD
-                <img class="mx-auto" src="{{ $item->media[0]->getFullUrl() }}" alt="{{ $item->name }}"
-                    title="Bidang {{ $item->name }}">
-=======
                 @isset($item->media[0])
                     <img class="mx-auto" src="{{ $item->media[0]->getFullUrl() }}" alt="{{ $item->name }}"
                         title="Bidang {{ $item->name }}">
                 @else
                     <div>{{ $item->name }}</div>
                 @endisset
->>>>>>> 15f3f0fb090f6c88468e0a0e6358946cf36ba33d
             </div>
             @empty
             <div>

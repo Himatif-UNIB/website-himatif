@@ -78,7 +78,7 @@ Route::group(['prefix' => 'auth', 'as' => 'password.', 'middleware' => 'guest'],
 
 Route::group(['middleware' => ['auth']], function () {
     Route::group(['as' => 'admin.', 'prefix' => 'admin'], function () {
-        Route::group(['as' => 'settings.', 'prefix' => 'settings', 'middleware' => ['permission:read_setting|update_setting']], function () {
+        Route::group(['as' => 'settings.', 'prefix' => 'settings', 'middleware' => ['permission:read_site_setting|update_site_setting']], function () {
             Route::get('/', [SettingController::class, 'general'])->name('general');
             Route::put('/update', [SettingController::class, 'update'])->name('update');
         });
