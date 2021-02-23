@@ -6,26 +6,37 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
+use Staudenmeir\EloquentHasManyDeep\HasRelationships;
 
 class Division extends Model implements HasMedia
 {
-    use HasFactory, InteractsWithMedia;
+    use HasFactory, InteractsWithMedia, HasRelationships;
 
     public $timestamps = FALSE;
 
     /**
      * Invers relasi one to one
-     * 
+     *
      * Membuat definisi invers relasi dari model
      * App\Models\Position
-     * 
+     *
      * @since   1.0.0
      * @author  mulyosyahidin95
-     * 
+     *
      * @return  Definisi invers relasi
      */
     public function positionDivision()
     {
-        return $this->belongsTo('App\Models\Position');
+        return $this->hasMany(Position::class, 'division_id');
+    }
+
+    public function staffs()
+    {
+        return $this->hasManyThrough(Staff::class, Position::class);
+    }
+
+    public function users()
+    {
+        return $this->hasManyDeep(User::class, [Position::class, Staff::class]);
     }
 }

@@ -46,7 +46,7 @@
                 </div>
                 @endforeach
                 <div class="text-white text-lg font-bold mt-3">
-                   <a href="{{ route('blog.post', ['post' => $post->id, 'slug' => $post->slug]) }}">{{ $post->title }}</a>
+                    <a href="{{ route('blog.post', ['post' => $post->id, 'slug' => $post->slug]) }}">{{ $post->title }}</a>
                 </div>
                 <div class="text-dark-blue-400 text-base font-bold mt-3">
                     @empty($post->excerpt)
