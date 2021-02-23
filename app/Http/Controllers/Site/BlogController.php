@@ -13,12 +13,12 @@ class BlogController extends Controller
 {
     /**
      * Menampilkan daftar posting
-     * 
+     *
      * Menampilkan daftar posting di halaman `/blog`
-     * 
+     *
      * @since   1.0.0
      * @author  mulyosyahidin95
-     * 
+     *
      * @return View\Factory@public.blog.index
      */
     public function index()
@@ -31,16 +31,16 @@ class BlogController extends Controller
 
     /**
      * Posting berdasarkan kategori
-     * 
+     *
      * Menampilkan posting berdasarkan kategori yang dipilih.
      * Halaman ini dapat diakses di halaman `/blog/category/{id}/{slug}`
-     * 
+     *
      * @param   int     $id     Id kategori yang akan ditampilkan
      * @param   string  $slug   Slug kategori yang akan ditampilkan
-     * 
+     *
      * @since   1.0.0
      * @author  mulyosyahidin95
-     * 
+     *
      * @return  View\Factory@public.blog.category
      */
     public function category($id = 0, $slug = null)
@@ -49,13 +49,13 @@ class BlogController extends Controller
             abort(403, 'Akses tidak diizinkan');
         }
 
-        if ( ! Blog_category::where(['id' => $id, 'slug' => $slug])->exists()) {
+        if (!Blog_category::where(['id' => $id, 'slug' => $slug])->exists()) {
             abort(404, 'Kategori itu tidak ada!');
         }
 
         $posts = Blog_post::with('categories')->whereHas('categories', function ($category) use ($id) {
-                return $category->where('blog_categories.id', $id);
-            })->paginate();
+            return $category->where('blog_categories.id', $id);
+        })->paginate();
         $categories = Blog_category::orderBy('name')->get();
         $category = Blog_category::find($id);
 
@@ -64,17 +64,17 @@ class BlogController extends Controller
 
     /**
      * Halaman single post
-     * 
+     *
      * Menampilkan halaman single post yang dapat diakses
      * melalui halaman blog maupun kategori.
      * Menampilkan data posting dan komentar.
-     * 
+     *
      * @param   Blog_post   $post   Instance post yang diakses
      * @param   String      $slug   Slug posting
-     * 
+     *
      * @since   1.0.0
      * @author  mulyosyahidin95
-     * 
+     *
      * @return  View\Factory@public.blog.post
      */
     public function post(Blog_post $post = null, $slug = null)
@@ -86,23 +86,23 @@ class BlogController extends Controller
 
     /**
      * Menambah komentar baru
-     * 
+     *
      * Method untuk menambahkan komentar baru
      * ke posting. Diakses melalui form komentar pada
      * halaman single post atau dasbor
-     * 
+     *
      * @param   Request     $request    HTTP Request data
      * @param   Blog_post   $blog_post  Instance komentar yang akan dikomentari
      * @param   String      $slug       Slug posting yang akan dikomentari
-     * 
+     *
      * @since   1.0.0
      * @author  mulyosyahidin95
-     * 
-     * @return  redirectBack  
+     *
+     * @return  redirectBack
      */
     public function post_comment(Request $request, Blog_post $post = null, $slug = null)
     {
-        if ( ! getSetting('allowComment') || $post->allow_comment == false) {
+        if (!getSetting('allowComment') || $post->allow_comment == false) {
             //jika komentar tidak diizinkan secara global, tidak ada yang boleh berkomentar
             //jika posting dinyatakan tidak menerima komentar
 
@@ -113,8 +113,7 @@ class BlogController extends Controller
             $validator = Validator::make($request->all(), [
                 'content' => ['required', 'min:2', 'max:512']
             ]);
-        }
-        else {
+        } else {
             $validator = Validator::make($request->all(), [
                 'name' => ['required', 'min:4', 'max:255'],
                 'email' => ['required', 'min:10', 'max:255', 'email'],
@@ -138,12 +137,11 @@ class BlogController extends Controller
         if (auth()->check()) {
             //jika pemberi komentar sudah login,
             //gunakan data login dari session
-            
+
             $comment->user_id = auth()->user()->id;
             $comment->name = auth()->user()->name;
             $comment->email = auth()->user()->email;
-        }
-        else {
+        } else {
             $comment->name = $request->name;
             $comment->email = $request->email;
             $comment->website = $request->website;

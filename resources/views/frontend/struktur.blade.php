@@ -10,36 +10,31 @@
         </div>
     </div>
 
-
     @forelse ($positions as $index => $item)
-        @php ($grid = (count($positions[$index]) > 3) ? 4 : count($positions[$index]))
 
-        <div class="grid grid-row md:grid-cols-2 lg:grid-cols-{{ $grid }} place-items-center">
+        <div class="flex flex-wrap justify-center">
             @foreach ($positions[$index] as $data)
                 @if ($data['position']->parent_id == null)
-                <div
-                    class="w-80 h-80 bg-card-color rounded-xl border-2 cursor-pointer hover:border-gray-400 transition duration-500 ease-in-out w-64 h-64 lg:w-80 lg:h-80 rounded-3xl p-5 mb-5 flex flex-wrap content-center">
-                    <div class="flex justify-center h-full items-center">
-                        <div class="w-64 h-64">
-                            <div class="flex justify-center">
-                                @isset ($data['user']->media[0])
-                                    <img src="{{ $data['user']->media[0]->getFUllUrl() }}" alt="">
-                                @else
-                                    <img class="w-44 h-44 rounded-full object-cover" src="{{ getSiteLogo() }}" alt="">
-                                @endisset
+                <div class="bg-card-color border-2 cursor-pointer hover:border-gray-400 transition duration-500 ease-in-out w-64 h-auto lg:w-80 lg:h-80 rounded-3xl p-5 mb-5 flex flex-wrap justify-center items-center m-3">
+                    <div class="lg:w-64 lg:h-64">
+                        <div class="flex justify-center">
+                            @isset ($data['user']->media[0])
+                                <img src="{{ $data['user']->media[0]->getFUllUrl() }}" alt="">
+                            @else
+                                <img class="w-44 h-44 rounded-full object-cover" src="{{ getSiteLogo() }}" alt="">
+                            @endisset
+                        </div>
+
+                        <div class="flex justify-between items-center mt-5">
+                            <div>
+                                <span class="flex font-semibold text-gray-200 text-lg">{{ $data['user']->name }}</span>
+                                <span class="flex font-semibold text-orange-500 text-sm">{{ $data['position']->name }}</span>
                             </div>
-                            
-                            <div class="flex justify-between items-center mt-5">
-                                <div>
-                                    <span class="flex font-semibold text-gray-200 text-lg">{{ $data['user']->name }}</span>
-                                    <span class="flex font-semibold text-orange-500 text-sm">{{ $data['position']->name }}</span>
-                                </div>
-                                @if (isset($childs[$data['position']->id]) && count($childs[$data['position']->id]) > 0)
-                                <div class="flex space-x-3">
-                                    <i class="fa fa-users" style="color: white"></i>
-                                </div>
-                                @endif
+                            @if (isset($childs[$data['position']->id]) && count($childs[$data['position']->id]) > 0)
+                            <div class="flex space-x-3">
+                                <i class="fa fa-users" style="color: white"></i>
                             </div>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -49,7 +44,7 @@
     @empty
         <div class="grid grid-row md:grid-cols-2 lg:grid-cols-3 place-items-center">
             <div
-                class="w-80 h-80 bg-card-color rounded-xl border-2 cursor-pointer hover:border-gray-400 transition duration-500 ease-in-out w-64 h-64 lg:w-80 lg:h-80 rounded-3xl p-5 mb-5 flex flex-wrap content-center">
+                class="bg-card-color border-2 cursor-pointer hover:border-gray-400 transition duration-500 ease-in-out w-64 h-64 lg:w-80 lg:h-80 rounded-3xl p-5 mb-5 flex flex-wrap content-center">
                 <div class="flex justify-center h-full items-center">
                     <div class="w-64 h-64">
                         <div class="flex justify-center">

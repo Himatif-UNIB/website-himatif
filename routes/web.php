@@ -40,6 +40,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [HomeController::class, 'index'])->name('beranda');
+Route::get('/modal/{divisionId}', [HomeController::class, 'modal'])->name('beranda.modal');
 
 Route::get('/struktur', [SiteStaffController::class, 'index'])->name('struktur');
 Route::group(['prefix' => 'blog', 'as' => 'blog.'], function () {
@@ -105,7 +106,7 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'himatif-admin', 'as' => 'ad
         Route::get('/blog', [SettingController::class, 'blog'])->name('blog');
         Route::put('/update', [SettingController::class, 'update'])->name('update');
     });
-    
+
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
     Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::put('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
@@ -118,7 +119,7 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'himatif-admin', 'as' => 'ad
     Route::get('/members/export', [MemberController::class, 'export'])->name('members.export');
     Route::get('/members', [MemberController::class, 'index'])->name('members');
     Route::get('/members/{member}', [MemberController::class, 'show'])->name('members.show');
-    
+
     Route::get('/staff', [StaffController::class, 'index'])->name('staff.index');
     Route::get('/staff/create', [StaffController::class, 'create'])->name('staff.create');
     Route::post('/staff', [StaffController::class, 'store'])->name('staff.store');

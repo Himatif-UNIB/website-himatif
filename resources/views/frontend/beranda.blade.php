@@ -74,12 +74,12 @@
         </h2>
         <div class="grid grid-row md:grid-cols-2 lg:grid-cols-3 place-items-center"  data-aos="fade-up" data-aos-delay="500">
             @forelse ($divisions as $item)
-            <div class="border-2 cursor-pointer hover:border-gray-400 transition duration-500 ease-in-out w-64 h-64 lg:w-80 lg:h-80 rounded-3xl p-5 mb-5 flex flex-wrap content-center">
+            <div class="border-2 cursor-pointer hover:border-gray-400 transition duration-500 ease-in-out w-64 h-64 lg:w-80 lg:h-80 rounded-3xl p-5 mb-5 flex flex-wrap content-center modal-open">
                 @isset($item->media[0])
-                    <img class="mx-auto" src="{{ $item->media[0]->getFullUrl() }}" alt="{{ $item->name }}"
-                        title="Bidang {{ $item->name }}">
+                <img class="mx-auto" src="{{ $item->media[0]->getFullUrl() }}" alt="{{ $item->name }}"
+                title="Bidang {{ $item->name }}">
                 @else
-                    <div>{{ $item->name }}</div>
+                <div>{{ $item->name }}</div>
                 @endisset
             </div>
             @empty
@@ -127,8 +127,8 @@
             <div class="w-full flex flex-col items-center mb-6">
                 <span class="block font-poppins font-semibold text-xl text-gray-700">Wahyu Syahputra</span>
                 <span class="block font-poppins text-lg text-gray-500">G1A018093</span>
-                <div class="w-48 text-center bg-category-button-green rounded-full mt-2">
-                    <span class="text-category-text-green font-semibold">Information Technology</span>
+                <div class="w-auto px-4 text-center bg-category-button-green rounded-full mt-2">
+                    <span class="text-category-text-green font-semibold" id="division_name"></span>
                 </div>
             </div>
 
