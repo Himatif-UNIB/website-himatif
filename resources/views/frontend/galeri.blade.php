@@ -1,5 +1,5 @@
 @extends('layouts.frontend')
-
+@section('title', 'Galeri Foto '. getSetting('organizationName'))
 @section('style-after')
 <link type="text/css" rel="stylesheet" href="{{ asset('assets/plugins/lightGallery/css/lightgallery.css') }}" />
 @endsection
