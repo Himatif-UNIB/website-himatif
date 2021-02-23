@@ -56,6 +56,7 @@
     @include('includes.bottom-navbar')
 
     @include('includes.script')
+    @yield('script-after')
 
     @stack('custom_js')
 

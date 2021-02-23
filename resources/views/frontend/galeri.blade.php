@@ -1,5 +1,9 @@
 @extends('layouts.frontend')
 
+@section('style-after')
+<link type="text/css" rel="stylesheet" href="{{ asset('assets/plugins/lightGallery/css/lightgallery.css') }}" />
+@endsection
+
 @section('inner-content')
 <div class="px-2 mt-12 lg:mt-12 lg:px-0">
     <!-- START JUMBOTRON -->
@@ -18,34 +22,41 @@
 
 @section('outer-content')
 <div class="px-12 lg:px-24">
- <!-- START CONTENT -->
- <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mt-16">
-    <div class="mb-1 lg:mb-2">
+    <!-- START CONTENT -->
+    <div id="lightGallery" class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mt-16">
+        <div data-src="{{ asset('assets/bg-article.png') }}" class="item w-full h-56 bg-gray-400 rounded-xl overflow-hidden">
+            <img src="{{ asset('assets/bg-article.png') }}" class="cursor-pointer w-full h-full object-cover object-center" alt="">
+        </div>
         <div class="w-full h-56 bg-gray-400 rounded-xl overflow-hidden">
             <img class="cursor-pointer w-full h-full object-cover object-center" alt="">
         </div>
-    </div>
-    <div class="mb-1 lg:mb-2">
         <div class="w-full h-56 bg-gray-400 rounded-xl overflow-hidden">
             <img class="cursor-pointer w-full h-full object-cover object-center" alt="">
         </div>
-    </div>
-    <div class="mb-1 lg:mb-2">
         <div class="w-full h-56 bg-gray-400 rounded-xl overflow-hidden">
             <img class="cursor-pointer w-full h-full object-cover object-center" alt="">
         </div>
-    </div>
-    <div class="mb-1 lg:mb-2">
         <div class="w-full h-56 bg-gray-400 rounded-xl overflow-hidden">
             <img class="cursor-pointer w-full h-full object-cover object-center" alt="">
         </div>
+
     </div>
-    <div class="mb-1 lg:mb-2">
-        <div class="w-full h-56 bg-gray-400 rounded-xl overflow-hidden">
-            <img class="cursor-pointer w-full h-full object-cover object-center" alt="">
-        </div>
-    </div>
-</div>
 </div>
 
+@endsection
+
+@section('script-after')
+<script src="{{ asset('assets/plugins/lightGallery/js/lightgallery.min.js') }}"></script>
+
+<!-- lightgallery plugins -->
+<script src="{{ asset('assets/plugins/lightGallery/js/lg-thumbnail.min.js') }}"></script>
+<script src="{{ asset('assets/plugins/lightGallery/js/lg-fullscreen.min.js') }}"></script>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#lightGallery').lightGallery({
+            selector: '.item'
+        });
+    });
+</script>
 @endsection

@@ -79,8 +79,18 @@ Route::group(['prefix' => 'auth', 'as' => 'password.', 'middleware' => 'guest'],
     Route::post('/reset-password', [ForgotPasswordController::class,])->name('update');
 });
 
+<<<<<<< HEAD
+Route::group(['middleware' => ['auth']], function () {
+    Route::group(['as' => 'admin.', 'prefix' => 'admin'], function () {
+        Route::group(['as' => 'settings.', 'prefix' => 'settings', 'middleware' => ['permission:read_site_setting|update_site_setting']], function () {
+            Route::get('/', [SettingController::class, 'general'])->name('general');
+            Route::put('/update', [SettingController::class, 'update'])->name('update');
+        });
+
+=======
 Route::group(['middleware' => ['auth'], 'prefix' => 'himatif-admin', 'as' => 'admin.'], function () {
     Route::group(['prefix' => 'admin'], function () {
+>>>>>>> 330bf35bfadaa854e5f1dafcf801f18b13af2443
         Route::group(['middleware' => ['role:super_admin']], function () {
             Route::get('/users/roles', [PermissionController::class, 'roles'])->name('users.roles');
             Route::get('/users/permissions', [PermissionController::class, 'permissions'])->name('users.permissions');

@@ -16,7 +16,7 @@ class FormController extends Controller
 {
     /**
      * Membatasi akses user
-     * 
+     *
      * - create_form -> create(), store()
      * - read_form -> index(), show()
      * - update_form -> edit(), update()
@@ -234,10 +234,10 @@ class FormController extends Controller
 
     /**
      * Menampilkan halaman jawaban formulir
-     * 
+     *
      * @since   1.0.0
      * @author  mulyosyahidin95
-     * 
+     *
      * @return  View\Factory@private.forms.answers
      */
     public function answers(Form $form)
@@ -247,13 +247,13 @@ class FormController extends Controller
 
     /**
      * Action untuk export jawaban formulir
-     * 
+     *
      * Action untuk melakukan export jawaban formulir
      * ke format Excel.
-     * 
+     *
      * @since   1.0.0
      * @author  mulyosyahidin95
-     * 
+     *
      * @return  Excel
      */
     public function exportAnswer(Form $form)
