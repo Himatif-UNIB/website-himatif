@@ -71,7 +71,7 @@ class RolePermissionSeeder extends Seeder
         $superAdminRole->givePermissionTo([
             Permission::findByName('create_user'), Permission::findByName('read_user'), Permission::findByName('update_user'), Permission::findByName('delete_user'),
             Permission::findByName('create_blog_post'), Permission::findByName('read_blog_post'),
-            Permission::findByName('read_blog_category'),
+            Permission::findByName('create_blog_category'), Permission::findByName('read_blog_category'), Permission::findByName('update_blog_category'), Permission::findByName('delete_blog_category'),
             Permission::findByName('read_blog_comment'),
             Permission::findByName('read_member'),
             Permission::findByName('read_period'),
@@ -112,8 +112,6 @@ class RolePermissionSeeder extends Seeder
         $dpoRole = Role::findByName('dpo');
         $dpoRole->givePermissionTo([
             Permission::findByName('create_blog_post'), Permission::findByName('read_blog_post'), Permission::findByName('update_blog_post'), Permission::findByName('delete_blog_post'),
-            Permission::findByName('read_blog_category'),
-            Permission::findByName('read_blog_comment'),
             Permission::findByName('read_member'),
             Permission::findByName('read_period'),
             Permission::findByName('read_force'),
@@ -132,8 +130,6 @@ class RolePermissionSeeder extends Seeder
         $bpoRole = Role::findByName('bpo');
         $bpoRole->givePermissionTo([
             Permission::findByName('create_blog_post'), Permission::findByName('read_blog_post'), Permission::findByName('update_blog_post'), Permission::findByName('delete_blog_post'),
-            Permission::findByName('read_blog_category'),
-            Permission::findByName('read_blog_comment'),
             Permission::findByName('read_member'),
             Permission::findByName('read_period'),
             Permission::findByName('read_force'),
