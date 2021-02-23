@@ -217,6 +217,8 @@ class PostController extends Controller
             $post->categories()->sync($request->categories);
         }
         else {
+            $post->categories()->detach();
+
             $uncategorized = Blog_category::getUncategorizedData();
             if ($uncategorized != null) {
                 $post->categories()->attach($uncategorized->id);

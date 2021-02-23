@@ -82,6 +82,9 @@ class StaffController extends Controller
         $n = 0;
         foreach ($positions as $key => $data) {
             foreach ($positions[$key] as $user_id) {
+                $position = Position::find($key);
+                User::find($user_id)->assignRole($position->role_name);
+
                 $tempData[] = ['period_id' => $period, 'position_id' => $key, 'user_id' => $user_id];
             }
 
@@ -89,6 +92,7 @@ class StaffController extends Controller
 
             $n++;
         }
+
 
         DB::table('staff')->insert($insertData);
         
