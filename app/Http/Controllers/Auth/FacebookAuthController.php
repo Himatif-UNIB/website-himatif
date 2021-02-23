@@ -165,6 +165,7 @@ class FacebookAuthController extends Controller
     public function login()
     {
         return Socialite::driver('facebook')
+            ->with(['auth_type' => 'reauthenticate'])
             ->redirect();
     }
 }

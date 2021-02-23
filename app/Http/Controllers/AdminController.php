@@ -11,6 +11,9 @@ use App\Models\Form_answer;
 use App\Models\Member;
 use App\Models\Picture_gallery;
 use App\Models\Staff;
+use App\Models\User;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
 class AdminController extends Controller
 {
@@ -42,7 +45,7 @@ class AdminController extends Controller
         $data = [
             'secretary' => [
                 'forceCount' => Force::count(),
-                'memberCount' => Member::count(),
+                'memberCount' => Member::whereHas('memberUser')->count(),
                 'divisionCount' => Division::count(),
                 'staffCount' => Staff::count(),
                 'form' => [
@@ -62,7 +65,12 @@ class AdminController extends Controller
                     Blog_post::orderBy('created_at', 'DESC')->limit(1)->first() : null,
                 'comments' => Blog_comment::where('status', 'approved')->limit(3)->get()
             ],
-            'divisionStaffs' => $divisionStaffs
+            'divisionStaffs' => $divisionStaffs,
+            'admin' => [
+                'userCount' => User::count(),
+                'role' => Role::count(),
+                'permission' => Permission::count()
+            ]
         ];
 
         $divisionStaff = [];
