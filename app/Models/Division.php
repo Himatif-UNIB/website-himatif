@@ -6,11 +6,10 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
-use Staudenmeir\EloquentHasManyDeep\HasRelationships;
 
 class Division extends Model implements HasMedia
 {
-    use HasFactory, InteractsWithMedia, HasRelationships;
+    use HasFactory, InteractsWithMedia;
 
     public $timestamps = FALSE;
 
@@ -33,10 +32,5 @@ class Division extends Model implements HasMedia
     public function staffs()
     {
         return $this->hasManyThrough(Staff::class, Position::class);
-    }
-
-    public function users()
-    {
-        return $this->hasManyDeep(User::class, [Position::class, Staff::class]);
     }
 }
