@@ -28,7 +28,7 @@ class FacebookAuthController extends Controller
              * di address bar secara langsung. ~anak nakal
              */
             return redirect()
-                ->route('profile.edit')
+                ->route('admin.profile.edit')
                 ->withError('Akun HIMATIF kamu sudah terhubung ke Facebook.');
         }
 

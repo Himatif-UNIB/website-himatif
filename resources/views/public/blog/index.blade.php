@@ -32,7 +32,7 @@
             @forelse ($posts as $post)
             <div class="mb-12">
                 <div class="w-full h-56 bg-gray-400 rounded-xl overflow-hidden">
-                    <a href="{{ route('blog.post') }}">
+                    <a href="{{ route('blog.post', ['post' => $post->id, 'slug' => $post->slug]) }}">
                         @isset($post->media[0])
                             <img class="w-full h-full object-cover object-center" src="{{ $post->media[0]->getFullUrl() }}" alt="{{ $post->title }}">
                         @else

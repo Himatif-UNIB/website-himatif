@@ -1,5 +1,5 @@
 @extends('layouts.frontend')
-
+@section('title', 'Struktur Kepengurusan '. getSetting('organizationName') . ' '. getActivePeriod()->name)
 @section('inner-content')
     <!-- START ABOUT US -->
     <div class="mt-16">

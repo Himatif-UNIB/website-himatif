@@ -41,22 +41,22 @@ class GeneralSeeder extends Seeder
         }
 
         $builderPositionId = DB::table('positions')->insertGetId(
-            ['order_level' => 1, 'name' => 'Pembina']
+            ['order_level' => 1, 'name' => 'Pembina', 'role_name' => 'builder']
         );
 
         DB::table('positions')->insert([
-            ['order_level' => 2, 'name' => 'Ketua Umum'],
-            ['order_level' => 2, 'name' => 'Wakil Ketua Umum'],
-            ['order_level' => 3, 'name' => 'Dewan Penasehat Organisasi'],
-            ['order_level' => 4, 'name' => 'Badan Pertimbangan Organisasi']
+            ['order_level' => 2, 'name' => 'Ketua Umum', 'role_name' => 'chairman'],
+            ['order_level' => 2, 'name' => 'Wakil Ketua Umum', 'role_name' => 'vice_chairman'],
+            ['order_level' => 3, 'name' => 'Dewan Penasehat Organisasi', 'role_name' => 'dpo'],
+            ['order_level' => 4, 'name' => 'Badan Pertimbangan Organisasi', 'role_name' => 'bpo']
         ]);
 
-        $secretaryPositionId = DB::table('positions')->insertGetId(['order_level' => 5, 'name' => 'Sekretaris']);
-        $treasurerPositionId = DB::table('positions')->insertGetId(['order_level' => 5, 'name' => 'Bendahara']);
+        $secretaryPositionId = DB::table('positions')->insertGetId(['order_level' => 5, 'name' => 'Sekretaris', 'role_name' => 'secretary']);
+        $treasurerPositionId = DB::table('positions')->insertGetId(['order_level' => 5, 'name' => 'Bendahara', 'role_name' => 'treasurer']);
 
         DB::table('positions')->insert([
-            ['order_level' => 6, 'name' => 'Biro Kestari'],
-            ['order_level' => 6, 'name' => 'Biro Dana Usaha']
+            ['order_level' => 6, 'name' => 'Biro Kestari', 'role_name' => 'head_of_division'],
+            ['order_level' => 6, 'name' => 'Biro Dana Usaha', 'role_name' => 'head_of_division']
         ]);
 
         $headOfDivisionsId = [];
@@ -68,7 +68,7 @@ class GeneralSeeder extends Seeder
         $n = 0;
         foreach ($headOfDivisions as $head) {
             $headOfDivisionsId[] = DB::table('positions')->insertGetId(
-                ['order_level' => 7, 'name' => $head, 'division_id' => $divisionsId[$n]]
+                ['order_level' => 7, 'name' => $head, 'role_name' => 'head_of_division', 'division_id' => $divisionsId[$n]]
             );
 
             $n++;
@@ -82,7 +82,7 @@ class GeneralSeeder extends Seeder
         $n = 0;
         foreach ($divisionStaffs as $staff) {
             DB::table('positions')->insert([
-                'order_level' => 8, 'name' => $staff, 'division_id' => $divisionsId[$n], 'parent_id' => $headOfDivisionsId[$n]
+                'order_level' => 8, 'name' => $staff, 'role_name' => 'staff', 'division_id' => $divisionsId[$n], 'parent_id' => $headOfDivisionsId[$n]
             ]);
 
             $n++;
