@@ -25,7 +25,7 @@
             @endauth
 
             @guest
-            <button class="border-2 rounded-xl px-5 py-1 border-dark-blue-200 focus:outline-none hover:bg-orange-600 hover:text-white hover:border-white">
+            <button class="border-2 rounded-xl px-5 py-1 border-dark-blue-200 focus:outline-none hover:bg-orange-600 text-dark-blue-400 hover:text-white">
                 <a href="{{ route('login') }}">Login</a>
             </button>
             @endguest
