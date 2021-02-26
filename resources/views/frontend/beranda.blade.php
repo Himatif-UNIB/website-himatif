@@ -69,9 +69,11 @@
                 <h2 class="text-dark-blue-800 text-2xl lg:text-4xl font-bold mb-6 mt-5 lg:mt-0">
                     Sekilas Tentang {{ getSetting('organizationName') }}
                 </h2>
-                <span class="text-dark-blue-400 text-base font-bold leading-relaxed">
-                    {{ getSetting('organizationDesc') }}
-                </span>
+                <div>
+                    <span class="text-dark-blue-400 text-base font-bold leading-relaxed">
+                        {{ getSetting('organizationDesc') }}
+                    </span>
+                </div>
             </div>
         </div>
 
@@ -122,46 +124,47 @@
                 </div>
 
                 <!-- Add margin if you want to see some of the overlay behind the modal-->
-                <div class="modal-content py-12 text-left px-6 md:px-12">
-                    <!--Title-->
-                    <div class="flex justify-between items-center pb-3"></div>
+                <div class="modal-content py-12 text-left px-6 md:px-12 overflow-auto" style="height: 80vh;">
 
                     <!--Body-->
-                    <div class="relative mx-auto w-36 h-36 mb-2">
-                        {{ $divisionMember[0]['position']->division->name }}
-                        <span
-                            class="flex items-center justify-center absolute right-1 top-4 w-6 h-6 rounded-full bg-green-300 cursor-pointer tooltip">
-                            <svg class="w-10/12 fill-current text-white" xmlns="http://www.w3.org/2000/svg"
-                                viewBox="0 0 20 20" fill="currentColor">
-                                <path
-                                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                            </svg>
-                            <span class="tooltiptext">Coordinator</span>
-                        </span>
-                        <div class="overflow-hidden w-full h-full rounded-full">
-                            @isset($headOfDivisions[$divisionMember[0]['position']->division->id][0]->user->media[0])
-                            <img class="object-cover object-center"
-                                src="{{ $headOfDivisions[$divisionMember[0]['position']->division->id][0]->user->media[0]->getFullUrl() }}"
-                                alt="{{ $headOfDivisions[$divisionMember[0]['position']->division->id][0]->user->name }}">
-                            @else
-                            <img class="object-cover object-center"
-                                src="https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
-                                alt="{{ $headOfDivisions[$divisionMember[0]['position']->division->id][0]->user->name }}">
-                            @endif
+                    <div>
+                        <div class="relative mx-auto w-36 h-36 mb-2">
+                            <span
+                                class="flex items-center justify-center absolute right-1 top-4 w-6 h-6 rounded-full bg-green-300 cursor-pointer tooltip">
+                                <svg class="w-10/12 fill-current text-white" xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 20 20" fill="currentColor">
+                                    <path
+                                        d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                </svg>
+                                <span class="tooltiptext">Coordinator</span>
+                            </span>
+                            <div class="overflow-hidden w-full h-full rounded-full">
+                                @isset($headOfDivisions[$divisionMember[0]['position']->division->id][0]->user->media[0])
+                                <img class="object-cover object-center"
+                                    src="{{ $headOfDivisions[$divisionMember[0]['position']->division->id][0]->user->media[0]->getFullUrl() }}"
+                                    alt="{{ $headOfDivisions[$divisionMember[0]['position']->division->id][0]->user->name }}">
+                                @else
+                                <img class="object-cover object-center"
+                                    src="{{ asset('assets/user-default.png') }}"
+                                    alt="{{ $headOfDivisions[$divisionMember[0]['position']->division->id][0]->user->name }}">
+                                @endif
+                            </div>
                         </div>
                     </div>
+
 
                     <div class="w-full flex flex-col items-center mb-6">
                         <span class="block font-poppins font-semibold text-xl text-gray-700">{{ $headOfDivisions[$divisionMember[0]['position']->division->id][0]->user->name }}</span>
                         <span class="block font-poppins text-lg text-gray-500">{{ $headOfDivisions[$divisionMember[0]['position']->division->id][0]->user->member->npm }}</span>
                         <div class="w-auto px-4 text-center bg-category-button-green rounded-full mt-2">
-                            <span class="text-category-text-green font-semibold" id="division_name"></span>
+                            <span class="text-category-text-green font-semibold" id="division_name">
+                                {{ $divisionMember[0]['position']->division->name }}
+                            </span>
                         </div>
                     </div>
 
                     @forelse ($divisionMember as $member)
-                        <div
-                            class="mb-3 flex items-center justify-between px-7 w-full h-12 border-2 border-gray-300 rounded-lg">
+                        <div class="mb-3 flex items-center justify-between px-7 w-full h-12 border-2 border-gray-300 rounded-lg bg-gray-50">
                             <span class="font-poppins font-medium text-gray-800">{{ $member->user->name }}</span>
                             <span class="font-poppins text-gray-500">{{ $member->user->member->npm }}</span>
                         </div>
@@ -172,10 +175,6 @@
                             <span class="font-poppins text-gray-500">Upps...</span>
                         </div>
     @endforelse
-
-    <div class="flex justify-end pt-2">
-        <button class="modal-close px-4 bg-indigo-500 py-2 rounded-lg text-white hover:bg-indigo-400">Tutup</button>
-    </div>
     </div>
     </div>
     </div>

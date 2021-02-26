@@ -1,12 +1,12 @@
 <!-- comment form -->
-<div class="flex mx-auto items-center justify-center shadow-lg mt-6 mx-8 mb-4 max-w-lg">
-    <form class="w-full max-w-xl bg-white rounded-lg px-4 pt-2"
+<div class="flex mx-auto items-center justify-center shadow-lg mt-6 mb-4 max-w-lg">
+    <form class="w-full max-w-xl bg-dark-blue-400 rounded-lg px-4 pt-2"
         action="{{ route('blog.post_comment', ['post' => $post->id, 'slug' => $post->slug]) }}" method="post"
         id="comment-form">
         @csrf
 
         <div class="flex flex-wrap -mx-3 mb-6">
-            <h2 class="px-4 pt-3 pb-2 text-gray-800 text-lg">Berikan sebuah komentar</h2>
+            <h2 class="px-4 pt-3 pb-2 text-white text-lg">Berikan sebuah komentar</h2>
 
             <div class="w-full md:w-full px-3 mb-2 mt-2">
                 @empty(old('reply_to'))
@@ -18,19 +18,19 @@
                 <div class="give-reply mb-5">
                     Berikan balasan untuk komentar <b>{{ old('reply_to_name') }}</b>
                     <br>
-                    <a href="#" class="cancel-give-reply text-orange-600">Batal</a>
+                    <a href="#" class="cancel-give-reply text-white">Batal</a>
                 </div>
 
                 <input type="hidden" name="reply_to" value="{{ old('reply_to') }}" id="reply-to">
                 <input type="hidden" name="reply_to_name" value="{{ old('reply_to_name') }}" id="reply-to-name">
                 @endempty
-                    
+
                 @auth
                     @if (session()->has('success'))
-                        <span class="text-orange-600 md:hover:text-blue-600">
+                        <span class="text-white md:hover:text-blue-600">
                             {{ session()->get('success') }}</span>
                     @else
-                        <label for="comment-content" class="text-orange-600 md:hover:text-blue-600">Berikan komentar sebagai
+                        <label for="comment-content" class="text-white md:hover:text-blue-600">Berikan komentar sebagai
                             {{ auth()->user()->name }}</label>
                     @endif
                 @else

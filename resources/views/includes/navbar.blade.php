@@ -16,7 +16,7 @@
             <li class="px-6 {{ request()->is('galeri') ? 'text-gray-50' : 'text-dark-blue-400' }} hover:text-gray-50">
                 <a href="{{ route('galeri') }}">Galeri</a>
             </li>
-            <li class="px-6 {{ request()->is('blog') ? 'text-gray-50' : 'text-dark-blue-400' }} hover:text-gray-50">
+            <li class="px-6 {{ request()->is('blog') || request()->is('blog/*')  ? 'text-gray-50' : 'text-dark-blue-400' }} hover:text-gray-50">
                 <a href="{{ route('blog.index') }}">Blog</a>
             </li>
             @auth
@@ -27,10 +27,9 @@
             @endauth
 
             @guest
-                <button
-                    class="border-2 rounded-xl px-5 py-1 border-dark-blue-200 focus:outline-none hover:bg-orange-600 text-gray-400 hover:text-white hover:border-white">
-                    <a href="{{ route('login') }}">Login</a>
-                </button>
+            <button class="border-2 rounded-xl px-5 py-1 border-dark-blue-200 focus:outline-none hover:bg-orange-600 text-dark-blue-400 hover:text-white">
+                <a href="{{ route('login') }}">Login</a>
+            </button>
             @endguest
         </ul>
     </div>

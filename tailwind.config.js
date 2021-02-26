@@ -3,6 +3,18 @@ module.exports = {
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {
+      keyframes: {
+        wiggle: {
+          '0%' : { transform: 'rotate(6deg)' },
+          '25%' : { transform: 'rotate(-6deg)' },
+          '50%' : { transform: 'rotate(12deg)' },
+          '75%' : { transform: 'rotate(-1deg)' },
+          '100%' : { transform: 'rotate(0deg)' },
+        }
+      },
+      animation: {
+        wiggle: 'wiggle 1.2s ease-in-out infinite',
+       },
       width: {
         mammoth : '100vw'
       },
