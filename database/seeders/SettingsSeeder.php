@@ -35,7 +35,10 @@ class SettingsSeeder extends Seeder
             'yandexVerifyCode' => null,
             'googleAnalyticsId' => null,
             'facebookAuthorId' => null,
-            'facebookAppId' => null
+            'facebookAppId' => null,
+            'facebookUrl' => null,
+            'instagramUrl' => null,
+            'youtubeUrl' => null
         ];
 
         foreach ($data as $key => $value) {

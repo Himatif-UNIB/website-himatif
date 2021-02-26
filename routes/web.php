@@ -105,6 +105,7 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'himatif-admin', 'as' => 'ad
         Route::get('/', [SettingController::class, 'general'])->name('general');
         Route::get('/blog', [SettingController::class, 'blog'])->name('blog');
         Route::put('/update', [SettingController::class, 'update'])->name('update');
+        Route::get('/social-media', [SettingController::class, 'socialMedia'])->name('socials');
     });
 
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
