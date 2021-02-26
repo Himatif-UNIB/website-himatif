@@ -1,10 +1,23 @@
 @extends('layouts.frontend')
+
+@section('style-after')
+    <style>
+        .structure{
+            transition: 0.2s;
+        }
+
+        .structure:hover{
+            transform: translateY(-10px);
+        }
+    </style>
+@endsection
+
 @section('title', 'Struktur Kepengurusan '. getSetting('organizationName') . ' '. getActivePeriod()->name)
 @section('inner-content')
     <!-- START ABOUT US -->
     <div class="mt-16">
-        <div class="flex justify-center">
-            <span class="text-white text-4xl font-bold mb-4">
+        <div class="flex justify-center text-center">
+            <span class="text-white text-2xl lg:text-4xl font-bold mb-4">
                 Struktur Kepengurusan {{ getSetting('organizationName') }} {{ getActivePeriod()->name }}
             </span>
         </div>
@@ -15,7 +28,7 @@
         <div class="flex flex-wrap justify-center">
             @foreach ($positions[$index] as $data)
                 @if ($data['position']->parent_id == null)
-                <div class="bg-card-color border-2 cursor-pointer hover:border-gray-400 transition duration-500 ease-in-out w-64 h-auto lg:w-80 lg:h-80 rounded-3xl p-5 mb-5 flex flex-wrap justify-center items-center m-3">
+                <div class="bg-card-color border-2 cursor-pointer hover:border-gray-400 transition duration-500 ease-in-out w-64 h-auto lg:w-80 lg:h-80 rounded-3xl p-5 mb-5 flex flex-wrap justify-center items-center m-3 structure">
                     <div class="lg:w-64 lg:h-64">
                         <div class="flex justify-center">
                             @isset ($data['user']->media[0])
@@ -32,7 +45,11 @@
                             </div>
                             @if (isset($childs[$data['position']->id]) && count($childs[$data['position']->id]) > 0)
                             <div class="flex space-x-3">
-                                <i class="fa fa-users" style="color: white"></i>
+                                <span>
+                                    <svg class="fill-current text-white" width="20" height="20" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                        <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z" />
+                                    </svg>
+                                </span>
                             </div>
                             @endif
                         </div>

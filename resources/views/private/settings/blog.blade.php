@@ -19,7 +19,7 @@
                                     <span class="float-right text-success">{{ session()->get('success') }}</span>
                                 @endif
                             </h4>
-                        </div>                 
+                        </div>
                     </div>
                 </div>
                 <div class="widget-content widget-content-area">

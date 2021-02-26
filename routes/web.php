@@ -42,6 +42,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [HomeController::class, 'index'])->name('beranda');
 Route::get('/modal/{divisionId}', [HomeController::class, 'modal'])->name('beranda.modal');
 
+Route::view('/form', 'form');
+
 Route::get('/struktur', [SiteStaffController::class, 'index'])->name('struktur');
 Route::group(['prefix' => 'blog', 'as' => 'blog.'], function () {
     Route::get('/', [BlogController::class, 'index'])->name('index');

@@ -15,7 +15,7 @@
             <li class="px-6 {{ request()->is('galeri')  ? 'text-gray-50' : 'text-dark-blue-400' }} hover:text-gray-50">
                 <a href="{{ route('galeri') }}">Galeri</a>
             </li>
-            <li class="px-6 {{ request()->is('blog')  ? 'text-gray-50' : 'text-dark-blue-400' }} hover:text-gray-50">
+            <li class="px-6 {{ request()->is('blog') || request()->is('blog/*')  ? 'text-gray-50' : 'text-dark-blue-400' }} hover:text-gray-50">
                 <a href="{{ route('blog.index') }}">Blog</a>
             </li>
             @auth

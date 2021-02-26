@@ -1,9 +1,9 @@
 <div class="header-container fixed-top">
     <header class="header navbar navbar-expand-sm">
-        
+
         <ul class="navbar-nav theme-brand flex-row  text-center">
             <li class="nav-item theme-logo">
-                <a href="index.html">
+                <a href="{{ route('beranda') }}">
                     <img src="{{ getSiteLogo() }}" class="navbar-logo" alt="Logo {{ getSetting('organizationName') }}">
                 </a>
             </li>
@@ -35,7 +35,7 @@
         </ul>
 
         <ul class="navbar-item flex-row search-ul">
-           
+
         </ul>
         <ul class="navbar-item flex-row navbar-dropdown">
             <li class="nav-item dropdown user-profile-dropdown  order-lg-0 order-1">
