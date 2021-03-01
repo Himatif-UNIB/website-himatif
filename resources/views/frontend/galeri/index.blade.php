@@ -22,23 +22,23 @@
 
 @section('outer-content')
 <div class="px-12 lg:px-24">
+
+    <div class="mt-10">
+        <p class="text-white font-semibold text-2xl">Semua Album</p>
+    </div>
+
     <!-- START CONTENT -->
-    <div id="lightGallery" class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mt-16">
-        <div data-src="{{ asset('assets/bg-article.png') }}" class="item w-full h-56 bg-gray-400 rounded-xl overflow-hidden">
-            <img src="{{ asset('assets/bg-article.png') }}" class="cursor-pointer w-full h-full object-cover object-center" alt="">
-        </div>
-        <div class="w-full h-56 bg-gray-400 rounded-xl overflow-hidden">
-            <img class="cursor-pointer w-full h-full object-cover object-center" alt="">
-        </div>
-        <div class="w-full h-56 bg-gray-400 rounded-xl overflow-hidden">
-            <img class="cursor-pointer w-full h-full object-cover object-center" alt="">
-        </div>
-        <div class="w-full h-56 bg-gray-400 rounded-xl overflow-hidden">
-            <img class="cursor-pointer w-full h-full object-cover object-center" alt="">
-        </div>
-        <div class="w-full h-56 bg-gray-400 rounded-xl overflow-hidden">
-            <img class="cursor-pointer w-full h-full object-cover object-center" alt="">
-        </div>
+    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mt-6">
+
+        <a href="{{ route('galeri.detail', 'test') }}" class="flex flex-col">
+            <div class="w-full h-52 rounded-lg overflow-hidden">
+                <img class="w-full h-full object-cover" src="{{ asset('assets/bg-article.png') }}" alt="">
+            </div>
+            <div class="w-full mt-2">
+                <p class="text-white font-medium">PMO 2020 (Peserta)</p>
+                <p class="text-gray-400">10 item</p>
+            </div>
+        </a>
 
     </div>
 </div>

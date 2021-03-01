@@ -31,10 +31,62 @@
 
         <div class="w-full h-auto px-6 py-5 bg-gray-100 rounded-md">
             <h3 class="text-lg font-semibold text-dark-blue-800">Pertanyaan Tanpa Judul</h3>
-            <label class="inline-flex items-center mt-3">
-                <input type="checkbox" class="form-checkbox h-5 w-5 text-orange-500" checked><span class="ml-2 text-gray-700">label</span>
-            </label>
+            <div class="mt-4">
+                <div class="mt-2">
+                    <label class="inline-flex items-center">
+                        <input type="radio" class="form-radio" name="accountType" value="personal">
+                        <span class="ml-2">Personal</span>
+                    </label>
+                    <label class="inline-flex items-center ml-6">
+                        <input type="radio" class="form-radio" name="accountType" value="busines">
+                        <span class="ml-2">Business</span>
+                    </label>
+                </div>
+            </div>
         </div>
+
+        <div class="w-full h-auto px-6 py-5 bg-gray-100 rounded-md">
+            <h3 class="text-lg font-semibold text-dark-blue-800">Pertanyaan Tanpa Judul</h3>
+            <div class="mt-4 space-x-3">
+                <label for="">
+                    <input type="checkbox">
+                    <span>Testing</span>
+                </label>
+                <label for="">
+                    <input type="checkbox">
+                    <span>Testing</span>
+                </label>
+            </div>
+        </div>
+
+        <div class="w-full h-auto px-6 py-5 bg-gray-100 rounded-md">
+            <h3 class="text-lg font-semibold text-dark-blue-800">Pertanyaan Tanpa Judul</h3>
+            <div class="mt-4">
+                <textarea class="w-full h-auto bg-gray-100 focus:outline-none border border-dark-blue-400 rounded-md p-3" id="textarea"></textarea>
+            </div>
+        </div>
+
+        <div class="w-full h-auto px-6 py-5 bg-gray-100 rounded-md">
+            <h3 class="text-lg font-semibold text-dark-blue-800">Pertanyaan Tanpa Judul</h3>
+            <div class="mt-4">
+                <select name="" id="" class="w-1/4 px-3 py-2 bg-gray-100 border border-dark-blue-400 rounded-md">
+                    <option value="1">testing</option>
+                    <option value="2">qwe</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="w-full h-auto px-6 py-5 bg-gray-100 rounded-md">
+            <h3 class="text-lg font-semibold text-dark-blue-800">Pertanyaan Tanpa Judul</h3>
+            <div class="mt-4">
+                <input type="file">
+            </div>
+        </div>
+
+        <div class="text-center mt-4">
+            <a href="{{ route('form.submit') }}" class="font-semibold text-lg bg-orange-500 rounded-md px-6 py-1 text-white hover:bg-orange-600 focus:outline-none">Kirim</a>
+        </div>
+
     </div>
 
 </body>

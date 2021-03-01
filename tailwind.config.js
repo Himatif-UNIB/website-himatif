@@ -3,6 +3,9 @@ module.exports = {
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {
+      fontFamily:{
+        poppins: ['Poppins'],
+      },
       keyframes: {
         wiggle: {
           '0%' : { transform: 'rotate(6deg)' },

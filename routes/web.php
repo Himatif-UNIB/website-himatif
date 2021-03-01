@@ -16,6 +16,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SettingController;
+use App\Http\Controllers\PublicController;
 use App\Http\Controllers\Site\BlogController;
 use App\Http\Controllers\Site\FormController as SiteFormController;
 use App\Http\Controllers\Site\StaffController as SiteStaffController;
@@ -42,7 +43,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [HomeController::class, 'index'])->name('beranda');
 Route::get('/modal/{divisionId}', [HomeController::class, 'modal'])->name('beranda.modal');
 
-Route::view('/form', 'form');
+Route::view('/form', 'form')->name('form');
+Route::view('/form-submit', 'form-submit')->name('form.submit');
 
 Route::get('/struktur', [SiteStaffController::class, 'index'])->name('struktur');
 Route::group(['prefix' => 'blog', 'as' => 'blog.'], function () {
@@ -57,8 +59,12 @@ Route::get('/modal', function () {
 })->name('modal');
 
 Route::get('/galeri', function () {
-    return view('frontend.galeri');
+    return view('frontend.galeri.index');
 })->name('galeri');
+
+Route::get('/galeri/{slug}', [PublicController::class, 'galeriDetail'])->name('galeri.detail');
+
+
 
 Route::get('/home', [AdminController::class, 'index'])->middleware('auth')->name('index');
 

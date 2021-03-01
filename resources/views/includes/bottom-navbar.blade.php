@@ -14,13 +14,13 @@
                   </svg>
                 <span class="tab tab-kategori block text-xs">Struktur</span>
             </a>
-            <a href="{{ route('galeri') }}" class="w-full justify-center inline-block text-center pt-2 pb-1 {{ request()->is('galeri') ? 'text-gray-200' :  'text-gray-400' }}">
+            <a href="{{ route('galeri') }}" class="w-full justify-center inline-block text-center pt-2 pb-1 {{ request()->is('galeri') || request()->is('galeri/*') ? 'text-gray-200' :  'text-gray-400' }}">
                 <svg height="25" width="25" class="inline-block mb-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                     <path fill-rule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clip-rule="evenodd" />
                 </svg>
                 <span class="tab tab-kategori block text-xs">Galeri</span>
             </a>
-            <a href="{{ route('blog.index') }}" class="w-full justify-center inline-block text-center pt-2 pb-1 {{ request()->is('blog') ? 'text-gray-200' :  'text-gray-400' }}">
+            <a href="{{ route('blog.index') }}" class="w-full justify-center inline-block text-center pt-2 pb-1 {{ request()->is('blog') || request()->is('blog/*') ? 'text-gray-200' :  'text-gray-400' }}">
                 <svg height="25" width="25" class="inline-block mb-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                     <path fill-rule="evenodd" d="M2 5a2 2 0 012-2h8a2 2 0 012 2v10a2 2 0 002 2H4a2 2 0 01-2-2V5zm3 1h6v4H5V6zm6 6H5v2h6v-2z" clip-rule="evenodd" />
                     <path d="M15 7h1a2 2 0 012 2v5.5a1.5 1.5 0 01-3 0V7z" />

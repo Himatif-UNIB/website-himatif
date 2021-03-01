@@ -138,7 +138,7 @@
                                 </svg>
                                 <span class="tooltiptext">Coordinator</span>
                             </span>
-                            <div class="overflow-hidden w-full h-full rounded-full">
+                            <div class="overflow-hidden w-full h-full rounded-full border-4 border-dotted border-green-400 p-1">
                                 @isset($headOfDivisions[$divisionMember[0]['position']->division->id][0]->user->media[0])
                                 <img class="object-cover object-center"
                                     src="{{ $headOfDivisions[$divisionMember[0]['position']->division->id][0]->user->media[0]->getFullUrl() }}"
@@ -165,7 +165,7 @@
 
                     @forelse ($divisionMember as $member)
                         <div class="mb-3 flex items-center justify-between px-7 w-full h-12 border-2 border-gray-300 rounded-lg bg-gray-50">
-                            <span class="font-poppins font-medium text-gray-800">{{ $member->user->name }}</span>
+                            <span class="font-poppins text-sm md:text-base font-medium text-gray-800">{{ $member->user->name }}</span>
                             <span class="font-poppins text-gray-500">{{ $member->user->member->npm }}</span>
                         </div>
                     @empty
