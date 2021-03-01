@@ -435,9 +435,9 @@
                         </svg><span>PENGATURAN</span></div>
                 </li>
 
-                <li class="menu {{ __active('SettingController', 'general') }}">
+                <li class="menu {{ __active('SettingController') }}">
                     <a href="#settings" data-toggle="collapse"
-                        aria-expanded="{{ __displayAria('SettingController', 'general') }}" class="dropdown-toggle">
+                        aria-expanded="{{ __displayAria('SettingController') }}" class="dropdown-toggle">
                         <div class="">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -463,6 +463,9 @@
                         </li>
                         <li>
                             <a href="{{ route('admin.settings.blog') }}">Blog</a>
+                        </li>
+                        <li>
+                            <a href="{{ route('admin.settings.socials') }}">Sosial Media</a>
                         </li>
                     </ul>
                 </li>

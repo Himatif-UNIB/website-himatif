@@ -32,6 +32,16 @@ class SettingController extends Controller
         return view('private.settings.webmaster');
     }
 
+    public function blog()
+    {
+        return view('private.settings.blog');
+    }
+
+    public function socialMedia()
+    {
+        return view('private.settings.social');
+    }
+
     /**
      * Menyimpan data pengaturan
      * 
@@ -142,12 +152,21 @@ class SettingController extends Controller
                 return redirect()
                     ->back()
                     ->withSuccess('Berhasil menyimpan pengaturan');
-                break;
-        }
-    }
+            break;
+            case 'social' :
+                $allowedFields = ['facebookUrl', 'instagramUrl', 'youtubeUrl'];
 
-    public function blog()
-    {
-        return view('private.settings.blog');
+                foreach ($allowedFields as $field) {
+                    Setting::where('key', $field)
+                        ->update(
+                            ['value' => isset($request->settings[$field]) ? $request->settings[$field] : null]
+                        );
+                }
+
+                return redirect()
+                    ->back()
+                    ->withSuccess('Berhasil menyimpan pengaturan');
+            break;
+        }
     }
 }
