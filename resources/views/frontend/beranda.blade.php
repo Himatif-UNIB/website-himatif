@@ -65,8 +65,8 @@
     <div class="container mx-auto px-6 lg:px-28 py-6 mt-28">
         <div class="lg:flex justify-between items-center">
             <img src="{{ asset('assets/about-himatif.png') }}" class="mr-24" data-aos="fade-right" data-aos-delay="700">
-            <div class="" data-aos="fade-up">
-                <h2 class="text-dark-blue-800 text-2xl lg:text-4xl font-bold mb-6 mt-5 lg:mt-0">
+            <div class="mt-12 md:mt-0" data-aos="fade-up">
+                <h2 class="text-center md:text-left text-dark-blue-800 text-2xl lg:text-4xl font-bold mb-6 mt-5 lg:mt-0">
                     Sekilas Tentang {{ getSetting('organizationName') }}
                 </h2>
                 <div>

@@ -14,14 +14,30 @@
 
 @section('title', 'Struktur Kepengurusan '. getSetting('organizationName') . ' '. getActivePeriod()->name)
 @section('inner-content')
-    <!-- START ABOUT US -->
-    <div class="mt-16">
-        <div class="flex justify-center text-center">
-            <span class="text-white text-2xl lg:text-4xl font-bold mb-4">
-                Struktur Kepengurusan {{ getSetting('organizationName') }} {{ getActivePeriod()->name }}
-            </span>
+
+    <!-- START JUMBOTRON -->
+    <div class="lg:flex justify-between mt-20 items-center mb-24">
+        <div data-aos="fade-right" data-aos-delay="200">
+            <h1 class="text-white md:text-left uppercase mb-12 text-center">
+                <span
+                    class="text-6xl md:text-7xl font-bold tracking-normal block uppercase">Struktur</span>
+                <span
+                    class="text-2xl md:text-3xl tracking-wider font-light block">{{ getSetting('organizationName') }} - {{ getSetting('organizationUniversity') }}</span>
+            </h1>
+
+            <div class="text-center md:text-left">
+                <span class="text-dark-blue-400 text-lg font-bold">
+                    Struktur Kepengurusan {{ getSetting('organizationName') }} {{ getActivePeriod()->name }}
+                </span>
+            </div>
+
         </div>
+        <img class="mt-16 lg:mt-0" src="{{ asset('assets/structure.png') }}" alt="" data-aos="zoom-in"
+            data-aos-delay="600">
     </div>
+    <!-- END JUMBOTRON -->
+
+    <!-- START ABOUT US -->
 
     @forelse ($positions as $index => $item)
 
