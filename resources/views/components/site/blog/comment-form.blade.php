@@ -1,20 +1,32 @@
-<!-- comment form -->
 <div class="flex mx-auto items-center justify-center shadow-lg mt-6 mb-4 max-w-lg">
-    <form class="w-full max-w-xl bg-dark-blue-400 rounded-lg px-4 pt-2"
-        action="{{ route('blog.post_comment', ['post' => $post->id, 'slug' => $post->slug]) }}" method="post"
-        id="comment-form">
-        @csrf
+    @guest
+        <form class="w-full bg-dark-blue-400 rounded-lg px-6 py-5" id="comment-form"
+            action="{{ route('blog.post_comment', ['post' => $post->id, 'slug' => $post->slug]) }}" method="POST">
+            @csrf
 
-        <div class="flex flex-wrap -mx-3 mb-6">
-            <h2 class="px-4 pt-3 pb-2 text-white text-lg">Berikan sebuah komentar</h2>
+            <div class="flex items-center space-x-5 mb-3">
+                <div>
+                    <span class="text-dark-blue-800 text-lg font-semibold mb-2">Komentar</span>
+                </div>
+                <div
+                    class="bg-dark-blue-800 flex items-center text-white space-x-2 px-2 rounded-md text-sm py-1 cursor-pointer replied-name">
+                    <span>
+                        <svg class="stroke-current text-white" xmlns="http://www.w3.org/2000/svg" width="15" height="15"
+                            fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6" />
+                        </svg>
+                    </span>
+                    <span>Wahyu</span>
+                </div>
+            </div>
 
-            <div class="w-full md:w-full px-3 mb-2 mt-2">
-                @empty(old('reply_to'))
-                    <div class="give-reply"></div>
+            @empty(old('reply_to'))
+                <div class="give-reply"></div>
 
-                    <input type="hidden" name="reply_to" value="" id="reply-to">
-                    <input type="hidden" name="reply_to_name" value="" id="reply-to-name">
-                @else
+                <input type="hidden" name="reply_to" value="" id="reply-to">
+                <input type="hidden" name="reply_to_name" value="" id="reply-to-name">
+            @else
                 <div class="give-reply mb-5">
                     Berikan balasan untuk komentar <b>{{ old('reply_to_name') }}</b>
                     <br>
@@ -23,103 +35,119 @@
 
                 <input type="hidden" name="reply_to" value="{{ old('reply_to') }}" id="reply-to">
                 <input type="hidden" name="reply_to_name" value="{{ old('reply_to_name') }}" id="reply-to-name">
-                @endempty
+            @endempty
 
-                @auth
-                    @if (session()->has('success'))
-                        <span class="text-white md:hover:text-blue-600">
-                            {{ session()->get('success') }}</span>
-                    @else
-                        <label for="comment-content" class="text-white md:hover:text-blue-600">Berikan komentar sebagai
-                            {{ auth()->user()->name }}</label>
-                    @endif
-                @else
-                    @if (session()->has('success'))
-                        <div class="mb-2">
-                            <span class="text-orange-600">
-                                {{ session()->get('success') }}</span>
-                        </div>
-                    @endif
-                    <div class="mb-4">
-                        <label class="block text-gray-700 text-sm font-bold mb-2" for="name">
-                            Nama: <span class="text-red-600">*</span>
-                        </label>
-                        <input
-                            class="@error('name') border-red-500 @enderror focus:outline-none focus:ring-2
-                                focus:ring-purple-600 focus:border-transparent shadow appearance-none border border-gray-400
-                                rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                            name="name" id="name" type="text" value="{{ old('name', session()->get('commentName')) }}" required>
+            @if (session()->has('success'))
+                <div class="mb-2">
+                    <span class="text-orange-600">
+                        {{ session()->get('success') }}</span>
+                </div>
+            @endif
 
-                        @error('name')
-                            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
-                                <span class="block sm:inline">{{ $message }}</span>
-                            </div>
-                        @enderror
-                    </div>
+            <div class="relative flex w-full flex-wrap items-stretch mb-3 py-1">
+                <span
+                    class="z-10 h-full leading-snug font-normal text-center text-gray-400 absolute bg-transparent rounded text-base items-center justify-center w-8 pl-3 py-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
+                            clip-rule="evenodd" />
+                    </svg>
+                </span>
+                <input type="text" placeholder="Nama" name="name" value="{{ old('name', session()->get('commentName')) }}"
+                    class="px-3 py-3 placeholder-gray-400 text-white relative bg-dark-blue-800 rounded text-sm shadow outline-none focus:outline-none focus:shadow-outline w-full pl-10" />
 
-                    <div class="mb-4">
-                        <label class="block text-gray-700 text-sm font-bold mb-2" for="email">
-                            Email: <span class="text-red-600">*</span>
-                        </label>
-                        <input
-                            class="@error('email') border-red-500 @enderror focus:outline-none focus:ring-2
-                                focus:ring-purple-600 focus:border-transparent shadow appearance-none border border-gray-400
-                                rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                            name="email" id="email" type="email" value="{{ old('email', session()->get('commentEmail')) }}" required>
-
-                        @error('email')
-                            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
-                                <span class="block sm:inline">{{ $message }}</span>
-                            </div>
-                        @enderror
-                    </div>
-
-                    <div class="mb-4">
-                        <label class="block text-gray-700 text-sm font-bold mb-2" for="website">
-                            Website:
-                        </label>
-                        <input
-                            class="@error('website') border-red-500 @enderror focus:outline-none focus:ring-2
-                                focus:ring-purple-600 focus:border-transparent shadow appearance-none border border-gray-400
-                                rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                            name="website" id="website" type="url" value="{{ old('website', session()->get('commentWebsite')) }}">
-
-                        @error('website')
-                            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
-                                <span class="block sm:inline">{{ $message }}</span>
-                            </div>
-                        @enderror
-                    </div>
-                @endauth
-            </div>
-            <div class="w-full md:w-full px-3 mb-2 mt-2">
-                <label class="block text-gray-700 text-sm font-bold mb-2" for="comment-content">
-                    Komentar: <span class="text-red-600">*</span>
-                </label>
-                <textarea
-                    class="@error('content') border-red-500 @enderror focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent rounded border border-gray-400 leading-normal resize-none w-full h-20 py-2 px-3 font-medium placeholder-gray-700 focus:outline-none focus:bg-white"
-                    name="content" placeholder='' id='comment-content' required>{{ old('content') }}</textarea>
-
-                @error('content')
+                @error('name')
                     <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
                         <span class="block sm:inline">{{ $message }}</span>
                     </div>
                 @enderror
             </div>
-            <div class="w-full md:w-full flex items-start md:w-full px-3">
-                <div class="flex items-start w-1/2 text-gray-700 px-2 mr-auto">
-                    <svg fill="none" class="w-5 h-5 text-gray-600 mr-1" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            <div class="relative flex w-full flex-wrap items-stretch mb-3 py-1">
+                <span
+                    class="z-10 h-full leading-snug font-normal text-center text-gray-400 absolute bg-transparent rounded text-base items-center justify-center w-8 pl-3 py-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd"
+                            d="M14.243 5.757a6 6 0 10-.986 9.284 1 1 0 111.087 1.678A8 8 0 1118 10a3 3 0 01-4.8 2.401A4 4 0 1114 10a1 1 0 102 0c0-1.537-.586-3.07-1.757-4.243zM12 10a2 2 0 10-4 0 2 2 0 004 0z"
+                            clip-rule="evenodd" />
                     </svg>
-                    <p class="text-xs md:text-sm pt-px">Kode HTML tidak diizinkan.</p>
-                </div>
-                <div class="-mr-1">
-                    <input type='submit'
-                        class="bg-white text-gray-700 font-medium py-1 px-4 border border-gray-400 rounded-lg tracking-wide mr-1 hover:bg-gray-100"
-                        value='Posting Komentar'>
-                </div>
+                </span>
+                <input type="text" placeholder="Email" name="email" value="{{ old('email', session()->get('commentEmail')) }}"
+                    class="px-3 py-3 placeholder-gray-400 text-white relative bg-dark-blue-800 rounded text-sm shadow outline-none focus:outline-none focus:shadow-outline w-full pl-10" />
             </div>
-    </form>
-</div>
+            <div class="relative flex w-full flex-wrap items-stretch mb-3 py-1">
+                <span
+                    class="z-10 h-full leading-snug font-normal text-center text-gray-400 absolute bg-transparent rounded text-base items-center justify-center w-8 pl-3 py-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-globe">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="2" y1="12" x2="22" y2="12"></line>
+                        <path
+                            d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z">
+                        </path>
+                    </svg>
+                </span>
+                <input type="text" placeholder="Website" name="website" value="{{ old('website', session()->get('commentWebsite')) }}"
+                    class="px-3 py-3 placeholder-gray-400 text-white relative bg-dark-blue-800 rounded text-sm shadow outline-none focus:outline-none focus:shadow-outline w-full pl-10" />
+            </div>
+            <div class="relative flex w-full flex-wrap items-stretch mb-3 py-1">
+                <span
+                    class="z-10 h-full leading-snug font-normal text-center text-gray-400 absolute bg-transparent rounded text-base items-center justify-center w-8 pl-3 py-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd"
+                            d="M18 10c0 3.866-3.582 7-8 7a8.841 8.841 0 01-4.083-.98L2 17l1.338-3.123C2.493 12.767 2 11.434 2 10c0-3.866 3.582-7 8-7s8 3.134 8 7zM7 9H5v2h2V9zm8 0h-2v2h2V9zM9 9h2v2H9V9z"
+                            clip-rule="evenodd" />
+                    </svg>
+                </span>
+                <textarea placeholder="Komentar" name="content"
+                    class="px-3 py-3 placeholder-gray-400 text-white relative bg-dark-blue-800 rounded text-sm shadow outline-none focus:outline-none focus:shadow-outline w-full pl-10">{{ old('content') }}</textarea>
+            </div>
+            <div class="text-center">
+                <button
+                    class="bg-orange-500 hover:bg-orange-600 font-bold py-1 px-4 rounded inline-flex items-center text-white">
+                    Kirim
+                </button>
+            </div>
+        </form>
+    @endguest
+
+    @auth
+        <div class="flex mx-auto items-center justify-center shadow-lg mt-6 mb-4 max-w-lg w-full">
+            <form class="w-full bg-dark-blue-400 rounded-lg px-6 py-5" action="">
+                <div class="flex items-center space-x-5 mb-3">
+                    <div>
+                        <span class="text-dark-blue-800 text-lg font-semibold mb-2">Komentar</span>
+                    </div>
+                    <div
+                        class="bg-dark-blue-800 flex items-center text-white space-x-2 px-2 rounded-md text-sm py-1 cursor-pointer replied-name">
+                        <span>
+                            <svg class="stroke-current text-white" xmlns="http://www.w3.org/2000/svg" width="15" height="15"
+                                fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6" />
+                            </svg>
+                        </span>
+                        <span>Wahyu</span>
+                    </div>
+                </div>
+
+                <div class="relative flex w-full flex-wrap items-stretch mb-3 py-1">
+                    <span
+                        class="z-10 h-full leading-snug font-normal text-center text-gray-400 absolute bg-transparent rounded text-base items-center justify-center w-8 pl-3 py-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd"
+                                d="M18 10c0 3.866-3.582 7-8 7a8.841 8.841 0 01-4.083-.98L2 17l1.338-3.123C2.493 12.767 2 11.434 2 10c0-3.866 3.582-7 8-7s8 3.134 8 7zM7 9H5v2h2V9zm8 0h-2v2h2V9zM9 9h2v2H9V9z"
+                                clip-rule="evenodd" />
+                        </svg>
+                    </span>
+                    <textarea placeholder="Komentar"
+                        class="px-3 py-3 placeholder-gray-400 text-white relative bg-dark-blue-800 rounded text-sm shadow outline-none focus:outline-none focus:shadow-outline w-full pl-10"></textarea>
+                </div>
+                <div class="text-center">
+                    <button
+                        class="bg-orange-500 hover:bg-orange-600 font-bold py-1 px-4 rounded inline-flex items-center text-white">
+                        Kirim
+                    </button>
+                </div>
+            </form>
+        </div>
+    @endauth
 </div>
