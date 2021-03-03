@@ -19,6 +19,7 @@ use App\Http\Controllers\SettingController;
 use App\Http\Controllers\PublicController;
 use App\Http\Controllers\Site\BlogController;
 use App\Http\Controllers\Site\FormController as SiteFormController;
+use App\Http\Controllers\Site\GalleryController as SiteGalleryController;
 use App\Http\Controllers\Site\StaffController as SiteStaffController;
 use App\Http\Controllers\StaffController;
 use App\Http\Controllers\UserFormController;
@@ -58,13 +59,10 @@ Route::get('/modal', function () {
     return view('frontend.modal');
 })->name('modal');
 
-Route::get('/galeri', function () {
-    return view('frontend.galeri.index');
-})->name('galeri');
-
-Route::get('/galeri/{slug}', [PublicController::class, 'galeriDetail'])->name('galeri.detail');
-
-
+Route::prefix('galeri')->group(function () {
+    Route::get('/', [SiteGalleryController::class, 'index'])->name('galeri');
+    Route::get('/{album}/{title}', [SiteGalleryController::class, 'show'])->name('galeri.detail');
+});
 
 Route::get('/home', [AdminController::class, 'index'])->middleware('auth')->name('index');
 

@@ -35,17 +35,7 @@
 
     <div class="my-36 max-w-3xl mx-auto space-y-4">
         @if (session()->has('success'))
-        <div class="w-full h-auto px-6 py-5 bg-gray-100 rounded-md border-t-8 border-orange-500">
-            <p class="my-3 text-dark-blue-800">
-                @empty($form->post_message)
-                Terima kasih, tanggapan Anda telah dikirimkan.
-                <br>
-                <a href="" class="text-orange-600">Kirim tanggapan lain</a>
-                @else
-                {!! $form->post_message !!}
-                @endempty
-            </p>
-        </div>
+            @include('public.forms.success')
         @else
         <div class="w-full h-auto px-6 py-5 bg-gray-100 rounded-md border-t-8 border-orange-500">
             <h2 class="text-3xl font-semibold text-dark-blue-800">{{ $form->title }}</h2>
