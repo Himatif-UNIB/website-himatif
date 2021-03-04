@@ -41,7 +41,7 @@ class HomeController extends Controller
 
         //dd($headOfDivisions);
 
-        return view('frontend.beranda', compact('divisions', 'childs', 'headOfDivisions'));
+        return view('public.beranda', compact('divisions', 'childs', 'headOfDivisions'));
     }
 
     public function modal($divisionId)

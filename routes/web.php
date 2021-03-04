@@ -55,10 +55,6 @@ Route::group(['prefix' => 'blog', 'as' => 'blog.'], function () {
     Route::post('/read/{post?}/{slug?}', [BlogController::class, 'post_comment'])->name('post_comment');
 });
 
-Route::get('/modal', function () {
-    return view('frontend.modal');
-})->name('modal');
-
 Route::prefix('galeri')->group(function () {
     Route::get('/', [SiteGalleryController::class, 'index'])->name('galeri');
     Route::get('/{album}/{title}', [SiteGalleryController::class, 'show'])->name('galeri.detail');

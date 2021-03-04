@@ -8,13 +8,13 @@
     <div class="px-2 mt-12 lg:mt-12 lg:px-0">
         <!-- START JUMBOTRON -->
         <div class="inline md:flex lg:flex items-center justify-between">
-            <div class="inline">
+            <div class="inline" data-aos="fade-right" data-aos-delay="200">
                 <h1 class="text-center lg:text-left text-6xl lg:text-9xl font-serif text-white bottom-0">Galeri</h1>
                 <p class="mt-3 lg:mt-0 text-center lg:text-left text-dark-blue-400 text-base font-bold leading-relaxed">
                     Kumpulan foto-foto kegiatan HIMATIF Universitas Bengkulu
                 </p>
             </div>
-            <img class="mt-12 lg:mt-0 w-full lg:w-2/3" src="{{ asset('assets/foto-galeri.png') }}">
+            <img class="mt-12 lg:mt-0 w-full lg:w-2/3" src="{{ asset('assets/foto-galeri.png') }}" data-aos="zoom-in" data-aos-delay="600">
         </div>
         <!-- END JUMBOTRON -->
     </div>

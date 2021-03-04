@@ -11,13 +11,13 @@ class StaffController extends Controller
 {
     /**
      * Halaman struktur kepengurusan
-     * 
+     *
      * Menampilkan halaman struktur kepengurusan
      * berdasarkan data yang sudah diinput oleh sekretaris
-     * 
+     *
      * @since   1.0.0
      * @author  mulyosyahidin95
-     * 
+     *
      * @return  View\Factory@frontend.struktur
      */
     public function index()
@@ -40,7 +40,7 @@ class StaffController extends Controller
         $getChilds = Staff::whereHas('position', function ($position) {
             return $position->where('parent_id', '!=', null);
         })->where('period_id', getActivePeriod()->id)->get();
-        
+
 
         $childTemp = [];
         $n = 0;
@@ -55,6 +55,6 @@ class StaffController extends Controller
         $grouped = $collection->groupBy('position.parent_id');
         $childs = $grouped->all();
 
-        return view('frontend.struktur', compact('childs', 'staff', 'positions'));
+        return view('public.struktur', compact('childs', 'staff', 'positions'));
     }
 }
