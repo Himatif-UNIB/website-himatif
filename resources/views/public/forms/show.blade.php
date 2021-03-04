@@ -13,211 +13,223 @@
         <link rel="icon" href="{{ getSiteLogo() }}"/>
     @endif
 
-    <!-- BEGIN GLOBAL MANDATORY STYLES -->
-    <link href="https://fonts.googleapis.com/css?family=Quicksand:400,500,600,700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link href="{{ asset('assets/plugins/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ asset('assets/themes/cork/css/plugins.css') }}" rel="stylesheet" type="text/css" />
-    <!-- END GLOBAL MANDATORY STYLES -->
-
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <!--  BEGIN CUSTOM STYLE FILE  -->
-    <link href="{{ asset('assets/themes/cork/css/pages/contact_us.css') }}" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/themes/cork/css/forms/theme-checkbox-radio.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/plugins/air-datepicker/dist/css/datepicker.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css') }}">
     <!--  END CUSTOM STYLE FILE  -->
+
+    <style>
+        input[type=text] {
+            border-bottom: 1px solid #92A4B2;
+            padding: 2px 0 2px 0;
+        }
+
+        textarea {
+            border-bottom: 1px solid #92A4B2;
+        }
+    </style>
 </head>
-<body class="sidebar-noneoverflow">
+<body class="bg-dark-blue">
 
-    <div class="contact-us">
-        <div class="cu-contact-section">                           
-            <div class="cu-section-header">
-                <h4>{{ $form->title }}</h4>
-                @if ($form->description != '')
-                    <p>{{ $form->description }}</p>
+    <div class="my-36 max-w-3xl mx-auto space-y-4">
+        @if (session()->has('success'))
+            @include('public.forms.success')
+        @else
+        <div class="w-full h-auto px-6 py-5 bg-gray-100 rounded-md border-t-8 border-orange-500">
+            <h2 class="text-3xl font-semibold text-dark-blue-800">{{ $form->title }}</h2>
+            <p class="my-3 text-dark-blue-800">{!! $form->description !!}</p>
+        </div>
+
+        <form action="{{ route('form.store', $form->id) }}" method="POST" enctype="multipart/form-data">
+            @csrf
+            <input type="hidden" name="form_id" value="{{ $form->id }}">
+
+            @forelse ($form->questions as $item)
+                @if ($item->type == 1)
+                    {{-- Input text --}}
+                    <div class="w-full h-auto px-6 py-5 bg-gray-100 rounded-md">
+                        <h3 class="text-lg font-semibold text-dark-blue-800">
+                            <label for="question-{{ $item->id }}">
+                                {{ $item->question }}
+                                @if ($item->is_required == 1) <span class="font-weight-bold text-danger">*</span> @endif
+                            </label>
+                        </h3>
+                        <input class="my-3 w-full bg-gray-100 focus:outline-none focus:border focus:border-b-2 focus:border-orange-600" type="text" value="{{ old('question.'. $item->id) }}"
+                            id="question-{{ $item->id }}" placeholder="Jawaban anda"
+                            name="question[{{ $item->id }}]" @if ($item->is_required == 1) required="required" @endif>
+
+                        @error('question.'. $item->id)
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
                 @endif
-            </div>
-            <div id="basic_map1"></div>
-            <div class="contact-form">
-                @if (session()->has('success'))
-                    <form action="">
-                        @if (session()->get('success') == '')
-                        <p>Tanggapan anda telah dikirimkan. Terima kasih!</p>
-                    @else
-                        <p>{{ session()->get('success') }}</p>
-                    @endif
-                    </form>
-                @else
-                <form class="" action="{{ route('form.store', $form->id) }}" method="POST" enctype="multipart/form-data">
-                    @csrf
-                    <input type="hidden" name="form_id" value="{{ $form->id }}">
 
-                    <h4>Berikan sebuah tanggapan</h4>
+                @if ($item->type == 2)
+                    {{-- Textarea --}}
+                    <div class="w-full h-auto px-6 py-5 bg-gray-100 rounded-md mt-4">
+                        <h3 class="text-lg font-semibold text-dark-blue-800">
+                            <label for="question-{{ $item->id }}">
+                                {{ $item->question }}
+                                @if ($item->is_required == 1) <span class="font-weight-bold text-danger">*</span> @endif
+                            </label>
+                        </h3>
+                        <textarea class="my-3 w-full bg-gray-100 focus:outline-none focus:border focus:border-b-2 focus:border-orange-600" type="text"
+                            id="question-{{ $item->id }}" placeholder="Jawaban anda"
+                            name="question[{{ $item->id }}]" @if ($item->is_required == 1) required="required" @endif>{{ old('question.'. $item->id) }}</textarea>
 
-                    @forelse ($form->questions as $item)
-                        @if ($item->type == 1)
-                        <div class="row mb-4">
-                            <div class="col-sm-12 col-12 input-fields mb-4 mb-sm-0">
-                                <label for="question-{{ $item->id }}">{{ $item->question }} @if ($item->is_required == 1) <span class="font-weight-bold text-danger">*</span> @endif</label>
-                                <input type="text" value="{{ old('question.'. $item->id) }}" id="question-{{ $item->id }}" class="form-control @error('question.'. $item->id) is-invalid @enderror" name="question[{{ $item->id }}]" @if ($item->is_required == 1) required="required" @endif>
-                            
-                                @error('question.'. $item->id)
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
-                            </div>
-                        </div>
-                        @endif
+                        @error('question.'. $item->id)
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+                @endif
 
-                        @if ($item->type == 2)
-                        <div class="row">
-                            <div class="col">
-                                <div class="form-group input-fields">
-                                    <label for="question-{{ $item->id }}">{{ $item->question }} @if ($item->is_required == 1) <span class="font-weight-bold text-danger">*</span> @endif</label>
-                                    <textarea class="form-control @error('question.'. $item->id) is-invalid @enderror" id="question-{{ $item->id }}" name="question[{{ $item->id }}]" rows="4" @if ($item->is_required == 1) required="required" @endif>{{ old('question.'. $item->id) }}</textarea>
-                                
-                                    @error('question.'. $item->id)
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                    @enderror
-                                </div>
-                            </div>
-                        </div>
-                        @endif
-
-                        @if ($item->type == 3)
-                        <div class="row mb-4">
-                            <div class="col-sm-12 col-12">
-                                <p class="">{{ $item->question }} @if ($item->is_required == 1) <span class="font-weight-bold text-danger">*</span> @endif</p>
-                            </div>
-                            <div class="col-sm-12 col-12 input-fields">
+                @if ($item->type == 3)
+                    {{-- Input radio --}}
+                    <div class="w-full h-auto px-6 py-5 bg-gray-100 rounded-md mt-4">
+                        <h3 class="text-lg font-semibold text-dark-blue-800">{{ $item->question }}</h3>
+                        <div class="mt-4">
+                            <div class="mt-2">
                                 @foreach (json_decode($item->multiple_options) as $key => $option)
-                                <div class="n-chk">
-                                    <label class="new-control new-radio radio-success">
-                                      <input type="radio" class="new-control-input @error('question.'. $item->id) is-invalid @enderror" name="question[{{ $item->id }}]" value="{{ $option }}" @if ($item->is_required == 1) required="required" @endif>
-                                      <span class="new-control-indicator"></span> {{ $option }}
-                                    </label>
-                                </div>
+                                    <div class="n-chk">
+                                        <label class="new-control new-radio radio-info">
+                                            <input type="radio" class="new-control-input" name="question[{{ $item->id }}]"
+                                                value="{{ $option }}">
+                                            <span class="new-control-indicator"></span> {{ $option }}
+                                        </label>
+                                    </div>
                                 @endforeach
 
                                 @error('question.'. $item->id)
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
-                        </div>
-                        @endif
-
-                        @if ($item->type == 4)
-                        <div class="row mb-4">
-                            <div class="col-sm-12 col-12">
-                                <p class="">{{ $item->question }} @if ($item->is_required == 1) <span class="font-weight-bold text-danger">*</span> @endif</p>
-                            </div>
-                            <div class="col-sm-12 col-12 input-fields">
-                                @foreach (json_decode($item->multiple_options) as $key => $option)
-                                <div class="n-chk" style="display: block">
-                                    <label class="new-control new-checkbox checkbox-success">
-                                      <input type="checkbox" class="new-control-input @error('question.'. $item->id) is-invalid @enderror" name="question[{{ $item->id }}]" value="{{ $option }}" @if ($item->is_required == 1) required="required" @endif>
-                                      <span class="new-control-indicator"></span> {{ $option }}
-                                    </label>
-                                </div>
-                                @endforeach
-
-                                @error('question.'. $item->id)
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
-                            </div>
-                        </div>
-                        @endif
-
-                        @if ($item->type == 5)
-                        <div class="row">
-                            <div class="col">
-                                <div class="form-group input-fields">
-                                    <label for="question-{{ $item->id }}">{{ $item->question }} @if ($item->is_required == 1) <span class="font-weight-bold text-danger">*</span> @endif</label>
-                                    <select name="question[{{ $item->id }}]" id="question-{{ $item->id }}" class="form-control @error('question.'. $item->id) is-invalid @enderror" @if ($item->is_required == 1) required="required" @endif>
-                                        @forelse (json_decode($item->multiple_options) as $option)
-                                            <option value="{{ $option }}">{{ $option }} </option>
-                                        @empty
-                                            <option value="0">Tidak ada pilihan</option>
-                                        @endforelse
-                                    </select>
-
-                                    @error('question.'. $item->id)
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                    @enderror
-                                </div>
-                            </div>
-                        </div>
-                        @endif
-
-                        @if ($item->type == 6)
-                        <div class="row mb-4">
-                            <div class="col-sm-12 col-12 input-fields mb-4 mb-sm-0">
-                                <label for="question-{{ $item->id }}">{{ $item->question }} @if ($item->is_required == 1) <span class="font-weight-bold text-danger">*</span> @endif</label>
-                                <input type="text" name="question[{{ $item->id }}]" value="{{ old('question.'. $item->id) }}" id="question-{{ $item->id }}" class="form-control @error('question.'. $item->id) is-invalid @enderror" @if ($item->is_required == 1) required="required" @endif>
-                            
-                                @error('question.'. $item->id)
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
-                            </div>
-                        </div>
-                        @endif
-
-                        @if ($item->type == 7)
-                        <div class="row mb-4">
-                            <div class="col-sm-12 col-12 input-fields mb-4 mb-sm-0">
-                                <label for="question-{{ $item->id }}">{{ $item->question }} @if ($item->is_required == 1) <span class="font-weight-bold text-danger">*</span> @endif</label>
-                                <input type="text"  name="question[{{ $item->id }}]"value="{{ old('question.'. $item->id) }}" id="question-{{ $item->id }}" class="form-control @error('question.'. $item->id) is-invalid @enderror" @if ($item->is_required == 1) required="required" @endif>
-                            
-                                @error('question.'. $item->id)
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
-                            </div>
-                        </div>
-                        @endif
-
-                        @if ($item->type == 8)
-                        <div class="row mb-4">
-                            <div class="col-sm-12 col-12 input-fields mb-4 mb-sm-0">
-                                <label for="question-{{ $item->id }}">{{ $item->question }} @if ($item->is_required == 1) <span class="font-weight-bold text-danger">*</span> @endif</label>
-                                <input type="text" name="question[{{ $item->id }}]" value="{{ old('question.'. $item->id) }}" id="question-{{ $item->id }}" class="form-control @error('question.'. $item->id) is-invalid @enderror" @if ($item->is_required == 1) required="required" @endif>
-                            
-                                @error('question.'. $item->id)
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
-                            </div>
-                        </div>
-                        @endif
-
-                        @if ($item->type == 9)
-                        <div class="row mb-4">
-                            <div class="col-sm-12 col-12 input-fields mb-4 mb-sm-0">
-                                <label for="question-{{ $item->id }}">{{ $item->question }} @if ($item->is_required == 1) <span class="font-weight-bold text-danger">*</span> @endif</label>
-                                <input type="file" name="question[{{ $item->id }}]" accept="{{ implode(',', json_decode($item->file_rules)->mimes) }}" id="question-{{ $item->id }}" class="form-control @error('question.'. $item->id) is-invalid @enderror" @if ($item->is_required == 1) required="required" @endif>
-                            
-                                @error('question.'. $item->id)
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
-                            </div>
-                        </div>
-                        @endif
-                    @empty
-                        
-                    @endforelse
-                    
-                    <div class="row">
-                        <div class="col text-sm-left text-center">
-                            <button class="btn btn-primary mt-4">Kirim Tanggapan</button>
                         </div>
                     </div>
-                </form>
                 @endif
-            </div>
-        </div>
+
+                @if ($item->type == 4)
+                    {{-- input checkbox --}}
+                    <div class="w-full h-auto px-6 py-5 bg-gray-100 rounded-md mt-4">
+                        <h3 class="text-lg font-semibold text-dark-blue-800">{{ $item->question }}</h3>
+                        <div class="mt-4 space-x-3">
+
+                            @foreach (json_decode($item->multiple_options) as $key => $option)
+                            <div class="n-chk">
+                                <label class="new-control new-checkbox checkbox-info">
+                                    <input type="checkbox" class="new-control-input" name="question[{{ $item->id }}]"
+                                        value="{{ $option }}">
+                                    <span class="new-control-indicator"></span> {{ $option }}
+                                </label>
+                            </div>
+                            @endforeach
+                        </div>
+                    </div>
+                @endif
+
+                @if ($item->type == 5)
+                    <div class="w-full h-auto px-6 py-5 bg-gray-100 rounded-md mt-4">
+                        <h3 class="text-lg font-semibold text-dark-blue-800">Pertanyaan Tanpa Judul</h3>
+                        <div class="mt-4">
+                            <select name="question[{{ $item->id }}]" id="question-{{ $item->id }}"
+                                class="w-1/4 px-3 py-2 bg-gray-100 border border-dark-blue-400 rounded-md">
+                                @forelse (json_decode($item->multiple_options) as $option)
+                                    <option value="{{ $option }}">{{ $option }} </option>
+                                @empty
+                                    <option value="0">Tidak ada pilihan</option>
+                                @endforelse
+                            </select>
+                        </div>
+                    </div>
+                @endif
+
+                @if ($item->type == 6)
+                    <div class="w-full h-auto px-6 py-5 bg-gray-100 rounded-md mt-4">
+                        <h3 class="text-lg font-semibold text-dark-blue-800">
+                            <label for="question-{{ $item->id }}">
+                                {{ $item->question }}
+                                @if ($item->is_required == 1) <span class="font-weight-bold text-danger">*</span> @endif
+                            </label>
+                        </h3>
+                        <input class="my-3 w-full bg-gray-100 focus:outline-none" type="text" value="{{ old('question.'. $item->id) }}"
+                            placeholder="Jawaban anda"
+                            name="question[{{ $item->id }}]" value="{{ old('question.'. $item->id) }}" id="question-{{ $item->id }}" @if ($item->is_required == 1) required="required" @endif>
+
+                        @error('question.'. $item->id)
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+                @endif
+
+                @if ($item->type == 7)
+                    <div class="w-full h-auto px-6 py-5 bg-gray-100 rounded-md mt-4">
+                        <h3 class="text-lg font-semibold text-dark-blue-800">
+                            <label for="question-{{ $item->id }}">
+                                {{ $item->question }}
+                                @if ($item->is_required == 1) <span class="font-weight-bold text-danger">*</span> @endif
+                            </label>
+                        </h3>
+                        <input class="my-3 w-full bg-gray-100 focus:outline-none focus:border focus:border-b-2 focus:border-orange-600" type="text" value="{{ old('question.'. $item->id) }}"
+                            id="question-{{ $item->id }}" placeholder="Jawaban anda"
+                            name="question[{{ $item->id }}]" @if ($item->is_required == 1) required="required" @endif>
+
+                        @error('question.'. $item->id)
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+                @endif
+
+                @if ($item->type == 8)
+                    <div class="w-full h-auto px-6 py-5 bg-gray-100 rounded-md mt-4">
+                        <h3 class="text-lg font-semibold text-dark-blue-800">
+                            <label for="question-{{ $item->id }}">
+                                {{ $item->question }}
+                                @if ($item->is_required == 1) <span class="font-weight-bold text-danger">*</span> @endif
+                            </label>
+                        </h3>
+                        <input class="my-3 w-full bg-gray-100 focus:outline-none focus:border focus:border-b-2 focus:border-orange-600" type="text" value="{{ old('question.'. $item->id) }}"
+                            id="question-{{ $item->id }}" placeholder="Jawaban anda"
+                            name="question[{{ $item->id }}]" @if ($item->is_required == 1) required="required" @endif>
+
+                        @error('question.'. $item->id)
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+                @endif
+
+                @if ($item->type == 9)
+                    <div class="w-full h-auto px-6 py-5 bg-gray-100 rounded-md mt-4">
+                        <h3 class="text-lg font-semibold text-dark-blue-800">
+                            <label for="question-{{ $item->id }}">
+                                {{ $item->question }}
+                                @if ($item->is_required == 1) <span class="font-weight-bold text-danger">*</span> @endif
+                            </label>
+                        </h3>
+                        <input class="my-3 w-full bg-gray-100 focus:outline-none focus:border focus:border-b-2 focus:border-orange-600" type="file" value="{{ old('question.'. $item->id) }}"
+                            id="question-{{ $item->id }}" accept="{{ implode(',', json_decode($item->file_rules)->mimes) }}"
+                            name="question[{{ $item->id }}]" @if ($item->is_required == 1) required="required" @endif>
+
+                        @error('question.'. $item->id)
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+                @endif
+                @empty
+                        
+                @endforelse
+
+                <div class="w-full h-auto px-6 py-5 bg-gray-100 rounded-md mt-4 text-center">
+                    <input type="submit"
+                        class="font-semibold text-lg bg-orange-600 rounded-md px-6 py-1 text-white focus:outline-none"
+                        value="Kirim Jawaban" />
+                </div>
+        </form>
+        @endif
     </div>
 
     <!-- BEGIN GLOBAL MANDATORY STYLES -->
     <script src="{{ asset('assets/themes/cork/js/libs/jquery-3.1.1.min.js') }}"></script>
-    <script src="{{ asset('assets/plugins/bootstrap/js/popper.min.js') }}"></script>
-    <script src="{{ asset('assets/plugins/bootstrap/js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('assets/themes/cork/js/custom.js') }}"></script>
     <!-- END GLOBAL MANDATORY STYLES -->
 
@@ -228,17 +240,6 @@
     <script src="{{ asset('assets/plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js') }}"></script>
 
     <script>
-        function getHeight() {
-            var getMapElement = document.getElementById('basic_map1');
-            var getWindowHeight = window.innerHeight;
-            var setHeightOfMap = getMapElement.style.height = getWindowHeight + 'px';
-        }
-        getHeight();
-
-        window.addEventListener('resize', function(event){
-          getHeight();
-        });
-
         @foreach ($dateFields as $item)
         $('#question-{{ $item->id }}').datepicker({
             language: 'id',
@@ -250,7 +251,7 @@
                     if (dp.$datepicker.find('button').html() === undefined) {
                         /*ONLY when button don't existis*/
                         dp.$datepicker.append(
-                            '<button type="button" class="btn btn-block btn-primary uk-button uk-button-default uk-button-small uk-width-1-1 uk-margin-small-bottom" disabled="disabled"><i class="fas fa-check"></i> OK</button>'
+                            '<button type="button" class="bg-orange-600 p-2 text-white w-full hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:ring-opacity-50" disabled="disabled"><i class="fas fa-check"></i> OK</button>'
                             );
                         dp.$datepicker.find('button').click(function(event) {
                             dp.hide();
@@ -294,7 +295,7 @@
                     if (dp.$datepicker.find('button').html() === undefined) {
                         /*ONLY when button don't existis*/
                         dp.$datepicker.append(
-                            '<button type="button" class="btn btn-block btn-primary uk-button uk-button-default uk-button-small uk-width-1-1 uk-margin-small-bottom" disabled="disabled"><i class="fas fa-check"></i> OK</button>'
+                            '<button type="button" class="bg-orange-600 p-2 text-white w-full hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:ring-opacity-50" disabled="disabled"><i class="fas fa-check"></i> OK</button>'
                             );
                         dp.$datepicker.find('button').click(function(event) {
                             dp.hide();

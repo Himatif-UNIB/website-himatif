@@ -33,7 +33,13 @@
             </div>
             <div class="text-center space-y-2 font-poppins">
                 <p class="text-2xl text-dark-blue-800 ">Tanggapan anda telah direkam</p>
-                <p class="text-gray-500">Terimakasih telah memberikan tanggapan</p>
+                <p class="text-gray-500">
+                    @empty($form->post_message)
+                    Terimakasih telah memberikan tanggapan
+                    @else
+                        {!! $form->post_message !!}
+                    @endempty
+                </p>
             </div>
             <div class="mt-8 text-center">
                 <a href="{{ route('beranda') }}" class="bg-orange-500 hover:bg-orange-600 font-semibold text-white px-3 py-1 rounded-lg focus:outline-none text-lg">Kembali ke Beranda</a>
