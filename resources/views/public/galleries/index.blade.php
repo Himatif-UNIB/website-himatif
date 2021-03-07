@@ -1,6 +1,6 @@
 @extends('layouts.frontend')
 @section('title', 'Galeri Foto ' . getSetting('organizationName'))
-@section('style-after')
+@section('custom_head')
     <link type="text/css" rel="stylesheet" href="{{ asset('assets/plugins/lightGallery/css/lightgallery.css') }}" />
 @endsection
 
@@ -14,7 +14,8 @@
                     Kumpulan foto-foto kegiatan HIMATIF Universitas Bengkulu
                 </p>
             </div>
-            <img class="mt-12 lg:mt-0 w-full lg:w-2/3" src="{{ asset('assets/foto-galeri.png') }}" data-aos="zoom-in" data-aos-delay="600">
+            <img class="mt-12 lg:mt-0 w-full lg:w-2/3" src="{{ asset('assets/images/foto-galeri.png') }}"
+                data-aos="zoom-in" data-aos-delay="600">
         </div>
         <!-- END JUMBOTRON -->
     </div>
@@ -32,7 +33,7 @@
             @forelse ($albums as $album)
                 <a href="{{ route('galeri.detail', ['album' => $album->id, 'slug' => $album->slug]) }}" class="flex flex-col">
                     <div class="w-full h-52 rounded-lg overflow-hidden">
-                        <img class="w-full h-full object-cover" src="{{ asset('assets/bg-article.png') }}" alt="">
+                        <img class="w-full h-full object-cover" src="{{ asset('assets/images/bg-article.png') }}" alt="">
                     </div>
                     <div class="w-full mt-2">
                         <p class="text-white font-medium">{{ $album->title }}</p>
@@ -42,7 +43,7 @@
             @empty
                 <a href="{{ route('galeri.detail', 'test') }}" class="flex flex-col">
                     <div class="w-full h-52 rounded-lg overflow-hidden">
-                        <img class="w-full h-full object-cover" src="{{ asset('assets/bg-article.png') }}" alt="">
+                        <img class="w-full h-full object-cover" src="{{ asset('assets/images/bg-article.png') }}" alt="">
                     </div>
                     <div class="w-full mt-2">
                         <p class="text-white font-medium">Tidak ada album</p>
@@ -55,7 +56,7 @@
 
 @endsection
 
-@section('script-after')
+@section('custom_js')
 <script src="{{ asset('assets/plugins/lightGallery/js/lightgallery.min.js') }}"></script>
 
 <!-- lightgallery plugins -->

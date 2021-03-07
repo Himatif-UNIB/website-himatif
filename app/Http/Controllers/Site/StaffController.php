@@ -55,6 +55,6 @@ class StaffController extends Controller
         $grouped = $collection->groupBy('position.parent_id');
         $childs = $grouped->all();
 
-        return view('public.struktur', compact('childs', 'staff', 'positions'));
+        return view('public.structures', compact('childs', 'staff', 'positions'));
     }
 }

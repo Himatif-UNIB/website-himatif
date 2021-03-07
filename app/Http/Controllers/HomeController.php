@@ -39,15 +39,6 @@ class HomeController extends Controller
         $grouped = $collection->groupBy('position.division.id');
         $headOfDivisions = $grouped->all();
 
-        //dd($headOfDivisions);
-
-        return view('public.beranda', compact('divisions', 'childs', 'headOfDivisions'));
-    }
-
-    public function modal($divisionId)
-    {
-        $divisi = Division::where('id', $divisionId)->with('positionDivision');
-
-        return response()->json(compact('data'));
+        return view('public.index', compact('divisions', 'childs', 'headOfDivisions'));
     }
 }
