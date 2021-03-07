@@ -57,7 +57,7 @@ Route::group(['prefix' => 'blog', 'as' => 'blog.'], function () {
 
 Route::prefix('galeri')->group(function () {
     Route::get('/', [SiteGalleryController::class, 'index'])->name('galeri');
-    Route::get('/{album}/{title}', [SiteGalleryController::class, 'show'])->name('galeri.detail');
+    Route::get('/{album}/{slug}', [SiteGalleryController::class, 'show'])->name('galeri.detail');
 });
 
 Route::get('/home', [AdminController::class, 'index'])->middleware('auth')->name('index');
