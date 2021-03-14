@@ -2,7 +2,8 @@ module.exports = {
   purge: [
     './resources/views/public/**/*.blade.php',
     './resources/views/public/*.blade.php',
-    './resources/views/includes/*.blade.php'
+    './resources/views/includes/*.blade.php',
+    './resources/views/components/site/blog/*.blade.php',
   ],
   darkMode: false, // or 'media' or 'class'
   theme: {
