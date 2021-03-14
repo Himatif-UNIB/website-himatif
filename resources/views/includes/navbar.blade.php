@@ -1,8 +1,10 @@
 <!-- START NAVBAR -->
 <div class="flex justify-between items-center" id="navbar">
     <div class="flex items-center space-x-4">
-        <img class="w-12 h-12" src="{{ getSiteLogo() }}" alt="{{ getSetting('organizationName') }} Logo">
-        <span class="text-white font-bold text-2xl">{{ getSetting('organizationName') }}</span>
+        <a href="{{ route('beranda') }}" class="flex items-center space-x-3">
+            <img class="w-12 h-12" src="{{ getSiteLogo() }}" alt="{{ getSetting('organizationName') }} Logo">
+            <span class="text-white font-bold text-2xl">{{ getSetting('organizationName') }}</span>
+        </a>
     </div>
     <div class=" invisible lg:visible">
         <ul class="flex items-center">
