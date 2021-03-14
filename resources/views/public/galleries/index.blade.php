@@ -30,7 +30,7 @@
         <!-- START CONTENT -->
         <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mt-6">
             @forelse ($albums as $album)
-                <a href="{{ route('galeri.detail', ['album' => $album->id, 'title' => $album->title]) }}" class="flex flex-col">
+                <a href="{{ route('galeri.detail', ['album' => $album->id, 'slug' => $album->slug]) }}" class="flex flex-col">
                     <div class="w-full h-52 rounded-lg overflow-hidden">
                         <img class="w-full h-full object-cover" src="{{ asset('assets/bg-article.png') }}" alt="">
                     </div>

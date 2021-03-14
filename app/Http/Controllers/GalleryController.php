@@ -6,6 +6,7 @@ use App\Models\Picture_gallery;
 use App\Models\Picture_gallery_category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Str;
 
 class GalleryController extends Controller
 {
@@ -57,6 +58,7 @@ class GalleryController extends Controller
         $gallery = new Picture_gallery();
         $gallery->user_id = $request->user()->id;
         $gallery->title = $request->title;
+        $gallery->slug = Str::slug($request->title);
         $gallery->description = $request->description;
         $gallery->status = 'draft';
 
@@ -117,6 +119,7 @@ class GalleryController extends Controller
 
         $gallery->user_id = $request->user()->id;
         $gallery->title = $request->title;
+        $gallery->slug = Str::slug($request->title);
         $gallery->description = $request->description;
         if ($request->draft) {
             $gallery->status = 'draft';
