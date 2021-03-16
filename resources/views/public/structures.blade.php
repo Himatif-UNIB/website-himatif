@@ -44,12 +44,14 @@
         <div class="flex flex-wrap justify-center">
             @foreach ($positions[$index] as $data)
                 @if ($data['position']->parent_id == null)
-                    <div
-                        class="bg-card-color border-2 cursor-pointer hover:border-gray-400 transition duration-500 ease-in-out w-64 h-auto lg:w-80 lg:h-80 rounded-3xl p-5 mb-5 flex flex-wrap justify-center items-center m-3 structure">
+                    <div class="bg-card-color border-2 cursor-pointer hover:border-gray-400
+                                    transition duration-500 ease-in-out w-64 h-auto lg:w-80 lg:h-80 rounded-3xl p-5 mb-5 flex flex-wrap
+                                    justify-center items-center m-3 structure">
                         <div class="lg:w-64 lg:h-64">
                             <div class="flex justify-center">
                                 @isset($data['user']->media[0])
-                                    <img src="{{ $data['user']->media[0]->getFUllUrl() }}" alt="">
+                                    <img src="{{ $data['user']->media[0]->getFUllUrl() }}" alt="" class="rounded-full"
+                                        style="width: 200px">
                                 @else
                                     <img class="w-44 h-44 rounded-full object-cover" src="{{ getSiteLogo() }}" alt="">
                                 @endisset

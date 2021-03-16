@@ -1,10 +1,10 @@
 <!-- START NAVBAR -->
-<div class="flex justify-between items-center" id="navbar">
+<div class="flex justify-between items-center shadow-lg px-6 py-6" id="navbar">
     <div class="flex items-center space-x-4">
         <img class="w-12 h-12" src="{{ getSiteLogo() }}" alt="{{ getSetting('organizationName') }} Logo">
         <span class="text-white font-bold text-2xl">{{ getSetting('organizationName') }}</span>
     </div>
-    <div class=" invisible lg:visible">
+    <div class="invisible lg:visible">
         <ul class="flex items-center">
             <li class="px-6 {{ request()->is('/') ? 'text-gray-50' : 'text-dark-blue-400' }} hover:text-gray-50">
                 <a href="{{ route('beranda') }}">Beranda</a>
