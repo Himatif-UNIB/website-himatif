@@ -92,7 +92,8 @@
                 {"data": "email"},
                 {
                     data: function(data, row, type) {
-                        return `<span class="badge badge-info">${data.roles[0].label}</span>`;
+                        return (data.roles != undefined) ?
+                            `<span class="badge badge-info">${data.roles[0].label}</span>` : '';
                     }
                 },
                 {
