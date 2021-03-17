@@ -9,7 +9,7 @@
                     <span class="text-dark-blue-800 text-lg font-semibold mb-2">Komentar</span>
                 </div>
                 <div
-                    class="bg-dark-blue-800 flex items-center text-white space-x-2 px-2 rounded-md text-sm py-1 cursor-pointer replied-name">
+                    class="bg-dark-blue-800 flex items-center text-white space-x-2 px-2 rounded-md text-sm py-1 cursor-pointer move-y-animation">
                     <span>
                         <svg class="stroke-current text-white" xmlns="http://www.w3.org/2000/svg" width="15" height="15"
                             fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -117,7 +117,7 @@
                         <span class="text-dark-blue-800 text-lg font-semibold mb-2">Komentar</span>
                     </div>
                     <div
-                        class="bg-dark-blue-800 flex items-center text-white space-x-2 px-2 rounded-md text-sm py-1 cursor-pointer replied-name">
+                        class="bg-dark-blue-800 flex items-center text-white space-x-2 px-2 rounded-md text-sm py-1 cursor-pointer move-y-animation">
                         <span>
                             <svg class="stroke-current text-white" xmlns="http://www.w3.org/2000/svg" width="15" height="15"
                                 fill="none" viewBox="0 0 24 24" stroke="currentColor">

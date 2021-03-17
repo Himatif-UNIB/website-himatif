@@ -5,24 +5,6 @@
     <link rel="stylesheet" href="{{ asset('assets/plugins/lightgallery.js/dist/css/lightgallery.min.css') }}">
 
     <style>
-        .grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            grid-gap: 1.5rem;
-        }
-
-        @media screen and (min-width: 768px) {
-            .grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-
-        @media screen and (min-width: 992px) {
-            .grid {
-                grid-template-columns: repeat(3, 1fr);
-            }
-        }
-
         .grid a img {
             transition: all .2s ease-in;
             filter: grayscale(100%);
@@ -32,23 +14,35 @@
             filter: grayscale(0);
         }
 
+        .move-y-animation {
+            transition: 0.2s;
+        }
+
+        .move-y-animation:hover {
+            transform: translateY(-10px);
+        }
+
     </style>
+
 @endsection
 
 @section('outer-content')
 
     <div class="bg-dark-blue relative">
         <div class="container mx-auto px-6 lg:px-28 py-6">
-            <div class="text-center mb-5">
-                <h1 class="text-3xl text-white font-semibold">{{ $album->title }}</h1>
+            <div class="text-center mb-12">
+                <h1 class="text-3xl text-white font-semibold mb-3">{{ $album->title }}</h1>
                 <p class="text-gray-200">Diposting pada {{ \Carbon\Carbon::parse($album->created_at)->format('l, d M Y H:i') }}</p>
             </div>
-            <div class="grid max-w-4xl mx-auto p-8" id="galleries">
+            <div class="grid grid-cols-2 lg:grid-cols-3 mx-auto" id="galleries">
                 @foreach ($album->media as $picture)
-                    <a href="{{ $picture->getFullUrl() }}" target="_blank"
-                        class="bg-white rounded h-full text-grey-darkest no-underline shadow-md">
-                        <img class="w-full block rounded-b" src="{{ $picture->getFullUrl() }}" alt="A photo of a fox">
-                    </a>
+                <a class="gallery m-1 md:m-2 lg:m-3 move-y-animation" href="{{ $picture->getFullUrl() }}" target="_blank">
+                    <div class="bg-white h-full text-grey-darkest no-underline shadow-md rounded-md overflow-hidden">
+                        <div class="h-36 md:h-48 lg:h-72">
+                            <img class="w-full h-full block rounded-b object-cover" src="{{ $picture->getFullUrl() }}" alt="A photo of a fox">
+                        </div>
+                    </div>
+                </a>
                 @endforeach
             </div>
         </div>

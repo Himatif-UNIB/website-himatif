@@ -67,10 +67,10 @@
                     </p>
                 </div>
             </div>
-            <div style="margin-left: 3.8rem;">
-                <span class="text-white">
+            <div class="w-max" style="margin-left: 3.8rem;">
+                <p class="text-white">
                     {!! nl2br(e($reply->content)) !!}
-                </span>
+                </p>
             </div>
         </div>
     @endforeach

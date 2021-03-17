@@ -9,6 +9,7 @@
         z-index: 20;
         box-shadow: 0px 6px 17px -8px rgba(0, 0, 0, 0.445);
         animation: fade 0.2s;
+        transition: all 0.2s;
     }
 
     @keyframes fade {

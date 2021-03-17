@@ -2,8 +2,8 @@
 <div class="mt-64 py-24 bg-dark-blue border-t-2 border-dark-blue-200 overflow-hidden lg:overflow-visible">
     <div class="container mx-auto">
         <div class="flex items-center justify-center">
-            <img class="w-2 h-2" src="{{ getSiteLogo() }}" alt="" style="width: 50px">
-            <span class="text-white text-2xl lg:text-4xl font-serif ml-3">
+            <img class="w-16 h-16" src="{{ getSiteLogo() }}" alt="">
+            <span class="text-white text-2xl lg:text-3xl font-serif ml-3 uppercase">
                 {{ getSetting('siteName') }}
             </span>
         </div>
@@ -27,7 +27,7 @@
 
         <div class="mt-8 px-5 lg:px-0 text-sm lg:text-base">
             <div class="flex flex-col space-y-2 lg:space-y-0 lg:flex-row items-center justify-center text-center space-x-2">
-                <span class="text-dark-blue-200">Copyright &#169; 2021 Himatif UNIB Designed & developed by
+                <span class="text-dark-blue-200">Copyright &#169; 2021 HIMATIF UNIB Designed & developed by
                     <strong class="text-dark-blue-400">Notip.exe</strong>
                 </span>
                 <img class="w-5 h-5 animate-wiggle" src="{{ asset('assets/notip.png') }}" alt="">

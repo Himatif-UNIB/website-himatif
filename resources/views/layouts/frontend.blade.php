@@ -50,7 +50,9 @@
 
     @yield('outer-content')
 
+    @if (Request::segment(2) !== 'read')
     <x-site.footer />
+    @endif
     <x-site.bottom-navbar />
 
     <script src="{{ asset('js/main.js') }}"></script>

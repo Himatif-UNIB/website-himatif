@@ -34,6 +34,14 @@
             visibility: visible;
         }
 
+        .move-y-animation{
+            transition: 0.2s;
+        }
+
+        .move-y-animation:hover{
+            transform: translateY(-3px);
+        }
+
     </style>
 @endsection
 
@@ -80,6 +88,53 @@
 
         <div class="mt-36">
             <h2 class="text-dark-blue-800 text-2xl lg:text-4xl font-bold mb-12 flex justify-center" data-aos="zoom-in-up">
+                Blog
+            </h2>
+
+            <div class="4">
+                <!-- START CONTENT -->
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mt-16">
+                    @foreach ($posts as $post)
+                        <div class="mb-12 border border-gray-50 rounded-xl p-2" data-aos="zoom-in-up">
+                            <div class="w-full h-56 bg-gray-400 rounded-xl overflow-hidden">
+                                <a href="{{ route('blog.post', ['post' => $post->id, 'slug' => $post->slug]) }}">
+                                    @isset($post->media[0])
+                                        <img class="w-full h-full object-cover object-center"
+                                            src="{{ $post->media[0]->getFullUrl() }}" alt="{{ $post->title }}">
+                                    @else
+                                        <img class="w-full h-full object-cover object-center"
+                                            src="{{ asset('assets/images/bg-article.png') }}" alt="{{ $post->title }}">
+                                    @endisset
+                                </a>
+                            </div>
+                            <div class="px-4">
+                                @foreach ($post->categories as $category)
+                                    <div
+                                        class="w-min px-5 bg-category-button-green text-category-text-green font-semibold rounded-md mt-6">
+                                        <a
+                                            href="{{ route('blog.category', ['id' => $category->id, 'slug' => $category->slug]) }}">{{ $category->name }}</a>
+                                    </div>
+                                @endforeach
+                            </div>
+                            <div class="text-gray-800 text-lg font-bold mt-3 px-4">
+                                <a
+                                    href="{{ route('blog.post', ['post' => $post->id, 'slug' => $post->slug]) }}">{{ $post->title }}</a>
+                            </div>
+                            <div class="text-dark-blue-400 text-base mt-2 p-4">
+                                @empty($post->excerpt)
+                                    {{ \Str::limit(strip_tags($post->content, 6)) }}
+                                @else
+                                    {{ $post->excerpt }}
+                                @endempty
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-36">
+            <h2 class="text-dark-blue-800 text-2xl lg:text-4xl font-bold mb-12 flex justify-center" data-aos="zoom-in-up">
                 Bidang Organisasi
             </h2>
             <div class="grid grid-row md:grid-cols-2 lg:grid-cols-3 place-items-center" data-aos="fade-up"
@@ -103,52 +158,6 @@
             </div>
         </div>
 
-        <div class="mt-36">
-            <h2 class="text-dark-blue-800 text-2xl lg:text-4xl font-bold mb-12 flex justify-center" data-aos="zoom-in-up">
-                Blog
-            </h2>
-
-            <div class="4">
-                <!-- START CONTENT -->
-                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mt-16">
-                    @foreach ($posts as $post)
-                        <div class="mb-12 shadow-lg" data-aos="zoom-in-up">
-                            <div class="w-full h-56 bg-gray-400 rounded-xl overflow-hidden">
-                                <a href="{{ route('blog.post', ['post' => $post->id, 'slug' => $post->slug]) }}">
-                                    @isset($post->media[0])
-                                        <img class="w-full h-full object-cover object-center"
-                                            src="{{ $post->media[0]->getFullUrl() }}" alt="{{ $post->title }}">
-                                    @else
-                                        <img class="w-full h-full object-cover object-center"
-                                            src="{{ asset('assets/images/bg-article.png') }}" alt="{{ $post->title }}">
-                                    @endisset
-                                </a>
-                            </div>
-                            <div class="px-4 py-4">
-                                @foreach ($post->categories as $category)
-                                    <div
-                                        class="w-min px-5 bg-category-button-green text-category-text-green font-semibold rounded-md mt-6">
-                                        <a
-                                            href="{{ route('blog.category', ['id' => $category->id, 'slug' => $category->slug]) }}">{{ $category->name }}</a>
-                                    </div>
-                                @endforeach
-                            </div>
-                            <div class="text-gray-800 text-lg font-bold mt-3 px-4 py-4">
-                                <a
-                                    href="{{ route('blog.post', ['post' => $post->id, 'slug' => $post->slug]) }}">{{ $post->title }}</a>
-                            </div>
-                            <div class="text-dark-blue-400 text-base mt-3 p-4">
-                                @empty($post->excerpt)
-                                    {{ \Str::limit(strip_tags($post->content, 6)) }}
-                                @else
-                                    {{ $post->excerpt }}
-                                @endempty
-                            </div>
-                        </div>
-                    @endforeach
-                </div>
-            </div>
-        </div>
     </div>
 
     <!--Modal-->

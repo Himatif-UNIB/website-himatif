@@ -3,6 +3,7 @@ module.exports = {
     './resources/views/public/**/*.blade.php',
     './resources/views/public/*.blade.php',
     './resources/views/includes/*.blade.php',
+    './resources/views/components/site/*.blade.php',
     './resources/views/components/site/blog/*.blade.php',
   ],
   darkMode: false, // or 'media' or 'class'
@@ -45,7 +46,7 @@ module.exports = {
         'dark-blue-200': '#76848D',
         'dark-blue-100': '#374D5E',
 
-        'category-text-green': '#75A665',
+        'category-text-green': '#5F8652',
         'category-text-yellow': '#A69565',
         'category-text-blue': '#65A699',
 

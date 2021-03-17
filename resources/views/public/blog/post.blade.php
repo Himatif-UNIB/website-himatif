@@ -2,11 +2,11 @@
 
 @section('custom_head')
     <style>
-        .replied-name{
+        .move-y-animation{
             transition: 0.2s;
         }
 
-        .replied-name:hover{
+        .move-y-animation:hover{
             transform: translateY(-3px);
         }
     </style>
@@ -46,12 +46,14 @@
             <div class="flexs justify-center mt-2 text-dark-blue-400 font-semibold text-center">
                 Diposting oleh {{ $post->user->name }} pada
                 {{ \Carbon\Carbon::parse($post->created_at)->format('l, d M Y H:i') }}
-                @foreach ($post->categories as $category)
-                    <div class="w-min px-5 bg-category-button-green text-category-text-green font-semibold rounded-md mt-2">
-                        <a
-                            href="{{ route('blog.category', ['id' => $category->id, 'slug' => $category->slug]) }}">{{ $category->name }}</a>
-                    </div>
-                @endforeach
+            </div>
+            <div class="w-full flex justify-center">
+            @foreach ($post->categories as $category)
+                <div class="w-min px-5 bg-category-button-green text-category-text-green font-semibold rounded-md mt-4">
+                    <a
+                        href="{{ route('blog.category', ['id' => $category->id, 'slug' => $category->slug]) }}">{{ $category->name }}</a>
+                </div>
+            @endforeach
             </div>
             <div class="mt-8 mb-32 text-white text-lg leading-relaxed">
                 {!! $post->content !!}

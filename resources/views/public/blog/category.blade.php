@@ -18,23 +18,22 @@
 
             <!-- START CATEGORY -->
             <div class="mt-12 flex overflow-x-auto">
-                <div
-                    class="w-min border-2 rounded-full text-center font-bold px-3 py-1 mr-4 border-dark-blue-400 text-dark-blue-400">
-                    <a href="{{ route('blog.index') }}">Semua</a>
-                </div>
+                <a href="{{ route('blog.index') }}" class="w-min border-2 rounded-full text-center font-bold px-3 py-1 mr-4 border-dark-blue-400 text-dark-blue-400">
+                    <div>
+                        Semua
+                    </div>
+                </a>
                 @foreach ($categories as $item)
                     @if ($category->id == $item->id)
-                        <div
-                            class="w-min border-2 rounded-full text-center font-bold px-3 py-1 mr-4 border-orange-600 text-orange-600">
-                            <a
-                                href="{{ route('blog.category', ['id' => $item->id, 'slug' => $item->slug]) }}/">{{ $item->name }}</a>
-                        </div>
+                    <a href="{{ route('blog.category', ['id' => $item->id, 'slug' => $item->slug]) }}/"
+                        class="w-min border-2 rounded-full text-center font-bold px-3 py-1 mr-4 border-orange-600 text-orange-600">
+                        <div>{{ $item->name }}</div>
+                    </a>
                     @else
-                        <div
-                            class="w-min border-2 rounded-full text-center font-bold px-3 py-1 mr-4 border-dark-blue-400 text-dark-blue-400">
-                            <a
-                                href="{{ route('blog.category', ['id' => $item->id, 'slug' => $item->slug]) }}/">{{ $item->name }}</a>
-                        </div>
+                    <a href="{{ route('blog.category', ['id' => $item->id, 'slug' => $item->slug]) }}/"
+                        class="w-min border-2 rounded-full text-center font-bold px-3 py-1 mr-4 border-dark-blue-400 text-dark-blue-400">
+                        <div>{{ $item->name }}</div>
+                    </a>
                     @endif
                 @endforeach
             </div>
@@ -70,7 +69,7 @@
             @empty
                 <div class="mb-12">
                     <div class="w-full h-56 bg-gray-400 rounded-xl overflow-hidden">
-                        <a href="{{ route('blog.post') }}">
+                        <a href="{{ route('blog.index') }}">
                             <img class="w-full h-full object-cover object-center"
                                 src="{{ asset('assets/images/bg-article.png') }}" alt="Tidak ada posting">
                         </a>
