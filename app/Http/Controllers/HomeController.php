@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Blog_post;
 use App\Models\Division;
 use App\Models\Staff;
 use Illuminate\Support\Facades\DB;
@@ -39,15 +40,8 @@ class HomeController extends Controller
         $grouped = $collection->groupBy('position.division.id');
         $headOfDivisions = $grouped->all();
 
-        //dd($headOfDivisions);
+        $posts = Blog_post::orderBy('created_at', 'DESC')->take(3)->get();
 
-        return view('public.beranda', compact('divisions', 'childs', 'headOfDivisions'));
-    }
-
-    public function modal($divisionId)
-    {
-        $divisi = Division::where('id', $divisionId)->with('positionDivision');
-
-        return response()->json(compact('data'));
+        return view('public.index', compact('divisions', 'childs', 'headOfDivisions', 'posts'));
     }
 }

@@ -1,6 +1,6 @@
 @extends('layouts.frontend')
 
-@section('style-after')
+@section('custom_head')
     <style>
         .replied-name{
             transition: 0.2s;
@@ -25,7 +25,7 @@
                 <img class="w-full h-full object-cover" src="{{ $post->media[0]->getFullUrl() }}" alt="{{ $post->title }}">
             @else
                 <img class="w-full h-full object-cover"
-                    src="{{ asset('assets/bg-article.png') }}"
+                    src="{{ asset('assets/images/bg-article.png') }}"
                     alt="{{ $post->title }}">
             @endisset
         </div>

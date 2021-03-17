@@ -1,28 +1,28 @@
 @extends('layouts.frontend')
 
-@section('style-after')
+@section('custom_head')
     <style>
-        .structure{
+        .structure {
             transition: 0.2s;
         }
 
-        .structure:hover{
+        .structure:hover {
             transform: translateY(-10px);
         }
+
     </style>
 @endsection
 
-@section('title', 'Struktur Kepengurusan '. getSetting('organizationName') . ' '. getActivePeriod()->name)
+@section('title', 'Struktur Kepengurusan ' . getSetting('organizationName') . ' ' . getActivePeriod()->name)
 @section('inner-content')
 
     <!-- START JUMBOTRON -->
     <div class="lg:flex justify-between mt-20 items-center mb-24">
         <div data-aos="fade-right" data-aos-delay="200">
             <h1 class="text-white md:text-left uppercase mb-12 text-center">
-                <span
-                    class="text-6xl md:text-7xl font-bold tracking-normal block uppercase">Struktur</span>
-                <span
-                    class="text-2xl md:text-3xl tracking-wider font-light block">{{ getSetting('organizationName') }} - {{ getSetting('organizationUniversity') }}</span>
+                <span class="text-6xl md:text-7xl font-bold tracking-normal block uppercase">Struktur</span>
+                <span class="text-2xl md:text-3xl tracking-wider font-light block">{{ getSetting('organizationName') }} -
+                    {{ getSetting('organizationUniversity') }}</span>
             </h1>
 
             <div class="text-center md:text-left">
@@ -32,7 +32,7 @@
             </div>
 
         </div>
-        <img class="mt-16 lg:mt-0" src="{{ asset('assets/structure.png') }}" alt="" data-aos="zoom-in"
+        <img class="mt-16 lg:mt-0" src="{{ asset('assets/images/structure.png') }}" alt="" data-aos="zoom-in"
             data-aos-delay="600">
     </div>
     <!-- END JUMBOTRON -->
@@ -44,33 +44,39 @@
         <div class="flex flex-wrap justify-center">
             @foreach ($positions[$index] as $data)
                 @if ($data['position']->parent_id == null)
-                <div class="bg-card-color border-2 cursor-pointer hover:border-gray-400 transition duration-500 ease-in-out w-64 h-auto lg:w-80 lg:h-80 rounded-3xl p-5 mb-5 flex flex-wrap justify-center items-center m-3 structure">
-                    <div class="lg:w-64 lg:h-64">
-                        <div class="flex justify-center">
-                            @isset ($data['user']->media[0])
-                                <img src="{{ $data['user']->media[0]->getFUllUrl() }}" alt="">
-                            @else
-                                <img class="w-44 h-44 rounded-full object-cover" src="{{ getSiteLogo() }}" alt="">
-                            @endisset
-                        </div>
+                    <div class="bg-card-color border-2 cursor-pointer hover:border-gray-400
+                                    transition duration-500 ease-in-out w-64 h-auto lg:w-80 lg:h-80 rounded-3xl p-5 mb-5 flex flex-wrap
+                                    justify-center items-center m-3 structure">
+                        <div class="lg:w-64 lg:h-64">
+                            <div class="flex justify-center">
+                                @isset($data['user']->media[0])
+                                    <img src="{{ $data['user']->media[0]->getFUllUrl() }}" alt="" class="rounded-full"
+                                        style="width: 200px">
+                                @else
+                                    <img class="w-44 h-44 rounded-full object-cover" src="{{ getSiteLogo() }}" alt="">
+                                @endisset
+                            </div>
 
-                        <div class="flex justify-between items-center mt-5">
-                            <div>
-                                <span class="flex font-semibold text-gray-200 text-lg">{{ $data['user']->name }}</span>
-                                <span class="flex font-semibold text-orange-500 text-sm">{{ $data['position']->name }}</span>
+                            <div class="flex justify-between items-center mt-5">
+                                <div>
+                                    <span class="flex font-semibold text-gray-200 text-lg">{{ $data['user']->name }}</span>
+                                    <span
+                                        class="flex font-semibold text-orange-500 text-sm">{{ $data['position']->name }}</span>
+                                </div>
+                                @if (isset($childs[$data['position']->id]) && count($childs[$data['position']->id]) > 0)
+                                    <div class="flex space-x-3">
+                                        <span>
+                                            <svg class="fill-current text-white" width="20" height="20"
+                                                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                                <path
+                                                    d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z" />
+                                            </svg>
+                                        </span>
+                                    </div>
+                                @endif
                             </div>
-                            @if (isset($childs[$data['position']->id]) && count($childs[$data['position']->id]) > 0)
-                            <div class="flex space-x-3">
-                                <span>
-                                    <svg class="fill-current text-white" width="20" height="20" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                                        <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z" />
-                                    </svg>
-                                </span>
-                            </div>
-                            @endif
                         </div>
                     </div>
-                </div>
                 @endif
             @endforeach
         </div>

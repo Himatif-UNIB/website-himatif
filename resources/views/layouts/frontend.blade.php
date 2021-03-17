@@ -31,7 +31,6 @@
     @endif
 
     @include('includes.style')
-    @yield('style-after')
 
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 
@@ -43,7 +42,7 @@
     <div class="bg-dark-blue relative">
         <div class="container mx-auto px-6 lg:px-28 py-6 overflow-hidden lg:overflow-visible">
 
-            @include('includes.navbar')
+            <x-site.top-navbar />
 
             @yield('inner-content')
         </div>
@@ -51,12 +50,15 @@
 
     @yield('outer-content')
 
-    @include('includes.footer')
+    <x-site.footer />
+    <x-site.bottom-navbar />
 
-    @include('includes.bottom-navbar')
-
-    @include('includes.script')
-    @yield('script-after')
+    <script src="{{ asset('js/main.js') }}"></script>
+    <script src="{{ asset('assets/themes/cork/js/libs/jquery-3.1.1.min.js') }}"></script>
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script>
+        AOS.init();
+    </script>
 
     @stack('custom_js')
 
@@ -80,5 +82,4 @@
         </script>
     @endif
 </body>
-
 </html>

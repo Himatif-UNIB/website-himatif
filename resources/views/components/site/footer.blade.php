@@ -2,7 +2,7 @@
 <div class="mt-64 py-24 bg-dark-blue border-t-2 border-dark-blue-200 overflow-hidden lg:overflow-visible">
     <div class="container mx-auto">
         <div class="flex items-center justify-center">
-            <img class="w-12 h-12 lg:w-48 lg:h-48" src="{{ getSiteLogo() }}" alt="">
+            <img class="w-2 h-2" src="{{ getSiteLogo() }}" alt="" style="width: 50px">
             <span class="text-white text-2xl lg:text-4xl font-serif ml-3">
                 {{ getSetting('siteName') }}
             </span>
