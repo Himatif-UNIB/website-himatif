@@ -33,15 +33,6 @@
         .tooltip:hover .tooltiptext {
             visibility: visible;
         }
-
-        .move-y-animation{
-            transition: 0.2s;
-        }
-
-        .move-y-animation:hover{
-            transform: translateY(-3px);
-        }
-
     </style>
 @endsection
 
@@ -95,7 +86,7 @@
                 <!-- START CONTENT -->
                 <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mt-16">
                     @foreach ($posts as $post)
-                        <div class="mb-12 border border-gray-50 rounded-xl p-2" data-aos="zoom-in-up">
+                        <div class="mb-12 border-2 border-gray-200 rounded-xl p-2 hover:shadow-md" data-aos="zoom-in-up">
                             <div class="w-full h-56 bg-gray-400 rounded-xl overflow-hidden">
                                 <a href="{{ route('blog.post', ['post' => $post->id, 'slug' => $post->slug]) }}">
                                     @isset($post->media[0])
@@ -141,7 +132,7 @@
                 data-aos-delay="500">
                 @forelse ($divisions as $item)
                     <div class="border-2 cursor-pointer hover:border-gray-400 transition duration-500 ease-in-out w-64 h-64 lg:w-80 lg:h-80 rounded-3xl p-5 mb-5 flex flex-wrap content-center
-                                                                            @if (isset($headOfDivisions[$item->id])) modal-open @endif"
+                        @if (isset($headOfDivisions[$item->id])) modal-open @endif"
                         data-division-id="{{ $item->id }}">
                         @isset($item->media[0])
                             <img class="mx-auto" src="{{ $item->media[0]->getFullUrl() }}" alt="{{ $item->name }}"
