@@ -221,12 +221,12 @@
                             <br>
                             File yang akan diimpor harus sesuai dengan contoh <i>template berikut</i>.
                         </div>
-    
+
                         <div class="text-center mt-2 mb-3">
                             <a href="{{ asset('uploads/template-import-anggota.xlsx') }}"
                                 class="btn btn-info btn-sm">Download Template</a>
                         </div>
-    
+
                         <div>
                             <ol>
                                 <li>
@@ -239,7 +239,7 @@
                                 </li>
                             </ol>
                         </div>
-    
+
                         <div class="form-group" id="import-file-field">
                             <label for="select-file">Pilih File:</label>
                             <input type="file" name="file" id="select-file" class="form-control" required="required">
@@ -256,7 +256,7 @@
 
                             <div class="invalid-feedback force-feedback"></div>
                         </div>
-    
+
                         <div class="alert alert-info">
                             Proses impor akan membutuhkan beberapa waktu, jangan tutup <i>pop up</i> ini sebelum proses impor selesai.
                         </div>
@@ -527,7 +527,7 @@
 
             deleteBtn.setAttribute('disabled', 'disabled');
             deleteBtn.innerHTML = '<i class="fa fa-spin fa-spinner"></i> Menghapus...';
-            
+
             fetch(`{{ route('api.members.destroy', false) }}/${delete_id}`, {
                 method: 'DELETE',
                 headers: {
@@ -604,7 +604,7 @@
                     editMemberNPMInput.value = res.npm;
 
                     loadForces(document.querySelector('#edit-member-force'), res.force_id);
-                    
+
                     $('#edit-modal').modal('show');
                 })
                 .catch(errors => {
@@ -651,7 +651,7 @@
                                 editMemberForceInput.classList.add('is-invalid');
                                 editMemberForceFeedback.innerHTML = validation.force_id[0]
                             }
-                            
+
                         }
                     } else if (res.success) {
                         editMemberBtn.innerHTML = '<i class="fa fa-check"></i> Berhasil!';

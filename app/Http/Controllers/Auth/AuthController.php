@@ -24,20 +24,20 @@ class AuthController extends Controller
 
     /**
      * Login user
-     * 
+     *
      * Method ini menangani permintaan login user.
      * User mengirimkan email dan password untuk login dan sistem
      * akan memeriksa email dan password tersebut.
      * Jika benar akan membuat token password yang
      * akan digunakan sebagai kredensial untuk mengakses API dan
      * mengembalikan JSON kredensial login (passport Token)
-     * 
+     *
      * @since   1.0.0
      * @author  mulyosyahidin95
-     * 
+     *
      * @method  POST
      * @param   $request
-     * 
+     *
      * @return  String  status login
      */
     public function login(Request $request)
@@ -74,7 +74,7 @@ class AuthController extends Controller
              * Jika login menggunakan NPM,
              * periksa apakah NPM terdaftar di table `members`
              * atau tidak.
-             * 
+             *
              * Jika iya, ambil data tabel `users` berdasarkan kolom `user_id`
              */
             $npm = $email;
@@ -124,16 +124,16 @@ class AuthController extends Controller
 
     /**
      * Logout user
-     * 
+     *
      * Method ini menangani permintaan logout user.
      * Method ini akan melakukan pengahapusan authentikasi dan
      * menghapus token passport yang didapatkan saat login.
-     * 
+     *
      * @since   1.0.0
      * @author  mulyosyahidin95
-     * 
+     *
      * @method  DELETE
-     * 
+     *
      * @return  String  Status logout
      */
     public function logout(Request $request)

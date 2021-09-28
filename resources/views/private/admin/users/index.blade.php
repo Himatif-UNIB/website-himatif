@@ -151,7 +151,7 @@
 
             deleteBtn.setAttribute('disabled', 'disabled');
             deleteBtn.innerHTML = '<i class="fa fa-spin fa-spinner"></i> Menghapus...';
-            
+
             fetch(`{{ route('api.users.destroy', false) }}/${delete_id}`, {
                 method: 'DELETE',
                 headers: {
