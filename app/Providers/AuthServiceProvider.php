@@ -32,5 +32,9 @@ class AuthServiceProvider extends ServiceProvider
         ResetPassword::createUrlUsing(function ($user, string $token) {
             return route('password.reset', $token);
         });
+
+        Gate::before(function ($user, $ability) {
+            return $user->hasRole('super_admin') ? true : null;
+        });
     }
 }

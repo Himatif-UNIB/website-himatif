@@ -25,4 +25,12 @@ class Form extends Model implements HasMedia
     {
         return $this->hasOne(User::class, 'id', 'user_id');
     }
+
+    public function userAlreadyAnswered()
+    {
+        return $this->answers()->where([
+            'ip_address' => request()->ip(),
+            'user_agent' => request()->header('User-Agent')
+        ]);
+    }
 }

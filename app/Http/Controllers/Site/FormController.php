@@ -13,15 +13,15 @@ class FormController extends Controller
 {
     /**
      * Menampilkan formulir
-     * 
+     *
      * Menampilkan formulir dari database berdasarkan
      * Id yang dipilih
-     * 
+     *
      * @param   Form    $form   Instance form yang akan diakses
-     * 
+     *
      * @since   1.0.0
      * @author  mulyosyahidin95
-     * 
+     *
      * @return  View\Factory@public.forms.show
      */
     public function show(Form $form)
@@ -34,6 +34,11 @@ class FormController extends Controller
         //status = 3 (ditutup admin), jangan boleh diakses
         if ($form->status == 3) {
             abort(410, 'Sayangnya, formulir tersebut sudah ditutup');
+        }
+
+        // jika user sudah pernah menjawab
+        if ($form->userAlreadyAnswered()->exists() && !request()->session()->has('success')) {
+            abort(410, 'Anda sudah menjawab form ini');
         }
 
         if ($form->closed_at != NULL && $form->closed_at < Carbon::now()) {
@@ -53,14 +58,14 @@ class FormController extends Controller
 
     /**
      * Simpan jawaban form
-     * 
+     *
      * Menyimpan jawaban form yang diisikan oleh user
-     * 
+     *
      * @param   Request $request    HTTP Request data
-     * 
+     *
      * @since   1.0.0
      * @author  mulyosyahidin95
-     * 
+     *
      * @return  redirectBack
      */
     public function store(Request $request)
@@ -81,7 +86,7 @@ class FormController extends Controller
         }
 
         $request->validate($validateFields);
-       
+
         $answer = new Form_answer;
         $answer->form_id = $form_id;
         $answer->ip_address = $request->getClientIp();
@@ -107,7 +112,7 @@ class FormController extends Controller
         if ($form->is_over_date) {
             //tampilkan peringatan jika user mengisi formulir melewati
             //batas waktu yang sudah ditentukan. Namun, data tetap disimpan
-            
+
             abort(410, 'Formulir ini sudah melewati batas waktu maksimal pengisian.');
         }
 
