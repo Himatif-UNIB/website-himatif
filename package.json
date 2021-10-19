@@ -20,5 +20,9 @@
         "resolve-url-loader": "^3.1.0",
         "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.0.2",
         "vue-template-compiler": "^2.6.12"
+    },
+    "dependencies": {
+        "laravel-echo": "^1.11.2",
+        "pusher-js": "^7.0.3"
     }
 }

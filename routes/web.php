@@ -1,5 +1,6 @@
 <?php
 
+use App\Events\AnswerCreated;
 use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\AdminController;

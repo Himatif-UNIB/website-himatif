@@ -34,6 +34,11 @@
                                     <tr>
                                         <td>{{ $item->id }}</td>
                                         <td>{{ $item->label }}</td>
+                                        @if ($item->name == 'super_admin')
+                                        <td>
+                                            <span class="badge badge-success mb-1">Bisa Melakukan Semuanya</span>
+                                        </td>
+                                        @else
                                         <td>
                                             @forelse ($item->permissions as $permission)
                                                 @if (\Str::contains($permission->name, 'create'))
@@ -52,6 +57,7 @@
                                                 -
                                             @endforelse
                                         </td>
+                                        @endif
                                         <td>
                                             <a href="{{ route('admin.users.permissions.edit', $item->id) }}"
                                                 class="btn btn-warning btn-sm"><i class="fa fa-edit"></i></a>
