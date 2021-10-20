@@ -13,9 +13,48 @@ type="text/css" />
     <div class="row layout-top-spacing" id="cancel-row">
         <div class="col-xl-12 col-lg-12 col-sm-12 mb-3">
             <div class="widget-content widget-content-area">
-                <h3>
-                    {{ $form->title }}
-                </h3>
+                <div class="d-flex align-items-center justify-content-between">
+                    <div>
+                        <h3 class="text-uppercase">
+                            {{ $form->title }}
+                        </h3>
+                    </div>
+                    <div>
+                        @if (count($form->answers) > 0)
+                        <a href="{{ route('admin.forms.answer.export', $form->id) }}" class="bs-tooltip" title="Download Excel" style="cursor: pointer;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 20 20" fill="currentColor" style="color: #12875E;">
+                                <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clip-rule="evenodd" />
+                              </svg>
+                        </a>
+                        @endif
+                        @if ($form->status == 2)
+                        <a href="{{ route('form.show', ['form' => $form->id, 'slug' => $form->slug]) }}" target="_blank" class="mx-2 bs-tooltip" title="Lihat Formulir" style="cursor: pointer; color: gray;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg><span class="icon-name"></span>
+                        </a>
+                        @endif
+                        <span class="custom-dropdown">
+                            <span class="dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-more-vertical"><circle cx="12" cy="12" r="1"></circle><circle cx="12" cy="5" r="1"></circle><circle cx="12" cy="19" r="1"></circle></svg>
+                            </span>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <a class="dropdown-item" href="{{ route('admin.forms.edit', $form->id) }}">Edit</a>
+                                <a class="dropdown-item" data-toggle="modal" data-target="#delete-modal" style="cursor:  pointer;">Hapus</a>
+                                <hr style="margin: 5px 5px;">
+
+                                @if (count($form->answers) > 0)
+                                <a href="{{ route('admin.forms.answers', $form->id) }}" class="dropdown-item" style="cursor: pointer;">Lihat Jawaban</a>
+                                @endif
+
+                                @if ($form->status == 2)
+                                <a class="dropdown-item" data-toggle="modal" data-target="#close-modal" style="cursor: pointer;">Tutup Formulir</a>
+                                @endif
+                                @if ($form->status == 3)
+                                <a class="dropdown-item" data-toggle="modal" data-target="#open-modal" style="cursor: pointer;">Buka Formulir</a>
+                                @endif
+                            </div>
+                        </span>
+                    </div>
+                </div>
 
                 @if (session()->has('success'))
                 <div class="text-success">
@@ -221,30 +260,8 @@ type="text/css" />
         </div>
     </div>
 </div>
-<div class="widget-footer text-right p-3">
-    @if ($form->status == 2)
-    <a href="{{ route('form.show', ['form' => $form->id, 'slug' => $form->slug]) }}" target="_blank" class="btn btn-info btn-sm">Lihat Formulir</a>
-    @endif
-    @if (count($form->answers) > 0)
-    <a href="{{ route('admin.forms.answer.export', $form->id) }}" class="btn btn-info btn-sm">Download
-        Jawaban</a>
-        <a href="{{ route('admin.forms.answers', $form->id) }}" class="btn btn-info btn-sm">Lihat
-            Jawaban</a>
-            @endif
-            @if ($form->status == 2)
-            <a href="#" data-toggle="modal" data-target="#close-modal"
-            class="btn btn-secondary btn-sm">Tutup Formulir</a>
-            @endif
-            @if ($form->status == 3)
-            <a href="#" data-target="#open-modal" data-toggle="modal" class="btn btn-success btn-sm">Buka
-                Formulir</a>
-                @endif
-                <a href="{{ route('admin.forms.edit', $form->id) }}" class="btn btn-warning btn-sm">Edit</a>
-                <a href="#" data-toggle="modal" data-target="#delete-modal" class="btn btn-danger btn-sm">Hapus</a>
-            </div>
         </div>
     </div>
-</div>
 </div>
 @endsection
 
