@@ -26,3 +26,9 @@ window.Echo = new Echo({
     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
     forceTLS: true
 });
+
+var channel = window.Echo.channel("answers");
+channel.listen("AnswerCreated", function(data) {
+    alert(JSON.stringify(data));
+    location.reload();
+});

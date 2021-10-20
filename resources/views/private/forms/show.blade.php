@@ -1,3 +1,4 @@
+
 @extends('layouts.admin')
 @section('title', $form->title)
 
@@ -172,7 +173,7 @@ type="text/css" />
         <div class="tab-pane fade" id="icon-answers" role="tabpanel"
         aria-labelledby="icon-answers-tab2">
         <div class="table-responsive">
-            <table class="table table-striped table-hover table-bordered">
+            <table class="table table-striped table-hover table-bordered" id="mytable">
                 <thead>
                     <tr>
                         @if (count($form->answers) > 0)
@@ -360,3 +361,7 @@ aria-hidden="true">
 </div>
 </div>
 @endsection
+
+@push('custom_js')
+<script src="/js/app.js"></script>
+@endpush

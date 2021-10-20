@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Site;
 
+use App\Events\AnswerCreated;
 use App\Http\Controllers\Controller;
 use App\Models\Form;
 use App\Models\Form_answer;
@@ -108,6 +109,8 @@ class FormController extends Controller
                     ->toMediaCollection('formUploadFile');
             }
         }
+
+        AnswerCreated::dispatch($form_question_answer);
 
         if ($form->is_over_date) {
             //tampilkan peringatan jika user mengisi formulir melewati

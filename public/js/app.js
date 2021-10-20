@@ -25578,6 +25578,11 @@ window.Echo = new laravel_echo__WEBPACK_IMPORTED_MODULE_0__["default"]({
   cluster: "ap1",
   forceTLS: true
 });
+var channel = window.Echo.channel("answers");
+channel.listen("AnswerCreated", function (data) {
+  alert(JSON.stringify(data));
+  location.reload();
+});
 
 /***/ }),
 
