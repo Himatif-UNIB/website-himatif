@@ -54,7 +54,7 @@
             </div>
 
         </div>
-        <img class="mt-16 lg:mt-0" src="{{ asset('assets/images/hero-img.png') }}" alt="" data-aos="zoom-in"
+        <img class="mt-16 lg:mt-0 w-4/5 mx-auto" src="{{ asset('assets/images/hero-img.png') }}" alt="" data-aos="zoom-in"
             data-aos-delay="600">
     </div>
     <!-- END JUMBOTRON -->
@@ -63,9 +63,8 @@
 @section('outer-content')
     <div class="container mx-auto px-6 lg:px-28 py-6 mt-28">
         <div class="lg:flex justify-between items-center">
-            <img src="{{ asset('assets/images/about-himatif.png') }}" class="mr-24" data-aos="fade-right"
-                data-aos-delay="700">
-            <div class="mt-12 md:mt-0" data-aos="fade-up">
+            <img src="{{ asset('assets/images/about-himatif.png') }}" class="mr-24 hidden md:block w-1/2" data-aos="fade-right" data-aos-delay="700">
+            <div class="mt-12 md:mt-0 w-full md:w-1/2" data-aos="fade-up">
                 <h2 class="text-center md:text-left text-dark-blue-800 text-2xl lg:text-4xl font-bold mb-6 mt-5 lg:mt-0">
                     Sekilas Tentang {{ getSetting('organizationName') }}
                 </h2>
