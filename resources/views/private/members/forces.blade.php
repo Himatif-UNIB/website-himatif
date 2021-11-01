@@ -336,7 +336,7 @@
 
             deleteBtn.setAttribute('disabled', 'disabled');
             deleteBtn.innerHTML = '<i class="fa fa-spin fa-spinner"></i> Menghapus...';
-            
+
             fetch(`{{ route('api.forces.destroy', false) }}/${delete_id}`, {
                 method: 'DELETE',
                 headers: {
@@ -412,7 +412,7 @@
                 .then(res => {
                     editForceNameInput.value = res.name;
                     editForceYearInput.value = res.year;
-                    
+
                     $('#edit-modal').modal('show');
                 })
                 .catch(errors => {

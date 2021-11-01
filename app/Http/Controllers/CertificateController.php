@@ -11,7 +11,7 @@ class CertificateController extends Controller
 {
     public function index()
     {
-        //  return view('private.certificates.index');
+         return view('private.certificates.index');
     }
 
     public function create()
