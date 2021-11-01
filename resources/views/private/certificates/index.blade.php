@@ -29,7 +29,10 @@
                     <div class="row">
                         <div class="col-md-6">
                             <h5 class="d-inline">Sertifikat Lomba</h5>
-                            <span class="badge badge-success ml-2"> 1 of 100 </span>
+                            @if ($batch)
+                                <span class="badge outline-badge-dark ml-2 badge-pills"> {{ $batch->processedJobs() }} completed out of {{ $batch->totalJobs }} </span>
+                                <span class="badge badge-dark ml-2 badge-pills"> {{ $batch->progress() }}% </span>
+                            @endif
                         </div>
                         <div class="col-md-6 text-right">
                             <span>
@@ -46,3 +49,15 @@
     </div>
 </div>
 @endsection
+
+@push('custom_js')
+    @if ($batch && $batch->progress() < 100)
+        <script>
+            window.setInterval('refresh()', 2000);
+
+            function refresh() {
+                window.location.reload()
+            }
+        </script>
+    @endif
+@endpush
