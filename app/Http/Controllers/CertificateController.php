@@ -11,18 +11,20 @@ class CertificateController extends Controller
 {
     public function index()
     {
-         return view('private.certificates.index');
+        //  return view('private.certificates.index');
     }
 
-    public function store()
+    public function create()
     {
-        $users = User::take(5)->get();
+         return view('private.certificates.create');
+    }
+
+    public function store(Request $request)
+    {
+        $users = User::take(2)->get();
 
         foreach ($users as $user) {
             SendCertificateJob::dispatch($user);
-            // $user->notify(new SendingCertificateNotification());
         }
-
-        // PDF::loadView('pdf.invoice');
     }
 }

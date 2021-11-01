@@ -2,13 +2,16 @@
 
 namespace App\Jobs;
 
-use App\Notifications\SendingCertificateNotification;
+use Barryvdh\DomPDF\Facade as PDF;
+use App\Mail\SendCertificate;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldBeUnique;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Queue\SerializesModels;
+use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Queue\SerializesModels;
+use Illuminate\Contracts\Queue\ShouldBeUnique;
+use App\Notifications\SendingCertificateNotification;
 
 class SendCertificateJob implements ShouldQueue
 {
@@ -33,6 +36,10 @@ class SendCertificateJob implements ShouldQueue
      */
     public function handle()
     {
-        $this->user->notify(new SendingCertificateNotification);
+        $pdf = PDF::loadView('emails.certificate.index', $this->user);
+
+        Mail::to($this->user->email)
+            ->send(new SendCertificate())
+            ->attachData($pdf->output(), "text.pdf");
     }
 }
