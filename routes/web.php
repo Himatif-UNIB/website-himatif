@@ -11,6 +11,7 @@ use App\Http\Controllers\Auth\GoogleAuthController;
 use App\Http\Controllers\Blog\CategoryController;
 use App\Http\Controllers\Blog\CommentController;
 use App\Http\Controllers\Blog\PostController;
+use App\Http\Controllers\CertificateController;
 use App\Http\Controllers\FormController;
 use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\HomeController;
@@ -110,6 +111,9 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'himatif-admin', 'as' => 'ad
         Route::put('/update', [SettingController::class, 'update'])->name('update');
         Route::get('/social-media', [SettingController::class, 'socialMedia'])->name('socials');
     });
+
+    Route::get('/certificates', [CertificateController::class, 'index'])->name('certificate.index');
+    Route::post('/certificates/{certificate}', [CertificateController::class, 'store'])->name('certificate.store');
 
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
     Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
