@@ -29,6 +29,5 @@ window.Echo = new Echo({
 
 var channel = window.Echo.channel("answers");
 channel.listen("AnswerCreated", function(data) {
-    alert(JSON.stringify(data));
     location.reload();
 });

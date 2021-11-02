@@ -25580,7 +25580,6 @@ window.Echo = new laravel_echo__WEBPACK_IMPORTED_MODULE_0__["default"]({
 });
 var channel = window.Echo.channel("answers");
 channel.listen("AnswerCreated", function (data) {
-  alert(JSON.stringify(data));
   location.reload();
 });
 
