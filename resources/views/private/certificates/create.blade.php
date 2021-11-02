@@ -82,8 +82,8 @@
                         <div class="widget-content widget-content-area">
                             <div class="row">
                                 <div class="col-md-6 col-sm-12 form-group">
-                                    <label for="title">Job Name <span class="text-danger font-weight-bold">*</span></label>
-                                    <input type="text" class="form-control" value="" id="title" name="title" required="required" maxlength="255" minlength="4">
+                                    <label for="job_name">Job Name <span class="text-danger font-weight-bold">*</span></label>
+                                    <input type="text" class="form-control" value="" id="job_name" name="job_name" required="required" maxlength="255" minlength="4">
                                 </div>
                                 <div class="col-md-6 col-sm-12 form-group">
                                     <label for="title">Subject Email <span class="text-danger font-weight-bold">*</span></label>

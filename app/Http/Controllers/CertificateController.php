@@ -6,7 +6,7 @@ use App\Models\User;
 use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Http\Request;
 use App\Jobs\SendCertificateJob;
-use App\Notifications\SendingCertificateNotification;
+use App\Models\JobBatch;
 use Illuminate\Support\Facades\Bus;
 
 class CertificateController extends Controller
@@ -18,7 +18,9 @@ class CertificateController extends Controller
             $batch = Bus::findBatch($request->batch_id);
         }
 
-         return view('private.certificates.index', compact('batch'));
+        $batches = JobBatch::latest()->get();
+
+         return view('private.certificates.index', compact('batch', 'batches'));
     }
 
     public function create()
@@ -28,7 +30,7 @@ class CertificateController extends Controller
 
     public function store(Request $request)
     {
-        $users = User::take(5)->get();
+        $users = User::take(2)->get();
 
         $jobs = [];
 
@@ -36,7 +38,7 @@ class CertificateController extends Controller
             $jobs[] = new SendCertificateJob($user);
         }
 
-        $batch = Bus::batch($jobs)->dispatch();
+        $batch = Bus::batch($jobs)->name($request->job_name)->dispatch();
 
         return redirect('/himatif-admin/certificates/?batch_id=' . $batch->id);
     }
