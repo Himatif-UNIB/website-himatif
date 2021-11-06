@@ -112,9 +112,10 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'himatif-admin', 'as' => 'ad
         Route::get('/social-media', [SettingController::class, 'socialMedia'])->name('socials');
     });
 
-    Route::get('/certificates', [CertificateController::class, 'index'])->name('certificate.index');
-    Route::get('/certificates/create', [CertificateController::class, 'create'])->name('certificate.create');
-    Route::post('/certificates', [CertificateController::class, 'store'])->name('certificate.store');
+    Route::get('/certificates', [CertificateController::class, 'index'])->name('certificates.index');
+    Route::post('/certificates', [CertificateController::class, 'store'])->name('certificates.store');
+    Route::get('/certificates/send', [CertificateController::class, 'send'])->name('certificates.send');
+    Route::get('/certificates/create', [CertificateController::class, 'create'])->name('certificates.create');
 
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
     Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');

@@ -6,6 +6,7 @@ use App\Models\User;
 use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Http\Request;
 use App\Jobs\SendCertificateJob;
+use App\Models\Certificate;
 use App\Models\JobBatch;
 use Illuminate\Support\Facades\Bus;
 
@@ -20,12 +21,19 @@ class CertificateController extends Controller
 
         $batches = JobBatch::latest()->get();
 
-         return view('private.certificates.index', compact('batch', 'batches'));
+        return view('private.certificates.index', compact('batch', 'batches'));
+    }
+
+    public function send()
+    {
+        $certificates = Certificate::latest()->get();
+
+        return view('private.certificates.send', compact('certificates'));
     }
 
     public function create()
     {
-         return view('private.certificates.create');
+        return view('private.certificates.create');
     }
 
     public function store(Request $request)
