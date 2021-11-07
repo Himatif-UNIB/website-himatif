@@ -7,6 +7,7 @@ use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Http\Request;
 use App\Jobs\SendCertificateJob;
 use App\Models\Certificate;
+use App\Models\Form;
 use App\Models\JobBatch;
 use Illuminate\Support\Facades\Bus;
 
@@ -27,8 +28,9 @@ class CertificateController extends Controller
     public function send()
     {
         $certificates = Certificate::latest()->get();
+        $forms = Form::with('questions')->latest()->get();
 
-        return view('private.certificates.send', compact('certificates'));
+        return view('private.certificates.send', compact('certificates', 'forms'));
     }
 
     public function create()

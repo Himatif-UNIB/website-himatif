@@ -11,6 +11,11 @@
         color: #445EDE;
         font-weight: bold
     }
+
+    .clicked-item{
+        border: #adff28 4px solid;
+        border-radius: 10px;
+    }
 </style>
 @endsection
 
@@ -43,10 +48,11 @@
                                     <div>
                                         <div class="card-body">
                                             <div class="row">
+                                                <input type="hidden" name="certificate_id" value="">
                                                 @forelse ($certificates as $certificate)
-                                                <div class="col-xl-6 col-lg-6 col-sm-12">
-                                                    <div class="position-relative">
-                                                        <img src="https://www.pixsy.com/wp-content/uploads/2021/04/ben-sweet-2LowviVHZ-E-unsplash-1.jpeg" height="125px" alt="" style="width: 100%; border-radius: 7px;">
+                                                <div class="col-xl-6 col-lg-6 col-sm-12 mb-3">
+                                                    <div class="position-relative certificate" id="{{ $certificate->id }}" style="cursor: pointer;">
+                                                        <img src="{{ asset('storage/' . $certificate->thumbnail) }}" height="125px" alt="" style="width: 100%; border-radius: 7px; object-fit: cover;">
                                                         <p class="position-absolute" style="right: 0px; top: 0px; color: white;">Lorem, ipsum dolor.</p>
                                                     </div>
                                                 </div>
@@ -62,21 +68,48 @@
                     </div>
                     <div class="col-xl-6 col-lg-6 col-sm-12">
                         <div class="widget-content widget-content-area">
-                            <div class="row">
-                                <div class="col-md-6 col-sm-12 form-group">
-                                    <label for="job_name">Job Name <span class="text-danger font-weight-bold">*</span></label>
-                                    <input type="text" class="form-control" value="" id="job_name" name="job_name" required="required" maxlength="255" minlength="4">
-                                </div>
-                                <div class="col-md-6 col-sm-12 form-group">
-                                    <label for="title">Subject Email <span class="text-danger font-weight-bold">*</span></label>
-                                    <input type="text" class="form-control" value="" id="title" name="title" required="required" maxlength="255" minlength="4">
-                                </div>
+                            <div class="form-group">
+                                <label for="job_name">Job Name <span class="text-danger font-weight-bold">*</span></label>
+                                <input type="text" class="form-control" value="" id="job_name" name="job_name" required="required" maxlength="255" minlength="4">
                             </div>
                             <div class="form-group">
-                                <label for="title">Job Name <span class="text-danger font-weight-bold">*</span></label>
-                                <input type="text" class="form-control" value="" id="title" name="title" required="required" maxlength="255" minlength="4">
+                                <label for="forms">Pilih Data Form <span class="text-danger font-weight-bold">*</span></label>
+                                <select class="form-control" value="" id="forms" name="forms" required="required">
+                                    <option disabled selected>Pilih Data</option>
+                                    @foreach ($forms as $form)
+                                        <option value="{{ $form->id }}">{{ \Str::limit($form->title, 35) }}</option>
+                                    @endforeach
+                                </select>
                             </div>
-                            <div class="text-right">
+                            <div class="row">
+                                <div class="col-md-4 col-sm-12">
+                                    <p><< Nama >></p>
+                                </div>
+                                <div class="col-md-4 col-sm-12">
+                                    <p>Map to column --></p>
+                                </div>
+                                <div class="col-md-4 col-sm-12">
+                                    <div class="input-group input-group-sm">
+                                        <select  class="form-control" name="name" id="form_questions_name">
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col-md-4 col-sm-12">
+                                    <p><< Email >></p>
+                                </div>
+                                <div class="col-md-4 col-sm-12">
+                                    <p>Map to column --></p>
+                                </div>
+                                <div class="col-md-4 col-sm-12">
+                                    <div class="input-group input-group-sm">
+                                        <select  class="form-control" name="email" id="form_questions_email">
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mt-3 text-right">
                                 <button class="btn btn-primary btn-md" type="submit">Save</button>
                             </div>
                         </div>
@@ -151,6 +184,42 @@
 @push('custom_js')
     <script>
         $(document).ready(function(){
+            $(document).on("click",".certificate", function () {
+                var clickedBtnID = $(this).attr('id'); // or var clickedBtnID = this.id
+                $('input[name="certificate_id"]').val(clickedBtnID)
+                $('.certificate').not(`#${clickedBtnID}`).removeClass('clicked-item')
+                $(`#${clickedBtnID}`).addClass('clicked-item')
+            });
+
+            $('#forms').change(function() {
+                let id = $(this).val()
+                $('#form_questions_name').empty()
+                $('#form_questions_email').empty()
+                $('#form_questions_name').append(`<option value="0" disabled selected>Processing...</option>`)
+                $('#form_questions_email').append(`<option value="0" disabled selected>Processing...</option>`)
+
+                $.ajax({
+                    type: 'GET',
+                    url: '/api/certificates/' + id,
+                    headers: {
+                        'Authorization': `Bearer ${passportAccessToken}`
+                    },
+                    success:function(response){
+                        var response = JSON.parse(response)
+                        console.log(response)
+                        $('#form_questions_name').empty()
+                        $('#form_questions_email').empty()
+                        $('#form_questions_name').append(`<option value="0" disabled selected>Select Name</option>`)
+                        $('#form_questions_email').append(`<option value="0" disabled selected>Select Email</option>`)
+
+                        response.forEach(element => {
+                            $('#form_questions_name').append(`<option value="${element['id']}">${element['question']}</option>`)
+                            $('#form_questions_email').append(`<option value="${element['id']}">${element['question']}</option>`)
+                        });
+                    }
+                })
+            })
+
             $('#certificate_type').change(function(){
                 let certificate_type = $('#certificate_type').find(':selected').val();
                 if (certificate_type == 'html') {

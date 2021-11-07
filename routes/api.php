@@ -50,5 +50,5 @@ Route::group(['middleware' => ['auth:api'], 'as' => 'api.'], function () {
         Route::apiResource('/gallery', GalleryController::class);
     });
 
-    Route::apiResource('/certificates', CertificateControlller::class)->only('store');
+    Route::apiResource('/certificates', CertificateControlller::class)->only('store', 'show');
 });

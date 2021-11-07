@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Certificate;
+use App\Models\Form_question;
 use Illuminate\Http\Request;
 
 class CertificateControlller extends Controller
@@ -65,7 +66,7 @@ class CertificateControlller extends Controller
      */
     public function show($id)
     {
-        //
+        echo json_encode(Form_question::where('form_id', $id)->get());
     }
 
     /**
