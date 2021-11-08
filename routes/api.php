@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\Api\Blog\CategoryController;
 use App\Http\Controllers\Api\Blog\CommentController;
-use App\Http\Controllers\Api\CertificateControlller;
+use App\Http\Controllers\Api\CertificateController;
 use App\Http\Controllers\Api\StaffController;
 use App\Http\Controllers\Api\DivisionController;
 use App\Http\Controllers\Api\ForceController;
@@ -50,5 +50,5 @@ Route::group(['middleware' => ['auth:api'], 'as' => 'api.'], function () {
         Route::apiResource('/gallery', GalleryController::class);
     });
 
-    Route::apiResource('/certificates', CertificateControlller::class)->only('store', 'show');
+    Route::apiResource('/certificates', CertificateController::class)->only('store', 'show');
 });

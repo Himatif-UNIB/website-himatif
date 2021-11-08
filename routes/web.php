@@ -169,3 +169,7 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'himatif-admin', 'as' => 'ad
 
 Route::get('/form/{form}-{slug}', [SiteFormController::class, 'show'])->name('form.show');
 Route::post('/form/{form}/submit', [SiteFormController::class, 'store'])->name('form.store');
+
+Route::get('certificate-test', function () {
+    return view('certificates.default');
+});

@@ -74,7 +74,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="forms">Pilih Data Form <span class="text-danger font-weight-bold">*</span></label>
-                                <select class="form-control" value="" id="forms" name="forms" required="required">
+                                <select class="form-control" value="" id="forms" name="form_id" required="required">
                                     <option disabled selected>Pilih Data</option>
                                     @foreach ($forms as $form)
                                         <option value="{{ $form->id }}">{{ \Str::limit($form->title, 35) }}</option>
@@ -144,7 +144,7 @@
                 <div class="modal-body" id="create_certificate_modal">
                     <div class="form-group">
                         <label for="title">Title<span class="text-danger font-weight-bold">*</span></label>
-                        <input type="text" class="form-control" id="title" name="title" required="required" maxlength="255" minlength="4">
+                        <input type="text" class="form-control" id="title" name="title" required="required" maxlength="255" minlength="4" autocomplete="off">
                         <span class="text-danger d-none" id="titleError"></span>
                     </div>
                     <div class="form-group">

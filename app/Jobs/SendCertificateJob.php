@@ -18,16 +18,17 @@ class SendCertificateJob implements ShouldQueue
 {
     use Batchable, Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    private $user;
+    private $email, $name;
 
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct($user)
+    public function __construct($email, $name)
     {
-        $this->user = $user;
+        $this->email = $email;
+        $this->name = $name;
     }
 
     /**
@@ -37,7 +38,10 @@ class SendCertificateJob implements ShouldQueue
      */
     public function handle()
     {
-        Mail::to($this->user->email)
-            ->send(new SendCertificate());
+        $pdf = PDF::loadView('certificates.default')->setPaper('a4', 'landscape');
+        $attachData = $pdf->output();
+
+        Mail::to($this->email)
+            ->send(new SendCertificate($this->name, $attachData));
     }
 }

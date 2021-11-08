@@ -67,7 +67,7 @@
                             <div class="col-md-6">
                                 <div class="row">
                                     <div class="col-6">
-                                        @if ($item->finished_at)
+                                        @if ($item->finished_at && !$item->pending_jobs && !$item->failed_jobs)
                                             <span class="dot dot-success mr-2 bs-tooltip" title="success"></span>
                                         @elseif ($item->pending_jobs != $item->total_jobs && $item->pending_jobs > 0)
                                             <span class="dot dot-warning mr-2 bs-tooltip" title="pending"></span>
@@ -81,7 +81,7 @@
                                     </div>
                                     <div class="col-6">
                                         @if ($batch)
-                                            @if ($batch->id == $item->id && $batch->progress() < 100)
+                                            @if ($batch->id == $item->id && $batch->progress() < 100 && !$batch->failedJobs)
                                                 <span class="ml-3 dashed-border">{{ $batch->processedJobs() }}  of {{ $batch->totalJobs }}</span>
                                                 <span class="badge badge-dark ml-2 badge-pills"> {{ $batch->progress() }}% </span>
                                             @endif
@@ -106,7 +106,7 @@
 @endsection
 
 @push('custom_js')
-    @if ($batch && $batch->progress() < 100)
+    @if ($batch && $batch->progress() < 100 && !$batch->failedJobs)
         <script>
             window.setInterval('refresh()', 2000);
 

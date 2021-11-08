@@ -7,9 +7,13 @@ use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Http\Request;
 use App\Jobs\SendCertificateJob;
 use App\Models\Certificate;
+use App\Models\CertificateUser;
 use App\Models\Form;
+use App\Models\Form_question;
+use App\Models\Form_question_answer;
 use App\Models\JobBatch;
 use Illuminate\Support\Facades\Bus;
+use Illuminate\Support\Facades\DB;
 
 class CertificateController extends Controller
 {
@@ -38,18 +42,36 @@ class CertificateController extends Controller
         return view('private.certificates.create');
     }
 
+    protected function getFormQuestionAnswer($data)
+    {
+         return Form_question_answer::where('question_id', $data)->get('answer');
+    }
+
     public function store(Request $request)
     {
-        $users = User::take(2)->get();
+        $names = $this->getFormQuestionAnswer($request->name);
+        $emails = $this->getFormQuestionAnswer($request->email);
 
-        $jobs = [];
+        DB::transaction(function () use ($names, $emails, $request) {
+            foreach ($names as $name) {
+                CertificateUser::create([
+                    'uuid' => uniqid(),
+                    'certificate_id' => $request->certificate_id,
+                    'user_name' => $name->answer
+                ]);
+            }
 
-        foreach ($users as $user) {
-            $jobs[] = new SendCertificateJob($user);
-        }
+            $jobs = [];
+            $i = 0;
 
-        $batch = Bus::batch($jobs)->name($request->job_name)->dispatch();
+            foreach ($emails as $email) {
+                $jobs[] = new SendCertificateJob($email->answer, $names[$i]->answer);
+                $i++;
+            }
 
-        return redirect('/himatif-admin/certificates/?batch_id=' . $batch->id);
+            $batch = Bus::batch($jobs)->name($request->job_name)->dispatch();
+
+            return redirect('/himatif-admin/certificates/?batch_id=' . $batch->id);
+        });
     }
 }
