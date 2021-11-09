@@ -9,5 +9,5 @@ class CertificateUser extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['uuid', 'certificate_id', 'order', 'user_name'];
+    protected $fillable = ['certificate_id', 'order', 'user_name'];
 }

@@ -12,15 +12,17 @@ class SendCertificate extends Mailable
     use Queueable, SerializesModels;
 
     private $name;
+    private $attachData;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($name)
+    public function __construct($name, $attachData)
     {
         $this->name = $name;
+        $this->attachData = $attachData;
     }
 
     /**
@@ -30,6 +32,7 @@ class SendCertificate extends Mailable
      */
     public function build()
     {
-        return $this->markdown('emails.certificates.default', ['name' => $this->name]);
+        return $this->markdown('emails.certificates.default', ['name' => $this->name])
+            ->attachData($this->attachData, 'certificate.pdf');
     }
 }

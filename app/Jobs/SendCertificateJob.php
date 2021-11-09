@@ -39,16 +39,16 @@ class SendCertificateJob implements ShouldQueue
      */
     public function handle()
     {
-        // $certificate_number = str_pad($this->order, 3, '0', STR_PAD_LEFT);
+        $certificate_number = str_pad($this->order, 3, '0', STR_PAD_LEFT);
 
-        // $pdf = PDF::loadView('certificates.default', [
-        //     'name' => $this->name,
-        //     'certificate_number' => $certificate_number
-        // ])->setPaper('a4', 'landscape');
+        $pdf = PDF::loadView('certificates.default', [
+            'name' => $this->name,
+            'certificate_number' => $certificate_number
+        ])->setPaper('a4', 'landscape');
 
-        // $attachData = $pdf->output();
+        $attachData = $pdf->output();
 
         Mail::to($this->email)
-            ->send(new SendCertificate($this->name));
+            ->send(new SendCertificate($this->name, $attachData));
     }
 }
