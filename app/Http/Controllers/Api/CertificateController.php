@@ -27,32 +27,17 @@ class CertificateController extends Controller
      */
     public function store(Request $request)
     {
-        if ($request->certificate_type == 'image') {
-            $validated = $request->validate([
-                'title' => 'required',
-                'file' => 'required|mimes:jpg,png,jpeg'
-            ]);
+        $validated = $request->validate([
+            'title' => 'required',
+            'file' => 'required|mimes:jpg,png,jpeg',
+            'number' => 'required'
+        ]);
 
-            $file_name = $request->file->getClientOriginalName();
-            $ext = pathinfo($file_name, PATHINFO_EXTENSION);
+        $file_name = $request->file->getClientOriginalName();
+        $ext = pathinfo($file_name, PATHINFO_EXTENSION);
 
-            $validated['thumbnail'] = $request->file->storeAs('thumbnail', uniqid() . '.' . $ext);
-            $validated['file'] = $request->file->storeAs('certificates', uniqid() . '.' . $ext);
+        $validated['file'] = $request->file->storeAs('certificates', uniqid() . '.' . $ext);
 
-        } elseif ($request->certificate_type == 'html') {
-            $validated = $request->validate([
-                'title' => 'required',
-                'file' => 'required|mimes:html',
-                'thumbnail' => 'required|mimes:jpg,png,jpeg'
-            ]);
-
-            $thumbnail_name = $request->thumbnail->getClientOriginalName();
-            $ext = pathinfo($thumbnail_name, PATHINFO_EXTENSION);
-
-            $validated['thumbnail'] = $request->file->storeAs('thumbnail', uniqid() . '.' . $ext);
-            $validated['file'] = $request->file->storeAs('certificates', uniqid() . '.blade.php');
-
-        }
         Certificate::create($validated);
 
         return redirect()->back();

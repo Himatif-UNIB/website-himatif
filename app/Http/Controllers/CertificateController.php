@@ -52,26 +52,22 @@ class CertificateController extends Controller
         $names = $this->getFormQuestionAnswer($request->name);
         $emails = $this->getFormQuestionAnswer($request->email);
 
-        DB::transaction(function () use ($names, $emails, $request) {
-            foreach ($names as $name) {
-                CertificateUser::create([
-                    'uuid' => uniqid(),
-                    'certificate_id' => $request->certificate_id,
-                    'user_name' => $name->answer
-                ]);
-            }
+        $jobs = [];
+        $i = 0;
 
-            $jobs = [];
-            $i = 0;
+        foreach ($emails as $email) {
+            $certificate = CertificateUser::create([
+                'certificate_id' => $request->certificate_id,
+                'order' => $i + 1,
+                'user_name' => $names[$i]->answer
+            ]);
 
-            foreach ($emails as $email) {
-                $jobs[] = new SendCertificateJob($email->answer, $names[$i]->answer);
-                $i++;
-            }
+            $jobs[] = new SendCertificateJob($email->answer, $names[$i]->answer, $certificate->order);
+            $i++;
+        }
 
-            $batch = Bus::batch($jobs)->name($request->job_name)->dispatch();
+        $batch = Bus::batch($jobs)->name($request->job_name)->dispatch();
 
-            return redirect('/himatif-admin/certificates/?batch_id=' . $batch->id);
-        });
+        return redirect('/himatif-admin/certificates/?batch_id=' . $batch->id);
     }
 }

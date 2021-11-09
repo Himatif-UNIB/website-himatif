@@ -21,14 +21,10 @@
             margin: 0;
     		height: 8.27in;
     		width: 11.69in;
-    		background-image: url("https://i.ibb.co/pw8CZRR/Screenshot-3.jpg");
+    		background-image: url("https://serving.photos.photobox.com/34305165aad6ee2f3126ebfb618e8ac148704fc7ec7a8145b83817b41a3498436defcd02.jpg");
     		background-size: 11.69in 8.27in; /* Not sure whether it works with DOMPDF. So, using a background of actual size. */
     		background-repeat: no-repeat;
             font-family: 'Mochiy Pop One'
-        }
-
-        .absolute {
-            margin-top: 275px;
         }
 
         .text-gray-800{
@@ -43,24 +39,18 @@
         .text-center{
             text-align: center;
         }
-
-        .qr-code{
-
-        }
     </style>
 
     <link href="https://fonts.googleapis.com/css2?family=Mochiy+Pop+One&display=swap" rel="stylesheet">
 </head>
 <body>
 
-    <div style="position: relative;">
-        <div style="width: 75px; height: 75px; background-color:black; position: absolute; top: -260px; left: 10px;">
-            lorem
-        </div>
+    <div class="text-center" style="margin-top: 140px;">
+        001/Sert/BIT/IT Expo
     </div>
 
-    <div class="w-full text-center">
-        <p class="absolute text-3xl text-gray-800">Wahyu Syahputra</p>
+    <div class="text-center">
+        <p class="text-3xl text-gray-800" style="margin-top: 100px;">Wahyu</p>
     </div>
 
 </body>

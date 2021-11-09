@@ -16,6 +16,7 @@ class CreateCertificateUsersTable extends Migration
         Schema::create('certificate_users', function (Blueprint $table) {
             $table->string('uuid')->primary();
             $table->foreignId('certificate_id')->constrained();
+            $table->integer('order');
             $table->string('user_name');
             $table->timestamps();
         });
@@ -28,6 +29,6 @@ class CreateCertificateUsersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('certificate_user');
+        Schema::dropIfExists('certificate_users');
     }
 }

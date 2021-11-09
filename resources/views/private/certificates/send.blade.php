@@ -52,7 +52,7 @@
                                                 @forelse ($certificates as $certificate)
                                                 <div class="col-xl-6 col-lg-6 col-sm-12 mb-3">
                                                     <div class="position-relative certificate" id="{{ $certificate->id }}" style="cursor: pointer;">
-                                                        <img src="{{ asset('storage/' . $certificate->thumbnail) }}" height="125px" alt="" style="width: 100%; border-radius: 7px; object-fit: cover;">
+                                                        <img src="{{ asset('storage/' . $certificate->file) }}" height="125px" alt="" style="width: 100%; border-radius: 7px; object-fit: cover;">
                                                         <p class="position-absolute" style="right: 0px; top: 0px; color: white;">Lorem, ipsum dolor.</p>
                                                     </div>
                                                 </div>
@@ -127,34 +127,20 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalCenterTitle">Tambah Data Sertifikat</h5>
-                @if ($errors->any())
-                    <div class="alert alert-danger">
-                        <ul>
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                @endif
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
                 </button>
             </div>
             <form id="addForm" enctype="multipart/form-data">
                 <div class="modal-body" id="create_certificate_modal">
-                    <div class="form-group">
-                        <label for="title">Title<span class="text-danger font-weight-bold">*</span></label>
-                        <input type="text" class="form-control" id="title" name="title" required="required" maxlength="255" minlength="4" autocomplete="off">
-                        <span class="text-danger d-none" id="titleError"></span>
-                    </div>
-                    <div class="form-group">
-                        <label for="certificate_type">Certifcate Type<span class="text-danger font-weight-bold">*</span></label>
-                        <select class="form-control" id="certificate_type" name="certificate_type" required="required">
-                            <option value="image">image</option>
-                            <option value="html">html</option>
-                        </select>
-                    </div>
                     <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="title">Title<span class="text-danger font-weight-bold">*</span></label>
+                                <input type="text" class="form-control" id="title" name="title" required="required" maxlength="255" minlength="4" autocomplete="off">
+                                <span class="text-danger d-none" id="titleError"></span>
+                            </div>
+                        </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="file">File<span class="text-danger font-weight-bold">*</span></label>
@@ -162,13 +148,17 @@
                                 <span class="text-danger d-none" id="fileError"></span>
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <div class="form-group d-none" id="form_group_thumbnail">
-                                <label for="thumbnail">Thumbnail<span class="text-danger font-weight-bold">*</span></label>
-                                <input type="file" class="form-control" id="thumbnail" name="thumbnail">
-                                <span class="text-danger d-none" id="thumbnailError"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="number">Penomoran Sertifikat<span class="text-danger font-weight-bold">*</span></label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text" id="basic-addon7">001/</span>
                             </div>
+                            <input type="text" name="number" class="form-control" id="basic-url" aria-describedby="basic-addon3" placeholder="Sert/BIT/IT/Class/HIMATIF/FTeknik/UNIB/2021">
                         </div>
+                        <span class="text-danger d-none" id="numberError">qwe</span>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -219,15 +209,6 @@
                     }
                 })
             })
-
-            $('#certificate_type').change(function(){
-                let certificate_type = $('#certificate_type').find(':selected').val();
-                if (certificate_type == 'html') {
-                    $('#form_group_thumbnail').removeClass('d-none')
-                } else {
-                    $('#form_group_thumbnail').addClass('d-none')
-                }
-            });
 
             $('#addForm').on('submit', function(event) {
                 event.preventDefault();
