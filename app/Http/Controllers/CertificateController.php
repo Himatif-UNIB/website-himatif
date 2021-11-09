@@ -57,6 +57,7 @@ class CertificateController extends Controller
 
         foreach ($emails as $email) {
             $certificate = CertificateUser::create([
+                'uuid' => uniqid(),
                 'certificate_id' => $request->certificate_id,
                 'order' => $i + 1,
                 'user_name' => $names[$i]->answer

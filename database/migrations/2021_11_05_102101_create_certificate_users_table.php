@@ -18,6 +18,7 @@ class CreateCertificateUsersTable extends Migration
             $table->foreignId('certificate_id')->constrained();
             $table->integer('order');
             $table->string('user_name');
+            $table->string('file');
             $table->timestamps();
         });
     }
