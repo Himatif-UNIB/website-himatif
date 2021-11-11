@@ -39,11 +39,14 @@
                         <div class="widget-content widget-content-area br-6">
                             <div class="accordion-icons">
                                 <div class="card">
-                                    <div class="card-header m-3 d-flex justify-content-between">
-                                        <h5 class="">Pilih Sertifikat</h5>
-                                        <button type="button" class="btn btn-sm btn-rounded btn-outline-primary d-inline" data-toggle="modal" data-target="#exampleModalCenter">
-                                            Tambah
-                                        </button>
+                                    <div class="card-header m-3">
+                                        <div class="d-flex justify-content-between">
+                                            <h5 class="">Pilih Sertifikat</h5>
+                                            <button type="button" class="btn btn-sm btn-rounded btn-outline-primary d-inline" data-toggle="modal" data-target="#exampleModalCenter">
+                                                Tambah
+                                            </button>
+                                        </div>
+                                        <p>Sertifikat : <span id="certificate_name">-</span> </p>
                                     </div>
                                     <div>
                                         <div class="card-body">
@@ -109,6 +112,9 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="d-flex mt-3 ml-1" id="total_answers">
+
+                            </div>
                             <div class="mt-3 text-right">
                                 <button class="btn btn-primary btn-md" type="submit">Save</button>
                             </div>
@@ -154,7 +160,7 @@
                         <label for="number">Penomoran Sertifikat<span class="text-danger font-weight-bold">*</span></label>
                         <div class="input-group">
                             <div class="input-group-prepend">
-                              <span class="input-group-text" id="basic-addon7">001/</span>
+                              <span class="input-group-text" id="basic-addon7">XXX/</span>
                             </div>
                             <input type="text" name="number" class="form-control" id="basic-url" aria-describedby="basic-addon3" placeholder="Sert/BIT/IT/Class/HIMATIF/FTeknik/UNIB/2021">
                         </div>
@@ -179,6 +185,20 @@
                 $('input[name="certificate_id"]').val(clickedBtnID)
                 $('.certificate').not(`#${clickedBtnID}`).removeClass('clicked-item')
                 $(`#${clickedBtnID}`).addClass('clicked-item')
+
+                $.ajax({
+                    type: 'GET',
+                    url: '/api/certificates/' + clickedBtnID,
+                    headers: {
+                        'Authorization': `Bearer ${passportAccessToken}`
+                    },
+                    success:function(response){
+                        var response = JSON.parse(response).title
+                        console.log(response);
+                        $('#certificate_name').text(response)
+                    }
+                })
+
             });
 
             $('#forms').change(function() {
@@ -190,17 +210,24 @@
 
                 $.ajax({
                     type: 'GET',
-                    url: '/api/certificates/' + id,
+                    url: '/api/form_questions/' + id,
                     headers: {
                         'Authorization': `Bearer ${passportAccessToken}`
                     },
                     success:function(response){
                         var response = JSON.parse(response)
-                        console.log(response)
+                        var total_answers = response.length
                         $('#form_questions_name').empty()
                         $('#form_questions_email').empty()
                         $('#form_questions_name').append(`<option value="0" disabled selected>Select Name</option>`)
                         $('#form_questions_email').append(`<option value="0" disabled selected>Select Email</option>`)
+
+                        $('#total_answers').html(`
+                            <span>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                            </span>
+                            <p class="text-sm ml-2">${total_answers} answers</p>
+                        `)
 
                         response.forEach(element => {
                             $('#form_questions_name').append(`<option value="${element['id']}">${element['question']}</option>`)

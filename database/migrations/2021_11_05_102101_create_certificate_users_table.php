@@ -14,7 +14,7 @@ class CreateCertificateUsersTable extends Migration
     public function up()
     {
         Schema::create('certificate_users', function (Blueprint $table) {
-            $table->string('uuid')->primary();
+            $table->id();
             $table->foreignId('certificate_id')->constrained();
             $table->integer('order');
             $table->string('user_name');

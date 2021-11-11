@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
-use App\Models\Certificate;
 use Illuminate\Http\Request;
+use App\Models\Form_question;
+use App\Http\Controllers\Controller;
 
-class CertificateController extends Controller
+class FormQuestionController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -26,20 +26,7 @@ class CertificateController extends Controller
      */
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'title' => 'required',
-            'file' => 'required|mimes:jpg,png,jpeg',
-            'number' => 'required'
-        ]);
-
-        $file_name = $request->file->getClientOriginalName();
-        $ext = pathinfo($file_name, PATHINFO_EXTENSION);
-
-        $validated['file'] = $request->file->storeAs('certificates', uniqid() . '.' . $ext);
-
-        Certificate::create($validated);
-
-        return redirect()->back();
+        //
     }
 
     /**
@@ -50,7 +37,7 @@ class CertificateController extends Controller
      */
     public function show($id)
     {
-        echo json_encode(Certificate::where('id', $id)->first());
+        echo json_encode(Form_question::where('form_id', $id)->get());
     }
 
     /**
