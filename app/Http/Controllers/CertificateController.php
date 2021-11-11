@@ -37,11 +37,6 @@ class CertificateController extends Controller
         return view('private.certificates.send', compact('certificates', 'forms'));
     }
 
-    public function create()
-    {
-        return view('private.certificates.create');
-    }
-
     protected function getFormQuestionAnswer($data)
     {
          return Form_question_answer::where('question_id', $data)->get('answer');
