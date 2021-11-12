@@ -60,7 +60,7 @@ class CertificateController extends Controller
             $certificate = Certificate::find($request->certificate_id);
 
             $jobs[] = new SendCertificateJob($email->answer, $names[$i]->answer,
-            $certificate_user->order, $certificate->file, $certificate->number
+            $certificate_user->order, $certificate->background_image, $certificate->number
             );
             $i++;
         }

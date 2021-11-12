@@ -21,7 +21,7 @@
             margin: 0;
     		height: 8.27in;
     		width: 11.69in;
-    		background-image: url({{ asset('storage/' . $certificate_image) }});
+    		background-image: url({{ asset('storage/' . $certificate_background_image) }});
     		background-size: 11.69in 8.27in; /* Not sure whether it works with DOMPDF. So, using a background of actual size. */
     		background-repeat: no-repeat;
             font-family: 'Mochiy Pop One'

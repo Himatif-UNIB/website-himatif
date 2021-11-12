@@ -18,19 +18,19 @@ class SendCertificateJob implements ShouldQueue
 {
     use Batchable, Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    private $email, $name, $order, $certificate_image, $certificate_number;
+    private $email, $name, $order, $certificate_background_image, $certificate_number;
 
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct($email, $name, $order, $certificate_image, $certificate_number)
+    public function __construct($email, $name, $order, $certificate_background_image, $certificate_number)
     {
         $this->email = $email;
         $this->name = $name;
         $this->order = $order;
-        $this->certificate_image = $certificate_image;
+        $this->certificate_background_image = $certificate_background_image;
         $this->certificate_number = $certificate_number;
     }
 
@@ -45,7 +45,7 @@ class SendCertificateJob implements ShouldQueue
 
         $pdf = PDF::loadView('certificates.default', [
             'name' => $this->name,
-            'certificate_image' => $this->certificate_image,
+            'certificate_background_image' => $this->certificate_background_image,
             'certificate_number' => $certificate_number,
         ])->setPaper('a4', 'landscape');
 

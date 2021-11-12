@@ -28,14 +28,14 @@ class CertificateController extends Controller
     {
         $validated = $request->validate([
             'title' => 'required',
-            'file' => 'required|mimes:jpg,png,jpeg',
+            'background_image' => 'required|mimes:jpg,png,jpeg',
             'number' => 'required'
         ]);
 
-        $file_name = $request->file->getClientOriginalName();
+        $file_name = $request->background_image->getClientOriginalName();
         $ext = pathinfo($file_name, PATHINFO_EXTENSION);
 
-        $validated['file'] = $request->file->storeAs('certificates', uniqid() . '.' . $ext);
+        $validated['background_image'] = $request->background_image->storeAs('certificates', uniqid() . '.' . $ext);
 
         Certificate::create($validated);
 

@@ -56,7 +56,7 @@
                                                 @forelse ($certificates as $certificate)
                                                 <div class="col-xl-6 col-lg-6 col-sm-12 mb-3">
                                                     <div class="position-relative certificate" id="{{ $certificate->id }}" style="cursor: pointer;">
-                                                        <img src="{{ asset('storage/' . $certificate->file) }}" height="125px" alt="" style="width: 100%; border-radius: 7px; object-fit: cover;">
+                                                        <img src="{{ asset('storage/' . $certificate->background_image) }}" height="125px" alt="" style="width: 100%; border-radius: 7px; object-fit: cover;">
                                                     </div>
                                                 </div>
                                                 @empty
@@ -156,8 +156,8 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="file">File<span class="text-danger font-weight-bold">*</span></label>
-                                <input type="file" class="form-control" id="file" name="file" required="required">
-                                <span class="text-danger d-none" id="fileError"></span>
+                                <input type="file" class="form-control" id="background_image" name="background_image" required="required">
+                                <span class="text-danger d-none" id="background_imageError"></span>
                             </div>
                         </div>
                     </div>
