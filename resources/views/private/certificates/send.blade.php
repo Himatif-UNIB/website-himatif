@@ -4,6 +4,7 @@
 @section('custom_head')
 
 <link href="{{ asset('assets/themes/cork/css/components/custom-modal.css') }}" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" type="text/css" href="{{ asset('assets/themes/cork/css/elements/alert.css') }}">
 
 <link href="{{ asset('assets/themes/cork/css/components/tabs-accordian/custom-accordions.css') }}" rel="stylesheet" type="text/css" />
 <style>
@@ -56,7 +57,6 @@
                                                 <div class="col-xl-6 col-lg-6 col-sm-12 mb-3">
                                                     <div class="position-relative certificate" id="{{ $certificate->id }}" style="cursor: pointer;">
                                                         <img src="{{ asset('storage/' . $certificate->file) }}" height="125px" alt="" style="width: 100%; border-radius: 7px; object-fit: cover;">
-                                                        <p class="position-absolute" style="right: 0px; top: 0px; color: white;">Lorem, ipsum dolor.</p>
                                                     </div>
                                                 </div>
                                                 @empty
@@ -140,6 +140,12 @@
             <form id="addForm" enctype="multipart/form-data">
                 <div class="modal-body" id="create_certificate_modal">
                     <div class="row">
+                        <div class="col-md-12">
+                            <div class="alert alert-light-info mb-4" role="alert">
+                                {{-- <button type="button" class="close" data-dismiss="alert" aria-label="Close"><svg> x </svg></button> --}}
+                                <strong>Info!</strong> Baca petunjuk untuk membuat sertifikat <a target="_blank" href="https://sneaky-entrance-2c3.notion.site/Membuat-Sertifikat-9691695c35144e138db0960c2bf0510c"><strong>disini.</strong></a>
+                            </div>
+                        </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="title">Title<span class="text-danger font-weight-bold">*</span></label>
@@ -216,7 +222,8 @@
                     },
                     success:function(response){
                         var response = JSON.parse(response)
-                        var total_answers = response.length
+                        var total_answers = response[0].form_question_answers_count
+                        console.log(total_answers);
                         $('#form_questions_name').empty()
                         $('#form_questions_email').empty()
                         $('#form_questions_name').append(`<option value="0" disabled selected>Select Name</option>`)
@@ -226,7 +233,7 @@
                             <span>
                                 <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
                             </span>
-                            <p class="text-sm ml-2">${total_answers} answers</p>
+                            <p class="text-sm ml-2">${total_answers} total answers</p>
                         `)
 
                         response.forEach(element => {

@@ -20,4 +20,9 @@ class Form_question extends Model
     {
         return $this->belongsTo(Form_question_answer::class);
     }
+
+    public function formQuestionAnswers()
+    {
+         return $this->hasMany(Form_question_answer::class, 'question_id');
+    }
 }

@@ -37,7 +37,7 @@ class FormQuestionController extends Controller
      */
     public function show($id)
     {
-        echo json_encode(Form_question::where('form_id', $id)->get());
+        echo json_encode(Form_question::where('form_id', $id)->withCount('formQuestionAnswers')->get());
     }
 
     /**

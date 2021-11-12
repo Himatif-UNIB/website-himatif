@@ -149,29 +149,42 @@
                         </a>
                     </li>
                 @endif
-                @if (current_user_can('send_certificate'))
-                    <li class="menu {{ __active('CertificateController', 'index') }}">
+            @endif
 
-                        <a href="{{ route('admin.certificates.index') }}"
-                            aria-expanded="{{ __displayAria('CertificateController', 'index') }}" class="dropdown-toggle">
-                            <div class="">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-award"><circle cx="12" cy="8" r="7"></circle><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline></svg>
-                                <span>Kelola Sertifikat</span>
-                            </div>
-                        </a>
-                    </li>
+            @if (current_user_can(['read_certificate', 'send_certificate']))
+                <li class="menu menu-heading">
+                    <div class="heading">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round" class="feather feather-minus">
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                        </svg>
+                        <span>MANAJEMEN Sertifikat</span>
+                    </div>
+                </li>
+                @if (current_user_can('read_certificate'))
+                <li class="menu {{ __active('CertificateController', 'index') }}">
+
+                    <a href="{{ route('admin.certificates.index') }}"
+                        aria-expanded="{{ __displayAria('CertificateController', 'index') }}" class="dropdown-toggle">
+                        <div class="">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-award"><circle cx="12" cy="8" r="7"></circle><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline></svg>
+                            <span>Kelola Sertifikat</span>
+                        </div>
+                    </a>
+                </li>
                 @endif
                 @if (current_user_can('send_certificate'))
-                    <li class="menu {{ __active('CertificateController', 'send') }}">
+                <li class="menu {{ __active('CertificateController', 'send') }}">
 
-                        <a href="{{ route('admin.certificates.send') }}"
-                            aria-expanded="{{ __displayAria('CertificateController', 'send') }}" class="dropdown-toggle">
-                            <div class="">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-award"><circle cx="12" cy="8" r="7"></circle><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline></svg>
-                                <span>Kirim Sertifikat</span>
-                            </div>
-                        </a>
-                    </li>
+                    <a href="{{ route('admin.certificates.send') }}"
+                        aria-expanded="{{ __displayAria('CertificateController', 'send') }}" class="dropdown-toggle">
+                        <div class="">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-award"><circle cx="12" cy="8" r="7"></circle><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline></svg>
+                            <span>Kirim Sertifikat</span>
+                        </div>
+                    </a>
+                </li>
                 @endif
             @endif
 

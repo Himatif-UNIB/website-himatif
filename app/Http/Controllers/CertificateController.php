@@ -51,13 +51,17 @@ class CertificateController extends Controller
         $i = 0;
 
         foreach ($emails as $email) {
-            $certificate = CertificateUser::create([
+            $certificate_user = CertificateUser::create([
                 'certificate_id' => $request->certificate_id,
                 'order' => $i + 1,
                 'user_name' => $names[$i]->answer
             ]);
 
-            $jobs[] = new SendCertificateJob($email->answer, $names[$i]->answer, $certificate->order);
+            $certificate = Certificate::find($request->certificate_id);
+
+            $jobs[] = new SendCertificateJob($email->answer, $names[$i]->answer,
+            $certificate_user->order, $certificate->file, $certificate->number
+            );
             $i++;
         }
 

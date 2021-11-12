@@ -21,7 +21,7 @@
             margin: 0;
     		height: 8.27in;
     		width: 11.69in;
-    		background-image: url("https://serving.photos.photobox.com/34305165aad6ee2f3126ebfb618e8ac148704fc7ec7a8145b83817b41a3498436defcd02.jpg");
+    		background-image: url({{ asset('storage/' . $certificate_image) }});
     		background-size: 11.69in 8.27in; /* Not sure whether it works with DOMPDF. So, using a background of actual size. */
     		background-repeat: no-repeat;
             font-family: 'Mochiy Pop One'
@@ -46,11 +46,11 @@
 <body>
 
     <div class="text-center" style="margin-top: 140px;">
-        001/Sert/BIT/IT Expo
+        {{ $certificate_number }}
     </div>
 
     <div class="text-center">
-        <p class="text-3xl text-gray-800" style="margin-top: 100px;">Wahyu</p>
+        <p class="text-3xl text-gray-800" style="margin-top: 100px;">{{ $name }}</p>
     </div>
 
 </body>
