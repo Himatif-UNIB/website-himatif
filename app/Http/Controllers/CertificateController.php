@@ -12,6 +12,7 @@ use App\Models\Form;
 use App\Models\Form_question;
 use App\Models\Form_question_answer;
 use App\Models\JobBatch;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\DB;
 
@@ -35,6 +36,14 @@ class CertificateController extends Controller
         $forms = Form::with('questions')->latest()->get();
 
         return view('private.certificates.send', compact('certificates', 'forms'));
+    }
+
+    public function retryBatch($batch_id)
+    {
+        // Artisan::call("queue:retry-batch {$batch_id}");
+        // Artisan::call("queue:work");
+
+        return redirect('/himatif-admin/certificates/?batch_id=' . $batch_id);
     }
 
     protected function getFormQuestionAnswer($data)

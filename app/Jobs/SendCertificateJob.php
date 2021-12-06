@@ -13,6 +13,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
 use App\Notifications\SendingCertificateNotification;
+use Exception;
 
 class SendCertificateJob implements ShouldQueue
 {
@@ -41,6 +42,8 @@ class SendCertificateJob implements ShouldQueue
      */
     public function handle()
     {
+        // throw new Exception();
+
         $certificate_number = str_pad($this->order, 3, '0', STR_PAD_LEFT) . '/' . $this->certificate_number;
 
         $pdf = PDF::loadView('certificates.default', [

@@ -78,6 +78,10 @@
                                         @endif
                                         <h6 class="d-inline">{{ $item->name }}</h6>
                                         <p class="d-inline-block">{{ \Str::limit($item->id, 13) }}</p>
+                                        <form action="{{ route('admin.certificates.retry_batch', $item->id) }}" method="post">
+                                            @csrf
+                                            <button type="submit" class="btn btn-sm">Retry job</button>
+                                        </form>
                                     </div>
                                     <div class="col-6">
                                         @if ($batch)
