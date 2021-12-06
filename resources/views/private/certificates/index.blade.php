@@ -67,11 +67,11 @@
                             <div class="col-md-6">
                                 <div class="row">
                                     <div class="col-6">
-                                        @if ($item->finished_at && !$item->pending_jobs && !$item->failed_jobs)
+                                        @if ($item->finished_at && !$item->pending_jobs)
                                             <span class="dot dot-success mr-2 bs-tooltip" title="success"></span>
                                         @elseif ($item->pending_jobs != $item->total_jobs && $item->pending_jobs > 0)
                                             <span class="dot dot-warning mr-2 bs-tooltip" title="pending"></span>
-                                        @elseif ($item->failed_jobs > 0)
+                                        @elseif ($item->failed_jobs > 0 && $item->pending_jobs)
                                             <span class="dot dot-danger mr-2 bs-tooltip" title="failed"></span>
                                         @else
                                             <span class="dot dot-secondary mr-2 bs-tooltip" title="draf"></span>

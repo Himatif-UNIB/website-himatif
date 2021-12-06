@@ -216,12 +216,12 @@
                     </div>
                 @endif
                 @empty
-                        
+
                 @endforelse
 
-                <div class="w-full h-auto px-6 py-5 bg-gray-100 rounded-md mt-4 text-center">
+                <div class="flex justify-center mt-4">
                     <input type="submit"
-                        class="font-semibold text-lg bg-orange-600 rounded-md px-6 py-1 text-white focus:outline-none"
+                        class="font-semibold text-lg bg-orange-600 rounded-md px-6 py-2 text-white focus:outline-none cursor-pointer"
                         value="Kirim Jawaban" />
                 </div>
         </form>

@@ -16,9 +16,9 @@
 
     <title>Form</title>
 </head>
-<body class="bg-dark-blue">
+<body class="bg-dark-blue min-h-screen">
 
-    <div class="flex h-screen items-center">
+    <div class="flex items-center">
         <div class="bg-gray-50 rounded-lg md:max-w-md mx-auto space-y-4 p-7 shadow-lg">
 
             <div class="flex justify-center relative">

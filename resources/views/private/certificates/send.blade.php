@@ -7,6 +7,8 @@
 <link rel="stylesheet" type="text/css" href="{{ asset('assets/themes/cork/css/elements/alert.css') }}">
 
 <link href="{{ asset('assets/themes/cork/css/components/tabs-accordian/custom-accordions.css') }}" rel="stylesheet" type="text/css" />
+
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 <style>
     table a {
         color: #445EDE;
@@ -77,7 +79,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="forms">Pilih Data Form <span class="text-danger font-weight-bold">*</span></label>
-                                <select class="form-control" value="" id="forms" name="form_id" required="required">
+                                <select class="form-control js-example-basic-single" value="" id="forms" name="form_id" required="required" style="padding: 5px;">
                                     <option disabled selected>Pilih Data</option>
                                     @foreach ($forms as $form)
                                         <option value="{{ $form->id }}">{{ \Str::limit($form->title, 35) }}</option>
@@ -184,6 +186,14 @@
 @endsection
 
 @push('custom_js')
+
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('.js-example-basic-single').select2();
+        });
+    </script>
+
     <script>
         $(document).ready(function(){
             $(document).on("click",".certificate", function () {
@@ -276,3 +286,7 @@
         })
     </script>
 @endpush
+
+@section('name')
+
+@endsection

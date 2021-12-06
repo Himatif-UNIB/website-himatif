@@ -40,8 +40,8 @@ class CertificateController extends Controller
 
     public function retryBatch($batch_id)
     {
-        // Artisan::call("queue:retry-batch {$batch_id}");
-        // Artisan::call("queue:work");
+        // After calling retry-batch, the queue:work command will do it again
+        Artisan::call("queue:retry-batch {$batch_id}");
 
         return redirect('/himatif-admin/certificates/?batch_id=' . $batch_id);
     }
