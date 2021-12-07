@@ -116,6 +116,7 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'himatif-admin', 'as' => 'ad
     Route::post('/certificates', [CertificateController::class, 'store'])->name('certificates.store');
     Route::get('/certificates/send', [CertificateController::class, 'send'])->name('certificates.send');
     Route::get('/certificates/create', [CertificateController::class, 'create'])->name('certificates.create');
+    Route::delete('/certificates/{id}', [CertificateController::class, 'destroy'])->name('certificates.delete');
     Route::post('/certificates/{batch_id}/retry-batch', [CertificateController::class, 'retryBatch'])->name('certificates.retry_batch');
 
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');

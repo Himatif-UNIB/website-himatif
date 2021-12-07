@@ -22,7 +22,7 @@ class CertificateController extends Controller
     {
         $this->middleware(['permission:create_certificate'])->only(['create', 'store']);
         $this->middleware(['permission:update_certificate'])->only(['edit', 'update']);
-        // $this->middleware(['permission:delete_certificate'])->only(['destroy']);
+        $this->middleware(['permission:delete_certificate'])->only(['destroy']);
         $this->middleware(['permission:read_certificate'])->only(['index', 'getFormQuestionAnswer']);
         $this->middleware(['permission:send_certificate'])->only(['send', 'retryBatch']);
     }
@@ -86,5 +86,12 @@ class CertificateController extends Controller
         $batch = Bus::batch($jobs)->name($request->job_name)->dispatch();
 
         return redirect('/himatif-admin/certificates/?batch_id=' . $batch->id);
+    }
+
+    public function destroy($batch_id)
+    {
+        JobBatch::find($batch_id)->delete();
+
+        return redirect()->back()->withSuccess('Berhasil menghapus job batch');
     }
 }
