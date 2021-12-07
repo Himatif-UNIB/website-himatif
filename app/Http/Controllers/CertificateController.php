@@ -18,6 +18,15 @@ use Illuminate\Support\Facades\DB;
 
 class CertificateController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['permission:create_certificate'])->only(['create', 'store']);
+        $this->middleware(['permission:update_certificate'])->only(['edit', 'update']);
+        // $this->middleware(['permission:delete_certificate'])->only(['destroy']);
+        $this->middleware(['permission:read_certificate'])->only(['index', 'getFormQuestionAnswer']);
+        $this->middleware(['permission:send_certificate'])->only(['send', 'retryBatch']);
+    }
+
     public function index(Request $request)
     {
         $batch = null;

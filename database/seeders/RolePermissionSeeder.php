@@ -57,6 +57,11 @@ class RolePermissionSeeder extends Seeder
             ['name' => 'create_form', 'label' => 'Menambah Formulir'], ['name' => 'read_form', 'label' => 'Melihat Formulir'], ['name' => 'update_form', 'label' => 'Mengubah Formulir'], ['name' => 'delete_form', 'label' => 'Menghapus Formulir'],
             ['name' => 'create_archive', 'label' => 'Menambah File dan Arsip'], ['name' => 'read_archive', 'label' => 'Melihat File dan Arsip'], ['name' => 'update_archive', 'label' => 'Mengubah File dan Arsip'], ['name' => 'delete_archive', 'label' => 'Menghapus File dan Arsip'],
             ['name' => 'create_gallery', 'label' => 'Menambah Galeri Foto'], ['name' => 'read_gallery', 'label' => 'Melihat Galeri Foto'], ['name' => 'update_gallery', 'label' => 'Mengubah Galeri Foto'], ['name' => 'delete_gallery', 'label' => 'Menghapus Galeri Foto'],
+            // ['name' => 'create_certificate', 'label' => 'Menambah Sertifikat'],
+            // ['name' => 'read_certificate', 'label' => 'Melihat Sertifikat'],
+            // ['name' => 'update_certificate', 'label' => 'Mengubah Sertifikat'],
+            // ['name' => 'delete_certificate', 'label' => 'Menghapus Sertifikat'],
+            // ['name' => 'send_certificate', 'label' => 'Mengirim Sertifikat'],
         ];
 
         foreach ($permissions as $item => $permission) {
@@ -203,7 +208,12 @@ class RolePermissionSeeder extends Seeder
             Permission::findByName('create_inventory'), Permission::findByName('read_inventory'), Permission::findByName('update_inventory'), Permission::findByName('delete_inventory'),
             Permission::findByName('create_form'), Permission::findByName('read_form'), Permission::findByName('update_form'), Permission::findByName('delete_form'),
             Permission::findByName('create_archive'), Permission::findByName('read_archive'),  Permission::findByName('update_archive'),  Permission::findByName('delete_archive'),
-            Permission::findByName('create_gallery'), Permission::findByName('read_gallery'),  Permission::findByName('update_gallery'),  Permission::findByName('delete_gallery')
+            Permission::findByName('create_gallery'), Permission::findByName('read_gallery'),  Permission::findByName('update_gallery'),  Permission::findByName('delete_gallery'),
+            // Permission::findByName('create_certificate'),
+            // Permission::findByName('read_certificate'),
+            // Permission::findByName('update_certificate'),
+            // Permission::findByName('delete_certificate'),
+            // Permission::findByName('send_certificate')
         ]);
 
         //berikan hak akses ke bendahara

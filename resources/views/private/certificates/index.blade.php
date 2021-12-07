@@ -67,25 +67,33 @@
                             <div class="col-md-6">
                                 <div class="row">
                                     <div class="col-6">
-                                        @if ($item->finished_at && !$item->pending_jobs)
-                                            <span class="dot dot-success mr-2 bs-tooltip" title="success"></span>
-                                        @elseif ($item->pending_jobs != $item->total_jobs && $item->pending_jobs > 0)
-                                            <span class="dot dot-warning mr-2 bs-tooltip" title="pending"></span>
-                                        @elseif ($item->failed_jobs > 0 && $item->pending_jobs)
-                                            <span class="dot dot-danger mr-2 bs-tooltip" title="failed"></span>
-                                        @else
-                                            <span class="dot dot-secondary mr-2 bs-tooltip" title="draf"></span>
-                                        @endif
-                                        <h6 class="d-inline">{{ $item->name }}</h6>
-                                        <p class="d-inline-block">{{ \Str::limit($item->id, 13) }}</p>
+                                        <div class="d-flex align-items-baseline">
+                                            @if ($item->finished_at && !$item->pending_jobs)
+                                                <span class="dot dot-success mr-2 bs-tooltip" title="success"></span>
+                                            @elseif ($item->pending_jobs != $item->total_jobs && $item->pending_jobs > 0)
+                                                <span class="dot dot-warning mr-2 bs-tooltip" title="pending"></span>
+                                            @elseif ($item->failed_jobs > 0 && $item->pending_jobs)
+                                                <span class="dot dot-danger mr-2 bs-tooltip" title="failed"></span>
+                                            @else
+                                                <span class="dot dot-secondary mr-2 bs-tooltip" title="draf"></span>
+                                            @endif
+                                            <h6 class="d-inline">{{ $item->name }}</h6>
+                                        </div>
+                                        <p>{{ \Str::limit($item->id, 13) }}</p>
+                                        @if($item->failed_jobs > 0 && $item->pending_jobs)
                                         <form action="{{ route('admin.certificates.retry_batch', $item->id) }}" method="post">
                                             @csrf
                                             <button type="submit" class="btn btn-sm">Retry job</button>
                                         </form>
+                                        @endif
                                     </div>
                                     <div class="col-6">
                                         @if ($batch)
-                                            @if ($batch->id == $item->id && $batch->progress() < 100 && !$batch->failedJobs)
+                                            @if (
+                                            $batch->id == $item->id && $batch->progress() < 100 && count($batch->failedJobIds) != 0
+                                            ||
+                                            $batch->id == $item->id && $batch->progress() < 100 && !$batch->failedJobs
+                                            )
                                                 <span class="ml-3 dashed-border">{{ $batch->processedJobs() }}  of {{ $batch->totalJobs }}</span>
                                                 <span class="badge badge-dark ml-2 badge-pills"> {{ $batch->progress() }}% </span>
                                             @endif
@@ -110,7 +118,11 @@
 @endsection
 
 @push('custom_js')
-    @if ($batch && $batch->progress() < 100 && !$batch->failedJobs)
+    @if (
+    $batch && $batch->progress() < 100 && count($batch->failedJobIds) != 0
+    ||
+    $batch && $batch->progress() < 100 && !$batch->failedJobs
+    )
         <script>
             window.setInterval('refresh()', 2000);
 
