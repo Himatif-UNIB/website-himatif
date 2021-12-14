@@ -15,6 +15,7 @@ use App\Models\JobBatch;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 
 class CertificateController extends Controller
 {
@@ -64,6 +65,15 @@ class CertificateController extends Controller
     {
         $names = $this->getFormQuestionAnswer($request->name);
         $emails = $this->getFormQuestionAnswer($request->email);
+
+        // check $emails is email
+        $validator = Validator::make($emails->toArray()[0], [
+            'answer' => 'email',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withError('Email yang dipilih tidak sesuai.');
+        }
 
         $jobs = [];
         $i = 0;

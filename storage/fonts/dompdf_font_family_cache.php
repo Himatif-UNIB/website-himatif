@@ -78,6 +78,6 @@
     'normal' => $rootDir . '/lib/fonts/DejaVuSerif',
   ),
   'mochiy pop one' => array(
-    'normal' => $fontDir . '/mochiy_pop_one_normal_2cf6e0806fc722404827a80e8a407a61',
+    'normal' => $fontDir . '/mochiy_pop_one_normal_456afe374056ec5d1d74d4701b5b4e03',
   ),
 ) ?>

@@ -30,6 +30,9 @@
                 <h3>
                     Kirim Sertifikat
                 </h3>
+                @if (session('error'))
+                    <div class="alert alert-danger">{{ session('error') }}</div>
+                @endif
             </div>
         </div>
 
