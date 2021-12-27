@@ -28,7 +28,7 @@
                                 data-toggle="tooltip" title="Ubah Struktur Pengurus">
                                 <i class="fas fa-edit"></i>
                             </a>
-                            <a href="#" class="btn btn-primary btn-sm d-none" data-toggle="modal" data-target="#add-modal">
+                            <a href="#" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#add-modal">
                                 <i class="fa fa-plus"></i>
                             </a>
                         </span>
@@ -94,7 +94,7 @@
                                 <div class="form-group" id="staff-position-field">
                                     <label for="staff-position">Jabatan:</label>
                                     <select class="form-control" id="staff-position" name="staff-position" required></select>
-                                
+
                                     <div class="invalid-feedback staff-position-feedback"></div>
                                 </div>
                             </div>
@@ -106,9 +106,9 @@
                                             <option value="{{ $role->name }}">{{ $role->label }}</option>
                                         @endforeach
                                     </select>
-        
+
                                     <span class="text-muted">Pilih role yang sesuai dengan jabatan</span>
-        
+
                                     <div class="invalid-feedback role-feedback"></div>
                                 </div>
                             </div>
@@ -161,7 +161,7 @@
                                 <div class="form-group" id="edit-staff-position-field">
                                     <label for="edit-staff-position">Jabatan:</label>
                                     <select class="form-control" id="edit-staff-position" name="staff-position" required></select>
-                                
+
                                     <div class="invalid-feedback edit-staff-position-feedback"></div>
                                 </div>
                             </div>
@@ -173,9 +173,9 @@
                                             <option value="{{ $role->name }}" class="{{ $role->name }}">{{ $role->label }}</option>
                                         @endforeach
                                     </select>
-        
+
                                     <span class="text-muted">Pilih role yang sesuai dengan jabatan</span>
-        
+
                                     <div class="invalid-feedback role-feedback"></div>
                                 </div>
                             </div>
@@ -517,7 +517,7 @@
 
             deleteBtn.setAttribute('disabled', 'disabled');
             deleteBtn.innerHTML = '<i class="fa fa-spin fa-spinner"></i> Menghapus...';
-            
+
             fetch(`{{ route('api.staffs.destroy', false) }}/${delete_id}`, {
                 method: 'DELETE',
                 headers: {

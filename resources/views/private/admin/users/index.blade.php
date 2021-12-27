@@ -16,6 +16,7 @@
             <div class="col-xl-12 col-lg-12 col-sm-12 mb-3">
                 <div class="widget-content widget-content-area">
                     <h3>Manajemen User</h3>
+                    <div class="alert alert-info">Jika ingin membuat user baru <a href="{{ route('admin.members') }}" style="color:  #4361ee;">klik</a> disini.</div>
                 </div>
             </div>
 
