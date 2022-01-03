@@ -26,7 +26,7 @@ class GalleryController extends Controller
     public function index()
     {
         $galleries = Picture_gallery::orderBy('created_at', 'DESC')->paginate();
-        
+
         return view('private.gallery.index', compact('galleries'));
     }
 
@@ -99,7 +99,7 @@ class GalleryController extends Controller
                 $galleryCategories[] = $item->id;
             }
         }
-        
+
         return view('private.gallery.edit', compact('categories', 'gallery', 'galleryCategories'));
     }
 
@@ -164,12 +164,12 @@ class GalleryController extends Controller
 
     /**
      * Halaman manajemen kategori
-     * 
+     *
      * Menampilkan halaman manajemen kategori album
-     * 
+     *
      * @since   1.0.0
      * @author  mulyosyahidin95
-     * 
+     *
      * @return View\Factory@private.gallery.categories
      */
     public function categories()

@@ -31,9 +31,17 @@
         <!-- START CONTENT -->
         <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mt-6">
             @forelse ($albums as $album)
+
+                @php
+                    $n = rand(0, 10);
+                @endphp
                 <a href="{{ route('galeri.detail', ['album' => $album->id, 'slug' => $album->slug]) }}" class="flex flex-col">
                     <div class="w-full h-52 rounded-lg overflow-hidden">
-                        <img class="w-full h-full object-cover" src="{{ asset('assets/images/bg-article.png') }}" alt="">
+                        @isset($album->media[0])
+                            <img src="{{ $album->media[$n]->getFullUrl() }}" class="card-img-top" alt="widget-card-2">
+                        @else
+                            <img src="{{ asset('assets/foto-galeri.png') }}" class="card-img-top" alt="widget-card-2">
+                        @endisset
                     </div>
                     <div class="w-full mt-2">
                         <p class="text-white font-medium">{{ $album->title }}</p>

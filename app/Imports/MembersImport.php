@@ -14,7 +14,7 @@ class MembersImport implements ToModel, WithHeadingRow
 {
     /**
      * @var   int $force_id
-     * 
+     *
      * ID angkatan yang akan diimport
      */
     private $force_id;

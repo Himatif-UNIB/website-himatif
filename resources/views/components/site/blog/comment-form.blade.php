@@ -6,6 +6,16 @@
 
             <div class="flex items-center space-x-5 mb-3">
                 <div>
+                    @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+
                     <span class="text-dark-blue-800 text-lg font-semibold mb-2">Komentar</span>
                 </div>
                 <div
@@ -102,6 +112,7 @@
             </div>
             <div class="text-center">
                 <button
+                    type="submit"
                     class="bg-orange-500 hover:bg-orange-600 font-bold py-1 px-4 rounded inline-flex items-center text-white">
                     Kirim
                 </button>

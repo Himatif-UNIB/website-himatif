@@ -230,7 +230,7 @@ type="text/css" />
             <tbody>
                 @foreach ($form->answers as $item)
                 <tr>
-                    <td>#{{ $item->id }}</td>
+                    <td>#{{ $loop->iteration }}</td>
                     <td>
                         {{ \Carbon\Carbon::parse($item->created_at)->format('d M Y H :i') }}
                     </td>
