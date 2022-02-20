@@ -27,10 +27,8 @@
 
         <div class="mt-8 px-5 lg:px-0 text-sm lg:text-base">
             <div class="flex flex-col space-y-2 lg:space-y-0 lg:flex-row items-center justify-center text-center space-x-2">
-                <span class="text-dark-blue-200">Copyright &#169; 2021 HIMATIF UNIB Designed & developed by
-                    <strong class="text-dark-blue-400">Notip.exe</strong>
+                <span class="text-dark-blue-200">Copyright &#169; 2022 HIMATIF UNIB.
                 </span>
-                <img class="w-5 h-5 animate-wiggle" src="{{ asset('assets/notip.png') }}" alt="">
             </div>
 
         </div>

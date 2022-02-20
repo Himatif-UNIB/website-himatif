@@ -42,7 +42,7 @@ class PermissionController extends Controller
      */
     public function permissions()
     {
-        $roles = Role::all();
+        $roles = Role::with(['permissions'])->get();
         $permissions = Permission::all();
 
         return view('private.admin.permissions.permissions', compact('roles', 'permissions'));

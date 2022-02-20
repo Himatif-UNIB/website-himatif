@@ -55,7 +55,7 @@ class AdminController extends Controller
                     'all' => Form::count(),
                     'answers' => Form_answer::count()
                 ],
-                'galleries' => Picture_gallery::paginate(10),
+                'galleries' => Picture_gallery::with(['media', 'categories'])->paginate(10),
                 'blog' => [
                     'post' => Blog_post::count(),
                     'comment' => Blog_comment::count(),
@@ -63,7 +63,7 @@ class AdminController extends Controller
                 ],
                 'latestPost' => (Blog_post::orderBy('created_at', 'DESC')->limit(1)->exists()) ?
                     Blog_post::orderBy('created_at', 'DESC')->limit(1)->first() : null,
-                'comments' => Blog_comment::where('status', 'approved')->limit(3)->get()
+                'comments' => Blog_comment::with(['post'])->where('status', 'approved')->limit(3)->get()
             ],
             'divisionStaffs' => $divisionStaffs,
             'admin' => [

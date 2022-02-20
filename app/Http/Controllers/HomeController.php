@@ -12,9 +12,9 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $divisions = Division::all();
+        $divisions = Division::with(['media'])->get();
 
-        $getChilds = Staff::with('position.division')->whereHas('position', function ($position) {
+        $getChilds = Staff::with(['position.division', 'user', 'user.member'])->whereHas('position', function ($position) {
             return $position->where('parent_id', '!=', null);
         })->where('period_id', getActivePeriod()->id)->get();
 
@@ -32,9 +32,10 @@ class HomeController extends Controller
         $childs = $grouped->all();
 
         $headOfDivisions = [];
-        $getHeadOfDivisions = Staff::with('user', 'position.division')->whereHas('position', function ($position) {
-            return $position->where('parent_id', null)->where('division_id', '!=', 'null');
-        })->where('period_id', getActivePeriod()->id)->get();
+        $getHeadOfDivisions = Staff::with(['user', 'position.division', 'user.media', 'user.member'])
+            ->whereHas('position', function ($position) {
+                return $position->where('parent_id', null)->where('division_id', '!=', 'null');
+            })->where('period_id', getActivePeriod()->id)->get();
 
         $collection = collect($getHeadOfDivisions);
         $grouped = $collection->groupBy('position.division.id');

@@ -22,7 +22,7 @@ class StaffController extends Controller
      */
     public function index()
     {
-        $staff = Staff::where('period_id', getActivePeriod()->id)->with('position', 'user.media')->get();
+        $staff = Staff::where('period_id', getActivePeriod()->id)->with(['position', 'user', 'user.media'])->get();
 
         $positionTemp = [];
         $n = 0;
@@ -37,7 +37,7 @@ class StaffController extends Controller
         $grouped = $collection->groupBy('position.order_level');
         $positions = $grouped->all();
 
-        $getChilds = Staff::whereHas('position', function ($position) {
+        $getChilds = Staff::with(['user', 'position'])->whereHas('position', function ($position) {
             return $position->where('parent_id', '!=', null);
         })->where('period_id', getActivePeriod()->id)->get();
 

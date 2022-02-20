@@ -37,7 +37,7 @@ class FormController extends Controller
      */
     public function index()
     {
-        $forms = Form::orderBy('created_at', 'DESC')->paginate();
+        $forms = Form::with(['answers'])->orderBy('created_at', 'DESC')->paginate();
 
         return view('private.forms.index', compact('forms'));
     }

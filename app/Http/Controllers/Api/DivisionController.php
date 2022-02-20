@@ -32,7 +32,7 @@ class DivisionController extends Controller
      */
     public function index()
     {
-        $divisions = Division::all();
+        $divisions = Division::with(['media'])->get();
         foreach ($divisions as $division) {
             $division->picture = isset($division->media[0]) ? $division->media[0]->getFullUrl() : NULL;
             unset($division->media);

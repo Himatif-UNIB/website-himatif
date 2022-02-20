@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Setting;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 
 if (!function_exists('getSetting')) {
@@ -19,15 +20,22 @@ if (!function_exists('getSetting')) {
      */
     function getSetting($key)
     {
-        if (DB::table('settings')->where('key', $key)->exists()) {
-            $setting = DB::table('settings')->select('value')
-                ->where('key', $key)
-                ->first();
+        if (Cache::get('setting_' . $key)) {
+            return Cache::get('setting_' . $key);
+        } else {
+            if (DB::table('settings')->where('key', $key)->exists()) {
+                $setting = DB::table('settings')->select('value')
+                    ->where('key', $key)
+                    ->first();
 
-            return $setting->value;
+                $value = $setting->value;
+                Cache::forever('setting_' . $key, $value);
+
+                return $value;
+            }
+
+            return NULL;
         }
-        
-        return "{KEY_NOT_DEFINED|$key}";
     }
 }
 
@@ -279,8 +287,7 @@ if (!function_exists('getProfilePicture')) {
     }
 }
 
-if (!function_exists('printUserName'))
-{
+if (!function_exists('printUserName')) {
     /**
      * Membuat nama panggilan
      * 
@@ -294,23 +301,24 @@ if (!function_exists('printUserName'))
      * 
      * @return Nama panggilan
      */
-    function printUserName($name) {
+    function printUserName($name)
+    {
         $nama = trim($name);
         $names = explode(' ', $name);
         if (count($names) == 1)
             return $nama;
-    
+
         $firstName = $names[0];
-    
+
         $backName = '';
         for ($i = 1; $i < count($names); $i++) {
-            $backName .= $names[$i] .' ';
+            $backName .= $names[$i] . ' ';
         }
         $backName = rtrim($backName);
         $backName = createAcronym($backName);
-    
-        $name = $firstName .' '. $backName;
-    
+
+        $name = $firstName . ' ' . $backName;
+
         return $name;
     }
 }
@@ -360,7 +368,7 @@ if (!function_exists('__displayAria')) {
             }
         } else if (isController($controller) && isAction($action)) {
             return 'true';
-        }  else if ($controller !== '' && $action === '') {
+        } else if ($controller !== '' && $action === '') {
             return isController($controller) ? 'true' : '';
         }
 
@@ -368,8 +376,7 @@ if (!function_exists('__displayAria')) {
     }
 }
 
-if ( ! function_exists('isEmail'))
-{
+if (!function_exists('isEmail')) {
     /**
      * Memberiksa apakah string adalah email
      * 
@@ -388,8 +395,7 @@ if ( ! function_exists('isEmail'))
     }
 }
 
-if ( ! function_exists('current_user_can'))
-{
+if (!function_exists('current_user_can')) {
     /**
      * Memeriksa apakah user dapat melakukan tindakan
      * 
@@ -425,8 +431,7 @@ if ( ! function_exists('current_user_can'))
                 }
 
                 return ($count > 0);
-            }
-            else if ($operand == 'AND') {
+            } else if ($operand == 'AND') {
                 foreach ($permissions as $permission) {
                     if (auth()->user()->can($permission)) {
                         $count += 1;
@@ -435,15 +440,13 @@ if ( ! function_exists('current_user_can'))
 
                 return (count($permissions) === $count);
             }
-        }
-        else {
+        } else {
             return auth()->user()->can($permissions);
         }
     }
 }
 
-if ( ! function_exists('getActivePeriod'))
-{
+if (!function_exists('getActivePeriod')) {
     /**
      * Mendapatkan data periode yang sedang aktif
      * 

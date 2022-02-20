@@ -79,7 +79,8 @@ class BlogController extends Controller
      */
     public function post(Blog_post $post = null, $slug = null)
     {
-        $comments = $post->comments()->where(['blog_comments.status' => 'approved', 'parent_id' => null])->get();
+        $comments = $post->comments()->with(['user', 'user.media', 'replies', 'replies.user'])
+            ->where(['blog_comments.status' => 'approved', 'parent_id' => null])->get();
 
         return view('public.blog.post', compact('post', 'comments'));
     }
