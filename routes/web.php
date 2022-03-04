@@ -43,7 +43,9 @@ use Illuminate\Support\Facades\Route;
     Frontend Route
 */
 
-Route::get('/', [HomeController::class, 'index'])->name('beranda');
+// Route::get('/', [HomeController::class, 'index'])->name('beranda');
+Route::get('/', fn () => view('others.cooming-soon.index'));
+
 Route::get('/modal/{divisionId}', [HomeController::class, 'modal'])->name('beranda.modal');
 
 Route::view('/form', 'form')->name('form');

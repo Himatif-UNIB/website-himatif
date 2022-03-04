@@ -2,18 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Blog_comment;
-use App\Models\Blog_post;
-use App\Models\Division;
-use App\Models\Force;
 use App\Models\Form;
-use App\Models\Form_answer;
-use App\Models\Member;
-use App\Models\Picture_gallery;
-use App\Models\Staff;
 use App\Models\User;
-use Spatie\Permission\Models\Permission;
+use App\Models\Force;
+use App\Models\Staff;
+use App\Models\Member;
+use App\Models\Division;
+use App\Models\Blog_post;
+use App\Models\Form_answer;
+use App\Models\Blog_comment;
+use App\Models\Picture_gallery;
 use Spatie\Permission\Models\Role;
+use Illuminate\Support\Facades\Auth;
+use Spatie\Permission\Models\Permission;
 
 class AdminController extends Controller
 {

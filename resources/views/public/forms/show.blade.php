@@ -49,7 +49,7 @@
             @forelse ($form->questions as $item)
                 @if ($item->type == 1)
                     {{-- Input text --}}
-                    <div class="w-full h-auto px-6 py-5 bg-gray-100 rounded-md">
+                    <div class="w-full mb-2 h-auto px-6 py-5 bg-gray-100 rounded-md">
                         <h3 class="text-lg font-semibold text-dark-blue-800">
                             <label for="question-{{ $item->id }}">
                                 {{ $item->question }}
@@ -68,7 +68,7 @@
 
                 @if ($item->type == 2)
                     {{-- Textarea --}}
-                    <div class="w-full h-auto px-6 py-5 bg-gray-100 rounded-md mt-4">
+                    <div class="w-full mb-2 h-auto px-6 py-5 bg-gray-100 rounded-md mt-4">
                         <h3 class="text-lg font-semibold text-dark-blue-800">
                             <label for="question-{{ $item->id }}">
                                 {{ $item->question }}
@@ -87,7 +87,7 @@
 
                 @if ($item->type == 3)
                     {{-- Input radio --}}
-                    <div class="w-full h-auto px-6 py-5 bg-gray-100 rounded-md mt-4">
+                    <div class="w-full mb-2 h-auto px-6 py-5 bg-gray-100 rounded-md mt-4">
                         <h3 class="text-lg font-semibold text-dark-blue-800">{{ $item->question }}</h3>
                         <div class="mt-4">
                             <div class="mt-2">
@@ -111,7 +111,7 @@
 
                 @if ($item->type == 4)
                     {{-- input checkbox --}}
-                    <div class="w-full h-auto px-6 py-5 bg-gray-100 rounded-md mt-4">
+                    <div class="w-full mb-2 h-auto px-6 py-5 bg-gray-100 rounded-md mt-4">
                         <h3 class="text-lg font-semibold text-dark-blue-800">{{ $item->question }}</h3>
                         <div class="mt-4 space-x-3">
 
@@ -129,7 +129,7 @@
                 @endif
 
                 @if ($item->type == 5)
-                    <div class="w-full h-auto px-6 py-5 bg-gray-100 rounded-md mt-4">
+                    <div class="w-full mb-2 h-auto px-6 py-5 bg-gray-100 rounded-md mt-4">
                         <h3 class="text-lg font-semibold text-dark-blue-800">Pertanyaan Tanpa Judul</h3>
                         <div class="mt-4">
                             <select name="question[{{ $item->id }}]" id="question-{{ $item->id }}"
@@ -145,7 +145,7 @@
                 @endif
 
                 @if ($item->type == 6)
-                    <div class="w-full h-auto px-6 py-5 bg-gray-100 rounded-md mt-4">
+                    <div class="w-full mb-2 h-auto px-6 py-5 bg-gray-100 rounded-md mt-4">
                         <h3 class="text-lg font-semibold text-dark-blue-800">
                             <label for="question-{{ $item->id }}">
                                 {{ $item->question }}
@@ -163,7 +163,7 @@
                 @endif
 
                 @if ($item->type == 7)
-                    <div class="w-full h-auto px-6 py-5 bg-gray-100 rounded-md mt-4">
+                    <div class="w-full mb-2 h-auto px-6 py-5 bg-gray-100 rounded-md mt-4">
                         <h3 class="text-lg font-semibold text-dark-blue-800">
                             <label for="question-{{ $item->id }}">
                                 {{ $item->question }}
@@ -181,7 +181,7 @@
                 @endif
 
                 @if ($item->type == 8)
-                    <div class="w-full h-auto px-6 py-5 bg-gray-100 rounded-md mt-4">
+                    <div class="w-full mb-2 h-auto px-6 py-5 bg-gray-100 rounded-md mt-4">
                         <h3 class="text-lg font-semibold text-dark-blue-800">
                             <label for="question-{{ $item->id }}">
                                 {{ $item->question }}
@@ -199,7 +199,7 @@
                 @endif
 
                 @if ($item->type == 9)
-                    <div class="w-full h-auto px-6 py-5 bg-gray-100 rounded-md mt-4">
+                    <div class="w-full mb-2 h-auto px-6 py-5 bg-gray-100 rounded-md mt-4">
                         <h3 class="text-lg font-semibold text-dark-blue-800">
                             <label for="question-{{ $item->id }}">
                                 {{ $item->question }}

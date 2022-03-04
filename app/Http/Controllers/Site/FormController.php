@@ -38,9 +38,9 @@ class FormController extends Controller
         }
 
         // jika user sudah pernah menjawab
-        if ($form->userAlreadyAnswered()->exists() && !request()->session()->has('success')) {
-            abort(410, 'Anda sudah menjawab form ini');
-        }
+        // if ($form->userAlreadyAnswered()->exists() && !request()->session()->has('success')) {
+        //     abort(410, 'Anda sudah menjawab form ini');
+        // }
 
         if ($form->closed_at != NULL && $form->closed_at < Carbon::now()) {
             abort(410, 'Sayangnya, formulir tersebut sudah ditutup');

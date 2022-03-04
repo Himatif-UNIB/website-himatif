@@ -33,7 +33,8 @@ class StaffController extends Controller
      */
     public function index()
     {
-        return ['data' => Staff::with(['user.member', 'position', 'period', 'position.division'])->get()];
+        return ['data' => Staff::with(['user.member', 'position', 'period', 'position.division'])
+            ->where('period_id', getActivePeriod()->id)->get()];
     }
 
     /**

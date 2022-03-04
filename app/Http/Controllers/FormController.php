@@ -90,6 +90,14 @@ class FormController extends Controller
         $form->max_fill_answer = $request->max_fill_answer;
         $form->save();
 
+        $id = $form->id;
+        $time = time();
+
+        $num_id = "{$id}_{$time}";
+        $num_id = base64_encode($num_id);
+        $form->num_id = $num_id;
+        $form->save();
+
         //$form->bitly_link = Bitly::getUrl(route('form.show', ['form' => $form->id, 'slug' => $form->slug]));
         //$form->save();
 

@@ -43,7 +43,7 @@ class StaffController extends Controller
             return $role->where('name', '!=', 'super_admin');
         })->get();
 
-        $staff = Staff::all();
+        $staff = Staff::where('period_id', getActivePeriod()->id)->get();
         
         $collectStaff = collect($staff);
         $groupedStaff = $collectStaff->groupBy('position_id');
