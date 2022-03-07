@@ -507,7 +507,6 @@
                     </ul>
                 </li>
 
-                @role('super_admin')
                 <li class="d-none menu {{ __active('SettingController', 'webmaster') }}">
                     <a href="{{ route('admin.settings.webmaster') }}"
                         aria-expanded="{{ __displayAria('SettingController', 'webmaster') }}" class="dropdown-toggle">
@@ -522,7 +521,6 @@
                         </div>
                     </a>
                 </li>
-                @endrole
             @endif
         </ul>
     </nav>

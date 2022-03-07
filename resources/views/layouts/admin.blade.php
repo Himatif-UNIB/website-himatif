@@ -26,6 +26,21 @@
     <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM STYLES -->
     @yield('custom_head')
     <!-- END PAGE LEVEL PLUGINS/CUSTOM STYLES -->
+
+    @if (getSetting('googleAnalyticsId'))
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id={{ getSetting('googleAnalyticsId') }}"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+
+            function gtag() {
+                dataLayer.push(arguments);
+            }
+            gtag('js', new Date());
+
+            gtag('config', '{{ getSetting('googleAnalyticsId') }}');
+        </script>
+    @endif
 </head>
 
 <body>
@@ -82,7 +97,6 @@
                     e.stopPropagation();
                 });
         });
-
     </script>
     <script src="{{ asset('assets/themes/cork/js/custom.js') }}"></script>
     <script src="{{ asset('assets/themes/cork/js/loader.js') }}"></script>
@@ -127,31 +141,11 @@
         $(function() {
             $('[data-toggle="tooltip"]').tooltip()
         });
-
     </script>
 
     <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
     @stack('custom_js')
     <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
-
-    @if (getSetting('googleAnalyticsId'))
-    <script>
-        (function(i, s, o, g, r, a, m) {
-            i['GoogleAnalyticsObject'] = r;
-            i[r] = i[r] || function() {
-                (i[r].q = i[r].q || []).push(arguments)
-            }, i[r].l = 1 * new Date();
-            a = s.createElement(o),
-                m = s.getElementsByTagName(o)[0];
-            a.async = 1;
-            a.src = g;
-            m.parentNode.insertBefore(a, m)
-        })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
-
-        ga('create', '{{ getSetting('googleAnalyticsId') }}', 'auto');
-        ga('send', 'pageview');
-    </script>
-    @endif
 </body>
 
 </html>
