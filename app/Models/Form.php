@@ -11,6 +11,12 @@ class Form extends Model implements HasMedia
 {
     use HasFactory, InteractsWithMedia;
 
+    public $casts = [
+        'max_fill_date' => 'datetime',
+        'closed_at' => 'datetime',
+        'publish_at' => 'datetime',
+    ];
+
     public function questions()
     {
         return $this->hasMany(Form_question::class);

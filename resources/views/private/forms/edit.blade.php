@@ -26,6 +26,11 @@
                     @method('PUT')
                     <input type="hidden" name="action" value="edit_form">
 
+                    @if (session()->has('success'))
+                        <input type="hidden" name="description" value="{{ $form->description }}">
+                        <input type="hidden" name="post_message" value="{{ $form->post_message }}">
+                    @endif
+
                     @if ($displayIdentity == true)
                         <div class="widget-content widget-content-area br-6 mb-2">
                             <div class="text-right">
@@ -148,22 +153,31 @@
                                             class="form-control field-type" data-id="{{ $item->id }}"
                                             required="required">
                                             <option disabled="disabled">Pilih:</option>
-                                            <option value="1" @if (old('question[' . $item->id . '][type]', $item->type) == 1) selected="selected" @endif>Jawaban pendek
+                                            <option value="1" @if (old('question[' . $item->id . '][type]', $item->type) == 1) selected="selected" @endif>
+                                                Jawaban pendek
                                             </option>
-                                            <option value="2" @if (old('question[' . $item->id . '][type]', $item->type) == 2) selected="selected" @endif>Jawaban panjang
+                                            <option value="2" @if (old('question[' . $item->id . '][type]', $item->type) == 2) selected="selected" @endif>
+                                                Jawaban panjang
                                             </option>
-                                            <option value="3" @if (old('question[' . $item->id . '][type]', $item->type) == 3) selected="selected" @endif>Pilihan ganda
+                                            <option value="3" @if (old('question[' . $item->id . '][type]', $item->type) == 3) selected="selected" @endif>
+                                                Pilihan ganda
                                             </option>
-                                            <option value="4" @if (old('question[' . $item->id . '][type]', $item->type) == 4) selected="selected" @endif>Pilihan centang
+                                            <option value="4" @if (old('question[' . $item->id . '][type]', $item->type) == 4) selected="selected" @endif>
+                                                Pilihan centang
                                             </option>
-                                            <option value="5" @if (old('question[' . $item->id . '][type]', $item->type) == 5) selected="selected" @endif>Dropdown
+                                            <option value="5" @if (old('question[' . $item->id . '][type]', $item->type) == 5) selected="selected" @endif>
+                                                Dropdown
                                             </option>
-                                            <option value="6" @if (old('question[' . $item->id . '][type]', $item->type) == 6) selected="selected" @endif>Tanggal</option>
-                                            <option value="7" @if (old('question[' . $item->id . '][type]', $item->type) == 7) selected="selected" @endif>Waktu</option>
-                                            <option value="8" @if (old('question[' . $item->id . '][type]', $item->type) == 8) selected="selected" @endif>Tanggal dan
+                                            <option value="6" @if (old('question[' . $item->id . '][type]', $item->type) == 6) selected="selected" @endif>
+                                                Tanggal</option>
+                                            <option value="7" @if (old('question[' . $item->id . '][type]', $item->type) == 7) selected="selected" @endif>
+                                                Waktu</option>
+                                            <option value="8"
+                                                @if (old('question[' . $item->id . '][type]', $item->type) == 8) selected="selected" @endif>Tanggal dan
                                                 Waktu
                                             </option>
-                                            <option value="9" @if (old('question[' . $item->id . '][type]', $item->type) == 9) selected="selected" @endif>Upload file
+                                            <option value="9"
+                                                @if (old('question[' . $item->id . '][type]', $item->type) == 9) selected="selected" @endif>Upload file
                                             </option>
                                         </select>
                                     </div>
@@ -279,7 +293,8 @@
                                 <div class="col-12 mt-2">
                                     <div class="text-right">
                                         <div class="form-group">
-                                            <input type="checkbox" name="question[0][is_required]" id="" value="1">
+                                            <input type="checkbox" class="is-required" data-is-required="form-0"
+                                                name="question[0][is_required]" id="" value="1">
                                             Kolom ini harus diisi?
                                         </div>
                                     </div>
@@ -577,6 +592,11 @@
             $(`.field-type`, cloneDiv).attr('data-id', newId);
             $(`.field-type`, cloneDiv).attr('name', `question[${newId}][type]`);
 
+            cloneDiv.find(`[data-is-required="form-${currentID}"]`).attr('data-is-required', `form-${newId}`);
+            $(`.is-required`, cloneDiv).attr('id', `require-${newId}`);
+            $(`.is-required`, cloneDiv).attr('name', `question[${newId}][is_required]`);
+            $(`.is-required`, cloneDiv).attr('data-id', newId);
+
             $('.new-field-container').append(cloneDiv);
         });
 
@@ -743,6 +763,5 @@
 
             containerMessage.appendChild(selectGroup)
         });
-
     </script>
 @endpush

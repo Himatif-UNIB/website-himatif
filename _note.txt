@@ -1,0 +1,12 @@
+# Perbaikan bug pada formulir
+- Tanggal: 07 Maret 2022
+- Author: @mulyosyahidin
+- Deskripsi: saat sebuah form sudah memiliki pertanyaan dan sudah ada jawaban, tetapi jika di edit dan
+    ditambah pertanyaan baru, maka semua jawaban yang lama malah terhapus.
+- Status: fix
+
+# Perbaikan bug pada pembuatan formulir baru
+- Tanggal: 07 Maret 2022
+- Author: @mulyosyahidin
+- Deskripsi: Pada saat membuat formulir baru, deskripsi dan post message terhapus
+- Status: fix

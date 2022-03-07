@@ -91,9 +91,9 @@ class FormController extends Controller
         $form->save();
 
         $id = $form->id;
-        $time = time();
+        $rand = rand(1, 99);
 
-        $num_id = "{$id}_{$time}";
+        $num_id = "{$id}_{$rand}";
         $num_id = base64_encode($num_id);
         $form->num_id = $num_id;
         $form->save();
@@ -181,30 +181,57 @@ class FormController extends Controller
                         ->toMediaCollection('formPicture');
                 }
 
-                if (count($form->questions) > 0) {
-                    $form->questions()->where('form_id', $form->id)->delete();
+                $question_id = [];
+                foreach ($form->questions as $question) {
+                    $question_id[] = $question->id;
+                }
+
+                foreach ($question_id as $old_question) {
+                    $type = $request->get('question')[$old_question]['type'];
+
+                    $question = Form_question::findOrFail($old_question);
+                    $question->question = $request->get('question')[$old_question]['title'];
+                    $question->type = $type;
+                    $question->is_required = isset($request->get('question')[$old_question]['is_required']);
+
+                    if ($type >= 3 && $type <= 5) {
+                        $question->multiple_options = json_encode($request->get('question')[$old_question]['multiple_options']);
+                    }
+
+                    if ($type == 9) {
+                        $fileRules = [
+                            'mimes' => explode(',', $request->get('question')[$old_question]['file_mimes']),
+                            'maxSize' => $request->get('question')[$old_question]['file_max_size'],
+                        ];
+
+                        $question->file_rules = json_encode($fileRules);
+                    }
+
+                    $question->save();
                 }
 
                 foreach ($request->question as $key => $question) {
-                    $formQuestion = new Form_question;
-                    $formQuestion->form_id = $form->id;
-                    $formQuestion->question = $question['title'];
-                    $formQuestion->type = $question['type'];
-                    $formQuestion->is_required = isset($question['is_required']) ? true : false;
-                    if ($question['type'] >= 3 && $question['type'] <= 5) {
-                        $formQuestion->multiple_options = json_encode($question['multiple_options']);
+                    if (!in_array($key, $question_id)) {
+                        $formQuestion = new Form_question;
+                        $formQuestion->form_id = $form->id;
+                        $formQuestion->question = $question['title'];
+                        $formQuestion->type = $question['type'];
+                        $formQuestion->is_required = isset($question['is_required']) ? true : false;
+                        if ($question['type'] >= 3 && $question['type'] <= 5) {
+                            $formQuestion->multiple_options = json_encode($question['multiple_options']);
+                        }
+
+                        if ($question['type'] == 9) {
+                            $fileRules = [
+                                'mimes' => explode(',', $question['file_mimes']),
+                                'maxSize' => $question['file_max_size']
+                            ];
+
+                            $formQuestion->file_rules = json_encode($fileRules);
+                        }
+
+                        $formQuestion->save();
                     }
-
-                    if ($question['type'] == 9) {
-                        $fileRules = [
-                            'mimes' => explode(',', $question['file_mimes']),
-                            'maxSize' => $question['file_max_size']
-                        ];
-
-                        $formQuestion->file_rules = json_encode($fileRules);
-                    }
-
-                    $formQuestion->save();
                 }
 
                 return redirect()
