@@ -90,12 +90,7 @@ class FormController extends Controller
         $form->max_fill_answer = $request->max_fill_answer;
         $form->save();
 
-        $id = $form->id;
-        $rand = rand(1, 99);
-
-        $num_id = "{$id}_{$rand}";
-        $num_id = base64_encode($num_id);
-        $form->num_id = $num_id;
+        $form->num_id = alphaID(time());
         $form->save();
 
         //$form->bitly_link = Bitly::getUrl(route('form.show', ['form' => $form->id, 'slug' => $form->slug]));
