@@ -37,7 +37,7 @@ class FormController extends Controller
      */
     public function index()
     {
-        $forms = Form::with(['answers'])->orderBy('created_at', 'DESC')->paginate();
+        $forms = Form::with(['answers'])->where('user_id', auth()->user()->id)->orderBy('created_at', 'DESC')->paginate();
 
         return view('private.forms.index', compact('forms'));
     }
@@ -93,8 +93,10 @@ class FormController extends Controller
         $form->num_id = alphaID(time());
         $form->save();
 
-        //$form->bitly_link = Bitly::getUrl(route('form.show', ['form' => $form->id, 'slug' => $form->slug]));
-        //$form->save();
+        if (config('app.env') == 'production') {
+            $form->bitly_link = Bitly::getUrl(route('form.show', ['form' => $form->id, 'slug' => $form->slug]));
+            $form->save();
+        }
 
         if ($request->hasFile('picture') && $request->file('picture')->isValid()) {
             $form->addMediaFromRequest('picture')
@@ -114,7 +116,10 @@ class FormController extends Controller
      */
     public function show(Form $form)
     {
-        //$isExpire =
+        if ($form->user_id != auth()->user()->id) {
+            abort(403, 'Akses tidak diizinkan. Form ini bukan milikmu!');
+        }
+
         return view('private.forms.show', compact('form'));
     }
 
@@ -126,6 +131,10 @@ class FormController extends Controller
      */
     public function edit(Form $form)
     {
+        if ($form->user_id != auth()->user()->id) {
+            abort(403, 'Akses tidak diizinkan. Form ini bukan milikmu!');
+        }
+
         return view('private.forms.edit', compact('form'))
             ->with(['displayIdentity' => true]);
     }
@@ -139,6 +148,10 @@ class FormController extends Controller
      */
     public function update(Request $request, Form $form)
     {
+        if ($form->user_id != auth()->user()->id) {
+            abort(403, 'Akses tidak diizinkan. Form ini bukan milikmu!');
+        }
+
         $action = $request->action;
 
         switch ($action) {
@@ -244,6 +257,10 @@ class FormController extends Controller
      */
     public function destroy(Form $form)
     {
+        if ($form->user_id != auth()->user()->id) {
+            abort(403, 'Akses tidak diizinkan. Form ini bukan milikmu!');
+        }
+
         if (count($form->questions) > 0) {
             $form->questions()->where('form_id', $form->id)->delete();
         }
@@ -272,6 +289,10 @@ class FormController extends Controller
      */
     public function answers(Form $form)
     {
+        if ($form->user_id != auth()->user()->id) {
+            abort(403, 'Akses tidak diizinkan. Form ini bukan milikmu!');
+        }
+
         return view('private.forms.answers', compact('form'));
     }
 
@@ -288,6 +309,10 @@ class FormController extends Controller
      */
     public function exportAnswer(Form $form)
     {
+        if ($form->user_id != auth()->user()->id) {
+            abort(403, 'Akses tidak diizinkan. Form ini bukan milikmu!');
+        }
+
         return Excel::download(new ExportFormAnswers($form->questions, $form->answers), 'Jawaban Formulir ' . $form->title . '.xlsx');
     }
 }

@@ -2,6 +2,7 @@
 @section('title', $form->title . ' - Edit Formulir')
 
 @section('custom_head')
+    <link rel="stylesheet" href="{{ asset('assets/plugins/air-datepicker/dist/css/datepicker.min.css') }}">
     <link rel="stylesheet" type="text/css"
         href="{{ asset('assets/plugins/@fortawesome/fontawesome-free/css/all.min.css') }}">
 @endsection
@@ -97,18 +98,18 @@
                                 <div class="row">
                                     <div class="col-md-6 col-sm-12">
                                         <div class="form-group">
-                                            <label for="auto-close">Otomatis tutup formulir pada:</label>
+                                            <label for="auto-close">Batas waktu pengisian formulir:</label>
                                             <input type="text"
                                                 class="form-control @error('max_fill_date') }} is-invalid @enderror"
-                                                id="auto-close" name="max_fill_date">
+                                                id="auto-close" name="max_fill_date" value="{{ old('max_fill_date', $form->max_fill_date) }}">
 
                                             @error('max_fill_date')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
                                                 </div>
                                             @enderror
-                                            <span class="text-muted">Kosongkan jika tidak ingin menutup formulir secara
-                                                otomatis</span>
+                                            <span class="text-muted">Formulir akan ditutup otomatis pada waktu
+                                                tersebut</span>
                                         </div>
                                     </div>
                                     <div class="col-md-6 col-sm-12">
@@ -327,6 +328,9 @@
 @endsection
 
 @push('custom_js')
+    <script src="{{ asset('assets/plugins/air-datepicker/dist/js/datepicker.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/air-datepicker/dist/js/i18n/datepicker.id.js') }}"></script>
+
     <script>
         $(document).on('change', '.field-type', function(e) {
             e.preventDefault();
@@ -763,5 +767,39 @@
 
             containerMessage.appendChild(selectGroup)
         });
+
+        $('#auto-close').datepicker({
+            language: 'id',
+            position: 'top left',
+            timepicker: true,
+            dateFormat: 'yyyy-mm-dd',
+            timeFormat: 'hh:ii',
+            minDate: new Date(),
+            closeButton: true,
+            onShow: function(dp, animationCompleted) {
+                if (!animationCompleted) {
+                    if (dp.$datepicker.find('button').html() === undefined) {
+                        /*ONLY when button don't existis*/
+                        dp.$datepicker.append(
+                            '<button type="button" class="btn btn-block btn-primary uk-button uk-button-default uk-button-small uk-width-1-1 uk-margin-small-bottom" disabled="disabled"><i class="fas fa-check"></i> OK</button>'
+                        );
+                        dp.$datepicker.find('button').click(function(event) {
+                            dp.hide();
+                        });
+                    }
+                }
+            },
+            onSelect: function(formattedDate, date, dp) {
+                if (formattedDate.length > 0) {
+                    dp.$datepicker.find('button').prop('disabled', false).removeClass('uk-button-default')
+                        .addClass('uk-button-primary');
+                } else {
+                    dp.$datepicker.find('button').prop('disabled', true).removeClass('uk-button-primary')
+                        .addClass('uk-button-default');
+                }
+            }
+        })
+            // .data('datepicker')
+            // .selectDate(new Date({{ $form->max_fill_date->format('Y') }}, {{ $form->max_fill_date->format('n') - 1 }}, {{ $form->max_fill_date->format('j') }}));
     </script>
 @endpush
