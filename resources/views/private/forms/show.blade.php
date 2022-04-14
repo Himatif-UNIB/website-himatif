@@ -5,6 +5,7 @@
     <link href="{{ asset('assets/themes/cork/css/components/tabs-accordian/custom-tabs.css') }}" rel="stylesheet"
         type="text/css" />
     <link href="{{ asset('assets/themes/cork/css/components/custom-modal.css') }}" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="{{ asset('assets/plugins/toastify-js/src/toastify.css') }}">
 @endsection
 
 @section('content')
@@ -263,7 +264,7 @@
                                                     <tr>
                                                         <td>#{{ $loop->iteration }}</td>
                                                         <td>
-                                                            {{ \Carbon\Carbon::parse($item->created_at)->format('d M Y H :i') }}
+                                                            {{ $item->created_at->translatedFormat('l, d M Y H:i') }}
                                                         </td>
                                                         @foreach ($item->answers as $answer)
                                                             <td>
@@ -418,5 +419,6 @@
 @endsection
 
 @push('custom_js')
-    <script src="/js/app.js"></script>
+    <script src="{{ url('js/app.js') }}"></script>
+    <script src="{{ asset('assets/plugins/toastify-js/src/toastify.js') }}"></script>
 @endpush

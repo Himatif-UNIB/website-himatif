@@ -61,7 +61,7 @@
                                     @endforeach
                                     <tr>
                                         <td>Waktu</td>
-                                        <td><strong>{{ \Carbon\Carbon::parse($item->created_at)->format('l, d M Y H:i') }}</strong></td>
+                                        <td><strong>{{ $item->created_at->translatedFormat('l, d M Y H:i') }}</strong></td>
                                     </tr>
                                     @if ($item->is_over_date || $item->is_over_answer)
                                         <tr>
@@ -79,6 +79,18 @@
                                             </td>
                                         </tr>
                                     @endif
+                                    <tr>
+                                        <td>
+                                            IP
+                                        </td>
+                                        <td><strong>{{ $item->ip_address }}</strong></td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            User Agent
+                                        </td>
+                                        <td><strong>{{ $item->user_agent }}</strong></td>
+                                    </tr>
                                 </table>
                             </div>
                         </div>

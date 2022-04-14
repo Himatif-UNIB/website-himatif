@@ -43,8 +43,8 @@ use Illuminate\Support\Facades\Route;
     Frontend Route
 */
 
-// Route::get('/', [HomeController::class, 'index'])->name('beranda');
-Route::get('/', fn () => view('others.cooming-soon.index'))->name('beranda');
+Route::get('/', [HomeController::class, 'index'])->name('beranda');
+// Route::get('/', fn () => view('others.cooming-soon.index'))->name('beranda');
 
 Route::get('/modal/{divisionId}', [HomeController::class, 'modal'])->name('beranda.modal');
 
