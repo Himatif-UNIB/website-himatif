@@ -66,7 +66,7 @@ class GoogleAuthController extends Controller
                  * cegah user mengubungkannya lagi.
                  */
                 return redirect()
-                    ->route('profile.edit')
+                    ->route('admin.profile.edit')
                     ->withError('Akun Google tersebut sudah terhubung dengan akun HIMATIF lain. Silahkan gunakan akun Google lain.');
             } else {
                 $name = $user->getName();
@@ -85,7 +85,7 @@ class GoogleAuthController extends Controller
                 }
 
                 return redirect()
-                    ->route('profile.edit')
+                    ->route('admin.profile.edit')
                     ->withSuccess('Berhasil menghubungkan dengan akun ' . $name);
             }
         } else {
@@ -146,7 +146,7 @@ class GoogleAuthController extends Controller
              * gagalkan tindakan ini. ~anak nakal
              */
             return redirect()
-                ->route('profile.edit')
+                ->route('admin.profile.edit')
                 ->withError('Akun HIMATIF kamu tidak terhubung ke Google.');
         }
 
