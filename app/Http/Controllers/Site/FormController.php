@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\Site;
 
-use App\Events\AnswerCreated;
-use App\Http\Controllers\Controller;
+use Carbon\Carbon;
 use App\Models\Form;
 use App\Models\Form_answer;
-use App\Models\Form_question_answer;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
+use App\Events\AnswerCreated;
+use App\Http\Controllers\Controller;
+use App\Models\Form_question_answer;
 
 class FormController extends Controller
 {
@@ -110,7 +110,7 @@ class FormController extends Controller
             }
         }
 
-        AnswerCreated::dispatch($form_question_answer);
+        AnswerCreated::dispatch($form->id);
 
         if ($form->is_over_date) {
             //tampilkan peringatan jika user mengisi formulir melewati

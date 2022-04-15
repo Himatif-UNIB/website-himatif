@@ -25972,7 +25972,28 @@ window.Echo = new laravel_echo__WEBPACK_IMPORTED_MODULE_0__["default"]({
 });
 var channel = window.Echo.channel("answers");
 channel.listen("AnswerCreated", function (data) {
-  location.reload();
+  var counter = document.querySelector("span.counter");
+  var current = counter.innerHTML;
+  counter.innerHTML = parseInt(current) + 1;
+  Toastify({
+    text: "Satu jawaban baru ditambahkan. Refresh untuk melihat.",
+    duration: 10000,
+    newWindow: true,
+    close: true,
+    gravity: "bottom",
+    // `top` or `bottom`
+    position: "right",
+    // `left`, `center` or `right`
+    stopOnFocus: true,
+    // Prevents dismissing of toast on hover
+    style: {
+      background: "linear-gradient(to right, #00b09b, #96c93d)"
+    },
+    onClick: function onClick() {
+      location.reload();
+    } // Callback after click
+
+  }).showToast();
 });
 
 /***/ }),

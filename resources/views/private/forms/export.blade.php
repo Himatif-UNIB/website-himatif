@@ -14,13 +14,13 @@
         @foreach ($answers as $item)
             <tr>
                 <td>{{ $n }}</td>
-                <td>{{ \Carbon\Carbon::parse($item->created_at)->format('l, d M Y H:i:s') }}</td>
+                <td>{{ $item->created_at->translatedFormat('l, d M Y H:i:s') }}</td>
                 <td>
                     @if ($item->is_over_date)
                         Melewati batas waktu
                     @endif
                     @if ($item->is_over_answer)
-                        Melewati batas jawaban
+                        Melewati batas waktu
                     @endif
                 </td>
 
