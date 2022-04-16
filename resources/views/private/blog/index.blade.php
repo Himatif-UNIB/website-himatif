@@ -70,7 +70,7 @@
                                 @foreach ($posts as $post)
                                     <tr>
                                         <td>
-                                            {{ $post->title }}
+                                            <a href="{{ route('admin.blog.posts.show', $post->id) }}">{{ $post->title }}</a>
                                             @if (count($post->categories) > 0)
                                                 <div class="mt-1">
                                                     @foreach ($post->categories as $category)
@@ -100,12 +100,8 @@
                                         <td>
                                             <div class="text-right">
                                                 @if (current_user_can('read_blog_post'))
-                                                <a href="{{ route('admin.blog.posts.show', $post->id) }}"
+                                                <a href="{{ route('blog.post', ['post' => $post->id, 'slug' => $post->slug]) }}" target="_blank"
                                                     class="btn btn-success btn-sm"><i class="fa fa-eye"></i></a>
-                                                @endif
-                                                @if (current_user_can('update_blog_post') && $post->user_id == auth()->user()->id)
-                                                <a href="{{ route('admin.blog.posts.edit', $post->id) }}"
-                                                    class="btn btn-info btn-sm"><i class="fa fa-edit"></i></a>
                                                 @endif
                                             </div>
                                         </td>

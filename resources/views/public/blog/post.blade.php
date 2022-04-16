@@ -106,7 +106,7 @@
         $(document).on('click', '.cancel-give-reply', function (e) {
             e.preventDefault();
 
-            replyToField.value = 0;
+            replyToField.value = null;
             giveReplyMessageContainer.classList.remove('mb-5');
             giveReplyMessageContainer.innerHTML = '';
         });

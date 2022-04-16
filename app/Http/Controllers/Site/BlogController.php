@@ -23,7 +23,7 @@ class BlogController extends Controller
      */
     public function index()
     {
-        $posts = Blog_post::orderBy('created_at', 'DESC')->paginate();
+        $posts = Blog_post::where('status', 'publish')->orderBy('created_at', 'DESC')->paginate();
         $categories = Blog_category::orderBy('name')->get();
 
         return view('public.blog.index', compact('posts', 'categories'));
@@ -55,7 +55,7 @@ class BlogController extends Controller
 
         $posts = Blog_post::with('categories')->whereHas('categories', function ($category) use ($id) {
             return $category->where('blog_categories.id', $id);
-        })->paginate();
+        })->where('status', 'publish')->paginate();
         $categories = Blog_category::orderBy('name')->get();
         $category = Blog_category::find($id);
 

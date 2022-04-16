@@ -18,7 +18,7 @@
 
                     <span class="text-dark-blue-800 text-lg font-semibold mb-2">Komentar</span>
                 </div>
-                <div
+                {{-- <div
                     class="bg-dark-blue-800 flex items-center text-white space-x-2 px-2 rounded-md text-sm py-1 cursor-pointer move-y-animation">
                     <span>
                         <svg class="stroke-current text-white" xmlns="http://www.w3.org/2000/svg" width="15" height="15"
@@ -27,8 +27,8 @@
                                 d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6" />
                         </svg>
                     </span>
-                    <span>Wahyu</span>
-                </div>
+                    <span>HIMATIF</span>
+                </div> --}}
             </div>
 
             @empty(old('reply_to'))
@@ -136,7 +136,7 @@
                                     d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6" />
                             </svg>
                         </span>
-                        <span>Wahyu</span>
+                        <span>Beri komentar sebagai {{ auth()->user()->name }}</span>
                     </div>
                 </div>
 
