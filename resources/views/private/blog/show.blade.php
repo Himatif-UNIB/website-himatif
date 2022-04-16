@@ -152,18 +152,20 @@
 
                 @if (current_user_can(['update_blog_post', 'delete_blog_post']) && $post->user_id == auth()->user()->id)
                     <div class="widget-content widget-content-area br-6">
+                        <a href="{{ route('blog.post', ['post' => $post->id, 'slug' => $post->slug]) }}" target="_blank"
+                            class="btn btn-success btn-sm"><i class="fa fa-eye"></i></a>
                         @if (current_user_can('update_blog_post') && $post->user_id == auth()->user()->id && $post->status != 'deleted')
                             <a href="{{ route('admin.blog.posts.edit', $post->id) }}" class="btn btn-info btn-md"
                                 data-toggle="tooltip" title="Edit Posting"><i class="fa fa-edit"></i></a>
                         @endif
                         @if (current_user_can('delete_blog_post') && $post->user_id == auth()->user()->id)
                             @if ($post->status == 'deleted')
-                                <a href="#" class="btn btn-warning btn-md" data-toggle="modal" data-target="#revert-modal"
+                                <a href="#" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#revert-modal"
                                     data-toggle="tooltip" title="Kembalikan Posting"><i class="fa fa-arrow-left"></i></a>
-                                <a href="#" class="btn btn-danger btn-md" data-toggle="modal" data-target="#delete-modal"
+                                <a href="#" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#delete-modal"
                                     data-toggle="tooltip" title="Hapus Posting"><i class="fa fa-trash"></i></a>
                             @else
-                                <a href="#" class="btn btn-danger btn-md" data-toggle="modal" data-target="#delete-modal"
+                                <a href="#" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#delete-modal"
                                     data-toggle="tooltip" title="Hapus Posting"><i class="fa fa-trash"></i></a>
                             @endif
                         @endif
