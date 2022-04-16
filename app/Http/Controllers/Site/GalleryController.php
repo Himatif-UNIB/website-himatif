@@ -10,7 +10,7 @@ class GalleryController extends Controller
 {
     public function index()
     {
-        $albums = Picture_gallery::with(['media'])->get();
+        $albums = Picture_gallery::with(['media'])->latest()->get();
 
         return view('public.galleries.index', compact('albums'));
     }
