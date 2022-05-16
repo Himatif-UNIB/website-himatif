@@ -71,7 +71,7 @@ class AdminController extends Controller
                 })
                     ->where('status', 'on_moderation')->count()
             ],
-            'forms' => Form::take(3)->withCount('answers')->get(),
+            'forms' => Form::where('user_id', $userId)->take(3)->withCount('answers')->get(),
             'secretary' => [
                 'forceCount' => Force::count(),
                 'memberCount' => Member::whereHas('memberUser')->count(),
@@ -89,7 +89,7 @@ class AdminController extends Controller
                     'comment' => Blog_comment::count(),
                     'commentModeration' => Blog_comment::where('status', 'on_moderation')->count()
                 ],
-                'galleries' => Picture_gallery::with(['media', 'categories'])->paginate(10),
+                'galleries' => Picture_gallery::where('user_id', $userId)->with(['media', 'categories'])->paginate(10),
                 'latestPost' => (Blog_post::orderBy('created_at', 'DESC')->limit(1)->exists()) ?
                     Blog_post::orderBy('created_at', 'DESC')->limit(1)->first() : null,
                 'comments' => Blog_comment::with(['post'])->where('status', 'approved')->limit(3)->get()
