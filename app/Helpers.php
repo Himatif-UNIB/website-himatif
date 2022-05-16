@@ -460,3 +460,21 @@ if (!function_exists('getActivePeriod')) {
         return DB::table('periods')->where('is_active', true)->first();
     }
 }
+
+if (!function_exists('getYoutubeID')) {
+    /**
+     * Mendapatkan ID dari video youtube
+     * 
+     * @since   1.0.0
+     * @author  mulyosyahidin95
+     * 
+     * @return  string   ID video
+     */
+    function getYoutubeID($url)
+    {
+        preg_match('%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^"&?/ ]{11})%i', $url, $match);
+        $youtube_id = $match[1];
+
+        return $youtube_id;
+    }
+}

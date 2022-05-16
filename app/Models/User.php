@@ -132,4 +132,19 @@ class User extends Authenticatable implements CanResetPassword, HasMedia
     {
         return $this->hasMany(Staff::class);
     }
+
+    /**
+     * Mendapatkan URL Foto profil
+     * 
+     * @since   1.0.0
+     * @author  mulyosyahidin95
+     * 
+     * @return  URL Foto profil
+     */
+    public function getAvatar()
+    {
+        return isset($this->media[0])
+            ? $this->getFirstMedia('avatars')
+            : asset('assets/images/avatar-1.png');
+    }
 }

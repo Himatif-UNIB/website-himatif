@@ -6,8 +6,9 @@ use App\Models\Showcase;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\Showcase_category;
-use Illuminate\Support\Facades\Storage;
 use Google_Service_Drive_Permission;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class ShowcaseController extends Controller
 {
@@ -25,7 +26,9 @@ class ShowcaseController extends Controller
      */
     public function index()
     {
-        //
+        $items = Showcase::where('user_id', Auth::user()->id)->with('category')->latest()->paginate();
+
+        return view('private.showcases.index', compact('items'));
     }
 
     /**
@@ -70,7 +73,7 @@ class ShowcaseController extends Controller
      */
     public function show(Showcase $showcase)
     {
-        //
+        return view('private.showcases.show', compact('showcase'));
     }
 
     /**
@@ -127,7 +130,7 @@ class ShowcaseController extends Controller
 
         if ($request->hasFile('file')) {
             if (!is_null($showcase->report_url)) {
-                Storage::disk('google')->delete($this->folderId .'/'. $showcase->report_url);
+                Storage::disk('google')->delete($this->folderId . '/' . $showcase->report_url);
             }
 
             $fileName = $showcase->id . '_' . $request->file('file')->getClientOriginalName();
@@ -146,7 +149,7 @@ class ShowcaseController extends Controller
                 ->where('extension', '=', pathinfo($fileName, PATHINFO_EXTENSION))
                 ->first();
 
-                $fileId = $file['basename'];
+            $fileId = $file['basename'];
 
             $service = Storage::disk('google')->getAdapter()->getService();
             $permission = new Google_Service_Drive_Permission();
@@ -173,6 +176,10 @@ class ShowcaseController extends Controller
      */
     public function destroy(Showcase $showcase)
     {
-        //
+        $showcase->delete();
+
+        return redirect()
+            ->to(route('admin.showcases.index'))
+            ->withSuccess('Berhasil menghapus karya');
     }
 }
