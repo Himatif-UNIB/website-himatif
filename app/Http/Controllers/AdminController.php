@@ -36,6 +36,7 @@ class AdminController extends Controller
         $role = Auth::user()->getRoleNames()[0];
         $userId = Auth::user()->id;
         $divisionStaffs = [];
+        $divisionName = null;
 
         if ($role == 'head_of_division') {
             $getHeadPositionId = Staff::where('user_id', $userId)
@@ -48,14 +49,15 @@ class AdminController extends Controller
             })
                 ->where('period_id', getActivePeriod()->id)
                 ->get();
-        }
 
-        $_getUserStaffId = Staff::where('period_id', getActivePeriod()->id)
+                $_getUserStaffId = Staff::where('period_id', getActivePeriod()->id)
             ->where('user_id', $userId)
             ->first()
             ->position_id;
-        $divisionName = Position::where('id', $_getUserStaffId)
-            ->with('division')->first()->division->name;
+
+            $divisionName = Position::where('id', $_getUserStaffId)
+                ->with('division')->first()->division->name;
+        }
 
         $data = [
             'divisionName' => $divisionName,
