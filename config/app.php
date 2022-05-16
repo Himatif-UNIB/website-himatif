@@ -184,6 +184,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         App\Providers\TelescopeServiceProvider::class,
         Laravel\Socialite\SocialiteServiceProvider::class,
+        App\Providers\GoogleDriveServiceProvider::class,
 
     ],
 

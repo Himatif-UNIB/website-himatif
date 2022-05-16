@@ -1,20 +1,22 @@
 <?php
 
-use App\Http\Controllers\Api\Blog\CategoryController;
-use App\Http\Controllers\Api\Blog\CommentController;
-use App\Http\Controllers\Api\CertificateController;
-use App\Http\Controllers\Api\StaffController;
-use App\Http\Controllers\Api\DivisionController;
-use App\Http\Controllers\Api\ForceController;
-use App\Http\Controllers\Api\FormQuestionController;
-use App\Http\Controllers\Api\Gallery\CategoryController as GalleryCategoryController;
-use App\Http\Controllers\Api\Gallery\GalleryController;
-use App\Http\Controllers\Api\MemberController;
-use App\Http\Controllers\Api\PeriodController;
-use App\Http\Controllers\Api\PositionController;
-use App\Http\Controllers\Api\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\Api\ForceController;
+use App\Http\Controllers\Api\StaffController;
+use App\Http\Controllers\Api\MemberController;
+use App\Http\Controllers\Api\PeriodController;
+use App\Http\Controllers\Api\DivisionController;
+use App\Http\Controllers\Api\PositionController;
+use App\Http\Controllers\Api\CertificateController;
+use App\Http\Controllers\Api\Blog\CommentController;
+use App\Http\Controllers\Api\FormQuestionController;
+use App\Http\Controllers\Api\Blog\CategoryController;
+use App\Http\Controllers\Api\Gallery\GalleryController;
+use App\Http\Controllers\Api\ShowcaseCategoryController;
+use App\Http\Controllers\Api\Gallery\CategoryController as GalleryCategoryController;
+use App\Http\Controllers\Api\ShowcaseController;
 
 /*
 |--------------------------------------------------------------------------
@@ -53,4 +55,12 @@ Route::group(['middleware' => ['auth:api'], 'as' => 'api.'], function () {
 
     Route::apiResource('/certificates', CertificateController::class)->only('store', 'show');
     Route::apiResource('/form_questions', FormQuestionController::class)->only('show');
+
+    Route::apiResource('/showcase_categories', ShowcaseCategoryController::class);
+    Route::apiResource('/showcases', ShowcaseController::class)->only(['update', 'destroy']);
+});
+
+Route::group(['prefix' => 'showcases'], function () {
+    Route::get('/', [ShowcaseController::class, 'index'])->name('showcases.index');
+    Route::get('/{showcase}', [ShowcaseController::class, 'show'])->name('showcases.show');
 });

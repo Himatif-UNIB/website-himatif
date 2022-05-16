@@ -41,7 +41,7 @@ class HomeController extends Controller
         $grouped = $collection->groupBy('position.division.id');
         $headOfDivisions = $grouped->all();
 
-        $posts = Blog_post::orderBy('created_at', 'DESC')->take(3)->get();
+        $posts = Blog_post::orderBy('created_at', 'DESC')->where('status', 'publish')->take(3)->get();
 
         return view('public.index', compact('divisions', 'childs', 'headOfDivisions', 'posts'));
     }

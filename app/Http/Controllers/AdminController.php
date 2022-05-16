@@ -32,11 +32,12 @@ class AdminController extends Controller
      */
     public function index()
     {
-        $role = auth()->user()->getRoleNames()[0];
+        $role = Auth::user()->getRoleNames()[0];
+        $userId = Auth::user()->id;
         $divisionStaffs = [];
 
         if ($role == 'head_of_division') {
-            $parent = auth()->user()->staffs[0]->position_id;
+            $parent = Auth::user()->staffs[0]->position_id;
 
             $divisionStaffs = Staff::whereHas('position', function ($position) use($parent) {
                 return $position->where('parent_id', $parent);
@@ -44,6 +45,17 @@ class AdminController extends Controller
         }
 
         $data = [
+            'blog' => [
+                'post' => Blog_post::where('user_id', $userId)->count(),
+                'comment' => Blog_comment::whereHas('post', function ($post) use ($userId) {
+                    return $post->where('user_id', $userId);
+                })->count(),
+                'commentModeration' => Blog_comment::whereHas('post', function ($post) use ($userId) {
+                    return $post->where('user_id', $userId);
+                })
+                ->where('status', 'on_moderation')->count()
+            ],
+            'forms' => Form::take(3)->withCount('answers')->get(),
             'secretary' => [
                 'forceCount' => Force::count(),
                 'memberCount' => Member::whereHas('memberUser')->count(),
@@ -56,12 +68,12 @@ class AdminController extends Controller
                     'all' => Form::count(),
                     'answers' => Form_answer::count()
                 ],
-                'galleries' => Picture_gallery::with(['media', 'categories'])->paginate(10),
                 'blog' => [
                     'post' => Blog_post::count(),
                     'comment' => Blog_comment::count(),
                     'commentModeration' => Blog_comment::where('status', 'on_moderation')->count()
                 ],
+                'galleries' => Picture_gallery::with(['media', 'categories'])->paginate(10),
                 'latestPost' => (Blog_post::orderBy('created_at', 'DESC')->limit(1)->exists()) ?
                     Blog_post::orderBy('created_at', 'DESC')->limit(1)->first() : null,
                 'comments' => Blog_comment::with(['post'])->where('status', 'approved')->limit(3)->get()

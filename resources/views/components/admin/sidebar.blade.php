@@ -29,78 +29,78 @@
             </li>
 
             @role('super_admin')
-            <li class="menu menu-heading">
-                <div class="heading">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                        class="feather feather-minus">
-                        <line x1="5" y1="12" x2="19" y2="12"></line>
-                    </svg>
-                    <span>MANAJEMEN HAK AKSES</span>
-                </div>
-            </li>
-
-            <li class="menu {{ __active('PermissionController', 'roles') }}">
-                <a href="{{ route('admin.users.roles') }}"
-                    aria-expanded="{{ __displayAria('PermissionController', 'roles') }}" class="dropdown-toggle">
-                    <div class="">
+                <li class="menu menu-heading">
+                    <div class="heading">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                            class="feather feather-users">
-                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                            <circle cx="9" cy="7" r="4"></circle>
-                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
-                            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                            class="feather feather-minus">
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
                         </svg>
-                        <span>Kelola <i>Role</i></span>
+                        <span>MANAJEMEN HAK AKSES</span>
                     </div>
-                </a>
-            </li>
-            <li class="menu {{ __active('PermissionController', ['permissions', 'edit']) }}">
-                <a href="{{ route('admin.users.permissions') }}"
-                    aria-expanded="{{ __displayAria('PermissionController', ['permissions', 'edit']) }}"
-                    class="dropdown-toggle">
-                    <div class="">
+                </li>
+
+                <li class="menu {{ __active('PermissionController', 'roles') }}">
+                    <a href="{{ route('admin.users.roles') }}"
+                        aria-expanded="{{ __displayAria('PermissionController', 'roles') }}" class="dropdown-toggle">
+                        <div class="">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                class="feather feather-users">
+                                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="9" cy="7" r="4"></circle>
+                                <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                            </svg>
+                            <span>Kelola <i>Role</i></span>
+                        </div>
+                    </a>
+                </li>
+                <li class="menu {{ __active('PermissionController', ['permissions', 'edit']) }}">
+                    <a href="{{ route('admin.users.permissions') }}"
+                        aria-expanded="{{ __displayAria('PermissionController', ['permissions', 'edit']) }}"
+                        class="dropdown-toggle">
+                        <div class="">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                class="feather feather-hash">
+                                <line x1="4" y1="9" x2="20" y2="9"></line>
+                                <line x1="4" y1="15" x2="20" y2="15"></line>
+                                <line x1="10" y1="3" x2="8" y2="21"></line>
+                                <line x1="16" y1="3" x2="14" y2="21"></line>
+                            </svg>
+                            <span>Kelola Hak Akses</span>
+                        </div>
+                    </a>
+                </li>
+
+                <li class="menu menu-heading">
+                    <div class="heading">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                            class="feather feather-hash">
-                            <line x1="4" y1="9" x2="20" y2="9"></line>
-                            <line x1="4" y1="15" x2="20" y2="15"></line>
-                            <line x1="10" y1="3" x2="8" y2="21"></line>
-                            <line x1="16" y1="3" x2="14" y2="21"></line>
+                            class="feather feather-minus">
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
                         </svg>
-                        <span>Kelola Hak Akses</span>
+                        <span>MANAJEMEN <i>USER</i></span>
                     </div>
-                </a>
-            </li>
+                </li>
 
-            <li class="menu menu-heading">
-                <div class="heading">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                        class="feather feather-minus">
-                        <line x1="5" y1="12" x2="19" y2="12"></line>
-                    </svg>
-                    <span>MANAJEMEN <i>USER</i></span>
-                </div>
-            </li>
-
-            <li class="menu {{ __active('UserController') }}">
-                <a href="{{ route('admin.users.index') }}" aria-expanded="{{ __displayAria('UserController') }}"
-                    class="dropdown-toggle">
-                    <div class="">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                            class="feather feather-users">
-                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                            <circle cx="9" cy="7" r="4"></circle>
-                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
-                            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-                        </svg>
-                        <span>Kelola <i>User</i></span>
-                    </div>
-                </a>
-            </li>
+                <li class="menu {{ __active('UserController') }}">
+                    <a href="{{ route('admin.users.index') }}" aria-expanded="{{ __displayAria('UserController') }}"
+                        class="dropdown-toggle">
+                        <div class="">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                class="feather feather-users">
+                                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="9" cy="7" r="4"></circle>
+                                <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                            </svg>
+                            <span>Kelola <i>User</i></span>
+                        </div>
+                    </a>
+                </li>
             @endrole
 
             @if (current_user_can(['create_form', 'read_form', 'update_form', 'delete_form']))
@@ -151,40 +151,123 @@
                 @endif
             @endif
 
-            @if (current_user_can(['read_certificate', 'send_certificate']))
+            @if (current_user_can(['create_showcase', 'read_showcase', 'update_showcase', 'delete_showcase']))
                 <li class="menu menu-heading">
-                    <div class="heading">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                    <div class="heading"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                             viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                             stroke-linecap="round" stroke-linejoin="round" class="feather feather-minus">
                             <line x1="5" y1="12" x2="19" y2="12"></line>
+                        </svg><span>SHOWCASE KARYA</span>
+                    </div>
+                </li>
+
+                @if (current_user_can(['read_showcase', 'update_showcase', 'delete_showcase']))
+                    <li class="menu {{ __active('ShowcaseController', ['index', 'show']) }}">
+                        <a href="{{ route('admin.showcases.index') }}"
+                            aria-expanded="{{ __displayAria('ShowcaseController', ['index', 'show']) }}"
+                            class="dropdown-toggle">
+                            <div class="">
+
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" class="feather feather-dribbble">
+                                    <circle cx="12" cy="12" r="10"></circle>
+                                    <path
+                                        d="M8.56 2.75c4.37 6.03 6.02 9.42 8.03 17.72m2.54-15.38c-3.72 4.35-8.94 5.66-16.88 5.85m19.5 1.9c-3.5-.93-6.63-.82-8.94 0-2.58.92-5.01 2.86-7.44 6.32">
+                                    </path>
+                                </svg>
+                                <span>Kelola Karya</span>
+                            </div>
+                        </a>
+                    </li>
+                @endif
+                @if (current_user_can('create_form'))
+                    <li class="menu {{ __active('ShowcaseController', ['create', 'edit']) }}">
+                        <a href="{{ route('admin.showcases.create') }}"
+                            aria-expanded="{{ __displayAria('ShowcaseController', ['create', 'edit']) }}"
+                            class="dropdown-toggle">
+                            <div class="">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" class="feather feather-plus-square">
+                                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                                    <line x1="12" y1="8" x2="12" y2="16"></line>
+                                    <line x1="8" y1="12" x2="16" y2="12"></line>
+                                </svg>
+                                <span>Upload Karya</span>
+                            </div>
+                        </a>
+                    </li>
+                @endif
+                @role('super_admin')
+                    <li class="menu {{ __active('ShowcaseCategoryController', 'index') }}">
+                        <a href="{{ route('admin.showcase-categories.index') }}"
+                            aria-expanded="{{ __displayAria('ShowcaseCategoryController', 'index') }}"
+                            class="dropdown-toggle">
+                            <div class="">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" class="feather feather-list">
+                                    <line x1="8" y1="6" x2="21" y2="6"></line>
+                                    <line x1="8" y1="12" x2="21" y2="12"></line>
+                                    <line x1="8" y1="18" x2="21" y2="18"></line>
+                                    <line x1="3" y1="6" x2="3.01" y2="6"></line>
+                                    <line x1="3" y1="12" x2="3.01" y2="12"></line>
+                                    <line x1="3" y1="18" x2="3.01" y2="18"></line>
+                                </svg>
+                                <span>Kelola Kategori</span>
+                            </div>
+                        </a>
+                    </li>
+                @endrole
+            @endif
+
+            @if (current_user_can(['read_certificate', 'send_certificate']))
+                <li class="menu menu-heading">
+                    <div class="heading">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            class="feather feather-minus">
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
                         </svg>
-                        <span>MANAJEMEN Sertifikat</span>
+                        <span>MANAJEMEN SERTIFIKAT</span>
                     </div>
                 </li>
                 @if (current_user_can('read_certificate'))
-                <li class="menu {{ __active('CertificateController', 'index') }}">
+                    <li class="menu {{ __active('CertificateController', 'index') }}">
 
-                    <a href="{{ route('admin.certificates.index') }}"
-                        aria-expanded="{{ __displayAria('CertificateController', 'index') }}" class="dropdown-toggle">
-                        <div class="">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-award"><circle cx="12" cy="8" r="7"></circle><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline></svg>
-                            <span>Kelola Sertifikat</span>
-                        </div>
-                    </a>
-                </li>
+                        <a href="{{ route('admin.certificates.index') }}"
+                            aria-expanded="{{ __displayAria('CertificateController', 'index') }}"
+                            class="dropdown-toggle">
+                            <div class="">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" class="feather feather-award">
+                                    <circle cx="12" cy="8" r="7"></circle>
+                                    <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline>
+                                </svg>
+                                <span>Kelola Sertifikat</span>
+                            </div>
+                        </a>
+                    </li>
                 @endif
                 @if (current_user_can('send_certificate'))
-                <li class="menu {{ __active('CertificateController', 'send') }}">
+                    <li class="menu {{ __active('CertificateController', 'send') }}">
 
-                    <a href="{{ route('admin.certificates.send') }}"
-                        aria-expanded="{{ __displayAria('CertificateController', 'send') }}" class="dropdown-toggle">
-                        <div class="">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-award"><circle cx="12" cy="8" r="7"></circle><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline></svg>
-                            <span>Kirim Sertifikat</span>
-                        </div>
-                    </a>
-                </li>
+                        <a href="{{ route('admin.certificates.send') }}"
+                            aria-expanded="{{ __displayAria('CertificateController', 'send') }}"
+                            class="dropdown-toggle">
+                            <div class="">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" class="feather feather-award">
+                                    <circle cx="12" cy="8" r="7"></circle>
+                                    <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline>
+                                </svg>
+                                <span>Kirim Sertifikat</span>
+                            </div>
+                        </a>
+                    </li>
                 @endif
             @endif
 
@@ -509,7 +592,8 @@
 
                 <li class="menu {{ __active('SettingController', 'webmaster') }}">
                     <a href="{{ route('admin.settings.webmaster') }}"
-                        aria-expanded="{{ __displayAria('SettingController', 'webmaster') }}" class="dropdown-toggle">
+                        aria-expanded="{{ __displayAria('SettingController', 'webmaster') }}"
+                        class="dropdown-toggle">
                         <div class="">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
