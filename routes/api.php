@@ -60,7 +60,7 @@ Route::group(['middleware' => ['auth:api'], 'as' => 'api.'], function () {
     Route::apiResource('/showcases', ShowcaseController::class)->only(['update', 'destroy']);
 });
 
-Route::group(['prefix' => 'showcases'], function () {
+Route::group(['prefix' => 'showcases', 'as' => 'api.'], function () {
     Route::get('/', [ShowcaseController::class, 'index'])->name('showcases.index');
     Route::get('/{showcase}', [ShowcaseController::class, 'show'])->name('showcases.show');
 });
