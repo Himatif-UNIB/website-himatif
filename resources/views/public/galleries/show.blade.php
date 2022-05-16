@@ -103,7 +103,7 @@
     <script>
         const container = document.getElementById('lightgallery');
         lightGallery(container, {
-            plugins: [lgZoom, lgFullscreen, lgShare, lgPager, lgHash, lgThumbnail, lgAutoplay, lgComment],
+            plugins: [lgAutoplay, lgZoom, lgFullscreen, lgShare, lgPager, lgHash, lgThumbnail, lgComment],
             // licenseKey: 'your_license_key'
             speed: 500,
             thumbnail: true,

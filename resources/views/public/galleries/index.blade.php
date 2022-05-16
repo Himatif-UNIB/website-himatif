@@ -33,7 +33,7 @@
             @forelse ($albums as $album)
 
                 @php
-                    $n = rand(0, 10);
+                    $n = rand(0, count($album->media) - 1);
                 @endphp
                 <a href="{{ route('galeri.detail', ['album' => $album->id, 'slug' => $album->slug]) }}" class="flex flex-col">
                     <div class="w-full h-52 rounded-lg overflow-hidden">
