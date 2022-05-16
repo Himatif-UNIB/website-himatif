@@ -1,32 +1,30 @@
 <?php
 
-use App\Events\AnswerCreated;
-use App\Http\Controllers\Admin\PermissionController;
-use App\Http\Controllers\Admin\UserController;
-use App\Http\Controllers\AdminController;
-use App\Http\Controllers\Auth\AuthController;
-use App\Http\Controllers\Auth\FacebookAuthController;
-use App\Http\Controllers\Auth\ForgotPasswordController;
-use App\Http\Controllers\Auth\GoogleAuthController;
-use App\Http\Controllers\Blog\CategoryController;
-use App\Http\Controllers\Blog\CommentController;
-use App\Http\Controllers\Blog\PostController;
-use App\Http\Controllers\CertificateController;
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FormController;
-use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\StaffController;
 use App\Http\Controllers\MemberController;
+use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SettingController;
-use App\Http\Controllers\PublicController;
+use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\Blog\PostController;
 use App\Http\Controllers\Site\BlogController;
+use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\CertificateController;
+use App\Http\Controllers\Blog\CommentController;
+use App\Http\Controllers\Blog\CategoryController;
+use App\Http\Controllers\Auth\GoogleAuthController;
+use App\Http\Controllers\Admin\PermissionController;
+use App\Http\Controllers\ShowcaseCategoryController;
+use App\Http\Controllers\Auth\FacebookAuthController;
+use App\Http\Controllers\Auth\ForgotPasswordController;
+use App\Http\Controllers\ShowcaseController;
 use App\Http\Controllers\Site\FormController as SiteFormController;
-use App\Http\Controllers\Site\GalleryController as SiteGalleryController;
 use App\Http\Controllers\Site\StaffController as SiteStaffController;
-use App\Http\Controllers\StaffController;
-use App\Http\Controllers\UserFormController;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Site\GalleryController as SiteGalleryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -169,6 +167,9 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'himatif-admin', 'as' => 'ad
     //manajemen galeri
     Route::get('/gallery/category', [GalleryController::class, 'categories'])->name('gallery.categories');
     Route::resource('gallery', GalleryController::class);
+
+    Route::resource('showcase-categories', ShowcaseCategoryController::class)->only('index');
+    Route::resource('showcases', ShowcaseController::class);
 });
 
 Route::get('/form/{form}-{slug}', [SiteFormController::class, 'show'])->name('form.show');

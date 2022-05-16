@@ -83,7 +83,6 @@
     <script src="https://cdn.jsdelivr.net/npm/lightgallery@2.4.0/plugins/thumbnail/lg-thumbnail.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/lightgallery@2.4.0/plugins/autoplay/lg-autoplay.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/lightgallery@2.4.0/plugins/comment/lg-comment.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/lightgallery@2.4.0/plugins/autoplay/lg-autoplay.min.js"></script>
 
     <script>
         var disqus_config = function() {
@@ -104,7 +103,7 @@
     <script>
         const container = document.getElementById('lightgallery');
         lightGallery(container, {
-            plugins: [lgAutoplay, lgZoom, lgFullscreen, lgShare, lgPager, lgHash, lgThumbnail, lgAutoplay, lgComment],
+            plugins: [lgZoom, lgFullscreen, lgShare, lgPager, lgHash, lgThumbnail, lgAutoplay, lgComment],
             // licenseKey: 'your_license_key'
             speed: 500,
             thumbnail: true,

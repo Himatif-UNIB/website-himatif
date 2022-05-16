@@ -32,7 +32,7 @@
             </div>
 
         </div>
-        <img class="mt-16 lg:mt-0" src="{{ asset('assets/images/structure.png') }}" alt="" data-aos="zoom-in"
+        <img class="mt-16 lg:mt-0" src="{{ asset('assets/images/yahya2022') }}" alt="" data-aos="zoom-in"
             data-aos-delay="600">
     </div>
     <!-- END JUMBOTRON -->

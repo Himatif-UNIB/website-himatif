@@ -19,6 +19,7 @@
         "laravel/socialite": "^5.1",
         "laravel/tinker": "^2.5",
         "maatwebsite/excel": "^3.1",
+        "nao-pon/flysystem-google-drive": "~1.1",
         "orangehill/iseed": "^3.0",
         "pusher/pusher-php-server": "^4.1.0",
         "shivella/laravel-bitly": "^1.1",
@@ -49,7 +50,8 @@
     "autoload": {
         "files": [
             "app/Helpers.php",
-            "app/Ids.php"
+            "app/Ids.php",
+            "app/Helpers/GoogleDrive.php"
         ],
         "psr-4": {
             "App\\": "app/",
