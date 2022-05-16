@@ -16,7 +16,7 @@
             <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12 col-12 layout-spacing">
                 <div class="widget-four">
                     <div class="widget-heading">
-                        <h5 class="">Ringkasan Blog</h5>
+                        <h5 class="">Ringkasan Blog Saya</h5>
                     </div>
                     <div class="widget-content">
                         <div class="vistorsBrowser">
@@ -32,7 +32,7 @@
                                 <div class="w-browser-details">
                                     <div class="w-browser-info">
                                         <h6>Posting</h6>
-                                        <p class="browser-count">{{ $secretary['blog']['post'] }}</p>
+                                        <p class="browser-count">{{ $blog['post'] }}</p>
                                     </div>
                                 </div>
                             </div>
@@ -50,7 +50,7 @@
                                 <div class="w-browser-details">
                                     <div class="w-browser-info">
                                         <h6>Komentar</h6>
-                                        <p class="browser-count">{{ $secretary['blog']['comment'] }}</p>
+                                        <p class="browser-count">{{ $blog['comment'] }}</p>
                                     </div>
                                 </div>
                             </div>
@@ -80,49 +80,40 @@
             <div class="col-xl-8 col-lg-12 col-md-12 col-sm-12 col-12 layout-spacing">
                 <div class="row widget-statistic">
                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                        <div class="widget widget-card-one">
-                            @if ($secretary['latestPost'] != null)
-                                <div class="widget-content">
-                                    <div class="media">
-                                        <div class="w-img">
-                                            <img src="{{ asset('assets/themes/cork/img/90x90.jpg') }}" alt="avatar">
+                        <div class="widget-four">
+                            <div class="widget-heading">
+                                <h5 class="">Formulir Saya</h5>
+                            </div>
+                            <div class="widget-content">
+                                <div class="vistorsBrowser">
+                                    @forelse ($forms as $form)
+                                        <div class="browser-list">
+                                            <div class="w-icon">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                                    stroke-linecap="round" stroke-linejoin="round"
+                                                    class="feather feather-mail">
+                                                    <path
+                                                        d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z">
+                                                    </path>
+                                                    <polyline points="22,6 12,13 2,6"></polyline>
+                                                </svg>
+                                            </div>
+                                            <div class="w-browser-details">
+                                                <div class="w-browser-info">
+                                                    <h6>
+                                                        <a
+                                                            href="{{ route('admin.forms.show', $form->id) }}">{{ $form->title }}</a>
+                                                    </h6>
+                                                    <p class="browser-count">{{ $form->answers_count }}</p>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div class="media-body">
-                                            <h6>Posting terbaru</h6>
-                                            <h6><i><a href="{{ route('blog.post', ['post' => $secretary['latestPost']->id, 'slug' => $secretary['latestPost']->slug]) }}"
-                                                        target="_blank">{{ $secretary['latestPost']->title }}</a></i>
-                                            </h6>
-                                            <p class="meta-date-time">
-                                                {{ \Carbon\Carbon::parse($secretary['latestPost']->created_at)->format('d M Y') }}
-                                            </p>
-                                        </div>
-                                    </div>
-
-                                    <p>
-                                        @if ($secretary['latestPost']->excerpt)
-                                            {{ $secretary['latestPost']->excerpt }}
-                                        @else
-                                            {{ \Str::limit(strip_tags($secretary['latestPost']->content), 110) }}
-                                        @endif
-                                    </p>
-
-                                    <div class="w-action">
-                                        <div class="card-like">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                                stroke-linecap="round" stroke-linejoin="round" class="feather feather-send">
-                                                <line x1="22" y1="2" x2="11" y2="13"></line>
-                                                <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
-                                            </svg>
-                                            <span>Diposting oleh {{ $secretary['latestPost']->user->name }}</span>
-                                        </div>
-                                    </div>
+                                    @empty
+                                        <p class="text-muted text-sm">Kamu belum membuat satupun formulir.</p>
+                                    @endforelse
                                 </div>
-                            @else
-                                <div class="widget-content">
-                                    <p>Belum ada posting yang ditambahkan</p>
-                                </div>
-                            @endif
+                            </div>
                         </div>
                     </div>
                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
@@ -157,45 +148,45 @@
         </div>
 
         <div class="col-lg-12 col-md-12 col-sm-12 col-12 layout-spacing">
-                <div class="widget widget-chart-three">
-                    <div class="widget-heading">
-                        <div class="">
-                            <h5 class="">Galeri Foto</h5>
-                        </div>
-                    </div>
-
-                    <div class="widget-content widget-content-area p-0">
-                        @if (count($secretary['galleries']) > 0)
-                            <div class="table-responsive">
-                                <table class="table table-hover table-condensed">
-                                    <thead>
-                                        <th></th>
-                                        <th>Judul</th>
-                                        <th>Jumlah Foto</th>
-                                    </thead>
-                                    <tbody>
-                                        @foreach ($secretary['galleries'] as $gallery)
-                                            <tr>
-                                                <td>
-                                                    @foreach ($gallery->categories as $category)
-                                                        <span class="badge badge-info mr-1">{{ $category->name }}</span>
-                                                    @endforeach
-                                                </td>
-                                                <td><a
-                                                        href="{{ route('admin.gallery.show', $gallery->id) }}">{{ $gallery->title }}</a>
-                                                </td>
-                                                <td>{{ count($gallery->media) }}</td>
-                                            </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
-                        @else
-                            <div class="alert alert-info">Tidak ada album yang ditambahkan</div>
-                        @endif
+            <div class="widget widget-chart-three">
+                <div class="widget-heading">
+                    <div class="">
+                        <h5 class="">Galeri Foto</h5>
                     </div>
                 </div>
+
+                <div class="widget-content widget-content-area p-0">
+                    @if (count($secretary['galleries']) > 0)
+                        <div class="table-responsive">
+                            <table class="table table-hover table-condensed">
+                                <thead>
+                                    <th></th>
+                                    <th>Judul</th>
+                                    <th>Jumlah Foto</th>
+                                </thead>
+                                <tbody>
+                                    @foreach ($secretary['galleries'] as $gallery)
+                                        <tr>
+                                            <td>
+                                                @foreach ($gallery->categories as $category)
+                                                    <span class="badge badge-info mr-1">{{ $category->name }}</span>
+                                                @endforeach
+                                            </td>
+                                            <td><a
+                                                    href="{{ route('admin.gallery.show', $gallery->id) }}">{{ $gallery->title }}</a>
+                                            </td>
+                                            <td>{{ count($gallery->media) }}</td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    @else
+                        <div class="alert alert-info">Tidak ada album yang ditambahkan</div>
+                    @endif
+                </div>
             </div>
+        </div>
     </div>
 @endsection
 
