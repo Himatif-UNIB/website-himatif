@@ -119,7 +119,7 @@
                 <div class="widget widget-chart-three">
                     <div class="widget-heading">
                         <div>
-                            <h5>Anggota Bidang {{ auth()->user()->staffs[0]->position->division->name }}</h5>
+                            <h5>Anggota Bidang {{ $divisionName }}</h5>
                         </div>
                     </div>
                     <div class="widget-content p-0">
