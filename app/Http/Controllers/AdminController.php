@@ -12,13 +12,14 @@ use App\Models\Blog_post;
 use App\Models\Form_answer;
 use App\Models\Blog_comment;
 use App\Models\Picture_gallery;
+use App\Models\Position;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Auth;
 use Spatie\Permission\Models\Permission;
 
 class AdminController extends Controller
 {
-    
+
     /**
      * AdminController@index
      * 
@@ -37,14 +38,27 @@ class AdminController extends Controller
         $divisionStaffs = [];
 
         if ($role == 'head_of_division') {
-            $parent = Auth::user()->staffs[0]->position_id;
+            $getHeadPositionId = Staff::where('user_id', $userId)
+                ->where('period_id', getActivePeriod()->id)
+                ->first()
+                ->position_id;
 
-            $divisionStaffs = Staff::whereHas('position', function ($position) use($parent) {
-                return $position->where('parent_id', $parent);
-            })->get();
+            $divisionStaffs = Staff::whereHas('position', function ($query) use ($getHeadPositionId) {
+                $query->where('parent_id', $getHeadPositionId);
+            })
+                ->where('period_id', getActivePeriod()->id)
+                ->get();
         }
 
+        $_getUserStaffId = Staff::where('period_id', getActivePeriod()->id)
+            ->where('user_id', $userId)
+            ->first()
+            ->position_id;
+        $divisionName = Position::where('id', $_getUserStaffId)
+            ->with('division')->first()->division->name;
+
         $data = [
+            'divisionName' => $divisionName,
             'blog' => [
                 'post' => Blog_post::where('user_id', $userId)->count(),
                 'comment' => Blog_comment::whereHas('post', function ($post) use ($userId) {
@@ -53,7 +67,7 @@ class AdminController extends Controller
                 'commentModeration' => Blog_comment::whereHas('post', function ($post) use ($userId) {
                     return $post->where('user_id', $userId);
                 })
-                ->where('status', 'on_moderation')->count()
+                    ->where('status', 'on_moderation')->count()
             ],
             'forms' => Form::take(3)->withCount('answers')->get(),
             'secretary' => [
@@ -86,9 +100,7 @@ class AdminController extends Controller
             ]
         ];
 
-        $divisionStaff = [];
-        
-        return view('private.overview.'. $role)
+        return view('private.overview.' . $role)
             ->with($data);
     }
 }
