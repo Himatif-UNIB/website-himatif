@@ -16,6 +16,8 @@ use App\Http\Controllers\Api\Blog\CategoryController;
 use App\Http\Controllers\Api\Gallery\GalleryController;
 use App\Http\Controllers\Api\ShowcaseCategoryController;
 use App\Http\Controllers\Api\Gallery\CategoryController as GalleryCategoryController;
+use App\Http\Controllers\Api\Showcase\CategoryController as ApiShowcaseCategoryController;
+use App\Http\Controllers\Api\Showcase\ShowcaseController as ShowcaseShowcaseController;
 use App\Http\Controllers\Api\ShowcaseController;
 
 /*
@@ -61,6 +63,7 @@ Route::group(['middleware' => ['auth:api'], 'as' => 'api.'], function () {
 });
 
 Route::group(['prefix' => 'showcases', 'as' => 'api.'], function () {
-    Route::get('/', [ShowcaseController::class, 'index'])->name('showcases.index');
-    Route::get('/{showcase}', [ShowcaseController::class, 'show'])->name('showcases.show');
+    Route::get('/', [ShowcaseShowcaseController::class, 'index'])->name('showcases.index');
+    Route::get('/categories', [ApiShowcaseCategoryController::class, 'index'])->name('showcases.categories');
+    Route::get('/{showcase}', [ShowcaseShowcaseController::class, 'show'])->name('showcases.show');
 });

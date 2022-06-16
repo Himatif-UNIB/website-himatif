@@ -10,3 +10,10 @@
 - Author: @mulyosyahidin
 - Deskripsi: Pada saat membuat formulir baru, deskripsi dan post message terhapus
 - Status: fix
+
+
+``
+    give your best!!.
+    suatu saat, setiap detik hari ini dan setiap baris kode akan engkau rindukan sebagai bagian
+    dari suatu perjalanan. tidak pernah ada rugi, hanya keikhlasan yang akan memberi.
+``
