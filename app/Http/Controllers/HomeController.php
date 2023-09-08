@@ -12,7 +12,7 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $divisions = Division::with(['media'])->get();
+        $divisions = Division::with(['media'])->where('show', 1)->get();
 
         $getChilds = Staff::with(['position.division', 'user', 'user.member'])->whereHas('position', function ($position) {
             return $position->where('parent_id', '!=', null);

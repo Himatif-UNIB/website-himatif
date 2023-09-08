@@ -37,7 +37,7 @@ class StaffController extends Controller
         $grouped = $collection->groupBy('position.order_level');
         $positions = $grouped->all();
 
-        $getChilds = Staff::with(['user', 'position'])->whereHas('position', function ($position) {
+        $getChilds = Staff::with(['user', 'position','user.member'])->whereHas('position', function ($position) {
             return $position->where('parent_id', '!=', null);
         })->where('period_id', getActivePeriod()->id)->get();
 
@@ -51,10 +51,39 @@ class StaffController extends Controller
             $n++;
         }
 
-        $collection = collect($childTemp);
+        $collection = collect($getChilds);
         $grouped = $collection->groupBy('position.parent_id');
         $childs = $grouped->all();
 
-        return view('public.structures', compact('childs', 'staff', 'positions'));
+        ///
+        // $getChilds = Staff::with(['position.division', 'user', 'user.member'])->whereHas('position', function ($position) {
+        //     return $position->where('parent_id', '!=', null);
+        // })->where('period_id', getActivePeriod()->id)->get();
+
+        // $childTemp = [];
+        // $n = 0;
+        // foreach ($getChilds as $item) {
+        //     $childTemp[$n]['user'] = $item->user;
+        //     $childTemp[$n]['position'] = $item->position;
+
+        //     $n++;
+        // }
+
+        // $collection = collect($getChilds);
+        // $grouped = $collection->groupBy('position.division_id');
+        // $childs = $grouped->all();
+        
+        $headOfDivisions = [];
+        $getHeadOfDivisions = Staff::with(['user', 'position.division', 'user.media', 'user.member'])
+            ->whereHas('position', function ($position) {
+                return $position->where('parent_id', null)->where('division_id', '!=', 'null');
+            })->where('period_id', getActivePeriod()->id)->get();
+
+        $collection = collect($getHeadOfDivisions);
+        $grouped = $collection->groupBy('position.division.id');
+        $headOfDivisions = $grouped->all();
+        
+
+        return view('public.structures', compact('childs', 'staff','headOfDivisions', 'positions'));
     }
 }
