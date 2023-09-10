@@ -31,7 +31,8 @@ class ShowcaseController extends Controller
                 return $query->where('title', 'like', '%' . $request->get('search') . '%')
                     ->orWhere('description', 'like', '%' . $request->get('search') . '%')
                     ->orWhere('github_url', 'like', '%' . $request->get('search') . '%')
-                    ->orWhere('youtube_url', 'like', '%' . $request->get('search') . '%');
+                    ->orWhere('youtube_url', 'like', '%' . $request->get('search') . '%')
+                    ->orWhere('user_id', 'like', '%' . $request->get('search') . '%');
             })
             ->when($request->get('category_id'), function ($query) use ($request) {
                 return $query->where('category_id', $request->get('category_id'));
