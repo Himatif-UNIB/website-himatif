@@ -29,6 +29,7 @@ class ShowcaseCategoryController extends Controller
                 $data[] = [
                     "name" => $name,
                     "profile" => $profile,
+                    'id_user' => $index->user_id,
                 ];
 
                 // $data[] = [$name,];
