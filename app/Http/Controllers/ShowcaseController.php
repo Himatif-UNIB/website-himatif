@@ -53,7 +53,7 @@ class ShowcaseController extends Controller
             'title' => 'required',
             'type' => 'required'
         ]);
-
+        
         $showcase = new Showcase();
         $showcase->user_id = auth()->user()->id;
         $showcase->type = $request->type ? $request->type : 'app';

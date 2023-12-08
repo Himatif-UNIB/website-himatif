@@ -1,6 +1,7 @@
 <div style="text-align: center;">
-<a href="https://himatifunib.org/" target="_blank">
-<img src="https://himatifunib.org/storage/47/himatif-6000_small.png"></a>
+<a href="http://himatifunib.org/" target="_blank">
+<img src="https://himatifunib.org/storage/156/himatif-6000_small.png" style="height: 200px;"></a>
+
 </div>
 
 ## Tentang Himatif
@@ -19,3 +20,4 @@ Website Himatif merupakan website profil resmi dari Himpunan Mahasiswa Teknik In
 Versi saat ini dikembangkan oleh bidang IT kepengurusan periode 2020-2021.
 - WS93
 - MMS61
+- AV

@@ -9,7 +9,6 @@
         .structure:hover {
             transform: translateY(-10px);
         }
-
     </style>
 @endsection
 
@@ -32,7 +31,7 @@
             </div>
 
         </div>
-        <img class="mt-16 lg:mt-0" src="{{ asset('assets/images/yahya2022.png') }}" alt="" data-aos="zoom-in"
+        <img class="mt-16 lg:mt-0" src="{{ asset('assets/favicon.png') }}" alt="" data-aos="zoom-in"
             data-aos-delay="600">
     </div>
     <!-- END JUMBOTRON -->
@@ -46,7 +45,8 @@
                 @if ($data['position']->parent_id == null)
                     <div class="bg-card-color border-2 cursor-pointer hover:border-gray-400
                                     transition duration-500 ease-in-out w-64 h-auto lg:w-80 lg:h-80 rounded-3xl p-5 mb-5 flex flex-wrap
-                                    justify-center items-center m-3 structure">
+                                    justify-center items-center m-3 structure @if ($data['position']->division_id != null) modal-open @endif"
+                        data-division-id="{{ $data['position']->division_id }}">
                         <div class="lg:w-64 lg:h-64">
                             <div class="flex justify-center">
                                 @isset($data['user']->media[0])
@@ -64,7 +64,7 @@
                                         class="flex font-semibold text-orange-500 text-sm">{{ $data['position']->name }}</span>
                                 </div>
                                 @if (isset($childs[$data['position']->id]) && count($childs[$data['position']->id]) > 0)
-                                    <div class="flex space-x-3">
+                                    <div class="flex space-x-3 ">
                                         <span>
                                             <svg class="fill-current text-white" width="20" height="20"
                                                 xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
@@ -96,8 +96,8 @@
                             </div>
                             <div class="flex space-x-3">
                                 <span>
-                                    <svg class="fill-current text-gray-400" height="1.5rem" viewBox="0 0 512 512" width="1.5rem"
-                                        xmlns="http://www.w3.org/2000/svg">
+                                    <svg class="fill-current text-gray-400" height="1.5rem" viewBox="0 0 512 512"
+                                        width="1.5rem" xmlns="http://www.w3.org/2000/svg">
                                         <path
                                             d="m305 256c0 27.0625-21.9375 49-49 49s-49-21.9375-49-49 21.9375-49 49-49 49 21.9375 49 49zm0 0" />
                                         <path
@@ -113,6 +113,139 @@
             </div>
         </div>
     @endforelse
+    <!--Modal-->
+    @foreach ($childs as $divisionMember)
+        <div
+            class="modal modal-{{ $divisionMember[0]['position']->division->id }} z-50 opacity-0 pointer-events-none fixed w-full h-full top-0 left-0 flex items-center justify-center">
+            <div class="modal-overlay absolute w-full h-full bg-gray-900 opacity-50"
+                data-division-id="{{ $divisionMember[1]['position']->division->id }}"></div>
 
-    <!-- END ABOUT US -->
-@endsection
+            <div class="modal-container bg-white w-full md:w-4/6 mx-auto rounded shadow-lg z-50 overflow-y-auto">
+                <div data-division-id="{{ $divisionMember[0]['position']->division->id }}"
+                    class="modal-close absolute top-0 right-0 cursor-pointer flex flex-col items-center mt-4 mr-4 text-white text-sm z-50">
+                    <svg class="fill-current text-white" xmlns="http://www.w3.org/2000/svg" width="18" height="18"
+                        viewBox="0 0 18 18">
+                        <path
+                            d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z">
+                        </path>
+                    </svg>
+                    <span class="text-sm">(Esc)</span>
+                </div>
+
+                <!-- Add margin if you want to see some of the overlay behind the modal-->
+                <div class="modal-content py-12 text-left px-6 md:px-12 overflow-auto" style="height: 80vh;">
+
+                    <!--Body-->
+                    <div>
+                        <div class="relative mx-auto w-36 h-36 mb-2">
+                            <span
+                                class="flex items-center justify-center absolute right-1 top-4 w-6 h-6 rounded-full bg-green-300 cursor-pointer tooltip">
+                                <svg class="w-10/12 fill-current text-white" xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 20 20" fill="currentColor">
+                                    <path
+                                        d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                </svg>
+                                <span class="tooltiptext">Coordinator</span>
+                            </span>
+                            <div
+                                class="overflow-hidden w-full h-full rounded-full border-4 border-dotted border-green-400 p-1">
+                                @isset($headOfDivisions[$divisionMember[0]['position']->division->id][0]->user->media[0])
+                                    <img class="object-cover object-center"
+                                        src="{{ $headOfDivisions[$divisionMember[0]['position']->division->id][0]->user->media[0]->getFullUrl() }}"
+                                        alt="{{ $headOfDivisions[$divisionMember[0]['position']->division->id][0]->user->name }}">
+                                @else
+                                    <img class="object-cover object-center" src="{{ asset('assets/user-default.png') }}"
+                                        alt="{{ $headOfDivisions[$divisionMember[0]['position']->division->id][0]->user->name }}">
+        @endif
+        </div>
+        </div>
+        </div>
+
+
+        <div class="w-full flex flex-col items-center mb-6">
+            <span
+                class="block font-poppins font-semibold text-xl text-gray-700">{{ $headOfDivisions[$divisionMember[0]['position']->division->id][0]->user->name }}</span>
+            <span
+                class="block font-poppins text-lg text-gray-500">{{ $headOfDivisions[$divisionMember[0]['position']->division->id][0]->user->member->npm }}</span>
+            <div class="w-auto px-4 text-center bg-category-button-green rounded-full mt-2">
+                <span class="text-category-text-green font-semibold" id="division_name">
+                    {{ $divisionMember[0]['position']->division->name }}
+                </span>
+            </div>
+        </div>
+
+        @forelse ($divisionMember as $member)
+            <div class="mb-3 flex items-center justify-between px-7 w-full h-12 border-2 border-gray-300 rounded-lg bg-gray-50">
+                <span class="font-poppins text-sm md:text-base font-medium text-gray-800">{{ $member->user->name }}</span>
+                <span class="font-poppins text-gray-500">{{ $member->user->member->npm }}</span>
+            </div>
+        @empty
+            <div class="mb-3 flex items-center justify-between px-7 w-full h-12 border-2 border-gray-300 rounded-lg">
+                <span class="font-poppins font-medium text-gray-800">Tidak ada data untuk ditampilkan</span>
+                <span class="font-poppins text-gray-500">Upps...</span>
+            </div>
+        @endforelse
+        </div>
+        </div>
+        </div>
+        @endforeach
+        <script>
+            let __activeDivisionId = 0;
+
+            var openModalBtns = document.querySelectorAll('.modal-open')
+            openModalBtns.forEach((btn) => {
+                btn.addEventListener('click', function(event) {
+                    event.preventDefault();
+
+                    let divisionId = btn.getAttribute('data-division-id');
+                    __activeDivisionId = divisionId;
+
+                    toggleModal(divisionId);
+                });
+            });
+
+            const overlays = document.querySelectorAll('.modal-overlay');
+            overlays.forEach((overlay) => {
+                let overlayDivisionId = overlay.getAttribute('data-division-id');
+
+                overlay.addEventListener('click', function(e) {
+                    e.preventDefault();
+
+                    let overlayDivisionId = overlay.getAttribute('data-division-id');
+                    toggleModal(overlayDivisionId)
+                })
+            })
+
+            var closeModalBtns = document.querySelectorAll('.modal-close')
+            closeModalBtns.forEach((btn) => {
+                btn.addEventListener('click', function() {
+                    let closeDivisionId = btn.getAttribute('data-division-id');
+
+                    toggleModal(closeDivisionId);
+                });
+            })
+
+            document.onkeydown = function(evt) {
+                evt = evt || window.event
+                var isEscape = false
+                if ("key" in evt) {
+                    isEscape = (evt.key === "Escape" || evt.key === "Esc")
+                } else {
+                    isEscape = (evt.keyCode === 27)
+                }
+                if (isEscape && document.body.classList.contains('modal-active')) {
+                    toggleModal(__activeDivisionId);
+                }
+            };
+
+            function toggleModal(divisionId) {
+                const body = document.querySelector('body')
+                const modal = document.querySelector(`.modal-${divisionId}`)
+
+                modal.classList.toggle('opacity-0')
+                modal.classList.toggle('pointer-events-none')
+                body.classList.toggle('modal-active')
+            }
+        </script>
+        <!-- END ABOUT US -->
+    @endsection

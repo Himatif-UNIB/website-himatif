@@ -45,7 +45,7 @@ Route::group(['middleware' => ['auth:api'], 'as' => 'api.'], function () {
     Route::apiResource('/staffs', StaffController::class);
     Route::apiResource('/users', UserController::class)->only(['index', 'store', 'destroy']);
 
-    Route::group(['as' => 'blog.', 'prefix' => 'blog'], function() {
+    Route::group(['as' => 'blog.', 'prefix' => 'blog'], function () {
         Route::apiResource('/blog_category', CategoryController::class);
         Route::apiResource('/comments', CommentController::class);
     });
@@ -63,7 +63,10 @@ Route::group(['middleware' => ['auth:api'], 'as' => 'api.'], function () {
 });
 
 Route::group(['prefix' => 'showcases', 'as' => 'api.'], function () {
-    Route::get('/', [ShowcaseShowcaseController::class, 'index'])->name('showcases.index');
+    Route::get('/', [ShowcaseController::class, 'index'])->name('showcases.index');
     Route::get('/categories', [ApiShowcaseCategoryController::class, 'index'])->name('showcases.categories');
-    Route::get('/{showcase}', [ShowcaseShowcaseController::class, 'show'])->name('showcases.show');
+    Route::get('/{showcase}', [ShowcaseController::class, 'show'])->name('showcases.show');
 });
+
+Route::get('/contributor', [ShowcaseCategoryController::class, 'contributor'])->name('showcases.contributor');
+

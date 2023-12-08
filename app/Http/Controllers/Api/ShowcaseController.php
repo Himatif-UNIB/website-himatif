@@ -16,7 +16,60 @@ class ShowcaseController extends Controller
      */
     public function index(Request $request)
     {
-        
+        $data = Showcase::where('status', Showcase::STATUS_PUBLISHED)
+            ->when($request->get('user_id'), function ($query) use ($request) {
+                return $query->where('user_id', $request->get('user_id'));
+            })
+            ->when($request->get('search'), function ($query) use ($request) {
+                return $query->where('title', 'like', '%' . $request->get('search') . '%')
+                    ->orWhere('description', 'like', '%' . $request->get('search') . '%')
+                    ->orWhere('github_url', 'like', '%' . $request->get('search') . '%')
+                    ->orWhere('youtube_url', 'like', '%' . $request->get('search') . '%');
+            })
+            ->when($request->get('category_id'), function ($query) use ($request) {
+                return $query->where('category_id', $request->get('category_id'));
+            })
+            ->when($request->get('type'), function ($query) use ($request) {
+                return $query->where('type', $request->get('type'));
+            })
+            ->when($request->get('technologies'), function ($query) use ($request) {
+                $technologies = strtolower($request->get('technologies'));
+
+                return $query->whereRaw('FIND_IN_SET(?, LOWER(technologiesS))', [$technologies]);
+            })
+            ->with(['user', 'category', 'media'])
+            ->latest()
+            // ->paginate();
+            ->get();
+            
+        // $data->withQueryString();
+
+        if (!is_null($this->compact)) {
+            $response = $data;
+        } else {
+            $response = [];
+            $_response = [];
+
+            // $response['total'] = $data->total();
+            // $response['per_page'] = $data->perPage();
+            // $response['current_page'] = $data->currentPage();
+            // $response['last_page'] = $data->lastPage();
+            // $response['first_page_url'] = $data->url(1);
+            // $response['last_page_url'] = $data->url($data->lastPage());
+            // $response['next_page_url'] = $data->nextPageUrl();
+            // $response['prev_page_url'] = $data->previousPageUrl();
+            // $response['path'] = $data->url($data->currentPage());
+            // $response['from'] = $data->firstItem();
+            // $response['to'] = $data->lastItem();
+
+            // foreach ($data as $item) {
+            //     $_response[] = $this->_compact_list($item);
+            // }
+
+            $response['data'] = $this->_compact_list($data);
+        }
+
+        return $response;
     }
 
     /**
