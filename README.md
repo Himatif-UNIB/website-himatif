@@ -1,6 +1,6 @@
 <div style="text-align: center;">
-<a href="http://himatif.ft.unib.ac.id/" target="_blank">
-<img src="http://himatif.ft.unib.ac.id/assets/profile/img/himatif.png"></a>
+<a href="http://himatifunib.org/" target="_blank">
+<img src="https://himatifunib.org/storage/156/himatif-6000_small.png"></a>
 </div>
 
 ## Tentang Himatif
