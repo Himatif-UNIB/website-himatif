@@ -49,9 +49,10 @@
     },
     "autoload": {
         "files": [
-            "app/Helpers.php",
-            "app/Ids.php",
-            "app/Helpers/GoogleDrive.php"
+            "app/Helpers/GoogleDrive.php",
+            "app/Helpers/Helpers.php",
+            "app/Helpers/Ids.php",
+            "app/Helpers/StringBuilder.php"
         ],
         "psr-4": {
             "App\\": "app/",

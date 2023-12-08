@@ -9,13 +9,6 @@ use Illuminate\Support\Facades\Validator;
 
 class ShowcaseController extends Controller
 {
-    public $compact;
-
-    public function __construct(Request $request)
-    {
-        $this->compact = $request->get('compact');
-    }
-
     /**
      * Display a listing of the resource.
      *
@@ -98,38 +91,7 @@ class ShowcaseController extends Controller
      */
     public function show(Request $request, Showcase $showcase)
     {
-        $data = $showcase->load(['user', 'category', 'media', 'user.media']);
         
-        if ($data->status == Showcase::STATUS_DRAFT) {
-            return response()->json([
-                'error' => true,
-                'message' => 'Data tidak ditemukan',
-            ], 404);
-        }
-
-        $related = Showcase::where('status', Showcase::STATUS_PUBLISHED)
-            ->where('type', $data->type)
-            ->where('id', '!=', $data->id)
-            ->where('category_id', $data->category_id)
-            ->with(['user', 'category', 'media'])
-            ->latest()->limit(3)->get();
-
-        if (is_null($this->compact)) {
-            $response = $this->_compact_data($data);
-            $response['related'] = $this->_compact_list($related);
-
-            if ($data->type == Showcase::TYPE_APP) {
-                $response['github_url'] = $data->github_url;
-            }
-            else {
-                $response['youtube_url'] = $data->youtube_url;
-            }
-        } else {
-            $response = $data;
-            $response['related'] = $related;
-        }
-
-        return ['data' => $response];
     }
 
     /**
@@ -193,73 +155,5 @@ class ShowcaseController extends Controller
                 'success' => true,
                 'message' => 'Berhasil menghapus foto'
             ]);
-    }
-
-    protected function _compact_data($data)
-    {
-        $response = [
-            'id' => $data->id,
-            'type' => $data->type,
-            'user' => [
-                'id' => $data->user->id,
-                'name' => $data->user->name,
-                'profile_picture' => isset($data->user->media[0]) ? $data->user->media[0]->getFullUrl() : null,
-            ],
-            'category' => $data->category,
-            'title' => $data->title,
-            'slug' => $data->slug,
-            'description' => $data->description,
-            'tags' => collect(explode(',', $data->tags))->map(function ($item) {
-                return trim($item);
-            }),
-            'technologies' => collect(explode(',', $data->technologies))->map(function ($item) {
-                return trim($item);
-            }),
-            'media' => [
-                'featured' => [
-                    'id' => $data->media[0]->id,
-                    'name' => $data->media[0]->name,
-                    'url' => $data->media[0]->getFullUrl(),
-                ],
-                'all' => $data->media->map(function ($item) {
-                    return [
-                        'id' => $item->id,
-                        'name' => $item->name,
-                        'url' => $item->getFullUrl(),
-                    ];
-                }),
-            ],
-            'report' => [
-                'file_id' => $data->report_drive_id,
-                'file_name' => $data->report_file_name,
-                'file_url' => create_drive_url($data->report_drive_id),
-            ],
-            'other_file' => $data->drive_url,
-            // 'created_at' => $data->created_at->format('Y-m-d H:i:s'),
-        ];
-
-        return $response;
-    }
-
-    protected function _compact_list($data) {
-        $response = [];
-
-        foreach ($data as $item) {
-            $response[] = [
-                'id' => $item->id,
-                'type' => $item->type,
-                'user' => [
-                    'id' => $item->user->id,
-                    'name' => $item->user->name,
-                ],
-                'category' => $item->category,
-                'title' => $item->title,
-                'slug' => $item->slug,
-                'media' => isset($item->media[0]) ? $item->media[0]->getFullUrl() : null,
-                'created_at' => $item->created_at->format('Y-m-d H:i:s'),
-            ];
-        }
-
-        return $response;
     }
 }
